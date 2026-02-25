@@ -73,9 +73,14 @@
   are suppressed relative to random
   {\small(Torquato \& Stillinger, 2003)}:
   \begin{equation*}
-    \sigma^2(R) \sim R^{d-\alpha},
+    S(k) \sim |k|^{\alpha} \;\text{as}\; k\to 0,
     \qquad
-    S(k) \sim |k|^{\alpha} \;\text{as}\; k\to 0
+    \sigma^2(R) \sim
+    \begin{cases}
+      R^{d-\alpha} & 0 < \alpha < 1 \\
+      R^{d-1}\ln R & \alpha = 1 \\
+      R^{d-1} & \alpha > 1
+    \end{cases}
   \end{equation*}
 
   \medskip
@@ -202,12 +207,12 @@
   \bigskip
   The Gaussian kernel $e^{-k^2 Dt}$ naturally smooths over the dense
   Bragg peaks, revealing the underlying $\alpha$
-  {\small(Torquato, 2021; Kim \& Torquato, 2024)}.
+  {\small(Torquato, 2021; Hitin-Bialus et al., 2024)}.
 \end{frame}
 \note{
   Two-phase media: Torquato (2002), Random Heterogeneous Materials, Ch.~2.
   Spreadability method: Torquato (2021), Phys.\ Rev.\ E 104, 054102.
-  Applied to quasicrystals: Kim \& Torquato (2024).
+  Applied to quasicrystals: Hitin-Bialus et al.\ (2024), Princeton thesis.
   Packing fraction $\phi_2=0.35$ follows from Hitin-Bialus (2024).
 }
 
@@ -254,7 +259,7 @@
 \end{frame}
 }
 \note{
-  Central result: all three chains give $\alpha\approx 3$,
+  Main result: all three chains give $\alpha\approx 3$,
   matching the eigenvalue prediction $\alpha=1-2\ln|\lambda_2|/\ln\lambda_1$
   from O\u{g}uz et al.\ (2019). Poisson baseline confirms $\alpha\approx 0$.
 }
