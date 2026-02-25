@@ -139,13 +139,34 @@ $\bar{\Lambda}$ rescaling invariance.
 - $\bar{\Lambda}$ values stable across N = 500k → 10M (convergence confirmed).
 - **Status:** COMPLETE. All results in `results/` directory.
 
-### Phase 4: Two-Phase Media and Diffusion Spreadability (Future)
+### Phase 4: Two-Phase Media and Diffusion Spreadability — COMPLETE
 
-- Decorate point patterns with solid rods ($\phi_2 = 0.35$).
-- Compute spectral density $\tilde{\chi}_V(k)$ and simulate excess spreadability
-  $\mathcal{S}(t)$.
-- Extract $\alpha$ via logarithmic derivative; verify $\alpha = 3$ for all three
-  metallic-mean chains.
+- Decorated point patterns with non-overlapping solid rods ($\phi_2 = 0.35$).
+- Computed structure factor $S(k)$ via histogram binning + FFT.
+- Computed spectral density $\tilde{\chi}_V(k) = \rho |m̃(k)|^2 S(k)$.
+- Evaluated excess spreadability $E(t) = S(\infty) - S(t)$ over $t \in [10^{-2}, 10^8]$.
+- Extracted $\alpha$ via logarithmic derivative of $E(t)$.
+- Implemented in `two_phase_media.py` (library) and `run_all.py` (Figs 6–8).
+
+**Alpha extraction results (linear fit of $\ln E$ vs $\ln t$ over $[10^2, 10^5]$):**
+
+| Pattern | $\alpha$ | Expected | Error | Status |
+|---|---|---|---|---|
+| Poisson | 0.001 | 0 | — | OK |
+| Integer Lattice | exp. decay | $\infty$ | — | OK |
+| Fibonacci (Golden Ratio) | 3.049 | 3 | 1.6% | OK |
+| Silver Ratio | 2.992 | 3 | 0.3% | OK |
+| Bronze Ratio | 2.987 | 3 | 0.4% | OK |
+
+- Two extraction methods: (1) period-aware log derivative for $\alpha(t)$ curves
+  (sliding window matched to oscillation period $2\ln\mu$ in $\ln t$ space), and
+  (2) linear fit of $\ln E$ vs $\ln t$ for reported values (more robust, averages
+  over all oscillations in the plateau window).
+- Integer lattice computed analytically from Bragg peak positions (avoids FFT
+  binning artifacts). Its $E(t)$ decays exponentially, reaching zero before the
+  plateau window — confirming $\alpha \to \infty$ as expected for crystals.
+- **Status:** COMPLETE. All three metallic-mean chains yield $\alpha \approx 3$,
+  confirming Class I hyperuniformity via the two-phase media approach.
 
 ### Phase 5: 2D Extensions (Future)
 

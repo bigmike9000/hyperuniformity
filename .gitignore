@@ -2,3 +2,12 @@ __pycache__/
 *.pyc
 .claude/
 .vscode/
+
+# LaTeX auxiliary files
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.synctex.gz
