@@ -119,7 +119,7 @@ $\bar{\Lambda}$ rescaling invariance.
 - **Goal:** Compute $\sigma^2(R)$ via sliding window and confirm it matches the
   exact result $\sigma^2(R) = 2\rho R$.
 - **Status:** COMPLETE. Implemented in `Poisson variance benchmark.py`.
-  Mean relative error < 2%.
+  Mean relative error 1.1\% (100 realizations).
 
 ### Phase 2: Generating Quasiperiodic Patterns — COMPLETE
 

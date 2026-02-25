@@ -69,7 +69,7 @@ def run_poisson_benchmark(rng):
     N = 10_000
     L = 10_000.0
     rho = N / L
-    num_realizations = 40
+    num_realizations = 100
     num_windows = 10_000
     R_array = np.linspace(1, 50, 30)
 
@@ -125,7 +125,7 @@ def run_poisson_benchmark(rng):
     ax2.tick_params(labelsize=12)
     # Annotation with mean error
     ax2.text(0.97, 0.95,
-             f'Mean error: {mean_err*100:.1f}%\nBenchmark PASSED',
+             f'Mean error: {mean_err*100:.1f}%',
              transform=ax2.transAxes, fontsize=12, ha='right', va='top',
              bbox=dict(boxstyle='round,pad=0.3', facecolor='lightgreen', alpha=0.8))
 
@@ -941,7 +941,7 @@ def run_spreadability_analysis(rng):
         f'  Silver:       {sil_alpha:6.3f}  (expected 3)\n'
         f'  Bronze:      {bro_alpha:6.3f}  (expected 3)'
     )
-    ax.text(0.98, 0.55, results_text, transform=ax.transAxes,
+    ax.text(0.98, 0.97, results_text, transform=ax.transAxes,
             fontsize=11, ha='right', va='top', family='monospace',
             bbox=dict(boxstyle='round,pad=0.5', facecolor='white',
                       edgecolor='black', alpha=0.9))

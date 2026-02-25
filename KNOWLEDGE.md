@@ -121,35 +121,35 @@ This is the primary method for Phase 3 of the project.
 def compute_variance(positions, R_values, L):
     """
     Compute σ²(R) via sliding window with periodic boundary conditions.
-    
+
     Parameters:
         positions: sorted array of N point positions in [0, L)
         R_values: array of window radii to evaluate
         L: system length (for periodic boundaries)
-    
+
     Returns:
         variance: array of σ²(R) values
     """
     N = len(positions)
     rho = N / L
     variance = np.zeros(len(R_values))
-    
+
     for i, R in enumerate(R_values):
         window_length = 2 * R
         if window_length >= L:
             # Window covers entire system — variance is 0
             variance[i] = 0.0
             continue
-        
+
         # For each point, count how many points fall in [x - R, x + R]
         # Use continuous sliding: analytically track count changes
         # as window center moves from 0 to L
-        
+
         # Method: For each gap between consecutive points,
         # the count in the window is constant.
         # Track count changes as window edges cross points.
-        
-        # EFFICIENT APPROACH: 
+
+        # EFFICIENT APPROACH:
         # Sort entry/exit events for the window
         counts = []
         # Sample M uniformly spaced window positions
@@ -163,10 +163,10 @@ def compute_variance(positions, R_values, L):
             else:  # wraps around
                 count = (N - np.searchsorted(positions, left)) + np.searchsorted(positions, right)
             counts.append(count)
-        
+
         counts = np.array(counts, dtype=float)
         variance[i] = np.var(counts)
-    
+
     return variance
 ```
 
@@ -178,17 +178,17 @@ For substitution tilings with N ~ 10^7 points, the sampling approach above is to
 def compute_variance_exact(positions, R, L):
     """
     Exact σ²(R) by tracking all count-change events.
-    
+
     As the window center sweeps from 0 to L, the count changes
     only when the left or right edge of the window crosses a point.
     Each point x_j creates two events:
       - A point enters the window when center = (x_j - R) mod L
       - A point exits the window when center = (x_j + R) mod L
-    
+
     Returns: exact σ²(R)
     """
     N = len(positions)
-    
+
     # Create sorted list of events: (position, +1 for enter, -1 for exit)
     events = []
     for xj in positions:
@@ -196,25 +196,25 @@ def compute_variance_exact(positions, R, L):
         exit_pos = (xj + R) % L    # point exits window
         events.append((enter_pos, +1))
         events.append((exit_pos, -1))
-    
+
     events.sort(key=lambda e: e[0])
-    
+
     # Walk through events, tracking count and accumulating
     # weighted first and second moments
     # Between consecutive events, count is constant
     # Weight = gap length / L
-    
+
     total_mean = 0.0
     total_sq = 0.0
     count = 0
-    
+
     # Initialize count at position 0
     # Count = number of points in window centered at 0
     # i.e., points in [L - R, R] (mod L)
     for xj in positions:
         if (xj % L) < R or (xj % L) > (L - R):
             count += 1
-    
+
     prev_pos = 0.0
     for pos, delta in events:
         gap = pos - prev_pos
@@ -225,13 +225,13 @@ def compute_variance_exact(positions, R, L):
         total_sq += count**2 * weight
         count += delta
         prev_pos = pos
-    
+
     # Final gap from last event back to 0 (or L)
     gap = L - prev_pos
     weight = gap / L
     total_mean += count * weight
     total_sq += count**2 * weight
-    
+
     variance = total_sq - total_mean**2
     return variance
 ```
@@ -333,12 +333,12 @@ The substitution must preserve the ratio ξ = L/S. This requires (from Oğuz et 
 def generate_substitution_chain(n_metallic, num_iterations, seed='L'):
     """
     Generate a 1D metallic-mean substitution chain.
-    
+
     Parameters:
         n_metallic: 1 for Fibonacci, 2 for silver, 3 for bronze
         num_iterations: number of substitution iterations
         seed: starting tile ('S' or 'L')
-    
+
     Returns:
         tiles: string of 'S' and 'L' characters
         positions: array of point positions (left endpoints of each tile)
@@ -352,26 +352,26 @@ def generate_substitution_chain(n_metallic, num_iterations, seed='L'):
             elif tile == 'L':
                 result.extend(['L'] * n_metallic + ['S'])
         return result
-    
+
     # Iterate
     tiles = list(seed)
     for _ in range(num_iterations):
         tiles = substitute(tiles)
-    
+
     # Compute positions
     xi = (n_metallic + np.sqrt(n_metallic**2 + 4)) / 2  # metallic mean
     S_length = 1.0  # set S = 1
     L_length = xi    # L = ξ·S
-    
+
     positions = [0.0]
     for tile in tiles[:-1]:  # N tiles → N+1 endpoints, but we want N points
         if tile == 'S':
             positions.append(positions[-1] + S_length)
         else:
             positions.append(positions[-1] + L_length)
-    
+
     total_length = positions[-1] + (S_length if tiles[-1] == 'S' else L_length)
-    
+
     return ''.join(tiles), np.array(positions), total_length
 ```
 
@@ -426,43 +426,43 @@ Alternative to substitution for generating quasiperiodic chains. Provides an ind
 def fibonacci_cut_and_project(N_target, tau=None):
     """
     Generate Fibonacci chain via cut-and-project method.
-    
+
     Parameters:
         N_target: approximate number of desired points
         tau: golden ratio (default: (1+√5)/2)
-    
+
     Returns:
         positions: sorted array of projected point positions
     """
     if tau is None:
         tau = (1 + np.sqrt(5)) / 2
-    
+
     # Physical space direction (unit vector)
     e_par = np.array([tau, 1]) / np.sqrt(tau**2 + 1)
     # Perpendicular space direction
     e_perp = np.array([-1, tau]) / np.sqrt(tau**2 + 1)
-    
+
     # Strip width (CRITICAL: must be "ideal" width)
     # For Fibonacci, ideal width = tau (projected window in perp space)
     # The perpendicular-space projection of the unit cell is
-    # max(|e₁·e_perp|, |e₂·e_perp|) ... 
+    # max(|e₁·e_perp|, |e₂·e_perp|) ...
     # Actually: omega = (1 + tau) / sqrt(1 + tau^2) ... but more precisely,
     # the ideal strip width in perpendicular space is:
-    omega = (1 + tau) / np.sqrt(1 + tau**2)  # = tau / sqrt(1 + tau^2) * (1 + tau)/tau ... 
+    omega = (1 + tau) / np.sqrt(1 + tau**2)  # = tau / sqrt(1 + tau^2) * (1 + tau)/tau ...
     # Simpler: omega = tau * (1/sqrt(1+tau^2)) + 1 * (tau/sqrt(1+tau^2))
-    # = (tau + tau) / sqrt(...) ... 
-    
+    # = (tau + tau) / sqrt(...) ...
+
     # CORRECT FORMULA: The acceptance window in perpendicular space
-    # has width W = |e₁·e_perp| + |e₂·e_perp| 
+    # has width W = |e₁·e_perp| + |e₂·e_perp|
     #             = 1/sqrt(1+tau^2) + tau/sqrt(1+tau^2)
     #             = (1+tau)/sqrt(1+tau^2) = tau^2/sqrt(1+tau^2)
     W = (1 + tau) / np.sqrt(1 + tau**2)
-    
+
     # Generate lattice points in a large enough region
     # Need ~N_target points, lattice has density ~1/tau per unit length along E∥
     L_est = N_target * tau  # rough estimate of physical-space extent
     grid_range = int(np.ceil(L_est / np.sqrt(1 + tau**2) * (1 + tau))) + 10
-    
+
     positions = []
     for i in range(-grid_range, grid_range + 1):
         for j in range(-grid_range, grid_range + 1):
@@ -474,12 +474,12 @@ def fibonacci_cut_and_project(N_target, tau=None):
                 # Project onto physical space
                 x_par = np.dot(point, e_par)
                 positions.append(x_par)
-    
+
     positions = np.sort(positions)
-    
+
     # Center and trim to desired count
     positions -= positions[len(positions)//2]
-    
+
     return positions
 ```
 
@@ -526,16 +526,16 @@ i.e., the time-averaged value of the variance over large R. This serves as a **s
 def compute_lambda_bar(positions, R_max, num_R_points, L):
     """
     Compute Λ̄ by averaging σ²(R) over R ∈ [R_min, R_max].
-    
+
     For Class I systems, σ²(R) is bounded and oscillating,
     so Λ̄ = mean of σ²(R) over a large R range.
     """
     R_values = np.linspace(1.0, R_max, num_R_points)
     variances = np.array([compute_variance_exact(positions, R, L) for R in R_values])
-    
+
     # Λ̄ = (1/R_max) ∫₀^{R_max} σ²(R') dR' ≈ mean(σ²)
     lambda_bar = np.trapz(variances, R_values) / (R_values[-1] - R_values[0])
-    
+
     return lambda_bar, R_values, variances
 ```
 
@@ -635,38 +635,38 @@ where J₁ is the Bessel function of the first kind.
 def compute_spectral_density_1d(positions, a, k_values, L):
     """
     Compute χ̃_V(k) for a 1D packing of rods of half-length a.
-    
+
     Parameters:
         positions: array of N point positions in [0, L)
         a: rod half-length (φ₂ = 2aρ)
         k_values: array of wavenumbers to evaluate
         L: system length (periodic)
-    
+
     Returns:
         chi_V: spectral density at each k value
     """
     N = len(positions)
     rho = N / L
-    
+
     chi_V = np.zeros(len(k_values))
-    
+
     for i, k in enumerate(k_values):
         if abs(k) < 1e-15:
             # k = 0: χ̃_V(0) = 0 for hyperuniform systems
             chi_V[i] = 0.0
             continue
-        
+
         # Structure factor via direct computation
         # S(k) = (1/N) |Σ_j exp(-i k x_j)|²
         phase_sum = np.sum(np.exp(-1j * k * positions))
         S_k = np.abs(phase_sum)**2 / N
-        
+
         # Form factor of rod
         m_tilde_k = 2 * np.sin(k * a) / k
-        
+
         # Spectral density
         chi_V[i] = rho * np.abs(m_tilde_k)**2 * S_k
-    
+
     return chi_V
 ```
 
@@ -680,24 +680,24 @@ For large N, use FFT-based approach:
 def compute_Sk_fft(positions, L, num_k):
     """
     Compute S(k) using histogram + FFT approach.
-    
+
     Bin point positions onto a fine grid, FFT, then |FFT|²/N.
     """
     # Create density histogram
     n_bins = max(num_k * 4, len(positions) * 4)  # oversample
     hist, edges = np.histogram(positions, bins=n_bins, range=(0, L))
-    
+
     # FFT (real-to-complex)
     rho_k = np.fft.rfft(hist.astype(float))
-    
+
     # S(k) = |ρ(k)|² / N
     N = len(positions)
     S_k = np.abs(rho_k)**2 / N
-    
+
     # Corresponding k values
     dk = 2 * np.pi / L
     k_values = np.arange(len(S_k)) * dk
-    
+
     return k_values, S_k
 ```
 
@@ -781,52 +781,52 @@ At long times, n(t) → (d + α)/2. So:
 def compute_spreadability_1d(chi_V_k, k_values, D, t_values, phi2):
     """
     Compute excess spreadability S(∞) - S(t) for a 1D two-phase medium.
-    
+
     Parameters:
         chi_V_k: spectral density evaluated at k_values
         k_values: array of wavenumbers (uniformly spaced, k ≥ 0)
         D: diffusion coefficient (set to 1 for simplicity)
         t_values: array of time values (use log spacing)
         phi2: volume fraction of phase 2
-    
+
     Returns:
         excess_S: array of S(∞) - S(t) values
     """
     dk = k_values[1] - k_values[0] if len(k_values) > 1 else 1.0
-    
+
     excess_S = np.zeros(len(t_values))
     for i, t in enumerate(t_values):
         # Numerical integration: (1/(π φ₂)) ∫ χ̃_V(k) exp(-k²Dt) dk
         integrand = chi_V_k * np.exp(-k_values**2 * D * t)
         excess_S[i] = np.trapz(integrand, k_values) / (np.pi * phi2)
-    
+
     return excess_S
 
 
 def extract_alpha_1d(t_values, excess_S, t_min_fit=None, t_max_fit=None):
     """
     Extract α from long-time spreadability decay.
-    
+
     In 1D: S(∞) - S(t) ~ t^{-(1+α)/2}
     So log(excess_S) vs log(t) has slope -(1+α)/2
     Therefore: α = -2·slope - 1
     """
     log_t = np.log(t_values)
     log_excess = np.log(excess_S)
-    
+
     # Select fitting range (long times only)
     if t_min_fit is None:
         t_min_fit = t_values[len(t_values)//2]
     if t_max_fit is None:
         t_max_fit = t_values[-1]
-    
+
     mask = (t_values >= t_min_fit) & (t_values <= t_max_fit) & (excess_S > 0)
-    
+
     # Linear regression on log-log plot
     slope, intercept = np.polyfit(log_t[mask], log_excess[mask], 1)
-    
+
     alpha = -2 * slope - 1  # For 1D: slope = -(1+α)/2
-    
+
     return alpha, slope
 ```
 

@@ -66,14 +66,14 @@ $|\lambda_2| = 1/\lambda_1$.
 
 ### What this figure shows
 Before analyzing quasicrystals, we validate our core algorithm. We generate
-random (Poisson) point patterns and compare the numerically computed number
+100 random (Poisson) point patterns and compare the numerically computed number
 variance against the known exact result $\sigma^2(R) = 2\rho R$.
 
 ### What to look for
 - **Left panel:** Black dots (computed) should lie exactly on the red dashed
   line (theory). Error bars show $\pm 2\sigma$ from 40 independent realizations.
 - **Right panel:** Relative error at each window size, all well below the 5%
-  threshold (red dashed line). Mean error = 1.8%.
+  threshold (red dashed line). Mean error = 1.1%.
 
 ### Why it matters
 This confirms the binary-search sliding-window algorithm is correct. All
@@ -421,7 +421,7 @@ gives smooth, stable plateau estimates.
 
 | Figure | File | Shows | Key Takeaway |
 |--------|------|-------|--------------|
-| 1 | `fig1_poisson_benchmark.png`    | Poisson $\sigma^2$ vs exact  | Code validated (< 2% error) |
+| 1 | `fig1_poisson_benchmark.png`    | Poisson $\sigma^2$ vs exact  | Code validated (1.1% error) |
 | 2 | `fig2_bounded_variance.png`     | 4-panel bounded variance     | Class I confirmed for all chains |
 | 3 | `fig3_hyperuniformity_test.png` | $\sigma^2/R \to 0$           | Fluctuations suppressed vs random |
 | 4 | `fig4_projection_comparison.png`| Class I vs Class II          | Strip width controls class |
