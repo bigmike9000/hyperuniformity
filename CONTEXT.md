@@ -1,19 +1,50 @@
-# Hyperuniformity in 1D and 2D Point Patterns — Project Context
+# Comprehensive Ranking of Hyperuniform 1D Point Patterns — Project Context
 
 ## Principal Investigator: Professor Salvatore Torquato, Princeton University
 
-## 1. Core Definitions
+## 1. Motivation and Scope
+
+Hyperuniformity is a unifying framework that encompasses a remarkably broad range of
+ordered and disordered systems with anomalously suppressed density fluctuations [1].
+In one dimension, the known landscape of hyperuniform point patterns — particularly
+for Class I ($\alpha > 1$) — remains surprisingly sparse. The table in the Physics
+Reports review [1] lists only a handful of 1D examples, leaving open the question
+of how diverse hyperuniform structures compare in their degree of order.
+
+**This project aims to provide a much more comprehensive ranking of 1D hyperuniform
+point configurations**, spanning two broad families:
+
+1. **Quasicrystals** — metallic-mean substitution tilings (Fibonacci, silver, bronze)
+   and other aperiodic ordered chains.
+2. **Exotic disordered systems** — hyperuniform point patterns that lack long-range
+   order yet still suppress large-scale density fluctuations (e.g., stealthy
+   hyperuniform, maximally random jammed, cloaked systems, perturbed lattices).
+
+The ranking is built from two complementary metrics: the **hyperuniformity exponent
+$\alpha$**, which classifies how strongly fluctuations are suppressed, and the
+**surface-area coefficient $\bar{\Lambda}$**, which quantifies the residual
+fluctuation amplitude within a given class. Together, these provide a fine-grained
+"fingerprint" for each pattern's degree of order.
+
+A key motivation is that hyperuniform systems often exhibit unusual physical
+properties — anomalous transport, photonic band gaps, mechanical rigidity — that
+correlate with their hyperuniformity class and $\bar{\Lambda}$ value [1, 2]. By
+establishing a comprehensive $(\alpha, \bar{\Lambda})$ ranking across diverse 1D
+structures, this project lays groundwork for connecting structural metrics to
+physical behavior.
+
+## 2. Core Definitions
 
 - **Hyperuniformity:** A point pattern where the local number variance $\sigma^2(R)$
-  within a spherical window of radius $R$ grows slower than the window's volume [1].
+  within a window of radius $R$ grows slower than the window volume [1].
 
 - **Scaling Exponent ($\alpha$):** In reciprocal space, the structure factor $S(k)$
   (or spectral density $\tilde{\chi}_V(k)$) vanishes as $k \to 0$, scaling as
   $S(k) \sim |k|^\alpha$ [2, 3].
 
 - **Hyperuniformity Classes:**
-  - **Class I** ($\alpha > 1$): Variance scales as $R^{d-1}$ (surface area).
-    Includes crystals, Fibonacci, and Penrose quasicrystals [1, 3, 4].
+  - **Class I** ($\alpha > 1$): Variance bounded, scales as $R^{d-1}$.
+    Includes crystals and quasicrystals [1, 3, 4].
   - **Class II** ($\alpha = 1$): Variance scales as $R^{d-1}\ln(R)$.
     Includes period-doubling limit-periodic chains [3, 5].
   - **Class III** ($0 < \alpha < 1$): Variance scales as $R^{d-\alpha}$.
@@ -23,10 +54,10 @@
 - **Surface-Area Coefficient ($\bar{\Lambda}$):** The amplitude coefficient of the
   leading variance growth term. For Class I systems in 1D this is the time-averaged
   value of the bounded, oscillating variance function. Reference values:
-  - 1D integer lattice: $\bar{\Lambda} = 1/6$
-  - 1D Poisson (random baseline, not hyperuniform): $\sigma^2(R) = 2\rho R$ [7]
+  - Integer lattice: $\bar{\Lambda} = 1/6$
+  - Poisson (random baseline, not hyperuniform): $\sigma^2(R) = 2\rho R$ [7]
 
-## 2. 1D Substitution Tilings
+## 3. 1D Substitution Tilings (Quasicrystals)
 
 Quasicrystals can be generated using a substitution matrix $\mathbf{M}$ applied
 iteratively to a seed tile (Short $S$ or Long $L$) [8, 9].
@@ -66,16 +97,17 @@ iteratively to a seed tile (Short $S$ or Long $L$) [8, 9].
   $\rho \approx 0.85$) and substitution method (density $\rho \approx 0.72$)
   give the same $\bar{\Lambda}$ for Fibonacci within 0.1%.
 
-## 3. The Measurement Problem & Two-Phase Media
+## 4. The Measurement Problem & Two-Phase Media
 
-Quasicrystals have dense, discontinuous Bragg peaks, making direct evaluation of
-$\alpha$ from $S(k)$ impossible [14, 15]. The workaround:
+Many hyperuniform systems (especially quasicrystals with dense, discontinuous Bragg
+peaks) make direct evaluation of $\alpha$ from $S(k)$ impossible [14, 15]. The
+workaround:
 
-- **Mapping:** Convert the point pattern to a two-phase medium by placing
-  non-overlapping solid rods (1D) or disks (2D) on each point [16, 17].
-- **Packing Fractions:** $\phi_2 = 0.35$ (1D), $\phi_2 = 0.25$ (2D) [17, 18].
+- **Mapping:** Convert the point pattern to a 1D two-phase medium by placing
+  non-overlapping solid rods on each point [16, 17].
+- **Packing Fraction:** $\phi_2 = 0.35$ [17, 18].
 
-## 4. Diffusion Spreadability $\mathcal{S}(t)$
+## 5. Diffusion Spreadability $\mathcal{S}(t)$
 
 The dynamic fraction of solute diffusing from particles (phase 2) into void space
 (phase 1) over time [19, 20].
@@ -88,15 +120,6 @@ The dynamic fraction of solute diffusing from particles (phase 2) into void spac
 - **Extracting $\alpha$:** At long times, the excess spreadability decays as
   $t^{-(d+\alpha)/2}$. The logarithmic derivative of the spreadability curve
   yields $\alpha$ [23–26].
-
-## 5. 2D Extensions
-
-- Generated using the **Generalized Dual Method (GDM):** Stack grids of parallel
-  lines with specific phase shifts and map intersections to a physical tiling
-  space [27, 28].
-- Targets: 5-fold Penrose tiling (golden ratio), 8-fold octagonal tiling (silver
-  mean), and untested bronze-ratio equivalents.
-- The 2D Penrose tiling yields $\alpha \approx 6$ [29, 30].
 
 ## 6. Current Results
 
@@ -111,7 +134,7 @@ The dynamic fraction of solute diffusing from particles (phase 2) into void spac
 Projection vs substitution agreement (Fibonacci): 0.1% difference, confirming
 $\bar{\Lambda}$ rescaling invariance.
 
-## 7. Project Roadmap
+## 7. Project Roadmap (1D Focus)
 
 ### Phase 1: Code Benchmarking & Validation — COMPLETE
 
@@ -168,10 +191,12 @@ $\bar{\Lambda}$ rescaling invariance.
 - **Status:** COMPLETE. All three metallic-mean chains yield $\alpha \approx 3$,
   confirming Class I hyperuniformity via the two-phase media approach.
 
-### Phase 5: 2D Extensions (Future)
+### Phase 5: Expanding the 1D Catalog (In Progress)
 
-- Construct 2D quasiperiodic tilings via the GDM.
-- Decorate vertices with disks ($\phi_2 = 0.25$), compute 2D radial spectral
-  density, extract $\alpha$.
-- Target: extract $\alpha$ for untested 2D silver/bronze equivalents (Penrose
-  baseline: $\alpha = 6$).
+- Extend the analysis pipeline to a broader set of 1D hyperuniform point patterns,
+  including disordered hyperuniform systems (e.g., stealthy hyperuniform, perturbed
+  lattices, maximally random jammed packings, cloaked systems).
+- Populate a comprehensive $(\alpha, \bar{\Lambda})$ ranking table across all three
+  hyperuniformity classes.
+- Investigate correlations between the structural metrics ($\alpha$, $\bar{\Lambda}$)
+  and physical properties (transport, band structure, mechanical response).
