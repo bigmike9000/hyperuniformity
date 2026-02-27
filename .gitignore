@@ -3,6 +3,10 @@ __pycache__/
 .claude/
 .vscode/
 
+# Large data files
+stealthy_data/
+results/stealthy_cache.json
+
 # LaTeX auxiliary files
 *.aux
 *.log

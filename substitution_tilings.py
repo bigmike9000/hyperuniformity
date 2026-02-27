@@ -6,11 +6,15 @@ Supported chains:
   - Fibonacci (golden ratio, tau = (1+sqrt(5))/2)
   - Silver ratio (1+sqrt(2))
   - Bronze ratio ((3+sqrt(13))/2)
+  - Copper ratio (2+sqrt(5))
+  - Nickel ratio ((5+sqrt(29))/2)
 
 Each chain is defined by a substitution matrix M acting on tile types [S, L]:
   Fibonacci: S->L, L->LS       M = [[0,1],[1,1]]
-  Silver:    S->L, L->LSS      M = [[0,1],[1,2]]
-  Bronze:    S->L, L->LSSS     M = [[0,1],[1,3]]
+  Silver:    S->L, L->LLS      M = [[0,1],[1,2]]
+  Bronze:    S->L, L->LLLS     M = [[0,1],[1,3]]
+  Copper:    S->L, L->LLLLS    M = [[0,1],[1,4]]
+  Nickel:    S->L, L->LLLLLS   M = [[0,1],[1,5]]
 
 The tile lengths are set so that L/S equals the corresponding metallic mean,
 ensuring the pattern is self-similar and Class I hyperuniform.
@@ -45,6 +49,18 @@ CHAINS = {
         'matrix': np.array([[0, 1], [1, 3]]),
         'rules': {'S': 'L', 'L': 'LLLS'},
         'metallic_mean': (3 + np.sqrt(13)) / 2,   # ~ 3.303
+    },
+    'copper': {
+        'name': 'Copper Ratio',
+        'matrix': np.array([[0, 1], [1, 4]]),
+        'rules': {'S': 'L', 'L': 'LLLLS'},
+        'metallic_mean': (4 + np.sqrt(20)) / 2,   # = 2 + sqrt(5) ~ 4.236
+    },
+    'nickel': {
+        'name': 'Nickel Ratio',
+        'matrix': np.array([[0, 1], [1, 5]]),
+        'rules': {'S': 'L', 'L': 'LLLLLS'},
+        'metallic_mean': (5 + np.sqrt(29)) / 2,   # ~ 5.193
     },
 }
 
