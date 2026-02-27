@@ -15,3 +15,6 @@ results/stealthy_cache.json
 *.snm
 *.toc
 *.synctex.gz
+
+# Generated PDFs (rebuild from .tex)
+jp_outline.pdf

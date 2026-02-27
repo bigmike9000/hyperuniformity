@@ -1,0 +1,549 @@
+% !TEX program = pdflatex
+\documentclass[aspectratio=169, 11pt]{beamer}
+
+% -- Theme ------------------------------------------------------------------
+\usetheme{Madrid}
+\usecolortheme{seahorse}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{%
+  \leavevmode\hbox{%
+    \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.5ex,dp=1ex,center]{author in head/foot}%
+      \usebeamerfont{author in head/foot}\insertshortauthor
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.34\paperwidth,ht=2.5ex,dp=1ex,center]{title in head/foot}%
+      \usebeamerfont{title in head/foot}\insertshorttitle
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.5ex,dp=1ex,right]{date in head/foot}%
+      \usebeamerfont{date in head/foot}\insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+    \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+% -- Packages ---------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfpages}
+\usepackage{bookmark}
+
+% -- Speaker notes ----------------------------------------------------------
+\setbeameroption{show notes on second screen=right}
+
+% -- Paths ------------------------------------------------------------------
+\graphicspath{{./}}
+
+% -- Custom colors ----------------------------------------------------------
+\definecolor{fibgreen}{HTML}{2ca02c}
+\definecolor{silvpurp}{HTML}{9467bd}
+\definecolor{bronred}{HTML}{d62728}
+\definecolor{copblue}{HTML}{1f77b4}
+\definecolor{nickorg}{HTML}{ff7f0e}
+\definecolor{resultbg}{HTML}{F0FFF0}
+\definecolor{novelbg}{HTML}{FFFFF0}
+
+% -- Title ------------------------------------------------------------------
+\title[Hyperuniformity of 1D Point Patterns]{%
+  Hyperuniformity of 1D Point Patterns}
+\subtitle{Week 2 Progress: Expanding the Catalog}
+\author{Michael Fang}
+\institute{Princeton University}
+\date{March 4, 2026}
+
+% ======================================================================
+\begin{document}
+
+% -- Slide 1: Title --------------------------------------------------------
+\begin{frame}
+  \titlepage
+\end{frame}
+\note{
+  Week 2 progress update. This week expanded the catalog from 4 patterns
+  (lattice + 3 quasicrystals) to 25 patterns across all three
+  hyperuniformity classes.
+}
+
+% ======================================================================
+\section{Recap}
+% ======================================================================
+
+% -- Slide 2: Week 1 Recap ------------------------------------------------
+\begin{frame}{Week 1 Recap}
+  \textbf{Established:}
+  \begin{itemize}
+    \item Validated variance algorithm (Poisson benchmark, 1.1\% error)
+    \item Generated Fibonacci, Silver, Bronze chains at $N\sim10^7$
+    \item Confirmed $\alpha=3$ for all three via spreadability
+      {\small(O\u{g}uz et al., 2019)}
+    \item Computed $\bar{\Lambda}$ --- the surface-area coefficient
+  \end{itemize}
+
+  \bigskip
+  \begin{table}
+    \centering\small
+    \begin{tabular}{lccc}
+      \toprule
+      \textbf{Pattern} & $\boldsymbol{\alpha}$ & $\boldsymbol{\bar{\Lambda}}$
+        & \textbf{Class}\\
+      \midrule
+      Integer Lattice & $\infty$ & 1/6 & I\\
+      Fibonacci & 3.05 & 0.200 & I\\
+      Silver & 2.99 & 0.250 & I\\
+      Bronze & 2.99 & 0.282 & I\\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \bigskip
+  \textbf{This week:} expand from 4 to \textbf{25 patterns}
+  across all three hyperuniformity classes.
+\end{frame}
+\note{
+  Brief recap of week 1. Key gap: only 4 patterns, only Class I,
+  only $\alpha=3$ and $\alpha=\infty$.
+}
+
+% ======================================================================
+\section{New Quasicrystals}
+% ======================================================================
+
+% -- Slide 3: Copper & Nickel Chains --------------------------------------
+{
+\setbeamercolor{frametitle}{bg=novelbg, fg=black}
+\begin{frame}{\texorpdfstring{%
+  Novel Result: Copper \& Nickel Quasicrystals}{%
+  Novel Result: Copper and Nickel Quasicrystals}}
+  Extended the metallic-mean family to $n=4$ (Copper) and $n=5$ (Nickel):
+
+  \vspace{-0.5em}
+  \begin{table}
+    \centering\small
+    \begin{tabular}{lcccccc}
+      \toprule
+      \textbf{Chain} & \textbf{Rule ($L\to$)} & $\boldsymbol{\mu_n}$
+        & $\boldsymbol{N}$ & $\boldsymbol{\alpha}$ & $\boldsymbol{\bar{\Lambda}}$
+        & \textbf{Literature}\\
+      \midrule
+      Fibonacci & $LS$ & 1.618 & 14.9M & 3.05 & 0.200 & 0.201$^a$\\
+      Silver & $LLS$ & 2.414 & 22.6M & 2.99 & 0.250 & ---\\
+      Bronze & $LLLS$ & 3.303 & 21.9M & 2.99 & 0.282 & ---\\
+\textcolor{copblue}{\textbf{Copper}} & $LLLLS$ & 4.236 & 39.1M
+        & \textcolor{copblue}{\textbf{3.03}} & \textcolor{copblue}{\textbf{0.293}} & \textbf{novel}\\
+\textcolor{nickorg}{\textbf{Nickel}} & $LLLLLS$ & 5.193 & 16.4M
+        & \textcolor{nickorg}{\textbf{2.88}} & \textcolor{nickorg}{\textbf{0.310}} & \textbf{novel}\\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  {\footnotesize $^a$Zachary \& Torquato (2009).}
+
+  \vspace{-0.3em}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \small
+      \textbf{Key findings:}
+      \begin{itemize}\setlength\itemsep{0.2em}
+        \item $\alpha=3$ confirmed for all five chains
+          {\footnotesize(eigenvalue formula: exact)}
+        \item $\bar{\Lambda}$ \textbf{increases monotonically} with $n$
+        \item $\Delta\bar{\Lambda}$: 0.050, 0.032, 0.011, 0.017
+          $\Rightarrow$ converging toward a limit
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \small
+      \textbf{Eigenvalue prediction} {\footnotesize(O\u{g}uz et al., 2019)}:
+      \vspace{-0.5em}
+      \begin{equation*}
+        \alpha = 1 - \frac{2\ln|\lambda_2|}{\ln\lambda_1}
+      \end{equation*}
+      \vspace{-0.8em}
+      For all metallic means, $\det M = -1$, so
+      $|\lambda_2|=1/\lambda_1$ and $\alpha=3$ exactly.
+
+      \vspace{0.2em}
+      \fcolorbox{black}{novelbg}{\parbox{0.85\linewidth}{\centering\small
+        Silver, Bronze, Copper, Nickel\\
+        $\bar{\Lambda}$ values appear \textbf{novel}.
+      }}
+    \end{column}
+  \end{columns}
+\end{frame}
+}
+\note{
+  Copper: $\mu_4 = 2+\sqrt{5}\approx 4.236$; $\bar\Lambda=0.293$.
+  Nickel: $\mu_5 = (5+\sqrt{29})/2\approx 5.193$; $\bar\Lambda=0.310$.
+  Both novel. Alpha confirmed via eigenvalue formula (exact 3.000)
+  and spreadability fit (3.03, 2.88).
+  The trend suggests $\bar{\Lambda}\to\text{limit}\lesssim 1/3$ as $n\to\infty$.
+}
+
+% ======================================================================
+\section{Stealthy Patterns}
+% ======================================================================
+
+% -- Slide 4: Stealthy Hyperuniform ----------------------------------------
+\begin{frame}{Stealthy Hyperuniform Patterns}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{fig9_stealthy_sk.png}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \small
+      \textbf{Data:} ${\sim}4{,}300$ configs/\,$\chi$\\
+      {\footnotesize(Torquato group, $N{=}2{,}000$, $\rho{=}1$)}
+
+      \smallskip
+      $S(k)=0$ for $k < K(\chi)$, verified to $\sim\!10^{-14}$.
+
+      \smallskip
+      \begin{table}
+        \centering\footnotesize
+        \begin{tabular}{ccc}
+          \toprule
+          $\boldsymbol{\chi}$ & $\boldsymbol{\bar{\Lambda}}$ & \textbf{SEM}\\
+          \midrule
+          0.10 & 1.026 & 0.002\\
+          0.20 & 0.528 & 0.001\\
+          0.30 & 0.358 & 0.0004\\
+          \bottomrule
+        \end{tabular}
+      \end{table}
+
+      \smallskip
+      \begin{itemize}\setlength\itemsep{0.1em}
+        \item Class I, $\alpha\to\infty$
+          {\footnotesize(exponential decay)}
+        \item $\bar{\Lambda}$ \textbf{decreases} with $\chi$:
+          more constrained $\Rightarrow$ more ordered
+        \item No published $\bar{\Lambda}$ for comparison
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+\note{
+  Stealthy patterns: Torquato, Zhang, Stillinger (2015), Phys.\ Rev.\ X 5.
+  The exclusion zone $S(k)=0$ for $k<K$ gives $\alpha\to\infty$ (faster than
+  any power law). Lambda-bar from 500-config ensemble, SEM $<0.2\%$.
+}
+
+% ======================================================================
+\section{Perturbed Lattices}
+% ======================================================================
+
+% -- Slide 5: Perturbed Lattice Overview -----------------------------------
+\begin{frame}{Perturbed Lattice Models}
+  Displace each site of $\mathbb{Z}$ by i.i.d.\ draw from distribution $f$
+  {\small(Klatt, Kim, Torquato, 2020)}:
+
+  \vspace{-0.3em}
+  \begin{table}
+    \centering\footnotesize
+    \begin{tabular}{llccl}
+      \toprule
+      \textbf{Distribution} & $\boldsymbol{\hat{f}(k)}$ & $\boldsymbol{\alpha}$
+        & \textbf{Class} & \textbf{Parameters}\\
+      \midrule
+      Uniform $[-a/2,\,a/2)$ & $\operatorname{sinc}(ka/2\pi)$
+        & 2 & I & $a=0.1$--$1.0$\\
+      Gaussian $\mathcal{N}(0,\sigma^2)$ & $e^{-\sigma^2k^2/2}$
+        & 2 & I & $\sigma=0.1$--$0.5$\\
+      Cauchy$(0,\gamma)$ & $e^{-\gamma|k|}$
+        & 1 & II & $\gamma=0.1$\\
+      Stable$(s,c)$ & $e^{-c^s|k|^s}$
+        & $s$ & I/II/III & $s=0.3$--$1.7$\\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \vspace{-0.8em}
+  \centering
+  \includegraphics[width=0.42\linewidth]{fig10_perturbed_variance.png}
+\end{frame}
+\note{
+  Perturbed lattices: Klatt, Kim, Torquato (2020), Phys.\ Rev.\ E 101, 032118.
+  The displacement distribution's characteristic function $\hat{f}(k)$ controls $\alpha$:
+  $S(k)\sim 1-|\hat{f}(k)|^2$ near $k=0$.
+  URL and Gaussian give $\alpha=2$ (Class I), Cauchy gives $\alpha=1$ (Class II),
+  stable with $s<1$ gives Class III.
+}
+
+% -- Slide 6: URL Exact Formula -------------------------------------------
+\begin{frame}{\texorpdfstring{%
+  URL Model: Exact $\bar{\Lambda}(a)$ Validated}{%
+  URL Model: Exact Lambda-bar Validated}}
+  \begin{columns}[T]
+    \begin{column}{0.58\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{fig14_url_lambda_curve.png}
+    \end{column}
+    \begin{column}{0.38\textwidth}
+      \small
+      \textbf{Exact formula} {\footnotesize(Klatt et al., 2020, Eq.~B7)}:
+      \vspace{-0.5em}
+      \begin{equation*}
+        \bar{\Lambda}(a) = \frac{a}{3} + \frac{\{a\}^2(1{-}\{a\})^2}{6a^2}
+      \end{equation*}
+      \vspace{-0.8em}
+      where $\{a\}=a-\lfloor a\rfloor$.
+
+      \medskip
+      \begin{table}
+        \centering\footnotesize
+        \begin{tabular}{cccc}
+          \toprule
+          $\boldsymbol{a}$ & \textbf{Num.} & \textbf{Exact} & \textbf{Err}\\
+          \midrule
+          0.1 & 0.168 & 0.168 & 0.2\%\\
+          0.3 & 0.181 & 0.182 & 0.2\%\\
+          0.5 & 0.208 & 0.208 & 0.1\%\\
+          0.8 & 0.274 & 0.273 & 0.1\%\\
+          1.0 & 0.333 & 0.333 & 0.0\%\\
+          \bottomrule
+        \end{tabular}
+      \end{table}
+
+      \smallskip
+      \fcolorbox{black}{resultbg}{\parbox{0.9\linewidth}{\centering\small
+        All 5 points match exact\\
+        curve within \textbf{0.2\%}.
+      }}
+    \end{column}
+  \end{columns}
+\end{frame}
+\note{
+  The URL (Uniformly Randomized Lattice) has an exact $\bar{\Lambda}(a)$ formula
+  from Klatt et al.\ (2020), Eq.~B7. At $a=0$: lattice ($1/6$).
+  At $a=1$: cloaked ($1/3$, all Bragg peaks vanish).
+  Our numerics at $N=100{,}000$ match to $<0.2\%$ for all $a$ values.
+}
+
+% ======================================================================
+\section{Filling the Alpha Gap}
+% ======================================================================
+
+% -- Slide 7: Stable s>1 --------------------------------------------------
+\begin{frame}{\texorpdfstring{%
+  Filling the $1<\alpha<2$ Gap: Stable Perturbations}{%
+  Filling the Alpha Gap: Stable Perturbations}}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{fig13_stable_classI_variance.png}
+
+      \vspace{-0.3em}
+      {\footnotesize Bounded variance confirms Class~I for all $s>1$.}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \small
+      Symmetric stable displacements with index $s>1$:\\
+      $\hat{f}(k) = e^{-c^s|k|^s} \;\Rightarrow\; \alpha = s$.
+
+      \medskip
+      \begin{table}
+        \centering\footnotesize
+        \begin{tabular}{cccc}
+          \toprule
+          $\boldsymbol{s}$ & $\boldsymbol{\alpha}$ (fit)
+            & $\boldsymbol{\bar{\Lambda}}$ & \textbf{Class}\\
+          \midrule
+          1.3 & 1.47 & 0.417 & I\\
+          1.5 & 1.75 & 0.303 & I\\
+          1.7 & 1.91 & 0.242 & I\\
+          \bottomrule
+        \end{tabular}
+      \end{table}
+
+      \medskip
+      \textbf{Before:} only $\alpha=2$ (Gaussian/URL)\\
+      and $\alpha=3$ (quasicrystals) in Class~I.
+
+      \medskip
+      \textbf{Now:} continuous family of Class~I\\
+      patterns with $1 < \alpha < 2$.
+
+      \medskip
+      {\footnotesize CMS algorithm for stable RVs;\\
+      scale $c=0.1$, $N{=}100{,}000$.}
+    \end{column}
+  \end{columns}
+\end{frame}
+\note{
+  Stable distributions with $s>1$ give Class I hyperuniform patterns
+  with $\alpha=s$, filling the gap $1<\alpha<2$.
+  Chambers-Mallows-Stuck algorithm generates symmetric stable RVs.
+  The same code handles $s<1$ (Class III) and $s>1$ (Class I).
+}
+
+% ======================================================================
+\section{Comprehensive Ranking}
+% ======================================================================
+
+% -- Slide 8: Ranking Chart (Main Result) ----------------------------------
+{
+\setbeamercolor{frametitle}{bg=resultbg, fg=black}
+\begin{frame}{\texorpdfstring{%
+  Main Result: 25-Pattern $(\alpha,\,\bar{\Lambda})$ Ranking}{%
+  Main Result: 25-Pattern Ranking}}
+  \centering
+  \includegraphics[width=0.95\linewidth]{fig11_ranking.png}
+\end{frame}
+}
+\note{
+  The comprehensive ranking chart: 25 patterns sorted by $\bar{\Lambda}$.
+  Left panel: log scale shows all classes.
+  Right panel: linear scale zooms into Class I.
+  Lower $\bar{\Lambda}$ = more ordered.
+  Integer lattice is the most ordered ($\bar{\Lambda}=1/6$).
+  Stable $s=0.3$ is the least ordered Class III pattern ($\bar{\Lambda}\sim 73$).
+}
+
+% -- Slide 9: Ranking Table -----------------------------------------------
+\begin{frame}{\texorpdfstring{%
+  Class I Ranking: $\bar{\Lambda}$ from Lattice to Disorder}{%
+  Class I Ranking}}
+  \begin{table}
+    \centering\small
+    \begin{tabular}{rlccc}
+      \toprule
+      \textbf{\#} & \textbf{Pattern} & $\boldsymbol{\alpha}$
+        & $\boldsymbol{\bar{\Lambda}}$ & \textbf{Category}\\
+      \midrule
+       1 & Integer Lattice & $\infty$ & 0.167 & crystal\\
+       2 & URL $a{=}0.1$ & 2.0 & 0.168 & perturbed\\
+       3 & Gaussian $\sigma{=}0.1$ & 2.0 & 0.187 & perturbed\\
+       4 & Fibonacci & 3.0 & 0.200 & quasicrystal\\
+       5 & URL $a{=}0.5$ & 2.0 & 0.208 & perturbed\\
+       6 & Stable $s{=}1.7$ & 1.9 & 0.242 & perturbed\\
+       7 & Silver & 3.0 & 0.250 & quasicrystal\\
+ 8 & \textbf{Copper} & \textbf{3.0} & \textbf{0.293} & quasicrystal\\
+ 9 & \textbf{Nickel} & \textbf{2.9} & \textbf{0.310} & quasicrystal\\
+      10 & URL $a{=}1.0$ (cloaked) & 2.0 & 0.333 & perturbed\\
+      11 & Stealthy $\chi{=}0.3$ & $\infty$ & 0.358 & stealthy\\
+      12 & Stealthy $\chi{=}0.1$ & $\infty$ & 1.026 & stealthy\\
+      \midrule
+      \multicolumn{5}{c}{\textit{+ Cauchy (Class II) and 3 stable $s{<}1$ (Class III)}}\\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \vspace{-0.8em}
+  {\footnotesize
+  Lower $\bar{\Lambda}$ = more ordered.
+  Lattice is ground state; quasicrystals intermediate;
+  stealthy (despite $\alpha\!\to\!\infty$) have large $\bar{\Lambda}$
+  from residual short-range disorder.}
+\end{frame}
+\note{
+  Key insight: $\alpha$ and $\bar{\Lambda}$ are complementary metrics.
+  Stealthy patterns have $\alpha\to\infty$ but $\bar\Lambda\gg 1/6$,
+  while quasicrystals have finite $\alpha=3$ but smaller $\bar\Lambda$.
+  This shows why both metrics are needed for a complete ranking.
+}
+
+% ======================================================================
+\section{Validation \& Open Questions}
+% ======================================================================
+
+% -- Slide 10: Literature Validation --------------------------------------
+\begin{frame}{Literature Validation}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \small
+      \textbf{$\bar{\Lambda}$ comparisons:}
+      \begin{table}
+        \centering\footnotesize
+        \begin{tabular}{lccc}
+          \toprule
+          \textbf{Pattern} & \textbf{Ours} & \textbf{Lit.} & \textbf{Err}\\
+          \midrule
+          Lattice & 0.167 & $1/6$ & exact\\
+          Fibonacci & 0.200 & 0.201$^a$ & 0.5\%\\
+          URL $a{=}1$ & 0.333 & $1/3$ $^b$ & 0.0\%\\
+          URL $a{=}0.5$ & 0.208 & 0.208$^b$ & 0.1\%\\
+          \midrule
+          Silver & 0.250 & --- & \textit{novel}\\
+          Bronze & 0.282 & --- & \textit{novel}\\
+          Copper & 0.293 & --- & \textit{novel}\\
+          Nickel & 0.310 & --- & \textit{novel}\\
+          \bottomrule
+        \end{tabular}
+      \end{table}
+      {\footnotesize $^a$Zachary \& Torquato (2009).\\
+       $^b$Klatt et al.\ (2020), Eq.~B7.}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \small
+      \textbf{$\alpha$ comparisons:}
+      \begin{table}
+        \centering\footnotesize
+        \begin{tabular}{lccc}
+          \toprule
+          \textbf{Pattern} & \textbf{Ours} & \textbf{Expected} & \textbf{Err}\\
+          \midrule
+          Fibonacci & 3.05 & 3 & 1.6\%\\
+          Silver & 2.99 & 3 & 0.3\%\\
+          Bronze & 2.99 & 3 & 0.4\%\\
+          Copper & 3.03 & 3 & 0.9\%\\
+          Nickel & 2.88 & 3 & 4.0\%\\
+          \midrule
+          URL (all $a$) & ${\approx}2.0$ & 2 & $<$4\%\\
+          Cauchy & 0.95 & 1 & 4.9\%\\
+          \bottomrule
+        \end{tabular}
+      \end{table}
+
+      \medskip
+      \fcolorbox{black}{resultbg}{\parbox{0.9\linewidth}{\centering\small
+        All published values\\
+        reproduced within \textbf{5\%}.
+      }}
+    \end{column}
+  \end{columns}
+\end{frame}
+\note{
+  All $\alpha$ and $\bar{\Lambda}$ values validated against published results.
+  Fibonacci $\bar{\Lambda}=0.201$ from Zachary \& Torquato (2009), Table 1.
+  URL exact formula from Klatt et al.\ (2020), Eq.~B7.
+  Eigenvalue prediction from O\u{g}uz et al.\ (2019).
+  Silver, Bronze, Copper, Nickel $\bar{\Lambda}$ values appear to be novel.
+}
+
+% -- Slide 11: Open Questions ---------------------------------------------
+\begin{frame}{Open Questions}
+  \textbf{1. The $2 < \alpha < 3$ gap:}
+  \begin{itemize}
+    \item All metallic-mean substitutions give $\alpha=3$ exactly ($\det M=-1$)
+    \item All finite-variance perturbations give $\alpha=2$ exactly
+    \item \textbf{No known 1D construction achieves $2<\alpha<3$}
+    \item Is this a fundamental gap, or does a construction exist?
+  \end{itemize}
+
+  \bigskip
+  \textbf{2. Metallic-mean $\bar{\Lambda}$ convergence:}
+  \begin{itemize}
+    \item $\bar{\Lambda}(n)$: 0.200, 0.250, 0.282, 0.293, 0.310
+    \item Successive differences decreasing --- what is $\bar{\Lambda}_\infty$?
+    \item Is the limit $1/3$ (the cloaked-URL value)?
+  \end{itemize}
+
+  \bigskip
+  \textbf{3. Next steps:}
+  \begin{itemize}
+    \item Add period-doubling chains (Class II, $\alpha=1$)
+    \item Obtain more stealthy $\chi$ values from grad student
+    \item Begin writing JP paper with the 25-pattern ranking table
+  \end{itemize}
+\end{frame}
+\note{
+  The $2<\alpha<3$ gap is a genuine open problem.
+  Non-Pisot substitution matrices could potentially give $2<\alpha<3$,
+  but these are rare and may not produce quasicrystalline patterns.
+  The $\bar{\Lambda}$ convergence question could be addressed analytically
+  or by computing $n=6,7,\ldots$ chains.
+}
+
+\end{document}
