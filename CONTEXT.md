@@ -191,12 +191,54 @@ $\bar{\Lambda}$ rescaling invariance.
 - **Status:** COMPLETE. All three metallic-mean chains yield $\alpha \approx 3$,
   confirming Class I hyperuniformity via the two-phase media approach.
 
-### Phase 5: Expanding the 1D Catalog (In Progress)
+### Phase 5: Expanding the 1D Catalog — COMPLETE
 
-- Extend the analysis pipeline to a broader set of 1D hyperuniform point patterns,
-  including disordered hyperuniform systems (e.g., stealthy hyperuniform, perturbed
-  lattices, maximally random jammed packings, cloaked systems).
-- Populate a comprehensive $(\alpha, \bar{\Lambda})$ ranking table across all three
-  hyperuniformity classes.
-- Investigate correlations between the structural metrics ($\alpha$, $\bar{\Lambda}$)
-  and physical properties (transport, band structure, mechanical response).
+Extended the analysis pipeline to a comprehensive $(\alpha, \bar{\Lambda})$ catalog
+spanning all three hyperuniformity classes, including disordered patterns.
+
+**New patterns added:**
+
+| Pattern | Class | $\alpha$ | $\bar{\Lambda}$ | Notes |
+|---|---|---|---|---|
+| Period-Doubling chain | II | 1.000 (exact) | diverges (log) | $\sigma^2 \approx 0.089\ln R + 0.277$ |
+| 0222 chain | III | 0.639 (exact) | diverges (power) | $\alpha_{\rm fit}=0.665$ at $N\approx10^6$ |
+| URL ($a=0.1$) | I | 2 | 0.1683 | exact: $(1+0.1^2)/6$ |
+| URL ($a=0.5$) | I | 2 | 0.2083 | exact: $(1+0.5^2)/6$ |
+| URL ($a=1.0$) | I | 2 | $1/3$ | exact: $(1+1^2)/6$ |
+| Stealthy ($\chi=0.1$) | I | 2 | $1.021\pm0.002$ | from 4314 configs, $N=2000$ |
+| Stealthy ($\chi=0.2$) | I | 2 | $0.526\pm0.001$ | from 4314 configs, $N=2000$ |
+| Stealthy ($\chi=0.3$) | I | 2 | $0.357\pm0.001$ | from 4314 configs, $N=2000$ |
+
+**Key analytic results:**
+
+1. **URL:** Exact formula $\bar{\Lambda} = (1+a^2)/6$ for $a \leq 1$ (Klatt et al. 2020).
+   Numerical estimator unreliable for $a < 0.75$ due to sampling aliasing.
+
+2. **Stealthy (1D):** Derived $\bar{\Lambda} = 1/(\pi^2\chi)$ from spectral integral.
+   Systematic excess of 0.7–5.7% explained by $S(k)$ overshoot above exclusion zone
+   cutoff $K = 2\pi\chi$. Formula appears unpublished; Morse et al. (2024) explicitly
+   excludes $d=1$.
+
+3. **Metallic chain fractions:** Fibonacci $\bar{\Lambda} = 0.2001$ (possibly $1/5$
+   exactly?), Silver $\bar{\Lambda} = 0.2500$ (possibly $1/4$ exactly?).
+
+**New files:**
+- `disordered_patterns.py` — URL generator and stealthy L-BFGS-B optimizer
+- `stealthy_analysis.py` — ensemble analysis of collab stealthy configurations
+- `research_catalog.py` — production catalog runner, saves `results/catalog.json`
+- `make_figures.py` — generates publication figures A–E from saved JSON data
+- `stealthy_configurations/` — collab data: ~4314 configs each for $\chi=0.1,0.2,0.3$
+
+**Figures produced:**
+- `figA_variance_by_class.png` — $\sigma^2(R)$ for all patterns; Class I/II/III separation
+- `figB_url_analysis.png` — URL exact vs numeric $\bar{\Lambda}$
+- `figC_stealthy_lambda_chi.png` — $\bar{\Lambda}(\chi)$ vs $1/(\pi^2\chi)$ theory
+- `figD_metallic_lambda_vs_mu.png` — $\bar{\Lambda}$ vs metallic ratio
+- `figE_comprehensive_ranking.png` — full $(\alpha, \bar{\Lambda})$ scatter plot
+- `figG/H/I/J_stealthy_*.png` — stealthy structure factor, variance, spreadability, exclusion zone
+- `results/week2_presentation.pdf` — 10-slide Week 2 progress presentation
+
+**Literature added:**
+- `literature/batten_stealthy_2008.pdf` — Batten, Stillinger & Torquato, J. Appl. Phys. 104 (2008)
+- `literature/morse_stealthy_dimensions_2024.pdf` — Morse, Steinhardt & Torquato, PRR 6 (2024)
+- `literature/middlemas_hyperuniformity_ranking_2019.pdf` — Middlemas et al., PRE 99 (2019)

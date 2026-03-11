@@ -46,6 +46,18 @@ CHAINS = {
         'rules': {'S': 'L', 'L': 'LLLS'},
         'metallic_mean': (3 + np.sqrt(13)) / 2,   # ~ 3.303
     },
+    'period_doubling': {
+        'name': 'Period-Doubling',
+        'matrix': np.array([[0, 2], [1, 1]]),
+        'rules': {'S': 'L', 'L': 'LSS'},
+        'metallic_mean': 2.0,   # tile ratio L/S = 2 (Class II: alpha=1)
+    },
+    'chain_0222': {
+        'name': '0222 Chain',
+        'matrix': np.array([[0, 2], [2, 2]]),
+        'rules': {'S': 'LL', 'L': 'SSLL'},
+        'metallic_mean': (1 + np.sqrt(5)) / 2,   # tile ratio L/S = tau (Class III: alpha~0.361)
+    },
 }
 
 

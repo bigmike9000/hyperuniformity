@@ -512,13 +512,30 @@ i.e., the time-averaged value of the variance over large R. This serves as a **s
 
 ### 5.2 Known Values
 
-| System | Λ̄ | Notes |
-|--------|---|-------|
-| 1D integer lattice | 1/6 ≈ 0.1667 | Global minimum among all 1D hyperuniform patterns |
-| 1D Fibonacci chain | ~0.2 (to be computed) | Expected to be close to but larger than 1/6 |
-| 1D Silver chain | ? (to be computed) | One of the project goals |
-| 1D Bronze chain | ? (to be computed) | One of the project goals |
-| 1D Poisson | Not defined (σ² ~ R) | Non-hyperuniform |
+| System | Class | α | Λ̄ | Source |
+|--------|-------|---|---|--------|
+| 1D integer lattice | I | ∞ | 1/6 = 0.1667 | Exact (Torquato & Stillinger 2003) — global minimum |
+| 1D Fibonacci chain | I | 3 | 0.2001 ± 0.0005 | Numeric, N~10⁶; possibly 1/5 exactly |
+| 1D Silver chain | I | 3 | 0.2500 ± 0.0002 | Numeric, N~10⁶; possibly 1/4 exactly |
+| 1D Bronze chain | I | 3 | 0.2821 ± 0.0006 | Numeric, N~10⁶ |
+| URL (a=0.1) | I | 2 | 0.1683 | Exact: (1+a²)/6 (Klatt et al. 2020) |
+| URL (a=0.5) | I | 2 | 0.2083 | Exact: (1+a²)/6 |
+| URL (a=1.0, cloaked) | I | 2 | 1/3 = 0.3333 | Exact: (1+a²)/6 |
+| Stealthy (χ=0.1) | I | 2 | 1.021 ± 0.002 | Ensemble, N=2000, 4314 configs |
+| Stealthy (χ=0.2) | I | 2 | 0.526 ± 0.001 | Ensemble, N=2000, 4314 configs |
+| Stealthy (χ=0.3) | I | 2 | 0.357 ± 0.001 | Ensemble, N=2000, 4314 configs |
+| Period-doubling | II | 1.000 | diverges | σ²≈0.089 ln R + 0.277 |
+| 0222 chain | III | 0.639 | diverges | α_fit=0.665 (finite-size); theory: 1−2ln(√5−1)/ln(1+√5) |
+| 1D Poisson | — | — | not defined | σ²=2ρR (non-hyperuniform) |
+
+**Analytic formula for URL (Klatt et al. 2020, eq. 12):**
+For a = 0: Λ̄ = 1/6 (recovers lattice). For a = 1 (cloaked): Λ̄ = 1/3.
+Numerical estimation unreliable for a < 0.75 due to sampling aliasing; always use exact formula.
+
+**Analytic formula for stealthy (derived, 1D):**
+Λ̄ = 1/(π²χ). Derived from ∫₀^∞ S(k)|ω̃(k;R)|²dk/π with S(k)=0 for k<K=2πχ, S(k)=1 above.
+Systematic excess 0.7–5.7% due to S(k) overshoot above K (increases with χ). Formula appears
+unpublished — Morse et al. (2024) explicitly excludes d=1.
 
 ### 5.3 Computational Method
 
@@ -1019,12 +1036,18 @@ def variance_at_R_numba(positions, R, L):
 
 ## REFERENCES
 
-1. Torquato & Stillinger (2003). "Local density fluctuations, hyperuniformity, and order metrics." Phys. Rev. E 68, 041113.
+1. Torquato & Stillinger (2003). "Local density fluctuations, hyperuniformity, and order metrics." Phys. Rev. E 68, 041113. DOI:10.1103/PhysRevE.68.041113
 2. Torquato (2018). "Hyperuniform states of matter." Physics Reports 745, 1-95.
-3. Oğuz, Socolar, Steinhardt & Torquato (2019). "Hyperuniformity and anti-hyperuniformity in one-dimensional substitution tilings." Acta Cryst. A 75, 3-13.
-4. Torquato (2021). "Diffusion spreadability as a probe of the microstructure of complex media across length scales." Phys. Rev. E 104, 054102.
+3. Oğuz, Socolar, Steinhardt & Torquato (2019). "Hyperuniformity and anti-hyperuniformity in one-dimensional substitution tilings." Acta Cryst. A 75, 3-13. DOI:10.1107/S2053273318015528
+4. Torquato (2021). "Diffusion spreadability as a probe of the microstructure of complex media across length scales." Phys. Rev. E 104, 054102. DOI:10.1103/PhysRevE.104.054102
 5. Wang & Torquato (2022). "Dynamic measure of hyperuniformity and nonhyperuniformity in heterogeneous media via the diffusion spreadability." Phys. Rev. Appl. 17, 034022.
-6. Hitin-Bialus, Maher, Steinhardt & Torquato (2024). "Hyperuniformity classes of quasiperiodic tilings via diffusion spreadability." Phys. Rev. E 109, 064108.
+6. Hitin-Bialus, Maher, Steinhardt & Torquato (2024). "Hyperuniformity classes of quasiperiodic tilings via diffusion spreadability." Phys. Rev. E 109, 064108. DOI:10.1103/PhysRevE.109.064108
 7. Oğuz, Socolar, Steinhardt & Torquato (2017). "Hyperuniformity of quasicrystals." Phys. Rev. B 95, 054119.
 8. Socolar, Steinhardt & Levine (1985). "Quasicrystals with arbitrary orientational symmetry." Phys. Rev. B 32, 5547.
 9. Maher, Wang, Shi, Jiao & Torquato (2025). "Precise determination of the long-time asymptotics of the diffusion spreadability." arXiv:2602.17873.
+10. Klatt, Kim & Torquato (2020). "Cloaking the underlying long-range order of randomly perturbed lattices." Phys. Rev. E 101, 032118. DOI:10.1103/PhysRevE.101.032118
+11. Uche, Stillinger & Torquato (2004). "Constraints on collective density variables: Two dimensions." Phys. Rev. E 70, 046122. DOI:10.1103/PhysRevE.70.046122
+12. Batten, Stillinger & Torquato (2008). "Classical disordered ground states: Super-ideal gases, and stealth and equi-luminous materials." J. Appl. Phys. 104, 033504. DOI:10.1063/1.2961314
+13. Torquato, Zhang & Stillinger (2015). "Ensemble theory for stealthy hyperuniform disordered ground states." Phys. Rev. X 5, 021020. DOI:10.1103/PhysRevX.5.021020
+14. Morse, Steinhardt & Torquato (2024). "Ordered and disordered stealthy hyperuniform point patterns across spatial dimensions." Phys. Rev. Research 6, 033260. DOI:10.1103/PhysRevResearch.6.033260
+15. Middlemas, Stillinger & Torquato (2019). "Hyperuniformity order metric of Barlow packings." Phys. Rev. E 99, 022111. DOI:10.1103/PhysRevE.99.022111

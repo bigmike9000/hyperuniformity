@@ -41,6 +41,10 @@ from two_phase_media import (
     compute_excess_spreadability, compute_lattice_spreadability,
     extract_alpha, extract_alpha_period_aware, extract_alpha_fit,
 )
+from disordered_patterns import (
+    generate_url, lambda_bar_url_exact,
+    generate_stealthy, generate_stealthy_ensemble,
+)
 
 # ============================================================
 # Configuration
@@ -51,6 +55,12 @@ PROJECTION_N = 200_000  # Target for projection method
 NUM_WINDOWS = 30_000    # Windows per R value for variance
 NUM_R_POINTS = 1000     # R values for standard variance curves
 RESULTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results')
+
+# Phase 5 additions
+DISORDERED_N = 100_000
+STEALTHY_N   = 10_000
+URL_A_VALUES = [0.1, 0.5, 1.0]
+STEALTHY_CHI = [0.1, 0.2, 0.3]
 
 
 def ensure_results_dir():
@@ -961,6 +971,494 @@ def run_spreadability_analysis(rng):
 
 
 # ============================================================
+# Figure 9: Expanded variance — all classes
+# ============================================================
+def run_expanded_variance(rng, chain_results):
+    """
+    Log-log sigma^2(R) for all patterns: substitution chains (incl. period-doubling
+    and 0222), lattice, URL (a=0.5, 1.0).  Reuses chain_results from
+    run_substitution_analysis to avoid regenerating 10M-tile chains.
+    """
+    print("\n" + "=" * 70)
+    print("  Figure 9: Expanded Variance — All Hyperuniformity Classes")
+    print("=" * 70)
+
+    all_curves = {}   # label -> (R_array, variances, class_label, color, ls)
+
+    # --- Integer lattice ---
+    N_lat = DISORDERED_N
+    pts_lat = np.arange(N_lat, dtype=np.float64)
+    R_lat = np.linspace(0.1, 200, NUM_R_POINTS)
+    print("  Computing lattice variance...")
+    t0 = time.perf_counter()
+    var_lat, _ = compute_number_variance_1d(
+        pts_lat, float(N_lat), R_lat, num_windows=NUM_WINDOWS, rng=rng)
+    print(f"  Done in {time.perf_counter()-t0:.1f}s")
+    all_curves['Lattice'] = (R_lat, var_lat, 'I', 'black', '-')
+
+    # --- Metallic-mean chains (reuse chain_results) ---
+    chain_colors = {'fibonacci': '#2ca02c', 'silver': '#9467bd', 'bronze': '#d62728'}
+    for cname, color in chain_colors.items():
+        r = chain_results[cname]
+        all_curves[CHAINS[cname]['name']] = (r['R_array'], r['variances'], 'I', color, '-')
+
+    # --- Period-doubling (Class II) ---
+    print("  Generating period-doubling chain (~500k tiles)...")
+    for iters in range(5, 60):
+        n_pred = predict_chain_length('period_doubling', iters)
+        if n_pred > 500_000:
+            break
+    t0 = time.perf_counter()
+    seq = generate_substitution_sequence('period_doubling', iters)
+    pts_pd, L_pd = sequence_to_points(seq, 'period_doubling')
+    del seq
+    rho_pd = len(pts_pd) / L_pd
+    mean_sp_pd = 1.0 / rho_pd
+    R_pd = np.linspace(mean_sp_pd, min(300 * mean_sp_pd, L_pd / 4), NUM_R_POINTS)
+    print(f"  N={len(pts_pd):,}, computing variance...")
+    var_pd, _ = compute_number_variance_1d(
+        pts_pd, L_pd, R_pd, num_windows=NUM_WINDOWS, rng=rng)
+    del pts_pd
+    print(f"  Done in {time.perf_counter()-t0:.1f}s")
+    all_curves['Period-Doubling'] = (R_pd, var_pd, 'II', '#ff7f0e', '--')
+
+    # --- 0222 chain (Class III) ---
+    print("  Generating 0222 chain (~500k tiles)...")
+    for iters in range(5, 60):
+        n_pred = predict_chain_length('chain_0222', iters)
+        if n_pred > 500_000:
+            break
+    t0 = time.perf_counter()
+    seq = generate_substitution_sequence('chain_0222', iters)
+    pts_0222, L_0222 = sequence_to_points(seq, 'chain_0222')
+    del seq
+    rho_0222 = len(pts_0222) / L_0222
+    mean_sp_0222 = 1.0 / rho_0222
+    R_0222 = np.linspace(mean_sp_0222, min(300 * mean_sp_0222, L_0222 / 4), NUM_R_POINTS)
+    print(f"  N={len(pts_0222):,}, computing variance...")
+    var_0222, _ = compute_number_variance_1d(
+        pts_0222, L_0222, R_0222, num_windows=NUM_WINDOWS, rng=rng)
+    del pts_0222
+    print(f"  Done in {time.perf_counter()-t0:.1f}s")
+    all_curves['0222 Chain'] = (R_0222, var_0222, 'III', '#17becf', ':')
+
+    # --- URL a=0.5 and a=1.0 ---
+    for a_val in [0.5, 1.0]:
+        label = f'URL (a={a_val})'
+        print(f"  Generating {label} (N={DISORDERED_N:,})...")
+        t0 = time.perf_counter()
+        pts_url, L_url = generate_url(DISORDERED_N, a_val, rng=rng)
+        R_url = np.linspace(0.5, 200, NUM_R_POINTS)
+        var_url, _ = compute_number_variance_1d(
+            pts_url, L_url, R_url, num_windows=NUM_WINDOWS, rng=rng)
+        del pts_url
+        print(f"  Done in {time.perf_counter()-t0:.1f}s, "
+              f"Lambda_bar ~ {compute_lambda_bar(R_url, var_url):.4f} "
+              f"(exact: {lambda_bar_url_exact(a_val):.4f})")
+        color = '#aec7e8' if a_val == 0.5 else '#1f77b4'
+        all_curves[label] = (R_url, var_url, 'I', color, '-.')
+
+    # --- Plot ---
+    fig, ax = plt.subplots(figsize=(12, 7))
+
+    ref_R = np.logspace(0, np.log10(200), 200)
+
+    for label, (R, var, cls, color, ls) in all_curves.items():
+        # Skip near-zero R values
+        mask = R > 0.05
+        ax.loglog(R[mask], var[mask], color=color, ls=ls, lw=1.2,
+                  alpha=0.85, label=f'{label} (Class {cls})')
+
+    # Reference lines
+    # Class II: ~C*ln(R)  — show as power-law approximation for log-log
+    R_ref2 = np.array([5.0, 200.0])
+    C_pd = np.mean(var_pd[len(var_pd)//2:]) / np.log(np.mean(R_pd[len(R_pd)//2:]))
+    ax.loglog(ref_R, C_pd * np.log(ref_R + 1), 'k--', lw=1.5, alpha=0.4,
+              label=r'$\sim \ln R$ (Class II)')
+
+    # Class III: power law with alpha~0.361 -> sigma^2 ~ R^(1-0.361) = R^0.639
+    R_ref3 = np.array([5.0, 200.0])
+    idx_mid = len(R_0222) // 2
+    C_0222 = var_0222[idx_mid] / R_0222[idx_mid] ** 0.639
+    ax.loglog(ref_R, C_0222 * ref_R ** 0.639, 'k:', lw=1.5, alpha=0.4,
+              label=r'$\sim R^{0.639}$ (Class III, $\alpha\approx0.36$)')
+
+    ax.set_xlabel(r'Window half-width $R$', fontsize=14)
+    ax.set_ylabel(r'$\sigma^2(R)$', fontsize=14)
+    ax.set_title('Figure 9: Number Variance Across All Hyperuniformity Classes',
+                 fontsize=14, fontweight='bold')
+    ax.legend(fontsize=9, loc='upper left', ncol=2)
+    ax.grid(True, ls=':', alpha=0.4)
+    ax.tick_params(labelsize=12)
+    plt.tight_layout()
+    path = os.path.join(RESULTS_DIR, 'fig9_variance_all_patterns.png')
+    plt.savefig(path, dpi=150, bbox_inches='tight')
+    plt.close()
+    print(f"  Saved: {path}")
+
+    return all_curves
+
+
+# ============================================================
+# Figure 10: Spectral density — all classes
+# ============================================================
+def run_spectral_density_all(rng):
+    """
+    chi_V(k) log-log for all patterns; annotate small-k slopes.
+    """
+    print("\n" + "=" * 70)
+    print("  Figure 10: Spectral Density — All Patterns")
+    print("=" * 70)
+
+    PHI2_local = PHI2
+    patterns_sd = {}
+
+    def _compute_sd(pts, L, label):
+        rho = len(pts) / L
+        a = PHI2_local / (2 * rho)
+        k, S_k = compute_structure_factor(pts, L)
+        chi_V = compute_spectral_density(k, S_k, rho, a)
+        return k, chi_V
+
+    # Poisson
+    print("  Poisson (N=100k)...")
+    pts = rng.uniform(0, float(DISORDERED_N), DISORDERED_N)
+    k, chi = _compute_sd(pts, float(DISORDERED_N), 'Poisson')
+    patterns_sd['Poisson'] = (k, chi, 'gray', '-', r'Poisson ($\alpha=0$)')
+    del pts
+
+    # Lattice
+    print("  Lattice (N=100k)...")
+    pts = np.arange(DISORDERED_N, dtype=np.float64)
+    k, chi = _compute_sd(pts, float(DISORDERED_N), 'Lattice')
+    patterns_sd['Lattice'] = (k, chi, 'black', '-', r'Lattice ($\alpha\to\infty$)')
+    del pts
+
+    # Fibonacci
+    print("  Fibonacci...")
+    for iters in range(5, 60):
+        if predict_chain_length('fibonacci', iters) > 500_000:
+            break
+    seq = generate_substitution_sequence('fibonacci', iters)
+    pts, L = sequence_to_points(seq, 'fibonacci'); del seq
+    k, chi = _compute_sd(pts, L, 'Fibonacci'); del pts
+    patterns_sd['Fibonacci'] = (k, chi, '#2ca02c', '-', r'Fibonacci ($\alpha=3$)')
+
+    # Period-doubling
+    print("  Period-Doubling...")
+    for iters in range(5, 60):
+        if predict_chain_length('period_doubling', iters) > 500_000:
+            break
+    seq = generate_substitution_sequence('period_doubling', iters)
+    pts, L = sequence_to_points(seq, 'period_doubling'); del seq
+    k, chi = _compute_sd(pts, L, 'PD'); del pts
+    patterns_sd['Period-Doubling'] = (k, chi, '#ff7f0e', '--', r'Period-Doubling ($\alpha=1$)')
+
+    # URL a=0.5
+    print("  URL (a=0.5)...")
+    pts, L = generate_url(DISORDERED_N, 0.5, rng=rng)
+    k, chi = _compute_sd(pts, L, 'URL'); del pts
+    patterns_sd['URL (a=0.5)'] = (k, chi, '#1f77b4', '-.', r'URL $a=0.5$ ($\alpha=2$)')
+
+    # Stealthy chi=0.1
+    print("  Stealthy (chi=0.1, N=10k)...")
+    pts, L = generate_stealthy(STEALTHY_N, 0.1, rng=rng, verbose=True)
+    k, chi = _compute_sd(pts, L, 'Stealthy'); del pts
+    patterns_sd['Stealthy (chi=0.1)'] = (k, chi, '#e377c2', '--', r'Stealthy $\chi=0.1$ ($\alpha=2$)')
+
+    # Plot
+    fig, ax = plt.subplots(figsize=(12, 7))
+
+    k_ref = np.logspace(-2, 0, 100)
+    slope_colors = {'k^0': ('gray', 0.3, r'$\sim k^0$ (Poisson)'),
+                    'k^1': ('#ff7f0e', 0.5, r'$\sim k^1$ ($\alpha=1$)'),
+                    'k^2': ('#1f77b4', 0.5, r'$\sim k^2$ ($\alpha=2$)'),
+                    'k^3': ('#2ca02c', 0.5, r'$\sim k^3$ ($\alpha=3$)')}
+
+    for label, (k, chi_V, color, ls, leg) in patterns_sd.items():
+        mask = (k > 0.005) & (k < 30)
+        ax.loglog(k[mask], chi_V[mask], color=color, ls=ls, lw=1.0,
+                  alpha=0.7, label=leg)
+
+    # Reference slope lines — scale to a common reference point
+    k0 = 0.1
+    ref_vals = {}
+    for label, (k, chi_V, *_) in patterns_sd.items():
+        idx = np.argmin(np.abs(k - k0))
+        ref_vals[label] = chi_V[idx]
+    c_poi = ref_vals.get('Poisson', 0.01)
+    c_fib = ref_vals.get('Fibonacci', 1e-4) / k0**3
+    c_pd = ref_vals.get('Period-Doubling', 1e-3) / k0**1
+    c_url = ref_vals.get('URL (a=0.5)', 1e-3) / k0**2
+    ax.loglog(k_ref, np.full_like(k_ref, c_poi), 'k-', lw=1, alpha=0.2)
+    ax.loglog(k_ref, c_pd * k_ref**1, 'k-', lw=1, alpha=0.2)
+    ax.loglog(k_ref, c_url * k_ref**2, 'k-', lw=1, alpha=0.2)
+    ax.loglog(k_ref, c_fib * k_ref**3, 'k-', lw=1, alpha=0.2)
+
+    # Annotate slopes
+    for slope, label_str in [(0, r'$k^0$'), (1, r'$k^1$'), (2, r'$k^2$'), (3, r'$k^3$')]:
+        c_vals = [c_poi, c_pd, c_url, c_fib]
+        c_use = c_vals[slope]
+        k_ann = 0.03
+        ax.text(k_ann, c_use * k_ann**slope * 1.5, label_str,
+                fontsize=10, color='gray', ha='left')
+
+    ax.set_xlabel(r'Wavevector $k$', fontsize=14)
+    ax.set_ylabel(r'$\tilde{\chi}_V(k)$', fontsize=14)
+    ax.set_title('Figure 10: Spectral Density — Small-$k$ Slope Reveals $\\alpha$',
+                 fontsize=14, fontweight='bold')
+    ax.legend(fontsize=9, loc='lower right')
+    ax.set_xlim(5e-3, 30)
+    ax.grid(True, ls=':', alpha=0.4)
+    ax.tick_params(labelsize=12)
+    plt.tight_layout()
+    path = os.path.join(RESULTS_DIR, 'fig10_spectral_density_all.png')
+    plt.savefig(path, dpi=150, bbox_inches='tight')
+    plt.close()
+    print(f"  Saved: {path}")
+
+    return patterns_sd
+
+
+# ============================================================
+# Figure 11: Spreadability — Class I patterns
+# ============================================================
+def run_spreadability_all(rng):
+    """
+    E(t) log-log for all Class I patterns: lattice, Fibonacci, silver, bronze,
+    URL (a=0.5), stealthy (chi=0.1).
+    """
+    print("\n" + "=" * 70)
+    print("  Figure 11: Spreadability — All Class I Patterns")
+    print("=" * 70)
+
+    t_array = np.logspace(-2, 8, 200)
+    PHI2_local = PHI2
+    spread_results = {}
+
+    def _spread(pts, L, label):
+        rho = len(pts) / L
+        a = PHI2_local / (2 * rho)
+        k, S_k = compute_structure_factor(pts, L)
+        chi_V = compute_spectral_density(k, S_k, rho, a)
+        E_t = compute_excess_spreadability(k, chi_V, PHI2_local, t_array)
+        alpha_fit, r2 = extract_alpha_fit(t_array, E_t, t_min=1e2, t_max=1e5)
+        print(f"    {label}: alpha_fit={alpha_fit:.3f}, R^2={r2:.4f}")
+        return E_t, alpha_fit
+
+    # Lattice (analytical)
+    print("  Lattice (analytical)...")
+    E_lat = compute_lattice_spreadability(PHI2_local, t_array)
+    spread_results['Lattice'] = (E_lat, np.nan, 'black', '-')
+
+    # Substitution chains (moderate N for speed)
+    for cname, color in [('fibonacci', '#2ca02c'), ('silver', '#9467bd'), ('bronze', '#d62728')]:
+        print(f"  {CHAINS[cname]['name']}...")
+        for iters in range(5, 60):
+            if predict_chain_length(cname, iters) > 500_000:
+                break
+        seq = generate_substitution_sequence(cname, iters)
+        pts, L = sequence_to_points(seq, cname); del seq
+        E_t, a_fit = _spread(pts, L, CHAINS[cname]['name']); del pts
+        spread_results[CHAINS[cname]['name']] = (E_t, a_fit, color, '-')
+
+    # URL a=0.5
+    print("  URL (a=0.5)...")
+    pts, L = generate_url(DISORDERED_N, 0.5, rng=rng)
+    E_t, a_fit = _spread(pts, L, 'URL a=0.5'); del pts
+    spread_results['URL (a=0.5)'] = (E_t, a_fit, '#1f77b4', '-.')
+
+    # Stealthy chi=0.1
+    print("  Stealthy (chi=0.1)...")
+    pts, L = generate_stealthy(STEALTHY_N, 0.1, rng=rng, verbose=True)
+    E_t, a_fit = _spread(pts, L, 'Stealthy chi=0.1'); del pts
+    spread_results['Stealthy (chi=0.1)'] = (E_t, a_fit, '#e377c2', '--')
+
+    # Plot
+    fig, ax = plt.subplots(figsize=(12, 7))
+
+    plot_colors = {
+        'Lattice': 'black',
+        CHAINS['fibonacci']['name']: '#2ca02c',
+        CHAINS['silver']['name']: '#9467bd',
+        CHAINS['bronze']['name']: '#d62728',
+        'URL (a=0.5)': '#1f77b4',
+        'Stealthy (chi=0.1)': '#e377c2',
+    }
+    for label, (E_t, a_fit, color, ls) in spread_results.items():
+        mask = E_t > 1e-20
+        leg = label if np.isnan(a_fit) else f'{label} ($\\hat{{\\alpha}}={a_fit:.2f}$)'
+        ax.loglog(t_array[mask], E_t[mask], color=color, ls=ls, lw=1.8,
+                  alpha=0.85, label=leg)
+
+    # Reference slopes
+    t_ref = np.logspace(1, 7, 100)
+    # Scale to Fibonacci at t=1e3
+    fib_name = CHAINS['fibonacci']['name']
+    E_fib = spread_results[fib_name][0]
+    idx_ref = np.argmin(np.abs(t_array - 1e3))
+    E_ref = max(E_fib[idx_ref], 1e-15)
+    for exp, label_str in [(-2.0, r'$\sim t^{-2}$ ($\alpha=3$)'),
+                            (-1.5, r'$\sim t^{-3/2}$ ($\alpha=2$)'),
+                            (-1.0, r'$\sim t^{-1}$ ($\alpha=1$)')]:
+        c = E_ref * (1e3) ** (-exp)
+        ax.loglog(t_ref, c * t_ref ** exp, 'k--', lw=1.0, alpha=0.3)
+        ax.text(t_ref[-1] * 1.1, c * t_ref[-1] ** exp, label_str,
+                fontsize=9, color='gray', va='center')
+
+    ax.axvspan(1e2, 1e5, alpha=0.07, color='gold')
+    ax.set_xlabel(r'Diffusion time $t$', fontsize=14)
+    ax.set_ylabel(r'Excess spreadability $E(t)$', fontsize=14)
+    ax.set_title('Figure 11: Spreadability of All Class I Patterns',
+                 fontsize=14, fontweight='bold')
+    ax.legend(fontsize=9, loc='lower left')
+    ax.grid(True, ls=':', alpha=0.4)
+    ax.tick_params(labelsize=12)
+    plt.tight_layout()
+    path = os.path.join(RESULTS_DIR, 'fig11_spreadability_all.png')
+    plt.savefig(path, dpi=150, bbox_inches='tight')
+    plt.close()
+    print(f"  Saved: {path}")
+
+    return spread_results
+
+
+# ============================================================
+# Figure 12: Ranking table / scatter plot
+# ============================================================
+def run_ranking_table(rng, chain_results, spread_results=None):
+    """
+    Unified (alpha, Lambda_bar) ranking.  Class I patterns get a scatter point;
+    Class II/III (diverging Lambda_bar) appear as vertical reference lines.
+    Also prints a formatted ASCII table.
+    """
+    print("\n" + "=" * 70)
+    print("  Figure 12: Unified (alpha, Lambda_bar) Ranking")
+    print("=" * 70)
+
+    # Collect all results
+    # Format: label -> {'alpha': float, 'lambda_bar': float or None, 'class': str, 'color': str}
+    ranking = {}
+
+    # Lattice
+    N_lat = DISORDERED_N
+    pts_lat = np.arange(N_lat, dtype=np.float64)
+    R_lat = np.linspace(0.1, 200, NUM_R_POINTS)
+    var_lat, _ = compute_number_variance_1d(
+        pts_lat, float(N_lat), R_lat, num_windows=10_000, rng=rng)
+    lb_lat = compute_lambda_bar(R_lat, var_lat)
+    ranking['Lattice'] = {'alpha': np.inf, 'lambda_bar': lb_lat, 'class': 'I', 'color': 'black'}
+
+    # Metallic-mean chains
+    chain_colors_r = {'fibonacci': '#2ca02c', 'silver': '#9467bd', 'bronze': '#d62728'}
+    for cname, color in chain_colors_r.items():
+        r = chain_results[cname]
+        ranking[CHAINS[cname]['name']] = {
+            'alpha': 3.0,
+            'lambda_bar': r['lambda_bar'],
+            'class': 'I',
+            'color': color,
+        }
+
+    # URL patterns
+    for a_val in URL_A_VALUES:
+        label = f'URL (a={a_val})'
+        print(f"  Computing Lambda_bar for {label}...")
+        pts, L = generate_url(DISORDERED_N, a_val, rng=rng)
+        R_url = np.linspace(0.5, 200, NUM_R_POINTS)
+        var_url, _ = compute_number_variance_1d(
+            pts, L, R_url, num_windows=10_000, rng=rng)
+        lb_url = compute_lambda_bar(R_url, var_url)
+        lb_exact = lambda_bar_url_exact(a_val)
+        print(f"    numeric={lb_url:.4f}, exact={lb_exact:.4f}, err={abs(lb_url-lb_exact):.4f}")
+        del pts
+        ranking[label] = {'alpha': 2.0, 'lambda_bar': lb_exact, 'class': 'I', 'color': '#1f77b4'}
+
+    # Stealthy patterns
+    stealthy_colors = {0.1: '#e377c2', 0.2: '#f7b6d2', 0.3: '#c5b0d5'}
+    for chi_val in STEALTHY_CHI:
+        label = f'Stealthy (χ={chi_val})'
+        print(f"  Computing Lambda_bar for {label}...")
+        pts, L = generate_stealthy(STEALTHY_N, chi_val, rng=rng, verbose=True)
+        R_st = np.linspace(0.5, 100, 500)
+        var_st, _ = compute_number_variance_1d(
+            pts, L, R_st, num_windows=5_000, rng=rng)
+        lb_st = compute_lambda_bar(R_st, var_st)
+        print(f"    Lambda_bar={lb_st:.4f}")
+        del pts
+        ranking[label] = {'alpha': 2.0, 'lambda_bar': lb_st, 'class': 'I',
+                          'color': stealthy_colors[chi_val]}
+
+    # Class II: period-doubling
+    alpha_pd, _, _ = verify_eigenvalue_prediction('period_doubling')
+    ranking['Period-Doubling'] = {'alpha': alpha_pd, 'lambda_bar': None,
+                                  'class': 'II', 'color': '#ff7f0e'}
+
+    # Class III: 0222 chain
+    alpha_0222, _, _ = verify_eigenvalue_prediction('chain_0222')
+    ranking['0222 Chain'] = {'alpha': alpha_0222, 'lambda_bar': None,
+                             'class': 'III', 'color': '#17becf'}
+
+    # --- ASCII table ---
+    print("\n  " + "=" * 65)
+    print(f"  {'Pattern':28s}  {'Class':>7s}  {'alpha':>8s}  {'Lambda_bar':>12s}")
+    print("  " + "-" * 65)
+    for label, info in sorted(ranking.items(),
+                               key=lambda x: (x[1]['class'], -x[1]['alpha']
+                                              if np.isfinite(x[1]['alpha']) else 1e9)):
+        alpha_str = 'inf' if not np.isfinite(info['alpha']) else f"{info['alpha']:.3f}"
+        lb_str = 'diverges' if info['lambda_bar'] is None else f"{info['lambda_bar']:.4f}"
+        print(f"  {label:28s}  {info['class']:>7s}  {alpha_str:>8s}  {lb_str:>12s}")
+    print("  " + "=" * 65)
+
+    # --- Scatter plot ---
+    fig, ax = plt.subplots(figsize=(11, 7))
+
+    class_markers = {'I': 'o', 'II': '^', 'III': 's'}
+    class_label_shown = set()
+
+    for label, info in ranking.items():
+        cls = info['class']
+        color = info['color']
+        alpha_val = info['alpha']
+        lb = info['lambda_bar']
+
+        if lb is not None:
+            # Class I: scatter point
+            alpha_plot = min(alpha_val, 4.5) if np.isfinite(alpha_val) else 4.5
+            leg = f'Class {cls}' if cls not in class_label_shown else None
+            class_label_shown.add(cls)
+            sc = ax.scatter(alpha_plot, lb, color=color, marker=class_markers[cls],
+                            s=120, zorder=5, label=leg)
+            ax.annotate(label, (alpha_plot, lb),
+                        textcoords='offset points', xytext=(6, 4), fontsize=8)
+        else:
+            # Class II/III: vertical reference line
+            leg = f'Class {cls} (Λ̄ diverges)' if f'vline_{cls}' not in class_label_shown else None
+            class_label_shown.add(f'vline_{cls}')
+            ax.axvline(alpha_val, color=color, ls='--', lw=1.5, alpha=0.7, label=leg)
+            ax.text(alpha_val + 0.04, ax.get_ylim()[0] if ax.get_ylim()[0] > 0 else 0.02,
+                    label, fontsize=8, color=color, rotation=90, va='bottom')
+
+    ax.set_xlabel(r'Hyperuniformity exponent $\alpha$', fontsize=13)
+    ax.set_ylabel(r'Surface-area coefficient $\bar{\Lambda}$', fontsize=13)
+    ax.set_title('Figure 12: Unified $(\\alpha, \\bar{\\Lambda})$ Ranking of 1D Hyperuniform Patterns',
+                 fontsize=13, fontweight='bold')
+    ax.set_xlim(-0.1, 5.0)
+    ax.set_ylim(bottom=0)
+    ax.legend(fontsize=10, loc='upper right')
+    ax.grid(True, ls=':', alpha=0.4)
+    ax.tick_params(labelsize=11)
+    plt.tight_layout()
+    path = os.path.join(RESULTS_DIR, 'fig12_ranking.png')
+    plt.savefig(path, dpi=150, bbox_inches='tight')
+    plt.close()
+    print(f"  Saved: {path}")
+
+    return ranking
+
+
+# ============================================================
 # Summary table
 # ============================================================
 def print_summary(lambda_bar_lattice, chain_results, lambda_bar_proj,
@@ -1037,9 +1535,15 @@ if __name__ == '__main__':
     run_piecewise_quadratic_verification(rng)
     alpha_results = run_spreadability_analysis(rng)
 
-    # Summary
+    # Summary (Phases 1-4)
     print_summary(lambda_bar_lattice, chain_results, lambda_bar_proj,
                   alpha_results)
+
+    # Phase 5: Expanded catalog (Figs 9-12)
+    all_curves = run_expanded_variance(rng, chain_results)       # Fig 9
+    run_spectral_density_all(rng)                                 # Fig 10
+    spread_results = run_spreadability_all(rng)                   # Fig 11
+    run_ranking_table(rng, chain_results, spread_results)         # Fig 12
 
     total_elapsed = time.perf_counter() - total_t0
     print(f"\n  Total runtime: {total_elapsed:.1f}s")

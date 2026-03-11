@@ -11,3 +11,14 @@ __pycache__/
 *.snm
 *.toc
 *.synctex.gz
+.DS_Store
+
+# LaTeX auxiliary files (additional)
+*.fdb_latexmk
+*.fls
+
+# Raw stealthy configuration data (too large for git; processed results in results/)
+stealthy_configurations/0.1_patterns/
+stealthy_configurations/0.2_patterns/
+stealthy_configurations/0.3_patterns/
+stealthy_configurations/*.tar.gz
