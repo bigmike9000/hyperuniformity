@@ -74,10 +74,98 @@ CHAINS = {
         'rules': {'S': 'LL', 'L': 'SSLL'},
         'metallic_mean': (1 + np.sqrt(5)) / 2,   # eigenvalues 1+sqrt(5), 1-sqrt(5) -> alpha~0.639 (Class III)
     },
+    # ----------------------------------------------------------------
+    # Cubic irrational substitution from Bombieri & Taylor (1986)
+    # "Which Distributions of Matter Diffract?", J. Physique C3-21
+    # Characteristic equation: x^3 - 2x^2 - x + 1 = 0
+    # Largest eigenvalue theta_1 ~ 2.247 is a Pisot-Vijayaraghavan number
+    # ----------------------------------------------------------------
+    'bombieri_taylor': {
+        'name': 'Bombieri-Taylor Cubic',
+        'matrix': np.array([[2, 0, 1], [1, 0, 1], [0, 1, 0]]),
+        'rules': {'a': 'aac', 'b': 'ac', 'c': 'b'},
+        'alphabet': 'abc',  # 3-letter alphabet (cubic irrational)
+    },
 }
 
 
-def generate_substitution_sequence(chain_name, num_iterations, seed='L'):
+def compute_tile_lengths(chain_name):
+    """
+    Compute tile lengths from the right eigenvector of the substitution matrix.
+
+    For N-letter alphabets, the right eigenvector corresponding to the largest
+    eigenvalue gives the tile length ratios preserved under inflation.
+
+    Parameters
+    ----------
+    chain_name : str
+        Chain name in CHAINS dict.
+
+    Returns
+    -------
+    tile_lengths : dict
+        Maps each letter to its tile length (normalized so shortest = 1).
+    theta1 : float
+        The largest eigenvalue (inflation factor).
+    """
+    chain = CHAINS[chain_name]
+    M = chain['matrix']
+
+    # For 2-letter systems, use metallic_mean directly
+    if 'metallic_mean' in chain:
+        metal = chain['metallic_mean']
+        return {'S': 1.0, 'L': metal}, metal
+
+    # For n-letter systems, compute from eigenvector
+    alphabet = chain.get('alphabet', 'SL')
+    eigenvalues, eigenvectors = np.linalg.eig(M)
+    idx = np.argmax(np.abs(eigenvalues))
+    theta1 = eigenvalues[idx].real
+    right_eigenvec = eigenvectors[:, idx].real
+
+    # Normalize so shortest tile = 1
+    right_eigenvec = np.abs(right_eigenvec)
+    right_eigenvec = right_eigenvec / np.min(right_eigenvec)
+
+    tile_lengths = {letter: right_eigenvec[i] for i, letter in enumerate(alphabet)}
+    return tile_lengths, theta1
+
+
+def sequence_to_points_general(sequence, chain_name):
+    """
+    Convert a tile sequence to 1D point positions (generalized for any alphabet).
+
+    Points are placed at the left endpoint of each tile.
+
+    Parameters
+    ----------
+    sequence : str
+        Tile sequence from generate_substitution_sequence.
+    chain_name : str
+        Chain name for looking up tile configuration.
+
+    Returns
+    -------
+    points : ndarray
+        1D array of point positions.
+    L_domain : float
+        Total domain length.
+    """
+    tile_lengths, _ = compute_tile_lengths(chain_name)
+
+    # Vectorized length lookup
+    lengths = np.array([tile_lengths[ch] for ch in sequence])
+    L_domain = float(np.sum(lengths))
+
+    # Points at left endpoint of each tile
+    points = np.empty(len(sequence), dtype=np.float64)
+    points[0] = 0.0
+    np.cumsum(lengths[:-1], out=points[1:])
+
+    return points, L_domain
+
+
+def generate_substitution_sequence(chain_name, num_iterations, seed=None):
     """
     Generate a 1D substitution tiling sequence by iteratively applying
     the substitution rules.
@@ -85,20 +173,27 @@ def generate_substitution_sequence(chain_name, num_iterations, seed='L'):
     Parameters
     ----------
     chain_name : str
-        One of 'fibonacci', 'silver', 'bronze'.
+        One of 'fibonacci', 'silver', 'bronze', 'bombieri_taylor', etc.
     num_iterations : int
         Number of substitution iterations. The chain length grows as
-        ~(metallic_mean)^num_iterations.
-    seed : str
-        Starting tile sequence (default 'L').
+        ~(largest_eigenvalue)^num_iterations.
+    seed : str or None
+        Starting tile sequence. If None, uses 'L' for 2-letter systems
+        or 'a' for 3-letter systems.
 
     Returns
     -------
     sequence : str
-        The tile sequence (e.g., 'LSLLSLSL...').
+        The tile sequence (e.g., 'LSLLSLSL...' or 'aacaacb...').
     """
     chain = CHAINS[chain_name]
     rules = chain['rules']
+
+    # Default seed based on alphabet
+    if seed is None:
+        alphabet = chain.get('alphabet', 'SL')
+        seed = alphabet[-1] if len(alphabet) == 2 else alphabet[0]  # 'L' for SL, 'a' for abc
+
     seq = seed
     for _ in range(num_iterations):
         seq = ''.join(rules[ch] for ch in seq)
@@ -135,15 +230,23 @@ def sequence_to_points(sequence, chain_name):
     return points, L_domain
 
 
-def predict_chain_length(chain_name, num_iterations, seed='L'):
+def predict_chain_length(chain_name, num_iterations, seed=None):
     """
     Predict the number of tiles after num_iterations substitutions
     without generating the full sequence, using the substitution matrix.
+
+    Generalized for any alphabet size.
     """
     chain = CHAINS[chain_name]
     M = chain['matrix']
-    # Count seed tiles: [num_S, num_L]
-    vec = np.array([seed.count('S'), seed.count('L')], dtype=np.int64)
+    alphabet = chain.get('alphabet', 'SL')
+
+    # Default seed based on alphabet
+    if seed is None:
+        seed = alphabet[-1] if len(alphabet) == 2 else alphabet[0]
+
+    # Count seed tiles for each letter in alphabet
+    vec = np.array([seed.count(ch) for ch in alphabet], dtype=np.int64)
     Mn = np.linalg.matrix_power(M, num_iterations)
     result = Mn @ vec
     return int(np.sum(result))
@@ -195,7 +298,8 @@ if __name__ == '__main__':
 
         t0 = time.perf_counter()
         seq = generate_substitution_sequence(name, iters)
-        points, L_domain = sequence_to_points(seq, name)
+        # Use generalized function for all chains (works for both 2 and 3 letter)
+        points, L_domain = sequence_to_points_general(seq, name)
         elapsed = time.perf_counter() - t0
 
         rho = len(points) / L_domain
@@ -206,26 +310,44 @@ if __name__ == '__main__':
             'num_iterations': iters,
         }
 
-        print(f"  {CHAINS[name]['name']:15s} {iters:6d} {len(points):12,d} "
+        print(f"  {CHAINS[name]['name']:25s} {iters:6d} {len(points):12,d} "
               f"{L_domain:12.1f} {rho:12.6f} {elapsed:7.2f}s")
 
-    # Verify tile ratio converges to metallic mean
-    print("\nTile ratio verification (L_count / S_count -> metallic mean):")
+    # Verify tile ratio converges to expected value
+    print("\nTile ratio verification:")
     for name in CHAINS:
         seq = results[name]['sequence']
-        n_L = seq.count('L')
-        n_S = seq.count('S')
-        ratio = n_L / n_S if n_S > 0 else float('inf')
-        expected = CHAINS[name]['metallic_mean']
-        print(f"  {CHAINS[name]['name']:30s}  L/S = {ratio:.6f}  "
-              f"(expected {expected:.6f}, err = {abs(ratio - expected):.2e})")
+        chain = CHAINS[name]
+        alphabet = chain.get('alphabet', 'SL')
+
+        if 'metallic_mean' in chain:
+            # 2-letter: L/S ratio
+            n_L = seq.count('L')
+            n_S = seq.count('S')
+            ratio = n_L / n_S if n_S > 0 else float('inf')
+            expected = chain['metallic_mean']
+            print(f"  {chain['name']:30s}  L/S = {ratio:.6f}  "
+                  f"(expected {expected:.6f}, err = {abs(ratio - expected):.2e})")
+        else:
+            # n-letter: show tile counts
+            tile_lengths, theta1 = compute_tile_lengths(name)
+            counts = {ch: seq.count(ch) for ch in alphabet}
+            total = sum(counts.values())
+            freqs = {ch: counts[ch] / total for ch in alphabet}
+            print(f"  {chain['name']:30s}  theta1={theta1:.4f}  "
+                  f"freqs: {', '.join(f'{ch}:{freqs[ch]:.3f}' for ch in alphabet)}")
 
     # Quick sanity check: spacing histogram
-    print("\nSpacing statistics (should show exactly 2 distinct spacings):")
+    print("\nSpacing statistics (# distinct spacings = alphabet size):")
     for name in CHAINS:
+        chain = CHAINS[name]
+        alphabet = chain.get('alphabet', 'SL')
         pts = results[name]['points']
         spacings = np.diff(pts)
-        unique_spacings = np.unique(np.round(spacings, 8))
-        print(f"  {CHAINS[name]['name']:30s}  unique spacings: {unique_spacings}")
+        unique_spacings = np.unique(np.round(spacings, 6))
+        expected_n = len(alphabet)
+        status = "OK" if len(unique_spacings) == expected_n else "CHECK"
+        print(f"  {chain['name']:30s}  {len(unique_spacings)} spacings (expected {expected_n}): "
+              f"{unique_spacings} [{status}]")
 
     print("\nDone. Point arrays stored in `results` dict.")

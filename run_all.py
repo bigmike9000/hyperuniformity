@@ -1377,7 +1377,7 @@ def run_ranking_table(rng, chain_results, spread_results=None):
     # Stealthy patterns
     stealthy_colors = {0.1: '#e377c2', 0.2: '#f7b6d2', 0.3: '#c5b0d5'}
     for chi_val in STEALTHY_CHI:
-        label = f'Stealthy (χ={chi_val})'
+        label = f'Stealthy (chi={chi_val})'
         print(f"  Computing Lambda_bar for {label}...")
         pts, L = generate_stealthy(STEALTHY_N, chi_val, rng=rng, verbose=True)
         R_st = np.linspace(0.5, 100, 500)
