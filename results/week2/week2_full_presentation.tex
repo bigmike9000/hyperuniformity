@@ -195,10 +195,18 @@ $a$ & $\bar{\Lambda}$ (numerical) & $\bar{\Lambda}$ (exact) \\
 URL = uncorrelated random lattice (independent displacements on integer lattice).
 
 Exact formula from Klatt et al.\ (2020): $\bar{\Lambda}(a) = (1+a^2)/6$.
-Recovers lattice value $1/6$ at $a=0$; equals $1/3$ at $a=1$ (cloaking threshold).
+Recovers lattice value $1/6$ at $a=0$; equals $1/3$ at $a=1$.
+Always $\alpha = 2$ regardless of $a$. Good validation because we have an exact analytical target.
 
-Good independent validation because we have an analytical result for all $a$.
-Always $\alpha = 2$ regardless of displacement amplitude $a$.
+\textbf{Cloaking (if it comes up):} The structure factor of a perturbed lattice is
+$S(k) = (1 - |\tilde{f}(k)|^2) + |\tilde{f}(k)|^2 S_L(k)$ (Klatt et al.\ Eq.\ 6).
+The second term carries the Bragg peaks of the original lattice, attenuated by $|\tilde{f}|^2$.
+For the URL, $\tilde{f}(k) = \mathrm{sinc}(ak/2)$, which vanishes at all non-zero reciprocal lattice
+vectors exactly when $a \in \mathbb{Z}$. At $a = 1$ the displacement cell tiles the unit cell perfectly
+--- all Bragg peaks vanish and the pattern is indistinguishable from a disordered system by any
+two-point measurement. Our $a = 1.0$ data point is this \emph{cloaked} case.
+$\bar{\Lambda}$ increases monotonically with $a$ (more fluctuation), but the $\tau$ order metric
+oscillates --- finite (no long-range order detectable) at $a=1$, diverging (Bragg peaks back) at $a=1.2$.
 }
 
 %----------------------------------------------------------------------
