@@ -178,18 +178,14 @@ All three classes now covered.
 \begin{frame}{URL Verification}
 
 Tested the perturbed lattice formula (Klatt et al.\ 2020):
-\[
-\bar{\Lambda}(a) = \frac{1+a^2}{6}
-\]
+$\displaystyle\bar{\Lambda}(a) = \frac{1+a^2}{6}$
+\quad Errors $< 0.3\%$.
 
-\begin{columns}[T]
-\begin{column}{0.45\textwidth}
-\vspace{0.5em}
-\textbf{Numerical results:}
+\vspace{0.15em}
 \begin{center}
 \begin{tabular}{ccc}
 \toprule
-$a$ & Numerical & Exact \\
+$a$ & $\bar{\Lambda}$ (numerical) & $\bar{\Lambda}$ (exact) \\
 \midrule
 0.1 & 0.168 & 0.168 \\
 0.5 & 0.208 & 0.208 \\
@@ -199,14 +195,8 @@ $a$ & Numerical & Exact \\
 \end{center}
 
 \vspace{0.3em}
-Errors $< 0.3\%$ --- validates the code against an independent analytical result.
-\end{column}
-
-\begin{column}{0.55\textwidth}
 \centering
-\includegraphics[width=\linewidth]{figures/figB_url_analysis.png}
-\end{column}
-\end{columns}
+\includegraphics[width=0.70\linewidth]{figures/figB_url_analysis.png}
 \end{frame}
 \note{
 URL = uncorrelated random lattice (independent displacements on integer lattice).
@@ -256,7 +246,7 @@ Higher $\chi$ $\Rightarrow$ wider exclusion zone $\Rightarrow$ better suppressio
 \includegraphics[width=\linewidth]{figures/stealthy_Sk_overlay.png}
 
 \vspace{0.1em}
-{\footnotesize $S(k)$ averaged over all configs for each $\chi$. Shaded region = exclusion zone.}
+{\footnotesize $S(k)$ averaged over all configs for each $\chi$.}
 \end{column}
 \end{columns}
 \end{frame}
@@ -393,8 +383,6 @@ URL ($a=0.1$)         & I & 2.0      & 0.168 \\
 Fibonacci             & I & 3.0      & 0.200 \\
 Silver                & I & 3.0      & 0.250 \\
 Bronze                & I & 3.0      & 0.282 \\
-Copper                & I & 3.0      & 0.293 \\
-Nickel                & I & 3.0      & 0.310 \\
 URL ($a=1.0$)         & I & 2.0      & 0.333 \\
 Stealthy ($\chi=0.3$) & I & 2.0      & 0.358 \\
 \rowcolor{resultbg}
