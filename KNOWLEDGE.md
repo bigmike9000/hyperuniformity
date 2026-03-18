@@ -521,9 +521,9 @@ i.e., the time-averaged value of the variance over large R. This serves as a **s
 | URL (a=0.1) | I | 2 | 0.1683 | Exact: (1+a²)/6 (Klatt et al. 2020) |
 | URL (a=0.5) | I | 2 | 0.2083 | Exact: (1+a²)/6 |
 | URL (a=1.0, cloaked) | I | 2 | 1/3 = 0.3333 | Exact: (1+a²)/6 |
-| Stealthy (χ=0.1) | I | 2 | 1.021 ± 0.002 | Ensemble, N=2000, 4314 configs |
-| Stealthy (χ=0.2) | I | 2 | 0.526 ± 0.001 | Ensemble, N=2000, 4314 configs |
-| Stealthy (χ=0.3) | I | 2 | 0.357 ± 0.001 | Ensemble, N=2000, 4314 configs |
+| Stealthy (χ=0.1) | I | ∞ | 1.021 ± 0.002 | Ensemble, N=2000, 4314 configs; S(k)=0 for all k<K* so α→∞ |
+| Stealthy (χ=0.2) | I | ∞ | 0.526 ± 0.001 | Ensemble, N=2000, 4314 configs; S(k)=0 for all k<K* so α→∞ |
+| Stealthy (χ=0.3) | I | ∞ | 0.357 ± 0.001 | Ensemble, N=2000, 4314 configs; S(k)=0 for all k<K* so α→∞ |
 | **Bombieri-Taylor cubic** | **I** | **1.545** | **0.377** | **N≈9.5M, 25 iterations; eigenvalue prediction exact** |
 | Period-doubling | II | 1.000 | diverges | σ²≈0.089 ln R + 0.277 |
 | 0222 chain | III | 0.639 | diverges | α_fit=0.665 (finite-size); theory: 1−2ln(√5−1)/ln(1+√5) |

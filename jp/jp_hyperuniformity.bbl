@@ -144,6 +144,7 @@
       \strng{authorbibnamehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
       \strng{authornamehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
       \strng{authorfullhash}{b2d10ff5b8c94e74610efc15c875ccb9}
+      \field{extraname}{1}
       \field{sortinit}{1}
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
@@ -157,6 +158,90 @@
       \range{pages}{1}
       \verb{doi}
       \verb 10.1103/PhysRevB.95.054119
+      \endverb
+    \endentry
+    \entry{oguz2019substitution}{article}{}
+      \name{author}{4}{}{%
+        {{hash=fa8823fe1f7971b162b343c26cac4c74}{%
+           family={Oğuz},
+           familyi={O\bibinitperiod},
+           given={Erdal\bibnamedelima C.},
+           giveni={E\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=0ea425e01b11b6bad5abe3c30f9ebfcc}{%
+           family={Socolar},
+           familyi={S\bibinitperiod},
+           given={Joshua\bibnamedelimb E.\bibnamedelimi S.},
+           giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=d6ce498e534c4aa4e853c99ca6da7cb5}{%
+           family={Steinhardt},
+           familyi={S\bibinitperiod},
+           given={Paul\bibnamedelima J.},
+           giveni={P\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=c3a792c01d1ad328590c8549b2dae94c}{%
+           family={Torquato},
+           familyi={T\bibinitperiod},
+           given={Salvatore},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
+      \strng{fullhash}{b2d10ff5b8c94e74610efc15c875ccb9}
+      \strng{bibnamehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
+      \strng{authorbibnamehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
+      \strng{authornamehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
+      \strng{authorfullhash}{b2d10ff5b8c94e74610efc15c875ccb9}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Acta Crystallographica Section A}
+      \field{number}{1}
+      \field{title}{Hyperuniformity and anti-hyperuniformity in one-dimensional substitution tilings}
+      \field{volume}{75}
+      \field{year}{2019}
+      \field{pages}{3\bibrangedash 13}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1107/S2053273318015528
+      \endverb
+    \endentry
+    \entry{klatt2020perturbed}{article}{}
+      \name{author}{3}{}{%
+        {{hash=74f7285d381c7e0d0e964c7ac00b2882}{%
+           family={Klatt},
+           familyi={K\bibinitperiod},
+           given={Michael\bibnamedelima A.},
+           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=2a5d98c7a4714565a070efadc84e3171}{%
+           family={Kim},
+           familyi={K\bibinitperiod},
+           given={Jaeuk},
+           giveni={J\bibinitperiod}}}%
+        {{hash=c3a792c01d1ad328590c8549b2dae94c}{%
+           family={Torquato},
+           familyi={T\bibinitperiod},
+           given={Salvatore},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{358b256d1a7e1386c9049e2b8ac9a82b}
+      \strng{fullhash}{358b256d1a7e1386c9049e2b8ac9a82b}
+      \strng{bibnamehash}{358b256d1a7e1386c9049e2b8ac9a82b}
+      \strng{authorbibnamehash}{358b256d1a7e1386c9049e2b8ac9a82b}
+      \strng{authornamehash}{358b256d1a7e1386c9049e2b8ac9a82b}
+      \strng{authorfullhash}{358b256d1a7e1386c9049e2b8ac9a82b}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Physical Review E}
+      \field{number}{3}
+      \field{title}{Cloaking the underlying long-range order of randomly perturbed lattices}
+      \field{volume}{101}
+      \field{year}{2020}
+      \field{pages}{032118}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1103/PhysRevE.101.032118
       \endverb
     \endentry
     \entry{torquato2015ensemble}{article}{}

@@ -227,9 +227,9 @@ Analyzed stealthy configurations provided by Sam.
 \toprule
 $\chi$ & $\bar{\Lambda}$ & $\bar{\Lambda}_\text{pred}$ & $\alpha$ \\
 \midrule
-0.1 & 1.02 & 1.01 & 2.0 \\
-0.2 & 0.53 & 0.51 & 2.0 \\
-0.3 & 0.36 & 0.34 & 2.0 \\
+0.1 & 1.02 & 1.01 & $\infty$ \\
+0.2 & 0.53 & 0.51 & $\infty$ \\
+0.3 & 0.36 & 0.34 & $\infty$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -259,7 +259,7 @@ Theory predicts $\bar{\Lambda} \approx 1/(\pi^2 \chi)$.
 
 The overlay shows all three $\chi$ values on one plot --- the exclusion zone widens visibly as $\chi$ increases, and $S(k)$ rises sharply at $K^*$ before approaching 1 at large $k$.
 
-$\alpha = 2$ is theoretical (can't extract via spreadability due to exponential decay).
+$\alpha \to \infty$: $S(k) = 0$ over a finite exclusion zone, not a power law. Exponential spreadability decay confirms this.
 }
 
 %----------------------------------------------------------------------
@@ -274,7 +274,8 @@ There was a gap in the $\alpha$ coverage:
 $\alpha$ & Class & Examples \\
 \midrule
 3 & I & Fibonacci, Silver, Bronze \\
-2 & I & URL, Stealthy \\
+2 & I & URL \\
+$\infty$ & I & Stealthy \\
 \rowcolor{yellow!30}
 $1 < \alpha < 2$ & I & No quasicrystal \\
 1 & II & Period-Doubling \\
@@ -361,7 +362,7 @@ Variance is bounded (Class I). Log-periodic oscillations in spreadability are ex
 
 \textbf{Panel (c)}: Spreadability decay. The log-periodic oscillations make power-law fitting unreliable for quasicrystals. The eigenvalue formula is exact; spreadability fit is not.
 
-\textbf{Panel (d)}: Shows Bombieri-Taylor fills the gap between Period-Doubling ($\alpha=1$) and URL ($\alpha=2$).
+\textbf{Panel (d)}: Shows Bombieri-Taylor fills the gap between Period-Doubling ($\alpha=1$) and URL ($\alpha=2$). Stealthy patterns have $\alpha\to\infty$ and do not appear on this axis.
 
 \textbf{Confidence}: $\alpha = 1.545$ is exact (analytical from eigenvalues). $\bar{\Lambda} = 0.377$ is numerical average of bounded variance.
 }
@@ -384,7 +385,7 @@ Fibonacci             & I & 3.0      & 0.200 \\
 Silver                & I & 3.0      & 0.250 \\
 Bronze                & I & 3.0      & 0.282 \\
 URL ($a=1.0$)         & I & 2.0      & 0.333 \\
-Stealthy ($\chi=0.3$) & I & 2.0      & 0.358 \\
+Stealthy ($\chi=0.3$) & I & $\infty$ & 0.358 \\
 \rowcolor{resultbg}
 \textbf{Bombieri-Taylor} & \textbf{I} & \textbf{1.545} & \textbf{0.377} \\
 \midrule

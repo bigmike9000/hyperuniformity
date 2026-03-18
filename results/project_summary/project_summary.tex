@@ -387,7 +387,7 @@ The \textbf{Uncorrelated Random Lattice (URL)} is constructed by:
 
 The URL has an exact analytical formula:
 \[
-\bar{\Lambda}(a) = \frac{1}{6} + \frac{a^2}{3}
+\bar{\Lambda}(a) = \frac{1+a^2}{6}
 \]
 
 and always has $\alpha = 2$ regardless of $a$.
@@ -399,7 +399,7 @@ and always has $\alpha = 2$ regardless of $a$.
 \toprule
 $a$ & $\bar{\Lambda}$ (numerical) & $\bar{\Lambda}$ (exact) \\
 \midrule
-0.1 & 0.168 & 0.170 \\
+0.1 & 0.168 & 0.168 \\
 0.5 & 0.208 & 0.208 \\
 1.0 & 0.334 & 0.333 \\
 \bottomrule
@@ -428,9 +428,9 @@ We analyzed stealthy configurations provided by another group member. These were
 \toprule
 $\chi$ & $\bar{\Lambda}$ & $\alpha$ \\
 \midrule
-0.1 & 1.02 & 2.0 \\
-0.2 & 0.53 & 2.0 \\
-0.3 & 0.36 & 2.0 \\
+0.1 & 1.02 & $\infty$ \\
+0.2 & 0.53 & $\infty$ \\
+0.3 & 0.36 & $\infty$ \\
 \bottomrule
 \end{tabular}
 \caption{Stealthy pattern results. The parameter $\chi = K^*/(4\pi\rho)$ controls the size of the exclusion region.}
@@ -524,13 +524,13 @@ After two weeks of analysis, we have characterized 26 different point patterns:
 \textbf{Pattern} & \textbf{Class} & $\boldsymbol{\alpha}$ & $\boldsymbol{\bar{\Lambda}}$ \\
 \midrule
 Integer Lattice & I & $\infty$ & 0.167 \\
-Stealthy ($\chi=0.3$) & I & 2.0 & 0.36 \\
 URL ($a=0.1$) & I & 2.0 & 0.168 \\
 Fibonacci & I & 3.0 & 0.200 \\
 URL ($a=0.5$) & I & 2.0 & 0.208 \\
 Silver & I & 3.0 & 0.250 \\
 Bronze & I & 3.0 & 0.282 \\
 URL ($a=1.0$) & I & 2.0 & 0.333 \\
+Stealthy ($\chi=0.3$) & I & $\infty$ & 0.36 \\
 \textbf{Bombieri-Taylor} & \textbf{I} & \textbf{1.545} & \textbf{0.377} \\
 \midrule
 Period-Doubling & II & 1.0 & diverges \\
