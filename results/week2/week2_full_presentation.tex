@@ -204,7 +204,7 @@ Errors $< 0.3\%$ --- validates the code against an independent analytical result
 
 \begin{column}{0.55\textwidth}
 \centering
-\includegraphics[width=\linewidth]{fig4_projection_comparison.png}
+\includegraphics[width=\linewidth]{figures/fig4_projection_comparison.png}
 \end{column}
 \end{columns}
 \end{frame}
@@ -221,15 +221,19 @@ Always $\alpha = 2$ regardless of displacement amplitude $a$.
 
 Analyzed stealthy configurations provided by Sam.
 
-\vspace{0.3em}
+\vspace{0.2em}
 \textbf{Idea:} Force $S(k) = 0$ for all $|k| < K^*$, not just at $k = 0$.
 
-\vspace{0.5em}
+\vspace{0.3em}
+\begin{columns}[T]
+\begin{column}{0.45\textwidth}
 \textbf{Results} ($N = 2{,}000$, $\sim$4000 configs each):
+\vspace{0.2em}
 \begin{center}
+\small
 \begin{tabular}{cccc}
 \toprule
-$\chi$ & $\bar{\Lambda}$ (measured) & $\bar{\Lambda}$ (predicted) & $\alpha$ \\
+$\chi$ & $\bar{\Lambda}$ & $\bar{\Lambda}_\text{pred}$ & $\alpha$ \\
 \midrule
 0.1 & 1.02 & 1.01 & 2.0 \\
 0.2 & 0.53 & 0.51 & 2.0 \\
@@ -238,11 +242,21 @@ $\chi$ & $\bar{\Lambda}$ (measured) & $\bar{\Lambda}$ (predicted) & $\alpha$ \\
 \end{tabular}
 \end{center}
 
-\vspace{0.5em}
-\textbf{Key observation:} $\bar{\Lambda} \approx 1/(\pi^2 \chi)$ --- good agreement with theory.
+\vspace{0.4em}
+$\bar{\Lambda} \approx 1/(\pi^2 \chi)$ --- matches theory.
 
 \vspace{0.3em}
-Higher $\chi$ (larger exclusion zone) $\Rightarrow$ better hyperuniformity, approaching lattice as $\chi \to \infty$.
+Higher $\chi$ $\Rightarrow$ wider exclusion zone $\Rightarrow$ better suppression.
+\end{column}
+
+\begin{column}{0.55\textwidth}
+\centering
+\includegraphics[width=\linewidth]{figures/stealthy_Sk_overlay.png}
+
+\vspace{0.1em}
+{\footnotesize $S(k)$ averaged over all configs for each $\chi$. Shaded region = exclusion zone.}
+\end{column}
+\end{columns}
 \end{frame}
 \note{
 Data from another grad student (CCO format, ~4000 configs per $\chi$).
@@ -251,7 +265,7 @@ $\chi$ controls the size of the exclusion region: $K = 2\pi\chi$.
 
 Theory predicts $\bar{\Lambda} \approx 1/(\pi^2 \chi)$.
 
-Larger exclusion zone = better suppression of fluctuations.
+The overlay shows all three $\chi$ values on one plot --- the exclusion zone widens visibly as $\chi$ increases, and $S(k)$ rises sharply at $K^*$ before approaching 1 at large $k$.
 
 $\alpha = 2$ is theoretical (can't extract via spreadability due to exponential decay).
 }
@@ -342,7 +356,7 @@ $\theta_1$ is a Pisot number (conjugates all $< 1$).
 %----------------------------------------------------------------------
 \begin{frame}{Bombieri-Taylor Results}
 \centering
-\includegraphics[width=0.78\linewidth]{bombieri_taylor_analysis.png}
+\includegraphics[width=0.78\linewidth]{figures/bombieri_taylor_analysis.png}
 
 \vspace{0.2em}
 \small
