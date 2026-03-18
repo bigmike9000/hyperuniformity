@@ -78,7 +78,7 @@ Bronze & 2.99 & 3 & 0.282 \\
 \end{table}
 
 \vspace{0.5em}
-\textbf{Since then:} Validated URL and stealthy patterns; analyzed the Bombieri-Taylor cubic substitution.
+\textbf{Since then:} Validated URL and stealthy patterns; found a quasicrystal in the $1 < \alpha < 2$ gap.
 \end{frame}
 \note{
 The metallic means all give $\alpha = 3$ because of the 2x2 matrix constraint: $|\lambda_2| = 1/|\lambda_1|$.
@@ -173,12 +173,15 @@ Theory predicts $\bar{\Lambda} \approx 1/(\pi^2 \chi)$.
 
 We can see the exclusion zone clearly widen as as $\chi$ increases, and $S(k)$ rises sharply at $K^*$ before approaching 1 at large $k$.
 
-$\alpha \to \infty$: $S(k) = 0$ over a finite exclusion zone, not a power law. Exponential spreadability decay confirms this.
+$\alpha \to \infty$: $S(k) = 0$ over a finite exclusion zone, not a power law. This is confirmed by exponential spreadability decay.
 }
 
 %----------------------------------------------------------------------
-\begin{frame}{$\alpha$ Coverage So Far}
+\begin{frame}{Filling the $1 < \alpha < 2$ Gap}
 
+There was a gap in the $\alpha$ coverage:
+
+\vspace{0.3em}
 \begin{center}
 \begin{tabular}{lcl}
 \toprule
@@ -188,7 +191,7 @@ $\infty$ & I & Lattice, Stealthy \\
 3 & I & Fibonacci, Silver, Bronze \\
 2 & I & URL \\
 \rowcolor{yellow!30}
-$1 < \alpha < 2$ & I & --- \\
+$1 < \alpha < 2$ & I & No quasicrystal \\
 1 & II & Period-Doubling \\
 $< 1$ & III & 0222 \\
 \bottomrule
@@ -196,10 +199,10 @@ $< 1$ & III & 0222 \\
 \end{center}
 
 \vspace{0.5em}
-All 2$\times$2 metallic-mean matrices give $\alpha = 3$ because $|\lambda_2| = 1/|\lambda_1|$.
+The issue: all 2$\times$2 metallic-mean matrices give $\alpha = 3$ because $|\lambda_2| = 1/|\lambda_1|$.
 
 \vspace{0.3em}
-Next: the Bombieri-Taylor cubic substitution (Bombieri \& Taylor 1986).
+Solution: the Bombieri-Taylor cubic substitution (1986 paper, p. C3-21).
 \end{frame}
 \note{
 Lattice and stealthy both have $\alpha = \infty$ (S(k) = 0 over a finite region, not just at k=0).
@@ -212,7 +215,7 @@ The gap at $1 < \alpha < 2$ is filled by the Bombieri-Taylor cubic substitution 
 %----------------------------------------------------------------------
 \begin{frame}{Bombieri-Taylor Cubic Substitution}
 
-Inflation rule from p.\ C3-21:
+From the 1986 paper (p. C3-21):
 
 \begin{columns}[T]
 \begin{column}{0.45\textwidth}
@@ -355,30 +358,23 @@ Both are known results from Oguz et al.\ (2019). Computed here to verify the ful
 %----------------------------------------------------------------------
 \begin{frame}{Summary}
 
-\textbf{This week:}
+\textbf{Since our last meeting:}
 \begin{itemize}
     \item Verified URL formula to $< 0.3\%$
     \item Analyzed stealthy data ($\bar{\Lambda} \approx 1/(\pi^2\chi)$, $\alpha \to \infty$)
-    \item Analyzed Bombieri-Taylor cubic substitution: $\alpha = 1.545$, $\bar{\Lambda} = 0.377$
+    \item Implemented Bombieri-Taylor cubic ($\alpha = 1.545$, fills $1 < \alpha < 2$ gap)
     \item Confirmed Class II and III numerically (Period-Doubling, 0222)
 \end{itemize}
 
 \vspace{0.5em}
-\textbf{Key finding:} Bombieri-Taylor gives $\alpha = 1.545$ --- a Class I quasicrystal in the previously empty $1 < \alpha < 2$ range.
-
-\vspace{0.5em}
-\textbf{Questions:}
+\textbf{Possible next steps:}
 \begin{itemize}
-    \item Are there other cubic/quartic substitutions to try?
-    \item Should 2D generalizations be next?
+    \item Other cubic/quartic substitutions
+    \item 2D generalizations?
 \end{itemize}
 \end{frame}
 \note{
-Total patterns analyzed: 26
 
-Key accomplishment: Bombieri-Taylor fills the gap.
-
-Possible next steps: other cubic substitutions, 2D/3D.
 }
 
 %----------------------------------------------------------------------
@@ -394,7 +390,7 @@ Possible next steps: other cubic substitutions, 2D/3D.
 \end{itemize}
 \end{frame}
 \note{
-Main references used this week.
+
 }
 
 \end{document}
