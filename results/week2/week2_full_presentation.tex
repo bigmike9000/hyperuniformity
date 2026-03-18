@@ -46,11 +46,10 @@ Weekly progress meeting with Professor Torquato.
 Main topics:
 \begin{itemize}
   \item Recap of last week (metallic means, $\alpha = 3$)
-  \item New patterns: Class II (Period-Doubling) and Class III (0222)
   \item URL validation: confirmed $\bar{\Lambda} = (1+a^2)/6$ to $<0.3\%$
   \item Stealthy patterns: $\bar{\Lambda} \approx 1/(\pi^2\chi)$, $\alpha \to \infty$
   \item Filling the gap: Bombieri-Taylor cubic, $\alpha = 1.545$
-  \item Updated ranking across all three classes
+  \item Updated ranking
 \end{itemize}
 }
 
@@ -79,7 +78,7 @@ Bronze & 2.99 & 3 & 0.282 \\
 \end{table}
 
 \vspace{0.5em}
-\textbf{This week:} Cover all three hyperuniformity classes and find something in the $1 < \alpha < 2$ gap.
+\textbf{This week:} Extend the analysis and fill the $1 < \alpha < 2$ gap.
 \end{frame}
 \note{
 Quick reminder of where we left off.
@@ -87,84 +86,6 @@ Quick reminder of where we left off.
 The metallic means all give $\alpha = 3$ because of the 2x2 matrix constraint: $|\lambda_2| = 1/|\lambda_1|$.
 
 Goal this week was to expand beyond just $\alpha = 3$.
-}
-
-%----------------------------------------------------------------------
-\begin{frame}{Class II: Period-Doubling}
-
-The Period-Doubling chain:
-\[
-S \to L, \quad L \to LSS \qquad \Rightarrow \qquad M = \begin{pmatrix} 0 & 2 \\ 1 & 1 \end{pmatrix}
-\]
-
-\vspace{0.5em}
-Matrix gives $\lambda_1 = 2$, $|\lambda_2| = 1$
-
-\vspace{0.3em}
-So: $\displaystyle\alpha = 1 - \frac{2\ln(1)}{\ln(2)} = 1$
-
-\vspace{0.5em}
-\textbf{Results:}
-\begin{itemize}
-    \item Variance grows like $\ln R$ (not bounded, not power-law)
-    \item $\bar{\Lambda}$ diverges --- can't use it to rank this pattern
-    \item This is the boundary case: $\alpha = 1$ exactly
-    \item \colorbox{resultbg}{Class II confirmed}
-\end{itemize}
-\end{frame}
-\note{
-Period-Doubling is the boundary case: $\alpha = 1$ exactly.
-
-$|\lambda_2| = 1$ means $\ln(1) = 0$ in the formula.
-
-First Class II example --- variance grows logarithmically.
-}
-
-%----------------------------------------------------------------------
-\begin{frame}{Class III: 0222 Chain}
-
-The 0222 chain:
-\[
-S \to LL, \quad L \to SSLL
-\]
-
-\begin{columns}[T]
-\begin{column}{0.30\textwidth}
-\vspace{0.3em}
-$|\lambda_2| = \sqrt{5}-1 > 1$
-
-$\Rightarrow\alpha \approx 0.64$
-
-\vspace{0.4em}
-\textbf{Results:}
-\begin{itemize}
-    \item $\sigma^2 \sim R^{0.36}$
-    \item Exponent $1-0.64=0.36$ \checkmark
-    \item $\bar{\Lambda}$ diverges
-    \item Class III confirmed
-\end{itemize}
-\end{column}
-
-\begin{column}{0.68\textwidth}
-\centering
-\includegraphics[width=\linewidth]{figures/fig_variance_II_III.png}
-\end{column}
-\end{columns}
-
-\vspace{0.3em}
-All three hyperuniformity classes now demonstrated.
-\end{frame}
-\note{
-0222 has $|\lambda_2| > 1$, which gives $\alpha < 1$.
-
-The figure shows Classes II and III side by side on log-log axes:
-\begin{itemize}
-  \item \textbf{Left (Class II):} Period-Doubling --- variance grows slowly, following $C\ln R + b$ (dashed). The trend is unmistakable but the growth is mild.
-  \item \textbf{Right (Class III):} 0222 Chain --- variance climbs as a clear straight line on log-log, fitted by $R^{0.335}$, consistent with $R^{1-\alpha} = R^{0.36}$.
-\end{itemize}
-
-Class I (bounded variance) was covered in previous slides.
-All three classes now have numerical evidence.
 }
 
 %----------------------------------------------------------------------
@@ -401,15 +322,50 @@ Bombieri-Taylor ($\alpha = 1.545$) is the only Class~I quasicrystal with $1 < \a
 }
 
 %----------------------------------------------------------------------
+\begin{frame}{Class II and III: For Completeness}
+
+Two substitution chains outside Class I, computed for reference:
+
+\vspace{0.3em}
+\begin{columns}[T]
+\begin{column}{0.36\textwidth}
+\vspace{0.5em}
+\footnotesize
+\begin{tabular}{lcc}
+\toprule
+\textbf{Chain} & $\boldsymbol{\alpha}$ & \textbf{Class} \\
+\midrule
+Period-Doubling & 1.0  & II \\
+0222            & 0.64 & III \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+\small Both have $\bar{\Lambda}$ diverging; cannot be ranked with Class I.
+\end{column}
+
+\begin{column}{0.61\textwidth}
+\centering
+\includegraphics[width=\linewidth]{figures/fig_variance_II_III.png}
+\end{column}
+\end{columns}
+\end{frame}
+\note{
+Period-Doubling: $|\lambda_2| = 1$ exactly, so $\alpha = 1$ and variance grows logarithmically.
+0222: $|\lambda_2| = \sqrt{5}-1 > 1$, so $\alpha = 0.64$ and variance grows as $R^{0.36}$.
+
+Both are known results from Oguz et al.\ (2019). Computed here to verify the full three-class picture numerically.
+}
+
+%----------------------------------------------------------------------
 \begin{frame}{Summary}
 
 \textbf{This week:}
 \begin{itemize}
-    \item Added Class II (Period-Doubling, $\alpha = 1$)
-    \item Added Class III (0222, $\alpha = 0.64$)
     \item Verified URL formula to $< 0.3\%$
-    \item Analyzed stealthy data ($\bar{\Lambda} \approx 1/(\pi^2\chi)$)
-    \item Implemented Bombieri-Taylor cubic ($\alpha = 1.545$)
+    \item Analyzed stealthy data ($\bar{\Lambda} \approx 1/(\pi^2\chi)$, $\alpha \to \infty$)
+    \item Implemented Bombieri-Taylor cubic ($\alpha = 1.545$, fills $1 < \alpha < 2$ gap)
+    \item Confirmed Class II and III numerically (Period-Doubling, 0222)
 \end{itemize}
 
 \vspace{0.5em}
