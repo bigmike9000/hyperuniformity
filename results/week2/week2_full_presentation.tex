@@ -273,9 +273,9 @@ There was a gap in the $\alpha$ coverage:
 \toprule
 $\alpha$ & Class & Examples \\
 \midrule
+$\infty$ & I & Lattice, Stealthy \\
 3 & I & Fibonacci, Silver, Bronze \\
 2 & I & URL \\
-$\infty$ & I & Stealthy \\
 \rowcolor{yellow!30}
 $1 < \alpha < 2$ & I & No quasicrystal \\
 1 & II & Period-Doubling \\
@@ -291,11 +291,11 @@ The issue: all 2$\times$2 metallic-mean matrices give $\alpha = 3$ because $|\la
 Solution: the Bombieri-Taylor cubic substitution (1986 paper, p. C3-21).
 \end{frame}
 \note{
-The 2x2 constraint: det$(M) = \pm 1$ forces $|\lambda_2| = 1/|\lambda_1|$.
+Lattice and stealthy both have $\alpha = \infty$ (S(k) = 0 over a finite region, not just at k=0).
 
-This always gives $\alpha = 1 + 2 = 3$.
+The metallic-mean 2x2 constraint: det$(M) = \pm 1$ forces $|\lambda_2| = 1/|\lambda_1|$, always giving $\alpha = 3$.
 
-Need a 3x3 matrix to break this constraint.
+The gap at $1 < \alpha < 2$ is filled by the Bombieri-Taylor cubic substitution on the next slide.
 }
 
 %----------------------------------------------------------------------
@@ -444,6 +444,7 @@ Possible next steps: other cubic substitutions, 2D/3D.
     \item Torquato \& Stillinger (2003), Phys. Rev. E 68, 041113
     \item Bombieri \& Taylor (1986), J. Physique Colloques 47, C3-19
     \item O\u{g}uz et al. (2017), Phys. Rev. B 95, 054119
+    \item Klatt, Kim \& Torquato (2020), Phys. Rev. E 101, 032118
     \item Torquato (2021), Phys. Rev. E 104, 054102
 \end{itemize}
 \end{frame}
