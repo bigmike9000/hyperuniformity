@@ -1,0 +1,15 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[0] Config.pm:310> INFO - Logfile is 'jp_hyperuniformity.blg'
+[176] biber-MSWIN64:340> INFO - === 
+[234] Biber.pm:419> INFO - Reading 'jp_hyperuniformity.bcf'
+[351] Biber.pm:979> INFO - Found 5 citekeys in bib section 0
+[360] Biber.pm:4419> INFO - Processing section 0
+[370] Biber.pm:4610> INFO - Looking for bibtex file 'references.bib' for section 0
+[459] bibtex.pm:1713> INFO - LaTeX decoding ...
+[473] bibtex.pm:1519> INFO - Found BibTeX data source 'references.bib'
+[512] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[512] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[512] Biber.pm:4239> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
+[512] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
+[514] bbl.pm:660> INFO - Writing 'jp_hyperuniformity.bbl' with encoding 'UTF-8'
+[516] bbl.pm:763> INFO - Output to jp_hyperuniformity.bbl

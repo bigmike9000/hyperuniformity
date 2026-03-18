@@ -524,6 +524,7 @@ i.e., the time-averaged value of the variance over large R. This serves as a **s
 | Stealthy (χ=0.1) | I | 2 | 1.021 ± 0.002 | Ensemble, N=2000, 4314 configs |
 | Stealthy (χ=0.2) | I | 2 | 0.526 ± 0.001 | Ensemble, N=2000, 4314 configs |
 | Stealthy (χ=0.3) | I | 2 | 0.357 ± 0.001 | Ensemble, N=2000, 4314 configs |
+| **Bombieri-Taylor cubic** | **I** | **1.545** | **0.377** | **N≈9.5M, 25 iterations; eigenvalue prediction exact** |
 | Period-doubling | II | 1.000 | diverges | σ²≈0.089 ln R + 0.277 |
 | 0222 chain | III | 0.639 | diverges | α_fit=0.665 (finite-size); theory: 1−2ln(√5−1)/ln(1+√5) |
 | 1D Poisson | — | — | not defined | σ²=2ρR (non-hyperuniform) |
@@ -978,28 +979,27 @@ This is computationally more involved than 1D substitution and is marked as Phas
 - S(k) computation: the sum Σ exp(-ikx_j) can be parallelized or done via FFT
 - Spreadability at different t values are independent
 
-### 11.5 File Organization Suggestion
+### 11.5 Actual File Organization (current state)
 
 ```
 project/
-├── KNOWLEDGE.md              ← this file
-├── src/
-│   ├── poisson_benchmark.py  ← Phase 1
-│   ├── substitution.py       ← Generate metallic-mean chains
-│   ├── projection.py         ← Cut-and-project (Fibonacci)
-│   ├── variance.py           ← σ²(R) computation
-│   ├── lambda_bar.py         ← Λ̄ computation
-│   ├── spectral_density.py   ← χ̃_V(k) computation
-│   ├── spreadability.py      ← S(t) and α extraction
-│   └── utils.py              ← Shared utilities
-├── tests/
-│   ├── test_poisson.py       ← Validates σ² = 2ρR
-│   ├── test_lattice.py       ← Validates Λ̄ = 1/6
-│   └── test_fibonacci.py     ← Cross-validates substitution vs projection
+├── KNOWLEDGE.md                        ← this file
+├── CONTEXT.md                          ← project roadmap / phase log
+├── jp/
+│   ├── jp_hyperuniformity.tex          ← Princeton Junior Paper (LaTeX)
+│   ├── jp_hyperuniformity.pdf          ← compiled output (14 pages)
+│   └── references.bib                  ← stub bibliography
+├── resources/
+│   ├── old_jp.tex                      ← previous JP (active anchoring in nematics)
+│   └── Biased_sampling_11_27_23 (example presentation).pdf
+├── literature/                         ← all reference PDFs (11 papers)
 ├── results/
-│   └── ...
-└── figures/
-    └── ...
+│   ├── figures/                        ← all PNG figures (fig1–fig14, figA–figJ, etc.)
+│   ├── data/                           ← catalog.json, stealthy_collab_results.json
+│   ├── project_summary/                ← project_summary.tex/.pdf
+│   └── week2/                          ← week2_full_presentation.tex/.pdf
+├── *.py                                ← analysis scripts (substitution_tilings.py, etc.)
+└── stealthy_configurations/            ← raw stealthy data from collaborator
 ```
 
 ### 11.6 Key Python Dependencies

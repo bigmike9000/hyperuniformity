@@ -292,7 +292,7 @@ is not a fixed number. The reported values are measured at $R_{\max}=300$.
 - Silver $\bar{\Lambda} = 0.250$, Bronze = 0.282, Copper = 0.293, Nickel = 0.310 are **novel**.
 - **Open gap:** No known 1D construction achieves $2 < \alpha < 3$.
 
-### Phase 6: Next Steps
+### Phase 6: Next Steps (pre-JP)
 
 - Obtain additional $\chi$ values for stealthy patterns from grad student.
 - Add more exotic patterns: period-doubling (Class II/$\alpha=1$), other
@@ -321,3 +321,42 @@ Analytic formula Λ̄=1/(π²χ) derived; systematic +0.7–5.7% excess from S(k
 middlemas_hyperuniformity_ranking_2019.pdf (3 new PDFs, DOIs in KNOWLEDGE.md).
 
 **Open questions:** Is Fibonacci Λ̄=1/5 exact? Silver=1/4? Does Λ̄(μₙ)→1/3? What fills 2<α<3 gap?
+
+### Phase 7: Junior Paper (JP) — COMPLETE
+
+A full Princeton Junior Paper LaTeX document was written summarizing all project results.
+
+**Output file:** `jp/jp_hyperuniformity.tex` (compiled PDF: `jp/jp_hyperuniformity.pdf`, 14 pages)
+**Stub bibliography:** `jp/references.bib` (6 entries — Torquato 2003, Torquato 2018,
+Oğuz et al. 2017, Bombieri-Taylor 1986, Shechtman 1984, Torquato-Zhang-Stillinger 2015)
+
+**Document structure:**
+- Title block modeled exactly on old JP (`resources/old_jp.tex`): title, author (Michael Fang),
+  advisor (Prof. Torquato), second reader (TBD), honor code `/s/` signature.
+- Abstract (~250 words): hyperuniformity overview, scope, key results (all metallic means α=3,
+  Bombieri-Taylor α=1.545 fills 1<α<2 gap).
+- §1 Introduction — cereal scooping analogy, physics motivation, scope outline.
+- §2 Theoretical Background — number variance, Classes I/II/III, exponent α, surface-area
+  coefficient Λ̄, substitution tilings, eigenvalue formula α=1−2ln|λ₂|/ln|λ₁|.
+- §3 Methods — variance/structure-factor/spreadability algorithms, validation, substitution generation.
+- §4 Results I: Metallic-Mean Quasicrystals — Fibonacci/Silver/Bronze, Table 1, det=±1
+  constraint derivation showing α=3 universally.
+- §5 Results II: Expanding the Spectrum — Period-Doubling (α=1), 0222 chain (α≈0.64),
+  URL (exact Λ̄ formula), stealthy (Λ̄≈1/π²χ), Bombieri-Taylor cubic (α=1.545, gap filled).
+- §6 Complete Catalog — Table 2 with 26 patterns, Fig. 12 ranking.
+- §7 Conclusion — synthesis, open questions (2<α<3 gap, higher-rank matrices, 2D extension).
+- Acknowledgements — Torquato group, stealthy collaborator.
+- Appendix A — hyperuniformity test figure.
+
+**Compilation:** pdflatex + biber + pdflatex×2. Third pass: zero warnings/errors.
+**Figures referenced** (all from `results/figures/`): fig1_poisson_benchmark, fig2_bounded_variance,
+fig3_hyperuniformity_test, fig9_stealthy_sk, stealthy_Sk_overlay, bombieri_taylor_analysis,
+fig12_ranking.
+
+**Repo reorganization** (completed before JP):
+- `results/figures/` — all PNG figures (previously flat in `results/`)
+- `results/data/` — catalog.json, stealthy_collab_results.json
+- `results/project_summary/` — project_summary.tex/.pdf
+- `results/week2/` — week2_full_presentation.tex/.pdf
+- `resources/` — old_jp.tex, example presentation PDF
+- `literature/` — all reference PDFs (11 papers)

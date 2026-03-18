@@ -428,15 +428,15 @@ We analyzed stealthy configurations provided by another group member. These were
 \toprule
 $\chi$ & $\bar{\Lambda}$ & $\alpha$ \\
 \midrule
-0.1 & 0.166 & 2.0 \\
-0.2 & 0.166 & 2.0 \\
-0.3 & 0.166 & 2.0 \\
+0.1 & 1.02 & 2.0 \\
+0.2 & 0.53 & 2.0 \\
+0.3 & 0.36 & 2.0 \\
 \bottomrule
 \end{tabular}
 \caption{Stealthy pattern results. The parameter $\chi = K^*/(4\pi\rho)$ controls the size of the exclusion region.}
 \end{table}
 
-Remarkably, $\bar{\Lambda} \approx 0.166 \approx 1/6$---the same as a \textbf{perfect lattice}! Stealthy patterns achieve optimal hyperuniformity despite being disordered.
+The measured values follow the theoretical prediction $\bar{\Lambda} \approx 1/(\pi^2 \chi)$. Larger exclusion zones (higher $\chi$) yield lower $\bar{\Lambda}$, approaching the lattice value $1/6$ as $\chi \to \infty$. However, for finite $\chi$, stealthy patterns have $\bar{\Lambda} > 1/6$.
 
 \subsection{The Gap Problem: $1 < \alpha < 2$}
 
@@ -524,7 +524,7 @@ After two weeks of analysis, we have characterized 26 different point patterns:
 \textbf{Pattern} & \textbf{Class} & $\boldsymbol{\alpha}$ & $\boldsymbol{\bar{\Lambda}}$ \\
 \midrule
 Integer Lattice & I & $\infty$ & 0.167 \\
-Stealthy ($\chi=0.1$--$0.3$) & I & 2.0 & 0.166 \\
+Stealthy ($\chi=0.3$) & I & 2.0 & 0.36 \\
 URL ($a=0.1$) & I & 2.0 & 0.168 \\
 Fibonacci & I & 3.0 & 0.200 \\
 URL ($a=0.5$) & I & 2.0 & 0.208 \\
@@ -542,7 +542,7 @@ Period-Doubling & II & 1.0 & diverges \\
 
 \textbf{Key observations:}
 \begin{enumerate}
-    \item The perfect lattice and stealthy patterns achieve the optimal $\bar{\Lambda} \approx 1/6$.
+    \item The perfect lattice achieves the optimal $\bar{\Lambda} = 1/6$. Stealthy patterns approach this limit as $\chi \to \infty$.
 
     \item Different $\alpha$ values don't necessarily correspond to different $\bar{\Lambda}$---the two metrics capture different aspects of hyperuniformity.
 
@@ -605,7 +605,7 @@ For quasicrystals, the eigenvalue formula is preferred because log-periodic osci
 
     \item \textbf{Discovered first quasicrystal with $1 < \alpha < 2$}: The Bombieri-Taylor cubic substitution with $\alpha = 1.545$.
 
-    \item \textbf{Demonstrated} that stealthy patterns achieve lattice-level order ($\bar{\Lambda} \approx 1/6$) despite being disordered.
+    \item \textbf{Characterized} stealthy patterns: $\bar{\Lambda} \approx 1/(\pi^2 \chi)$, approaching lattice-level order as $\chi$ increases.
 \end{enumerate}
 
 \subsection{Scientific Significance}

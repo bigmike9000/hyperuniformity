@@ -43,19 +43,19 @@ March 2026
 \note{
 Weekly progress meeting with Professor Torquato.
 
-Main things to cover:
+Main topics:
 \begin{itemize}
-  \item What I finished from last week
-  \item New patterns I analyzed (Classes II, III)
+  \item Recap of last week
+  \item New patterns analyzed (Classes II, III)
   \item The Bombieri-Taylor result
   \item Updated ranking
 \end{itemize}
 }
 
 %----------------------------------------------------------------------
-\begin{frame}{Quick Recap: What I Had Last Week}
+\begin{frame}{Quick Recap: Last Week}
 
-Last week I had:
+Last week:
 \begin{itemize}
     \item Variance code validated (Poisson benchmark, 1.1\% error)
     \item Three metallic-mean chains: Fibonacci, Silver, Bronze
@@ -77,7 +77,7 @@ Bronze & 2.99 & 3 & 0.282 \\
 \end{table}
 
 \vspace{0.5em}
-\textbf{This week:} I wanted to cover all three hyperuniformity classes and find something in the $1 < \alpha < 2$ gap.
+\textbf{This week:} Cover all three hyperuniformity classes and find something in the $1 < \alpha < 2$ gap.
 \end{frame}
 \note{
 Quick reminder of where we left off.
@@ -90,7 +90,7 @@ Goal this week was to expand beyond just $\alpha = 3$.
 %----------------------------------------------------------------------
 \begin{frame}{Class II: Period-Doubling}
 
-I implemented the Period-Doubling chain:
+The Period-Doubling chain:
 \[
 S \to L, \quad L \to LSS \qquad \Rightarrow \qquad M = \begin{pmatrix} 0 & 2 \\ 1 & 1 \end{pmatrix}
 \]
@@ -102,7 +102,7 @@ Matrix gives $\lambda_1 = 2$, $|\lambda_2| = 1$
 So: $\displaystyle\alpha = 1 - \frac{2\ln(1)}{\ln(2)} = 1$
 
 \vspace{0.5em}
-\textbf{What I found:}
+\textbf{Results:}
 \begin{itemize}
     \item Variance grows like $\ln R$ (not bounded, not power-law)
     \item $\bar{\Lambda}$ diverges --- can't use it to rank this pattern
@@ -115,13 +115,13 @@ Period-Doubling is the boundary case: $\alpha = 1$ exactly.
 
 $|\lambda_2| = 1$ means $\ln(1) = 0$ in the formula.
 
-This is our first Class II example --- variance grows logarithmically.
+First Class II example --- variance grows logarithmically.
 }
 
 %----------------------------------------------------------------------
 \begin{frame}{Class III: 0222 Chain}
 
-Also implemented the 0222 chain:
+The 0222 chain:
 \[
 S \to LL, \quad L \to SSLL
 \]
@@ -134,7 +134,7 @@ Here $|\lambda_2| = \sqrt{5} - 1 > 1$
 So: $\alpha \approx 0.64$
 
 \vspace{0.5em}
-\textbf{What I found:}
+\textbf{Results:}
 \begin{itemize}
     \item Variance grows like $R^{0.36}$
     \item $\bar{\Lambda}$ diverges
@@ -142,7 +142,7 @@ So: $\alpha \approx 0.64$
 \end{itemize}
 
 \vspace{0.5em}
-Now I have examples of all three classes.
+Now have examples of all three classes.
 \end{column}
 
 \begin{column}{0.55\textwidth}
@@ -162,7 +162,7 @@ III & $< 1$ & $\sim R^{1-\alpha}$ \\
 \end{tabular}
 
 \vspace{1em}
-The exponent $1 - 0.64 = 0.36$ matches what I measured.
+The exponent $1 - 0.64 = 0.36$ matches the measured value.
 \end{column}
 \end{columns}
 \end{frame}
@@ -171,13 +171,13 @@ The exponent $1 - 0.64 = 0.36$ matches what I measured.
 
 The power-law growth $R^{0.36}$ matches the prediction $R^{1-\alpha}$.
 
-Now we have all three classes covered.
+All three classes now covered.
 }
 
 %----------------------------------------------------------------------
 \begin{frame}{URL Verification}
 
-I also tested the perturbed lattice formula you mentioned:
+Tested the perturbed lattice formula:
 \[
 \bar{\Lambda}(a) = \frac{1}{6} + \frac{a^2}{3}
 \]
@@ -185,7 +185,7 @@ I also tested the perturbed lattice formula you mentioned:
 \begin{columns}[T]
 \begin{column}{0.45\textwidth}
 \vspace{0.5em}
-\textbf{My numerical results:}
+\textbf{Numerical results:}
 \begin{center}
 \begin{tabular}{ccc}
 \toprule
@@ -199,7 +199,7 @@ $a$ & Numerical & Exact \\
 \end{center}
 
 \vspace{0.3em}
-Errors $< 0.3\%$ --- this validates my code against an independent analytical result.
+Errors $< 0.3\%$ --- validates the code against an independent analytical result.
 \end{column}
 
 \begin{column}{0.55\textwidth}
@@ -219,7 +219,7 @@ Always $\alpha = 2$ regardless of displacement amplitude $a$.
 %----------------------------------------------------------------------
 \begin{frame}{Stealthy Patterns}
 
-I analyzed stealthy configurations provided by another group member.
+Analyzed stealthy configurations provided by Sam.
 
 \vspace{0.3em}
 \textbf{Idea:} Force $S(k) = 0$ for all $|k| < K^*$, not just at $k = 0$.
@@ -227,46 +227,50 @@ I analyzed stealthy configurations provided by another group member.
 \vspace{0.5em}
 \textbf{Results} ($N = 2{,}000$, $\sim$4000 configs each):
 \begin{center}
-\begin{tabular}{ccc}
+\begin{tabular}{cccc}
 \toprule
-$\chi$ & $\bar{\Lambda}$ & $\alpha$ \\
+$\chi$ & $\bar{\Lambda}$ (measured) & $\bar{\Lambda}$ (predicted) & $\alpha$ \\
 \midrule
-0.1 & 0.166 & 2.0 \\
-0.2 & 0.166 & 2.0 \\
-0.3 & 0.166 & 2.0 \\
+0.1 & 1.02 & 1.01 & 2.0 \\
+0.2 & 0.53 & 0.51 & 2.0 \\
+0.3 & 0.36 & 0.34 & 2.0 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \vspace{0.5em}
-\textbf{Key observation:} $\bar{\Lambda} \approx 1/6$ --- same as the perfect lattice!
+\textbf{Key observation:} $\bar{\Lambda} \approx 1/(\pi^2 \chi)$ --- good agreement with theory.
 
 \vspace{0.3em}
-These disordered patterns achieve optimal hyperuniformity.
+Higher $\chi$ (larger exclusion zone) $\Rightarrow$ better hyperuniformity, approaching lattice as $\chi \to \infty$.
 \end{frame}
 \note{
 Data from another grad student (CCO format, ~4000 configs per $\chi$).
 
-$\chi$ controls the size of the exclusion region.
+$\chi$ controls the size of the exclusion region: $K = 2\pi\chi$.
 
-Remarkable: disordered patterns achieve lattice-level $\bar{\Lambda}$.
+Theory predicts $\bar{\Lambda} \approx 1/(\pi^2 \chi)$.
+
+Larger exclusion zone = better suppression of fluctuations.
+
+$\alpha = 2$ is theoretical (can't extract via spreadability due to exponential decay).
 }
 
 %----------------------------------------------------------------------
-\begin{frame}{The Gap Problem}
+\begin{frame}{Filling the $1 < \alpha < 2$ Gap}
 
-At this point I noticed a gap in my data:
+There was a gap in the $\alpha$ coverage:
 
 \vspace{0.3em}
 \begin{center}
 \begin{tabular}{lcl}
 \toprule
-$\alpha$ & Class & What I have \\
+$\alpha$ & Class & Examples \\
 \midrule
 3 & I & Fibonacci, Silver, Bronze \\
 2 & I & URL, Stealthy \\
 \rowcolor{yellow!30}
-$1 < \alpha < 2$ & I & \textcolor{red}{Nothing!} \\
+$1 < \alpha < 2$ & I & No quasicrystal \\
 1 & II & Period-Doubling \\
 $< 1$ & III & 0222 \\
 \bottomrule
@@ -274,10 +278,10 @@ $< 1$ & III & 0222 \\
 \end{center}
 
 \vspace{0.5em}
-The problem: all 2$\times$2 metallic-mean matrices give $\alpha = 3$ because $|\lambda_2| = 1/|\lambda_1|$.
+The issue: all 2$\times$2 metallic-mean matrices give $\alpha = 3$ because $|\lambda_2| = 1/|\lambda_1|$.
 
 \vspace{0.3em}
-You suggested looking at the Bombieri-Taylor cubic substitution from their 1986 paper.
+Solution: the Bombieri-Taylor cubic substitution (1986 paper, p. C3-21).
 \end{frame}
 \note{
 The 2x2 constraint: det$(M) = \pm 1$ forces $|\lambda_2| = 1/|\lambda_1|$.
@@ -315,9 +319,9 @@ Eigenvalues: $\theta_1 = 2.247$, $|\lambda_2| = 0.802$
 \]
 
 \vspace{0.5em}
-\textbf{What I did:}
+\textbf{Implementation:}
 \begin{itemize}
-    \item Extended my code for 3-letter alphabets
+    \item Extended code for 3-letter alphabets
     \item Generated 9.5 million points
     \item Computed variance and $\bar{\Lambda}$
 \end{itemize}
@@ -330,7 +334,7 @@ Eigenvalues: $\theta_1 = 2.247$, $|\lambda_2| = 0.802$
 \note{
 Key: $|\lambda_2| = 0.802 \neq 1/\theta_1 = 0.445$.
 
-The 3x3 matrix breaks the constraint!
+The 3x3 matrix breaks the constraint.
 
 $\theta_1$ is a Pisot number (conjugates all $< 1$).
 }
@@ -345,13 +349,15 @@ $\theta_1$ is a Pisot number (conjugates all $< 1$).
 Variance is bounded (Class I). The log-periodic oscillations in spreadability are expected for quasicrystals.
 \end{frame}
 \note{
-Panel (a): Bounded variance confirms Class I.
+\textbf{Panel (a)}: Bounded variance confirms Class I. Oscillates between 0.05--0.49, mean = 0.377.
 
-Panel (c): Log-periodic oscillations with period $\ln(\theta_1)$.
+\textbf{Panel (b)}: Structure factor at small $k$. Shows $S(k) \to 0$ as $k \to 0$ (hyperuniform). Bragg peaks are characteristic of quasicrystals.
 
-Panel (d): Shows where B-T fits in the ranking.
+\textbf{Panel (c)}: Spreadability decay. The log-periodic oscillations make power-law fitting unreliable for quasicrystals. The eigenvalue formula is exact; spreadability fit is not.
 
-The eigenvalue formula $\alpha = 1.545$ is exact.
+\textbf{Panel (d)}: Shows Bombieri-Taylor fills the gap between Period-Doubling ($\alpha=1$) and URL ($\alpha=2$).
+
+\textbf{Confidence}: $\alpha = 1.545$ is exact (analytical from eigenvalues). $\bar{\Lambda} = 0.377$ is numerical average of bounded variance.
 }
 
 %----------------------------------------------------------------------
@@ -366,8 +372,8 @@ Here's where everything stands now:
 \textbf{Pattern} & \textbf{Class} & $\boldsymbol{\alpha}$ & $\boldsymbol{\bar{\Lambda}}$ \\
 \midrule
 Lattice & I & $\infty$ & 0.167 \\
-Stealthy & I & 2.0 & 0.166 \\
 URL ($a=0.1$) & I & 2.0 & 0.168 \\
+Stealthy ($\chi=0.3$) & I & 2.0 & 0.36 \\
 Fibonacci & I & 3.0 & 0.200 \\
 Silver & I & 3.0 & 0.250 \\
 Bronze & I & 3.0 & 0.282 \\
@@ -385,18 +391,18 @@ Period-Doubling & II & 1.0 & diverges \\
 
 Bombieri-Taylor fills the gap between $\alpha = 1$ and $\alpha = 2$.
 
-This is the first quasicrystal I know of with $1 < \alpha < 2$.
+First quasicrystal with $1 < \alpha < 2$.
 }
 
 %----------------------------------------------------------------------
 \begin{frame}{Summary}
 
-\textbf{What I did this week:}
+\textbf{This week:}
 \begin{itemize}
     \item Added Class II (Period-Doubling, $\alpha = 1$)
     \item Added Class III (0222, $\alpha = 0.64$)
     \item Verified URL formula to $< 0.3\%$
-    \item Analyzed stealthy data from group ($\bar{\Lambda} \approx 1/6$)
+    \item Analyzed stealthy data ($\bar{\Lambda} \approx 1/(\pi^2\chi)$)
     \item Implemented Bombieri-Taylor cubic ($\alpha = 1.545$)
 \end{itemize}
 
@@ -404,10 +410,10 @@ This is the first quasicrystal I know of with $1 < \alpha < 2$.
 \textbf{Main result:} Filled the $1 < \alpha < 2$ gap with a quasicrystal.
 
 \vspace{0.5em}
-\textbf{Questions for you:}
+\textbf{Questions:}
 \begin{itemize}
-    \item Are there other cubic/quartic substitutions I should try?
-    \item Should I look at 2D generalizations next?
+    \item Are there other cubic/quartic substitutions to try?
+    \item Should 2D generalizations be next?
 \end{itemize}
 \end{frame}
 \note{

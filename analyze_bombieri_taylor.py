@@ -227,57 +227,65 @@ def main():
     ax.legend()
     ax.grid(True, alpha=0.3)
 
-    # Panel (b): Structure factor near k=0
+    # Panel (b): Structure factor - zoom on small k to show S(k) -> 0
     ax = axes[0, 1]
-    ax.plot(k_values, S_k, 'b-', linewidth=0.8)
-    ax.set_xlabel('Wavenumber $k$')
-    ax.set_ylabel('Structure factor $S(k)$')
-    ax.set_title('(b) Structure Factor')
-    ax.set_xlim(0, 10)
+    # Only show small k region where hyperuniformity is visible
+    k_mask = k_values < 3
+    ax.plot(k_values[k_mask], S_k[k_mask], 'b-', linewidth=1.2)
+    ax.set_xlabel('Wavenumber $k$', fontsize=11)
+    ax.set_ylabel('Structure factor $S(k)$', fontsize=11)
+    ax.set_title('(b) Structure Factor (small $k$)')
+    ax.set_xlim(0, 3)
+    ax.set_ylim(0, max(S_k[k_mask]) * 1.1)
+    ax.axhline(0, color='gray', linestyle='-', alpha=0.3)
+    ax.text(0.1, max(S_k[k_mask]) * 0.9, '$S(k) \\to 0$ as $k \\to 0$\n(hyperuniform)', fontsize=10)
     ax.grid(True, alpha=0.3)
 
-    # Panel (c): Excess spreadability
+    # Panel (c): Excess spreadability with clearer reference
     ax = axes[1, 0]
-    ax.loglog(t_values, E_t, 'b-', linewidth=1.5)
-    # Add reference slope
-    t_ref = t_values[(t_values > 100) & (t_values < 1e5)]
-    E_ref = E_t[0] * (t_ref / t_values[0]) ** (-(1 + alpha_pred) / 2)
-    ax.loglog(t_ref, E_ref * 0.1, 'r--', linewidth=1,
-              label=f'$\\sim t^{{-(1+\\alpha)/2}}$, $\\alpha$={alpha_pred:.2f}')
-    ax.set_xlabel('Diffusion time $t$')
-    ax.set_ylabel('Excess spreadability $E(t)$')
-    ax.set_title('(c) Excess Spreadability')
-    ax.legend()
+    ax.loglog(t_values, E_t, 'b-', linewidth=1.5, label='Bombieri-Taylor')
+    # Add reference slope matching the data
+    t_fit = t_values[(t_values > 1e2) & (t_values < 1e5)]
+    E_fit_start = E_t[np.argmin(np.abs(t_values - 1e2))]
+    E_ref = E_fit_start * (t_fit / 1e2) ** (-(1 + alpha_pred) / 2)
+    ax.loglog(t_fit, E_ref, 'r--', linewidth=2,
+              label=f'Theory: $t^{{-1.27}}$ ($\\alpha$=1.55)')
+    ax.set_xlabel('Diffusion time $t$', fontsize=11)
+    ax.set_ylabel('Excess spreadability $E(t)$', fontsize=11)
+    ax.set_title('(c) Spreadability Decay')
+    ax.legend(fontsize=10, loc='lower left')
+    ax.set_xlim(1e-2, 1e8)
     ax.grid(True, alpha=0.3)
 
-    # Panel (d): Ranking comparison
+    # Panel (d): Alpha comparison - cleaner version
     ax = axes[1, 1]
     patterns = [
-        ('Period-Doubling', 1.0, 'II'),
-        ('Bombieri-Taylor', alpha_pred, 'I'),
-        ('URL (a=0.5)', 2.0, 'I'),
-        ('Fibonacci', 3.0, 'I'),
+        ('Period-Doubling', 1.0, 'II', '#FFA500'),
+        ('Bombieri-Taylor', alpha_pred, 'I', '#E53935'),
+        ('URL', 2.0, 'I', '#1E88E5'),
+        ('Fibonacci', 3.0, 'I', '#43A047'),
     ]
-    names = [p[0] for p in patterns]
-    alphas = [p[1] for p in patterns]
-    colors = ['orange' if p[2] == 'II' else 'blue' for p in patterns]
-    colors[1] = 'red'  # Highlight Bombieri-Taylor
 
     y_pos = np.arange(len(patterns))
-    bars = ax.barh(y_pos, alphas, color=colors, alpha=0.7)
-    ax.set_yticks(y_pos)
-    ax.set_yticklabels(names)
-    ax.set_xlabel('Hyperuniformity exponent $\\alpha$')
-    ax.set_title('(d) Ranking: Bombieri-Taylor fills the gap!')
-    ax.axvline(x=1, color='gray', linestyle=':', alpha=0.5)
-    ax.axvline(x=2, color='gray', linestyle=':', alpha=0.5)
-    ax.axvline(x=3, color='gray', linestyle=':', alpha=0.5)
-    for i, (name, alpha, cls) in enumerate(patterns):
-        ax.text(alpha + 0.1, i, f'$\\alpha$={alpha:.2f}', va='center')
-    ax.set_xlim(0, 4)
+    for i, (name, alpha, cls, color) in enumerate(patterns):
+        ax.barh(i, alpha, color=color, alpha=0.8, height=0.6)
+        ax.text(alpha + 0.08, i, f'{alpha:.2f}', va='center', fontsize=11, fontweight='bold')
 
-    plt.suptitle(f'Bombieri-Taylor Cubic Substitution: $\\alpha$ = {alpha_pred:.3f}, $\\bar{{\\Lambda}}$ = {lambda_bar:.3f}',
-                 fontsize=14, fontweight='bold')
+    ax.set_yticks(y_pos)
+    ax.set_yticklabels([p[0] for p in patterns], fontsize=11)
+    ax.set_xlabel('Hyperuniformity exponent $\\alpha$', fontsize=11)
+    ax.set_title('(d) Where Bombieri-Taylor Fits')
+
+    # Mark class boundaries
+    ax.axvline(x=1, color='black', linestyle='--', alpha=0.4, linewidth=1.5)
+    ax.text(1.02, 3.5, 'Class I/II\nboundary', fontsize=9, alpha=0.7)
+
+    ax.set_xlim(0, 3.8)
+    ax.set_ylim(-0.5, 3.5)
+    ax.grid(True, axis='x', alpha=0.3)
+
+    plt.suptitle(f'Bombieri-Taylor Cubic: $\\alpha$ = {alpha_pred:.3f}, $\\bar{{\\Lambda}}$ = {lambda_bar:.3f}',
+                 fontsize=13, fontweight='bold')
     plt.tight_layout()
     plt.savefig('results/bombieri_taylor_analysis.png', dpi=150, bbox_inches='tight')
     print(f"  Saved: results/bombieri_taylor_analysis.png")

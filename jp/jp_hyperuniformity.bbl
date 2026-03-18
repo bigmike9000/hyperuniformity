@@ -1,0 +1,204 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{torquato2003local}{article}{}
+      \name{author}{2}{}{%
+        {{hash=c3a792c01d1ad328590c8549b2dae94c}{%
+           family={Torquato},
+           familyi={T\bibinitperiod},
+           given={Salvatore},
+           giveni={S\bibinitperiod}}}%
+        {{hash=91b2bb9ed0ffdbca4052a5d57b5898ae}{%
+           family={Stillinger},
+           familyi={S\bibinitperiod},
+           given={Frank\bibnamedelima H.},
+           giveni={F\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{662c9e615457fa48a642fbd66b4c1885}
+      \strng{fullhash}{662c9e615457fa48a642fbd66b4c1885}
+      \strng{bibnamehash}{662c9e615457fa48a642fbd66b4c1885}
+      \strng{authorbibnamehash}{662c9e615457fa48a642fbd66b4c1885}
+      \strng{authornamehash}{662c9e615457fa48a642fbd66b4c1885}
+      \strng{authorfullhash}{662c9e615457fa48a642fbd66b4c1885}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Physical Review E}
+      \field{number}{4}
+      \field{title}{Local density fluctuations, hyperuniformity, and order metrics}
+      \field{volume}{68}
+      \field{year}{2003}
+      \field{pages}{041113}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1103/PhysRevE.68.041113
+      \endverb
+    \endentry
+    \entry{torquato2018hyperuniform}{article}{}
+      \name{author}{1}{}{%
+        {{hash=c3a792c01d1ad328590c8549b2dae94c}{%
+           family={Torquato},
+           familyi={T\bibinitperiod},
+           given={Salvatore},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{c3a792c01d1ad328590c8549b2dae94c}
+      \strng{fullhash}{c3a792c01d1ad328590c8549b2dae94c}
+      \strng{bibnamehash}{c3a792c01d1ad328590c8549b2dae94c}
+      \strng{authorbibnamehash}{c3a792c01d1ad328590c8549b2dae94c}
+      \strng{authornamehash}{c3a792c01d1ad328590c8549b2dae94c}
+      \strng{authorfullhash}{c3a792c01d1ad328590c8549b2dae94c}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Physics Reports}
+      \field{title}{Hyperuniform states of matter}
+      \field{volume}{745}
+      \field{year}{2018}
+      \field{pages}{1\bibrangedash 95}
+      \range{pages}{95}
+      \verb{doi}
+      \verb 10.1016/j.physrep.2018.03.001
+      \endverb
+    \endentry
+    \entry{bombieri1986which}{article}{}
+      \name{author}{2}{}{%
+        {{hash=e2d4fa0eea805e9de7709f9c548753f4}{%
+           family={Bombieri},
+           familyi={B\bibinitperiod},
+           given={Enrico},
+           giveni={E\bibinitperiod}}}%
+        {{hash=c724e0d4cc377fb93b6f92cb854a6ee9}{%
+           family={Taylor},
+           familyi={T\bibinitperiod},
+           given={J.\bibnamedelimi E.},
+           giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+      }
+      \strng{namehash}{f2359eace2b1dd1a1535ec6e59949556}
+      \strng{fullhash}{f2359eace2b1dd1a1535ec6e59949556}
+      \strng{bibnamehash}{f2359eace2b1dd1a1535ec6e59949556}
+      \strng{authorbibnamehash}{f2359eace2b1dd1a1535ec6e59949556}
+      \strng{authornamehash}{f2359eace2b1dd1a1535ec6e59949556}
+      \strng{authorfullhash}{f2359eace2b1dd1a1535ec6e59949556}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal de Physique}
+      \field{number}{C3}
+      \field{title}{Which distributions of matter diffract? {An} initial investigation}
+      \field{volume}{47}
+      \field{year}{1986}
+      \field{pages}{C3-19\bibrangedash C3-28}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1051/jphyscol:1986303
+      \endverb
+    \endentry
+    \entry{oguz2017hyperuniform}{article}{}
+      \name{author}{4}{}{%
+        {{hash=fa8823fe1f7971b162b343c26cac4c74}{%
+           family={Oğuz},
+           familyi={O\bibinitperiod},
+           given={Erdal\bibnamedelima C.},
+           giveni={E\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=0ea425e01b11b6bad5abe3c30f9ebfcc}{%
+           family={Socolar},
+           familyi={S\bibinitperiod},
+           given={Joshua\bibnamedelimb E.\bibnamedelimi S.},
+           giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=d6ce498e534c4aa4e853c99ca6da7cb5}{%
+           family={Steinhardt},
+           familyi={S\bibinitperiod},
+           given={Paul\bibnamedelima J.},
+           giveni={P\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=c3a792c01d1ad328590c8549b2dae94c}{%
+           family={Torquato},
+           familyi={T\bibinitperiod},
+           given={Salvatore},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
+      \strng{fullhash}{b2d10ff5b8c94e74610efc15c875ccb9}
+      \strng{bibnamehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
+      \strng{authorbibnamehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
+      \strng{authornamehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
+      \strng{authorfullhash}{b2d10ff5b8c94e74610efc15c875ccb9}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Physical Review B}
+      \field{number}{5}
+      \field{title}{Hyperuniformity of quasicrystals}
+      \field{volume}{95}
+      \field{year}{2017}
+      \field{pages}{054119}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1103/PhysRevB.95.054119
+      \endverb
+    \endentry
+    \entry{torquato2015ensemble}{article}{}
+      \name{author}{3}{}{%
+        {{hash=c3a792c01d1ad328590c8549b2dae94c}{%
+           family={Torquato},
+           familyi={T\bibinitperiod},
+           given={Salvatore},
+           giveni={S\bibinitperiod}}}%
+        {{hash=4243cd9c741636a90c4e8954517e0bcb}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Ge},
+           giveni={G\bibinitperiod}}}%
+        {{hash=91b2bb9ed0ffdbca4052a5d57b5898ae}{%
+           family={Stillinger},
+           familyi={S\bibinitperiod},
+           given={Frank\bibnamedelima H.},
+           giveni={F\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{db9d6718390ead48362ea5a9af966fa6}
+      \strng{fullhash}{db9d6718390ead48362ea5a9af966fa6}
+      \strng{bibnamehash}{db9d6718390ead48362ea5a9af966fa6}
+      \strng{authorbibnamehash}{db9d6718390ead48362ea5a9af966fa6}
+      \strng{authornamehash}{db9d6718390ead48362ea5a9af966fa6}
+      \strng{authorfullhash}{db9d6718390ead48362ea5a9af966fa6}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Physical Review X}
+      \field{number}{2}
+      \field{title}{Ensemble theory for stealthy hyperuniform disordered ground states}
+      \field{volume}{5}
+      \field{year}{2015}
+      \field{pages}{021020}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1103/PhysRevX.5.021020
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
