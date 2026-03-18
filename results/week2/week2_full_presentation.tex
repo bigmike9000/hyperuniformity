@@ -129,7 +129,7 @@ S \to LL, \quad L \to SSLL
 \]
 
 \begin{columns}[T]
-\begin{column}{0.45\textwidth}
+\begin{column}{0.40\textwidth}
 \vspace{0.5em}
 Here $|\lambda_2| = \sqrt{5} - 1 > 1$
 
@@ -139,6 +139,7 @@ So: $\alpha \approx 0.64$
 \textbf{Results:}
 \begin{itemize}
     \item Variance grows like $R^{0.36}$
+    \item Exponent $1 - 0.64 = 0.36$ matches
     \item $\bar{\Lambda}$ diverges
     \item Class III confirmed
 \end{itemize}
@@ -147,33 +148,23 @@ So: $\alpha \approx 0.64$
 Now have examples of all three classes.
 \end{column}
 
-\begin{column}{0.55\textwidth}
+\begin{column}{0.60\textwidth}
 \centering
-\small
-\textbf{The three classes:}
-\vspace{0.3em}
-
-\begin{tabular}{lcc}
-\toprule
-\textbf{Class} & $\boldsymbol{\alpha}$ & $\boldsymbol{\sigma^2(R)}$ \\
-\midrule
-I & $> 1$ & bounded \\
-II & $= 1$ & $\sim \ln R$ \\
-III & $< 1$ & $\sim R^{1-\alpha}$ \\
-\bottomrule
-\end{tabular}
-
-\vspace{1em}
-The exponent $1 - 0.64 = 0.36$ matches the measured value.
+\includegraphics[width=\linewidth]{figures/figA_variance_by_class.png}
 \end{column}
 \end{columns}
 \end{frame}
 \note{
 0222 has $|\lambda_2| > 1$, which gives $\alpha < 1$.
 
-The power-law growth $R^{0.36}$ matches the prediction $R^{1-\alpha}$.
+The figure shows all three classes' variance on log-log axes:
+\begin{itemize}
+  \item \textbf{Left (Class I):} $\sigma^2(R)$ saturates --- Fibonacci, Silver, Bronze, URL all flatten out.
+  \item \textbf{Centre (Class II):} Period-Doubling grows like $C\ln R + b$ (dashed fit).
+  \item \textbf{Right (Class III):} 0222 chain grows like $R^{0.335}$ (dashed fit) --- consistent with $R^{1-\alpha} = R^{0.36}$.
+\end{itemize}
 
-All three classes now covered.
+All three classes now covered with numerical evidence.
 }
 
 %----------------------------------------------------------------------
