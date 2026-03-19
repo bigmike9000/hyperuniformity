@@ -38,18 +38,14 @@
 Michael Fang
 
 \vspace{0.5em}
-March 2026
+March 19, 2026
 \end{frame}
 \note{
-Weekly progress meeting with Professor Torquato.
-
 Main topics:
 \begin{itemize}
-  \item Recap of last week (metallic means, $\alpha = 3$)
   \item URL validation: confirmed $\bar{\Lambda} = (1+a^2)/6$ to $<0.3\%$
   \item Stealthy patterns: $\bar{\Lambda} \approx 1/(\pi^2\chi)$, $\alpha \to \infty$
-  \item Bombieri-Taylor cubic: $\alpha = 1.545$, $\bar{\Lambda} = 0.377$
-  \item Updated ranking
+  \item Bombieri-Taylor cubic: $\bar{\Lambda} = 0.377$, $\alpha = 1.545$
 \end{itemize}
 }
 
@@ -173,11 +169,11 @@ Theory predicts $\bar{\Lambda} \approx 1/(\pi^2 \chi)$.
 
 We can see the exclusion zone clearly widen as as $\chi$ increases, and $S(k)$ rises sharply at $K^*$ before approaching 1 at large $k$.
 
-$\alpha \to \infty$: $S(k) = 0$ over a finite exclusion zone, not a power law. This is confirmed by exponential spreadability decay.
+$\alpha \to \infty$: $S(k) = 0$ over a finite exclusion zone, not a power law. 
 }
 
 %----------------------------------------------------------------------
-\begin{frame}{Filling the $1 < \alpha < 2$ Gap}
+\begin{frame}{Another 1D Quasiperiodic pattern}
 
 There was a gap in the $\alpha$ coverage:
 
@@ -199,10 +195,10 @@ $< 1$ & III & 0222 \\
 \end{center}
 
 \vspace{0.5em}
-The issue: all 2$\times$2 metallic-mean matrices give $\alpha = 3$ because $|\lambda_2| = 1/|\lambda_1|$.
+All 2$\times$2 metallic-mean matrices give $\alpha = 3$ because $|\lambda_2| = 1/|\lambda_1|$.
 
 \vspace{0.3em}
-Solution: the Bombieri-Taylor cubic substitution (1986 paper, p. C3-21).
+We can generate the pattern from Bombieri-Taylor (1986 article, p. C3-21).
 \end{frame}
 \note{
 Lattice and stealthy both have $\alpha = \infty$ (S(k) = 0 over a finite region, not just at k=0).
@@ -278,13 +274,13 @@ Variance is bounded (Class I). Log-periodic oscillations in spreadability are ex
 
 \textbf{Panel (d)}: Shows Bombieri-Taylor fills the gap between Period-Doubling ($\alpha=1$) and URL ($\alpha=2$). Stealthy patterns have $\alpha\to\infty$ and do not appear on this axis.
 
-\textbf{Confidence}: $\alpha = 1.545$ is exact (analytical from eigenvalues). $\bar{\Lambda} = 0.377$ is numerical average of bounded variance.
+$\alpha = 1.545$ is the analytical result from the eigenvalues, and $\bar{\Lambda} = 0.377$ from the numerical average of bounded variance.
 }
 
 %----------------------------------------------------------------------
 \begin{frame}{Updated Ranking}
 
-Here's where everything stands now:
+Here's the results so far:
 
 \vspace{0.3em}
 \small
@@ -309,12 +305,12 @@ Period-Doubling       & II  & 1.0  & diverges \\
 \end{tabular}
 \end{frame}
 \note{
-Table shows a selected subset of the 26 patterns analyzed, sorted by $\bar{\Lambda}$ within Class~I.
+Table shows a selected subset of patterns analyzed, sorted by $\bar{\Lambda}$ within Class~I.
 
 Lattice and Stealthy both have $\alpha = \infty$; they are ranked by $\bar{\Lambda}$ (0.167 vs.\ 0.358).
 
-URL ($a=0.1$, $\bar{\Lambda}=0.168$) sits just above the lattice minimum, illustrating that
-$\alpha$ and $\bar{\Lambda}$ are independent metrics.
+URL ($a=0.1$, $\bar{\Lambda}=0.168$) sits just above the lattice minimum, showing that
+$\alpha$ and $\bar{\Lambda}$ are independent.
 
 Bombieri-Taylor ($\alpha = 1.545$) is the only Class~I quasicrystal with $1 < \alpha < 2$.
 }
@@ -384,7 +380,7 @@ Both are known results from Oguz et al.\ (2019). Computed here to verify the ful
 \begin{itemize}
     \item Torquato \& Stillinger (2003), Phys. Rev. E 68, 041113
     \item Bombieri \& Taylor (1986), J. Physique Colloques 47, C3-19
-    \item O\u{g}uz et al. (2017), Phys. Rev. B 95, 054119
+    \item O\u{g}uz et al.\ (2019), Acta Cryst.\ A \textbf{75}, 3--13
     \item Klatt, Kim \& Torquato (2020), Phys. Rev. E 101, 032118
     \item Torquato (2021), Phys. Rev. E 104, 054102
 \end{itemize}
