@@ -1,15 +1,15 @@
-[0] Config.pm:307> INFO - This is Biber 2.19
-[0] Config.pm:310> INFO - Logfile is 'jp_hyperuniformity.blg'
-[199] biber-MSWIN64:340> INFO - === 
-[287] Biber.pm:419> INFO - Reading 'jp_hyperuniformity.bcf'
-[377] Biber.pm:979> INFO - Found 7 citekeys in bib section 0
-[386] Biber.pm:4419> INFO - Processing section 0
-[414] Biber.pm:4610> INFO - Looking for bibtex file 'references.bib' for section 0
-[503] bibtex.pm:1713> INFO - LaTeX decoding ...
-[519] bibtex.pm:1519> INFO - Found BibTeX data source 'references.bib'
-[595] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[595] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[595] Biber.pm:4239> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
-[595] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
-[598] bbl.pm:660> INFO - Writing 'jp_hyperuniformity.bbl' with encoding 'UTF-8'
-[600] bbl.pm:763> INFO - Output to jp_hyperuniformity.bbl
+[0] Config.pm:328> INFO - This is Biber 2.21
+[0] Config.pm:331> INFO - Logfile is 'jp_hyperuniformity.blg'
+[99] biber-MSWIN64:342> INFO - === 
+[128] Biber.pm:421> INFO - Reading 'jp_hyperuniformity.bcf'
+[199] Biber.pm:1002> INFO - Found 9 citekeys in bib section 0
+[208] Biber.pm:4487> INFO - Processing section 0
+[216] Biber.pm:4678> INFO - Looking for bibtex file 'references.bib' for section 0
+[248] bibtex.pm:1713> INFO - LaTeX decoding ...
+[256] bibtex.pm:1519> INFO - Found BibTeX data source 'references.bib'
+[293] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[293] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[293] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'en-US'
+[293] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[296] bbl.pm:676> INFO - Writing 'jp_hyperuniformity.bbl' with encoding 'UTF-8'
+[299] bbl.pm:779> INFO - Output to jp_hyperuniformity.bbl

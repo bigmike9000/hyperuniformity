@@ -1,5 +1,5 @@
 % $ biblatex auxiliary file $
-% $ biblatex bbl format version 3.2 $
+% $ biblatex bbl format version 3.3 $
 % Do not modify the above lines!
 %
 % This is an auxiliary file used by the 'biblatex' package.
@@ -18,8 +18,8 @@
 
 
 \refsection{0}
-  \datalist[entry]{none/global//global/global}
-    \entry{torquato2003local}{article}{}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{torquato2003local}{article}{}{}
       \name{author}{2}{}{%
         {{hash=c3a792c01d1ad328590c8549b2dae94c}{%
            family={Torquato},
@@ -34,10 +34,12 @@
       }
       \strng{namehash}{662c9e615457fa48a642fbd66b4c1885}
       \strng{fullhash}{662c9e615457fa48a642fbd66b4c1885}
+      \strng{fullhashraw}{662c9e615457fa48a642fbd66b4c1885}
       \strng{bibnamehash}{662c9e615457fa48a642fbd66b4c1885}
       \strng{authorbibnamehash}{662c9e615457fa48a642fbd66b4c1885}
       \strng{authornamehash}{662c9e615457fa48a642fbd66b4c1885}
       \strng{authorfullhash}{662c9e615457fa48a642fbd66b4c1885}
+      \strng{authorfullhashraw}{662c9e615457fa48a642fbd66b4c1885}
       \field{sortinit}{1}
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
@@ -53,7 +55,7 @@
       \verb 10.1103/PhysRevE.68.041113
       \endverb
     \endentry
-    \entry{torquato2018hyperuniform}{article}{}
+    \entry{torquato2018hyperuniform}{article}{}{}
       \name{author}{1}{}{%
         {{hash=c3a792c01d1ad328590c8549b2dae94c}{%
            family={Torquato},
@@ -63,12 +65,14 @@
       }
       \strng{namehash}{c3a792c01d1ad328590c8549b2dae94c}
       \strng{fullhash}{c3a792c01d1ad328590c8549b2dae94c}
+      \strng{fullhashraw}{c3a792c01d1ad328590c8549b2dae94c}
       \strng{bibnamehash}{c3a792c01d1ad328590c8549b2dae94c}
       \strng{authorbibnamehash}{c3a792c01d1ad328590c8549b2dae94c}
       \strng{authornamehash}{c3a792c01d1ad328590c8549b2dae94c}
       \strng{authorfullhash}{c3a792c01d1ad328590c8549b2dae94c}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \strng{authorfullhashraw}{c3a792c01d1ad328590c8549b2dae94c}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Physics Reports}
@@ -81,7 +85,100 @@
       \verb 10.1016/j.physrep.2018.03.001
       \endverb
     \endentry
-    \entry{bombieri1986which}{article}{}
+    \entry{shechtman1984metallic}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=34d7cfe55074e304baaa300c7a5dc098}{%
+           family={Shechtman},
+           familyi={S\bibinitperiod},
+           given={Dan},
+           giveni={D\bibinitperiod}}}%
+        {{hash=1159d8bc0f73ebad3d90caa7d1766af2}{%
+           family={Blech},
+           familyi={B\bibinitperiod},
+           given={Ilan},
+           giveni={I\bibinitperiod}}}%
+        {{hash=54e5b950123406e1ecf06d2d09a98777}{%
+           family={Gratias},
+           familyi={G\bibinitperiod},
+           given={Denis},
+           giveni={D\bibinitperiod}}}%
+        {{hash=52dbce452736c579ce3afd0bc41401e2}{%
+           family={Cahn},
+           familyi={C\bibinitperiod},
+           given={John\bibnamedelima W.},
+           giveni={J\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \strng{namehash}{cbeac00863c3199acdfb6e2bb00dce3a}
+      \strng{fullhash}{b855b2494bdaf27a6f142612de23cc12}
+      \strng{fullhashraw}{b855b2494bdaf27a6f142612de23cc12}
+      \strng{bibnamehash}{cbeac00863c3199acdfb6e2bb00dce3a}
+      \strng{authorbibnamehash}{cbeac00863c3199acdfb6e2bb00dce3a}
+      \strng{authornamehash}{cbeac00863c3199acdfb6e2bb00dce3a}
+      \strng{authorfullhash}{b855b2494bdaf27a6f142612de23cc12}
+      \strng{authorfullhashraw}{b855b2494bdaf27a6f142612de23cc12}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Physical Review Letters}
+      \field{number}{20}
+      \field{title}{Metallic phase with long-range orientational order and no translational symmetry}
+      \field{volume}{53}
+      \field{year}{1984}
+      \field{pages}{1951\bibrangedash 1953}
+      \range{pages}{3}
+      \verb{doi}
+      \verb 10.1103/PhysRevLett.53.1951
+      \endverb
+    \endentry
+    \entry{oguz2019substitution}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=fa8823fe1f7971b162b343c26cac4c74}{%
+           family={Oğuz},
+           familyi={O\bibinitperiod},
+           given={Erdal\bibnamedelima C.},
+           giveni={E\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=0ea425e01b11b6bad5abe3c30f9ebfcc}{%
+           family={Socolar},
+           familyi={S\bibinitperiod},
+           given={Joshua\bibnamedelimb E.\bibnamedelimi S.},
+           giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=d6ce498e534c4aa4e853c99ca6da7cb5}{%
+           family={Steinhardt},
+           familyi={S\bibinitperiod},
+           given={Paul\bibnamedelima J.},
+           giveni={P\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=c3a792c01d1ad328590c8549b2dae94c}{%
+           family={Torquato},
+           familyi={T\bibinitperiod},
+           given={Salvatore},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
+      \strng{fullhash}{b2d10ff5b8c94e74610efc15c875ccb9}
+      \strng{fullhashraw}{b2d10ff5b8c94e74610efc15c875ccb9}
+      \strng{bibnamehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
+      \strng{authorbibnamehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
+      \strng{authornamehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
+      \strng{authorfullhash}{b2d10ff5b8c94e74610efc15c875ccb9}
+      \strng{authorfullhashraw}{b2d10ff5b8c94e74610efc15c875ccb9}
+      \field{extraname}{1}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Acta Crystallographica Section A}
+      \field{number}{1}
+      \field{title}{Hyperuniformity and anti-hyperuniformity in one-dimensional substitution tilings}
+      \field{volume}{75}
+      \field{year}{2019}
+      \field{pages}{3\bibrangedash 13}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1107/S2053273318015528
+      \endverb
+    \endentry
+    \entry{bombieri1986which}{article}{}{}
       \name{author}{2}{}{%
         {{hash=e2d4fa0eea805e9de7709f9c548753f4}{%
            family={Bombieri},
@@ -96,12 +193,14 @@
       }
       \strng{namehash}{f2359eace2b1dd1a1535ec6e59949556}
       \strng{fullhash}{f2359eace2b1dd1a1535ec6e59949556}
+      \strng{fullhashraw}{f2359eace2b1dd1a1535ec6e59949556}
       \strng{bibnamehash}{f2359eace2b1dd1a1535ec6e59949556}
       \strng{authorbibnamehash}{f2359eace2b1dd1a1535ec6e59949556}
       \strng{authornamehash}{f2359eace2b1dd1a1535ec6e59949556}
       \strng{authorfullhash}{f2359eace2b1dd1a1535ec6e59949556}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \strng{authorfullhashraw}{f2359eace2b1dd1a1535ec6e59949556}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Journal de Physique}
@@ -115,7 +214,41 @@
       \verb 10.1051/jphyscol:1986303
       \endverb
     \endentry
-    \entry{oguz2017hyperuniform}{article}{}
+    \entry{zachary2009hyperuniform}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=51487091578514609f174b58458db8b0}{%
+           family={Zachary},
+           familyi={Z\bibinitperiod},
+           given={Chase\bibnamedelima E.},
+           giveni={C\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+        {{hash=c3a792c01d1ad328590c8549b2dae94c}{%
+           family={Torquato},
+           familyi={T\bibinitperiod},
+           given={Salvatore},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{a0771583283e1972a1ea759076ea13a1}
+      \strng{fullhash}{a0771583283e1972a1ea759076ea13a1}
+      \strng{fullhashraw}{a0771583283e1972a1ea759076ea13a1}
+      \strng{bibnamehash}{a0771583283e1972a1ea759076ea13a1}
+      \strng{authorbibnamehash}{a0771583283e1972a1ea759076ea13a1}
+      \strng{authornamehash}{a0771583283e1972a1ea759076ea13a1}
+      \strng{authorfullhash}{a0771583283e1972a1ea759076ea13a1}
+      \strng{authorfullhashraw}{a0771583283e1972a1ea759076ea13a1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Statistical Mechanics: Theory and Experiment}
+      \field{title}{Hyperuniformity in point patterns and two-phase heterogeneous media}
+      \field{year}{2009}
+      \field{pages}{P12015}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1088/1742-5468/2009/12/P12015
+      \endverb
+    \endentry
+    \entry{oguz2017hyperuniform}{article}{}{}
       \name{author}{4}{}{%
         {{hash=fa8823fe1f7971b162b343c26cac4c74}{%
            family={Oğuz},
@@ -140,13 +273,15 @@
       }
       \strng{namehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
       \strng{fullhash}{b2d10ff5b8c94e74610efc15c875ccb9}
+      \strng{fullhashraw}{b2d10ff5b8c94e74610efc15c875ccb9}
       \strng{bibnamehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
       \strng{authorbibnamehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
       \strng{authornamehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
       \strng{authorfullhash}{b2d10ff5b8c94e74610efc15c875ccb9}
-      \field{extraname}{1}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \strng{authorfullhashraw}{b2d10ff5b8c94e74610efc15c875ccb9}
+      \field{extraname}{2}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Physical Review B}
@@ -160,52 +295,7 @@
       \verb 10.1103/PhysRevB.95.054119
       \endverb
     \endentry
-    \entry{oguz2019substitution}{article}{}
-      \name{author}{4}{}{%
-        {{hash=fa8823fe1f7971b162b343c26cac4c74}{%
-           family={Oğuz},
-           familyi={O\bibinitperiod},
-           given={Erdal\bibnamedelima C.},
-           giveni={E\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
-        {{hash=0ea425e01b11b6bad5abe3c30f9ebfcc}{%
-           family={Socolar},
-           familyi={S\bibinitperiod},
-           given={Joshua\bibnamedelimb E.\bibnamedelimi S.},
-           giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
-        {{hash=d6ce498e534c4aa4e853c99ca6da7cb5}{%
-           family={Steinhardt},
-           familyi={S\bibinitperiod},
-           given={Paul\bibnamedelima J.},
-           giveni={P\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
-        {{hash=c3a792c01d1ad328590c8549b2dae94c}{%
-           family={Torquato},
-           familyi={T\bibinitperiod},
-           given={Salvatore},
-           giveni={S\bibinitperiod}}}%
-      }
-      \strng{namehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
-      \strng{fullhash}{b2d10ff5b8c94e74610efc15c875ccb9}
-      \strng{bibnamehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
-      \strng{authorbibnamehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
-      \strng{authornamehash}{5ecf3191ac7abaf84f90cbe33c7fb4a6}
-      \strng{authorfullhash}{b2d10ff5b8c94e74610efc15c875ccb9}
-      \field{extraname}{2}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Acta Crystallographica Section A}
-      \field{number}{1}
-      \field{title}{Hyperuniformity and anti-hyperuniformity in one-dimensional substitution tilings}
-      \field{volume}{75}
-      \field{year}{2019}
-      \field{pages}{3\bibrangedash 13}
-      \range{pages}{11}
-      \verb{doi}
-      \verb 10.1107/S2053273318015528
-      \endverb
-    \endentry
-    \entry{klatt2020perturbed}{article}{}
+    \entry{klatt2020perturbed}{article}{}{}
       \name{author}{3}{}{%
         {{hash=74f7285d381c7e0d0e964c7ac00b2882}{%
            family={Klatt},
@@ -225,12 +315,14 @@
       }
       \strng{namehash}{358b256d1a7e1386c9049e2b8ac9a82b}
       \strng{fullhash}{358b256d1a7e1386c9049e2b8ac9a82b}
+      \strng{fullhashraw}{358b256d1a7e1386c9049e2b8ac9a82b}
       \strng{bibnamehash}{358b256d1a7e1386c9049e2b8ac9a82b}
       \strng{authorbibnamehash}{358b256d1a7e1386c9049e2b8ac9a82b}
       \strng{authornamehash}{358b256d1a7e1386c9049e2b8ac9a82b}
       \strng{authorfullhash}{358b256d1a7e1386c9049e2b8ac9a82b}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \strng{authorfullhashraw}{358b256d1a7e1386c9049e2b8ac9a82b}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Physical Review E}
@@ -244,7 +336,7 @@
       \verb 10.1103/PhysRevE.101.032118
       \endverb
     \endentry
-    \entry{torquato2015ensemble}{article}{}
+    \entry{torquato2015ensemble}{article}{}{}
       \name{author}{3}{}{%
         {{hash=c3a792c01d1ad328590c8549b2dae94c}{%
            family={Torquato},
@@ -264,12 +356,14 @@
       }
       \strng{namehash}{db9d6718390ead48362ea5a9af966fa6}
       \strng{fullhash}{db9d6718390ead48362ea5a9af966fa6}
+      \strng{fullhashraw}{db9d6718390ead48362ea5a9af966fa6}
       \strng{bibnamehash}{db9d6718390ead48362ea5a9af966fa6}
       \strng{authorbibnamehash}{db9d6718390ead48362ea5a9af966fa6}
       \strng{authornamehash}{db9d6718390ead48362ea5a9af966fa6}
       \strng{authorfullhash}{db9d6718390ead48362ea5a9af966fa6}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \strng{authorfullhashraw}{db9d6718390ead48362ea5a9af966fa6}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Physical Review X}
