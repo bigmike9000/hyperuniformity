@@ -1,0 +1,44 @@
+=================================================================
+  Investigation 4: Generalized Scaling Metrics
+=================================================================
+
+[1] Period-Doubling (Class II, alpha=1) ...
+    alpha_eigenvalue = 1.000000
+    N=699,051, rho=0.666667  [0.0s]
+    Variance computed  [8.5s]
+    Curve fit: sigma^2 ~ 0.08048*ln(R) + 0.3248  (err C: 0.00407)
+    C_II (from plateau of sigma^2/ln R) = 0.12353 ± 0.01569
+    C_II (from curve fit)               = 0.08048
+
+[2] 0222 Chain (Class III, alpha~0.639) ...
+    alpha_eigenvalue = 0.639062
+    N=1,544,192, rho=0.723606  [0.1s]
+    Variance computed  [11.2s]
+    Curve fit: sigma^2 ~ 0.20854*R^0.3160  -> alpha_num=0.6840  (theory=0.6391)
+    A_III (theory alpha=0.6391) = 0.15109 ± 0.01433
+
+[3] Fibonacci (Class I, reference) ...
+    N=514,229, rho=0.723607  [0.1s]
+    Lambda_bar = 0.19491 ± 0.04910
+
+Generating fig_generalized_metrics.png ...
+  Saved: C:\Users\minec\OneDrive\Desktop\Hyperuniformity\results\figures\fig_generalized_metrics.png
+
+=================================================================
+  SUMMARY: Generalized Hyperuniformity Metrics
+=================================================================
+  Class I  — Fibonacci (alpha=3):
+    Lambda_bar = 0.19491 ± 0.04910  [lim sigma^2(R)]
+
+  Class II — Period-Doubling (alpha=1):
+    C_II  = 0.12353 ± 0.01569  [lim sigma^2(R)/ln R]
+    C_II  = 0.08048  [from curve fit]
+
+  Class III — 0222 Chain (alpha=0.6391):
+    A_III = 0.15109 ± 0.01433  [lim sigma^2(R)/R^{1-alpha}]
+    A_III = 0.20854  [from curve fit]
+    alpha_numeric = 0.6840  (theory = 0.6391)
+=================================================================
+
+Patching quasicrystal_variance.py with compute_generalized_metric() ...
+  Patched successfully.

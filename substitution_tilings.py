@@ -86,6 +86,24 @@ CHAINS = {
         'rules': {'a': 'aac', 'b': 'ac', 'c': 'b'},
         'alphabet': 'abc',  # 3-letter alphabet (cubic irrational)
     },
+    # ----------------------------------------------------------------
+    # Alpha=2 cubic substitution (discovered by systematic search, Week 3)
+    # From Investigation 3: 3x3 Pisot matrix with det=1, complex conjugate
+    # eigenvalue pair -> alpha = 2 EXACTLY (same as URL, but deterministic/ordered)
+    # Characteristic equation from matrix [[0,1,1],[0,0,1],[1,1,1]]:
+    #   x^3 - x^2 - 2x - 1 = 0
+    # Largest eigenvalue theta_1 ~ 2.1479 (real), |lambda_2| = |lambda_3| ~ 0.6823
+    # Alpha = 1 - 2*ln(0.6823)/ln(2.1479) = 2.000 (exact, by det=1 + conjugate pair)
+    # Lambda_bar ~ 0.275 (numerically measured, N~1.8e6)
+    # KEY RESULT: an ordered (deterministic) quasiperiodic tiling with alpha=2,
+    # providing a structural analogue of the URL at the Class I/alpha=2 boundary.
+    # ----------------------------------------------------------------
+    'cubic_alpha2': {
+        'name': 'Cubic alpha=2',
+        'matrix': np.array([[0, 1, 1], [0, 0, 1], [1, 1, 1]]),
+        'rules': {'a': 'bc', 'b': 'c', 'c': 'abc'},
+        'alphabet': 'abc',
+    },
 }
 
 

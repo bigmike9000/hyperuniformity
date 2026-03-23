@@ -134,6 +134,53 @@ def compute_lambda_bar(R_array, variances):
 
 # ============================================================
 # Main
+
+def compute_generalized_metric(R_array, var, class_type, alpha=None):
+    """
+    Compute the generalized hyperuniformity metric for any class.
+
+    For Class I  (alpha > 1): sigma^2(R) bounded -> metric = Lambda_bar = lim sigma^2(R)
+    For Class II (alpha = 1): sigma^2(R) ~ C*ln R -> metric = C_II = lim sigma^2(R)/ln(R)
+    For Class III (0<alpha<1): sigma^2(R) ~ A*R^{1-alpha} -> metric = A_III = lim sigma^2/R^{1-alpha}
+
+    Parameters
+    ----------
+    R_array : ndarray
+        Window half-widths.
+    var : ndarray
+        Number variance sigma^2(R).
+    class_type : str
+        One of 'I', 'II', 'III'.
+    alpha : float, optional
+        Hyperuniformity exponent. Required for class 'III'.
+
+    Returns
+    -------
+    metric : float
+    metric_err : float
+        Std over last 1/3 of R range.
+    normalized_var : ndarray
+        sigma^2(R) divided by the appropriate normalizer.
+    """
+    R = np.asarray(R_array, dtype=float)
+    v = np.asarray(var, dtype=float)
+    start = len(R) // 3
+
+    if class_type == 'I':
+        normalized = v.copy()
+    elif class_type == 'II':
+        normalized = v / np.log(np.maximum(R, 1e-10))
+    elif class_type == 'III':
+        if alpha is None:
+            raise ValueError("alpha is required for Class III metric")
+        normalized = v / np.power(np.maximum(R, 1e-10), 1.0 - alpha)
+    else:
+        raise ValueError(f"Unknown class_type '{class_type}'. Use 'I', 'II', or 'III'.")
+
+    metric     = float(np.mean(normalized[start:]))
+    metric_err = float(np.std(normalized[start:]))
+    return metric, metric_err, normalized
+
 # ============================================================
 
 if __name__ == '__main__':

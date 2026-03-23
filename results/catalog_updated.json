@@ -1,0 +1,50 @@
+{
+  "Stealthy (chi=0.1)": {
+    "class": "I",
+    "class_descriptor": "stealthy_hyperuniform",
+    "chi": 0.1,
+    "K_star": 0.6283185307179586,
+    "rho": 1.0,
+    "lambda_bar": 1.021,
+    "lambda_bar_err": 0.01,
+    "lambda_bar_theory": 1.0132118364233778,
+    "alpha": null,
+    "alpha_note": "Stealthy: S(k)=0 for |k|<K* by design. chi and K* are the correct descriptors, not alpha.",
+    "N_ensemble": 4316,
+    "N_per_config": 2000,
+    "source": "collaborator_ensemble",
+    "density_note": "Lambda_bar invariant under density rescaling in d=1"
+  },
+  "Stealthy (chi=0.2)": {
+    "class": "I",
+    "class_descriptor": "stealthy_hyperuniform",
+    "chi": 0.2,
+    "K_star": 1.2566370614359172,
+    "rho": 1.0,
+    "lambda_bar": 0.526,
+    "lambda_bar_err": 0.005,
+    "lambda_bar_theory": 0.5066059182116889,
+    "alpha": null,
+    "alpha_note": "Stealthy: S(k)=0 for |k|<K* by design. chi and K* are the correct descriptors, not alpha.",
+    "N_ensemble": 4316,
+    "N_per_config": 2000,
+    "source": "collaborator_ensemble",
+    "density_note": "Lambda_bar invariant under density rescaling in d=1"
+  },
+  "Stealthy (chi=0.3)": {
+    "class": "I",
+    "class_descriptor": "stealthy_hyperuniform",
+    "chi": 0.3,
+    "K_star": 1.8849555921538759,
+    "rho": 1.0,
+    "lambda_bar": 0.357,
+    "lambda_bar_err": 0.004,
+    "lambda_bar_theory": 0.3377372788077926,
+    "alpha": null,
+    "alpha_note": "Stealthy: S(k)=0 for |k|<K* by design. chi and K* are the correct descriptors, not alpha.",
+    "N_ensemble": 4316,
+    "N_per_config": 2000,
+    "source": "collaborator_ensemble",
+    "density_note": "Lambda_bar invariant under density rescaling in d=1"
+  }
+}

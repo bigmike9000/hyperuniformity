@@ -1,0 +1,49 @@
+=================================================================
+  Investigation 6: Catalog Cleanup + Density Normalization
+=================================================================
+
+Loading catalog from C:\Users\minec\OneDrive\Desktop\Hyperuniformity\results\catalog.json ...
+  Catalog not found; starting fresh.
+
+[1] Stealthy re-classification ...
+  chi=0.1: Lambda_bar=1.0210, K*=0.6283, theory=1.0132
+  chi=0.2: Lambda_bar=0.5260, K*=1.2566, theory=0.5066
+  chi=0.3: Lambda_bar=0.3570, K*=1.8850, theory=0.3377
+
+[2] Density normalization: verifying Lambda_bar invariance ...
+  Theoretical prediction: Lambda_bar is invariant under density rescaling (d=1)
+  Proof: sigma^2_new(R') = sigma^2_old(R'*rho_old) -> same large-R limit
+
+  Numerical verification on Fibonacci chain ...
+  N_fib=317,811, rho_fib=0.723607
+  Fibonacci Lambda_bar at rho_native=0.723607: 0.199584
+  Fibonacci Lambda_bar at rho=1 (rescaled):          0.199843
+  Difference: 0.000259  (INVARIANT)
+
+[3] Removing alpha=inf for stealthy in catalog ...
+  Stealthy entries found: ['Stealthy (chi=0.1)', 'Stealthy (chi=0.2)', 'Stealthy (chi=0.3)']
+  Updated: Stealthy (chi=0.1)
+  Updated: Stealthy (chi=0.2)
+  Updated: Stealthy (chi=0.3)
+
+  Saved updated catalog: C:\Users\minec\OneDrive\Desktop\Hyperuniformity\results\catalog_updated.json
+
+[4] Generating updated Lambda_bar ranking figure ...
+  Saved: C:\Users\minec\OneDrive\Desktop\Hyperuniformity\results\figures\fig_catalog_updated.png
+
+=================================================================
+  SUMMARY: Catalog Cleanup
+=================================================================
+
+  Stealthy entries updated:
+    Stealthy (chi=0.1): Lambda_bar=1.0210, K*=0.6283, alpha=None (not a power law)
+    Stealthy (chi=0.2): Lambda_bar=0.5260, K*=1.2566, alpha=None (not a power law)
+    Stealthy (chi=0.3): Lambda_bar=0.3570, K*=1.8850, alpha=None (not a power law)
+
+  Density normalization:
+    Lambda_bar is INVARIANT under density rescaling in d=1
+    Fibonacci verification: native=0.19958, rho=1=0.19984
+    Difference: 0.00026
+
+  Catalog saved to: C:\Users\minec\OneDrive\Desktop\Hyperuniformity\results\catalog_updated.json
+=================================================================

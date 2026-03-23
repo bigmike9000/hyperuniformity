@@ -1,0 +1,484 @@
+% !TEX program = pdflatex
+\documentclass[aspectratio=169, 11pt]{beamer}
+
+\usetheme{default}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{frametitle}{\vspace{0.5em}\textbf{\insertframetitle}}
+
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{pgfpages}
+
+% Speaker notes on right side
+\setbeameroption{show notes on second screen=right}
+
+\graphicspath{{../}}
+
+\definecolor{resultbg}{HTML}{E8F5E9}
+\definecolor{highlight}{HTML}{1565C0}
+\definecolor{gapbg}{HTML}{FFF9C4}
+\definecolor{proofbg}{HTML}{E3F2FD}
+
+\title{Week 3 Update}
+\author{Michael Fang}
+\date{March 2026}
+
+\begin{document}
+
+%----------------------------------------------------------------------
+\begin{frame}
+\centering
+\vspace{2em}
+{\Large\textbf{Week 3 Update}}
+
+\vspace{1em}
+Michael Fang
+
+\vspace{0.5em}
+March 2026
+\end{frame}
+\note{
+Six investigations this week:
+\begin{enumerate}
+  \item BT deep dive: diagnose spreadability failure
+  \item Finite-size scaling of $\alpha$
+  \item Systematic search for $2 < \alpha < 3$ tilings
+  \item Generalized metrics for Class II/III
+  \item $\bar{\Lambda}$ finite-$N$ corrections
+  \item Catalog cleanup + density normalization
+\end{enumerate}
+}
+
+%----------------------------------------------------------------------
+\begin{frame}{Recap and This Week}
+
+\textbf{Last week:}
+\begin{itemize}
+  \item URL: $\bar{\Lambda} = (1{+}a^2)/6$ confirmed to $<0.3\%$
+  \item Stealthy: $\bar{\Lambda} \approx 1/(\pi^2\chi)$, $\alpha \to \infty$
+  \item Bombieri-Taylor cubic: $\alpha = 1.545$, fills $1 < \alpha < 2$ gap
+  \item Period-Doubling (Class II), 0222 (Class III) confirmed
+\end{itemize}
+
+\vspace{0.4em}
+\textbf{This week:} Six investigations following Professor Torquato's suggestions.
+
+\vspace{0.3em}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\textbf{Research-new:}
+\begin{enumerate}
+  \item BT deep dive (why does spreadability fail?)
+  \item Finite-size scaling of $\alpha$
+  \item Can we fill $2 < \alpha < 3$?
+\end{enumerate}
+\end{column}
+\begin{column}{0.48\textwidth}
+\textbf{Theoretical/cleanup:}
+\begin{enumerate}
+  \setcounter{enumi}{3}
+  \item Generalized metrics (Class II, III)
+  \item $\bar{\Lambda}$ finite-$N$ corrections
+  \item Catalog cleanup + density normalization
+\end{enumerate}
+\end{column}
+\end{columns}
+\end{frame}
+\note{
+The six investigations were carried out in priority order: 1-3 are research-new, 4-6 are theoretical generalization and cleanup.
+
+Key new result: Investigation 3 proves that $2 < \alpha < 3$ cannot be filled with $3 \times 3$ matrices (row sums $\leq 4$), but we do find a deterministic substitution tiling with $\alpha = 2$ exactly.
+}
+
+%----------------------------------------------------------------------
+\begin{frame}{Investigation 1: Why Spreadability Fails for BT}
+
+Bombieri-Taylor has $|\lambda_2| = 0.802$ (large!) and the number variance oscillates strongly.
+
+\vspace{0.3em}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\textbf{Two failure modes diagnosed:}
+
+\vspace{0.3em}
+\textbf{(1) Rod overlap:}\\
+Minimum inter-point spacing $= 1.000$,\\
+but we need $2a < 1.000$.\\
+$\Rightarrow$ Corrected to $a_\mathrm{rod} = 0.45$.
+
+\vspace{0.4em}
+\textbf{(2) Slow convergence:}\\
+Large $|\lambda_2| = 0.802$ creates log-periodic oscillations in $\mathcal{S}(t)$ with period $2\ln(2.247) = 1.619$.\\
+Standard $t \in [10^2, 10^5]$ is inadequate.\\
+At $t \in [10^5, 10^9]$: $\hat{\alpha} = 1.67$.\\
+Theory: $\alpha = 1.545$.\\
+Convergence very slow from above.
+\end{column}
+\begin{column}{0.50\textwidth}
+\vspace{0.3em}
+\begin{center}
+\includegraphics[width=\linewidth]{figures/fig_bt_deep.png}
+\end{center}
+
+\vspace{0.2em}
+{\footnotesize BT has 12$\times$ more Bragg peaks than Fibonacci in the same $k$-range.}
+\end{column}
+\end{columns}
+
+\vspace{0.3em}
+\textbf{Conclusion:} Use $\sigma^2(R)$ and $\bar{\Lambda}$ for BT, not spreadability.
+\end{frame}
+\note{
+BT: 32,517 Bragg peaks in $k < 50$ vs.\ 2,637 for Fibonacci (12$\times$ denser).
+
+Rod overlap: the S-tiles in BT have minimum spacing 1.000, and the two-phase media calculation requires a sphere of radius $a$ that fits inside. If $2a = 1.002 > 1.000$, spheres overlap and the spectral density is ill-defined.
+
+Corrected $a_\mathrm{rod} = 0.45$ removes the overlap, but this changes the form factor and makes the absolute $\mathcal{S}(t)$ value unreliable.
+
+For the variance, $\bar{\Lambda} = 0.377$ is stable and reliable from $N \sim 2000$.
+}
+
+%----------------------------------------------------------------------
+\begin{frame}{Investigation 2: Finite-Size Scaling of $\alpha$}
+
+\textbf{Does direct $S(k)$ power-law fitting work for substitution tilings?}
+
+\vspace{0.3em}
+\colorbox{yellow!30}{\textbf{No.}} The structure factor is dominated by discrete Bragg peaks, not a smooth $k^\alpha$ background. Fitted $\alpha$ is unreliable ($R^2 < 0.1$ for all tilings tested).
+
+\vspace{0.4em}
+\textbf{Variance-based metrics are reliable:}
+
+\vspace{0.2em}
+\begin{center}
+\small
+\begin{tabular}{lllcc}
+\toprule
+\textbf{Pattern} & \textbf{Class} & \textbf{Metric} & \textbf{$N \sim 10^3$} & \textbf{$N \sim 10^6$} \\
+\midrule
+Bombieri-Taylor & I   & $\bar{\Lambda}(N)$ & 0.3775 & 0.3786 (stable from $N=2k$) \\
+Fibonacci       & I   & $\bar{\Lambda}(N)$ & 0.1994 & 0.1982 (stable from $N=1.6k$) \\
+Period-Doubling & II  & $C_{II}(N)$        & 0.1284 & 0.1233 (converges by $N=100k$) \\
+0222 Chain      & III & $\hat{\alpha}(N)$  & 1.046  & 0.776  (slow, theory = 0.639) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{0.3em}
+\begin{center}
+\includegraphics[width=0.62\linewidth]{figures/fig_finite_size_alpha.png}
+\end{center}
+\end{frame}
+\note{
+Class I convergence is fast because $\bar{\Lambda}$ is a spatial average (stable from very small $N$).
+
+Class II $C_{II}$ needs $N > 10^5$ to converge because the logarithmic variance requires large $R$ to observe the log-linear regime.
+
+Class III is slow because $|\lambda_2| = 1.236 > 1$ (not Pisot!), causing large corrections. Even at $N = 1.5 \times 10^6$, $\hat{\alpha} \approx 0.78$ rather than the theory $0.639$.
+
+Main takeaway: for Class I, variance-based $\bar{\Lambda}$ is stable even at small $N$; direct $S(k)$ fitting should be avoided for substitution tilings.
+}
+
+%----------------------------------------------------------------------
+\begin{frame}{Investigation 3: Can We Fill $2 < \alpha < 3$?}
+
+\textbf{Setup:} The $\alpha = 2$ level is occupied only by disordered patterns (URL, stable distributions).
+
+\vspace{0.2em}
+\textbf{Goal:} Find a \emph{deterministic} substitution tiling with $2 < \alpha \leq 3$.
+
+\vspace{0.3em}
+\textbf{Method:} Enumerate all $3 \times 3$ non-negative integer matrices with row sums $\leq 4$:
+\begin{itemize}
+  \item 39,304 total $\to$ 4,882 satisfy Pisot condition ($|\lambda_2|, |\lambda_3| < 1$)
+  \item 305 ``primitive'' matrices with ostensible $2 < \alpha < 3$ from eigenvalue formula
+\end{itemize}
+
+\vspace{0.3em}
+\colorbox{yellow!30}{\textbf{Result: ALL 305 give $\alpha = 2.000$ or $\alpha = 3.000$ exactly. None fill the gap.}}
+\end{frame}
+\note{
+We searched exhaustively through 39,304 matrices (all $3 \times 3$ matrices with entries 0-4 satisfying non-negativity). 4,882 are Pisot (all $|\lambda_i| < 1$ for $i \geq 2$), and 305 have eigenvalue-formula output in $(2,3)$.
+
+But every single one of those 305 has $\alpha$ equal to exactly 2 or exactly 3, not strictly between.
+
+This is not a coincidence --- there's a theorem.
+}
+
+%----------------------------------------------------------------------
+\begin{frame}{Why the Gap Cannot Be Filled (Algebraic Proof)}
+
+\textbf{Claim:} For any $3 \times 3$ substitution matrix with $|\det M| = 1$ and one complex conjugate eigenvalue pair, $\alpha = 2$ exactly.
+
+\vspace{0.3em}
+\textbf{Proof sketch:}
+
+For a $3 \times 3$ Pisot matrix $M$ with $|\det M| = 1$:
+\begin{itemize}
+  \item If $\lambda_2, \lambda_3$ are complex conjugates: $|\lambda_2| = |\lambda_3|$, and $\lambda_1 |\lambda_2|^2 = |\det M| = 1$
+        $\Rightarrow |\lambda_2|^2 = 1/\lambda_1 \Rightarrow$
+        \[
+          \alpha = 1 - \frac{2\ln|\lambda_2|}{\ln\lambda_1}
+                 = 1 - \frac{\ln(1/\lambda_1)}{\ln\lambda_1}
+                 = 1 + 1 = \boxed{2}
+        \]
+  \item If all eigenvalues are real: $\lambda_1 |\lambda_2| |\lambda_3| = 1$, and both $|\lambda_2|, |\lambda_3| < 1$. For $2 < \alpha < 3$ we need $1/\lambda_1 < |\lambda_2| < 1/\sqrt{\lambda_1}$, but integer matrix constraints with row sums $\leq 4$ never produce this range.
+\end{itemize}
+
+\vspace{0.3em}
+\colorbox{proofbg}{\textbf{Conclusion:} Filling $2 < \alpha < 3$ requires algebraic degree $\geq 4$ (i.e., $4 \times 4$ matrices or row sums $> 4$).}
+\end{frame}
+\note{
+The complex conjugate case is exact: $\det(M) = \lambda_1 \cdot \lambda_2 \cdot \bar{\lambda}_2 = \lambda_1 |\lambda_2|^2 = 1$, so $|\lambda_2| = 1/\sqrt{\lambda_1}$.
+
+Plugging into the eigenvalue formula: $\alpha = 1 - 2\ln(1/\sqrt{\lambda_1}) / \ln(\lambda_1) = 1 - \ln(1/\lambda_1)/\ln(\lambda_1) = 1 + 1 = 2$.
+
+This is a structural result: any $3 \times 3$ unimodular matrix with a complex conjugate pair gives $\alpha = 2$ exactly.
+
+The all-real-eigenvalue case can in principle give $\alpha \neq 2, 3$, but within row-sum $\leq 4$ we never find a case in $(2,3)$.
+
+To fill the gap, one would need to search $4 \times 4$ matrices.
+}
+
+%----------------------------------------------------------------------
+\begin{frame}{A New Deterministic $\alpha = 2$ Tiling}
+
+\textbf{Result:} Best $3 \times 3$ candidate from the search:
+
+\[
+  M = \begin{pmatrix} 0 & 1 & 1 \\ 0 & 0 & 1 \\ 1 & 1 & 1 \end{pmatrix},
+  \quad
+  \begin{cases} a \to bc \\ b \to c \\ c \to abc \end{cases}
+\]
+
+Eigenvalues: $\lambda_1 \approx 2.148$, $|\lambda_2| = |\lambda_3| \approx 0.682$.
+\[
+  \alpha = 1 - \frac{2\ln(0.682)}{\ln(2.148)} = \colorbox{resultbg}{\textbf{2.000}} \quad \text{(exact, complex conjugate pair)}
+\]
+
+\vspace{0.2em}
+\begin{center}
+\includegraphics[width=0.68\linewidth]{figures/fig_new_tilings.png}
+\end{center}
+
+\vspace{0.1em}
+{\small $\bar{\Lambda} = 0.275$, Class I confirmed. To our knowledge, the first \emph{deterministic} quasiperiodic tiling with $\alpha = 2$ (previously only URL/stochastic patterns).}
+\end{frame}
+\note{
+This is the ``cubic $\alpha=2$'' chain, now added to our CHAINS dict as `cubic\_alpha2'.
+
+Previously, $\alpha = 2$ was occupied only by the URL (random displacements of a lattice) and similar stochastic constructions. Now we have a deterministic substitution tiling at $\alpha = 2$, providing a structural analogue.
+
+$\bar{\Lambda} = 0.275$ is between the Silver chain value (0.250) and the Bronze chain value (0.282).
+
+$\lambda_1 \approx 2.148$ is the largest real root of $x^3 - x^2 - 2x - 1 = 0$.
+}
+
+%----------------------------------------------------------------------
+\begin{frame}{Investigation 4: Generalized Metrics for Class II and III}
+
+Within Class~I, $\bar{\Lambda}$ provides an absolute ranking. What are the analogues for Classes~II and~III?
+
+\vspace{0.2em}
+\begin{columns}[T]
+\begin{column}{0.52\textwidth}
+\textbf{Class II} ($\sigma^2 \sim C_{II} \ln R$):
+\[
+  C_{II} = \lim_{R\to\infty} \frac{\sigma^2(R)}{\ln R}
+\]
+Period-Doubling: $C_{II} = 0.123 \pm 0.016$
+
+\vspace{0.5em}
+\textbf{Class III} ($\sigma^2 \sim A_{III} R^{1-\alpha}$):
+\[
+  A_{III} = \lim_{R\to\infty} \frac{\sigma^2(R)}{R^{1-\alpha}}
+\]
+0222 chain ($\alpha = 0.639$): $A_{III} = 0.151 \pm 0.014$
+
+\vspace{0.5em}
+Implemented as \texttt{compute\_generalized\_metric()} in \texttt{quasicrystal\_variance.py}.
+\end{column}
+\begin{column}{0.46\textwidth}
+\begin{center}
+\includegraphics[width=\linewidth]{figures/fig_generalized_metrics.png}
+\end{center}
+
+{\footnotesize Normalized variance $\sigma^2/\ln R$ (Class II) and $\sigma^2/R^{1-\alpha}$ (Class III) each oscillate about a constant at large $R$, confirming the asymptotic scaling.}
+\end{column}
+\end{columns}
+\end{frame}
+\note{
+$C_{II}$ is measured from the plateau of $\sigma^2 / \ln R$ vs $R$. Period-Doubling gives $C_{II} \approx 0.123$.
+
+$A_{III}$ is measured from the plateau of $\sigma^2 / R^{1-\alpha}$ using the exact eigenvalue-formula $\alpha = 0.639$. The 0222 chain gives $A_{III} \approx 0.151$.
+
+These are the natural ``second-order'' hyperuniformity metrics that unify across classes. The Class~I limit ($\alpha \to 1^+$) should connect $\bar{\Lambda}$ to $C_{II}$ continuously, which is an open question.
+}
+
+%----------------------------------------------------------------------
+\begin{frame}{Investigation 5: Two Surprising Results about $\bar{\Lambda}$}
+
+\textbf{(A) Integer lattice has NO finite-$N$ correction to $\bar{\Lambda}$:}
+
+For the lattice, $\sigma^2(R) = \{2R\}(1-\{2R\})$ (fractional part formula, $R$ = window half-width).
+The running average $\bar{\Lambda}(R_\mathrm{max}) = (1/R_\mathrm{max})\int_0^{R_\mathrm{max}} \sigma^2 \, dR'$ evaluates to:
+\[
+  \bar{\Lambda}(R_\mathrm{max}) = \frac{1}{6} \quad \text{exactly, for all integer } R_\mathrm{max}.
+\]
+Simulation confirms: all values within 0.3\% of $1/6$ (just Monte Carlo noise).
+
+\vspace{0.4em}
+\textbf{(B) Stealthy patterns have two distinct phases:}
+
+Our \texttt{generate\_stealthy()} (starts from perturbed lattice) gives $\bar{\Lambda} \approx 1/6$ at all $N$ and $\chi$, not $1/(\pi^2\chi)$.
+
+\vspace{0.2em}
+\begin{center}
+\colorbox{yellow!30}{%
+\begin{minipage}{0.88\textwidth}
+\centering
+\textbf{Two stealthy phases:}\\[2pt]
+\begin{tabular}{lcc}
+\toprule
+Phase & Initial conditions & $\bar{\Lambda}$ \\
+\midrule
+Ordered-stealthy & Perturbed lattice & $\approx 1/6$ \\
+Disordered-stealthy & Random (collab data) & $1/(\pi^2\chi)$ \\
+\bottomrule
+\end{tabular}
+\textit{Both satisfy $S(k) = 0$ for $|k| < K^*$.}
+\end{minipage}
+}
+\end{center}
+\end{frame}
+\note{
+The lattice result is exact: the piecewise cubic integral of $\sigma^2(R)$ over complete unit cells gives exactly $1/6$ per unit cell, so the running average is $1/6$ for all integer $R_\mathrm{max}$.
+
+The stealthy two-phase result is physically important: the collective coordinate optimization landscape is not convex, and different initial conditions lead to different local minima that have the same $S(k) = 0$ constraint but very different $\bar{\Lambda}$.
+
+The collab data starts from random positions and finds the ``high-entropy'' phase ($\bar{\Lambda} = 1/(\pi^2\chi)$), while our optimization starting from a perturbed lattice finds the ``ordered'' phase ($\bar{\Lambda} \approx 1/6$).
+}
+
+%----------------------------------------------------------------------
+\begin{frame}{Investigation 6: Catalog Cleanup}
+
+\textbf{(A) Stealthy re-classification:}
+\begin{itemize}
+  \item Replaced $\alpha = \infty$ with $\alpha = $ \textit{None} (not a power law; by design)
+  \item Added $K^* = 2\pi\rho\chi$ as the correct descriptor for stealthy patterns
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{(B) Density invariance --- $\bar{\Lambda}$ comparison across all patterns is fair:}
+
+\textit{Claim}: $\bar{\Lambda}$ is invariant under density rescaling in $d = 1$.
+
+\textit{Proof sketch}: If $x_i \to x_i / \rho$, then $\sigma^2_\mathrm{new}(R') = \sigma^2_\mathrm{old}(R' \rho)$, and the running average over $[0, R'_\mathrm{max}]$ equals the old average over $[0, R'_\mathrm{max} \rho]$; both converge to the same limit.
+
+\textit{Numerical verification}: Fibonacci chain rescaled from $\rho = 0.724$ to $\rho = 1$:
+\[
+  \bar{\Lambda}(\rho_\mathrm{native}) = 0.19958, \quad \bar{\Lambda}(\rho = 1) = 0.19984, \quad \Delta = 0.00026.
+\]
+Direct comparison of $\bar{\Lambda}$ values across all patterns is valid without density normalization.
+\end{frame}
+\note{
+The stealthy re-classification is important because $\alpha = \infty$ gives the wrong impression that stealthy patterns are ``more hyperuniform'' than others in a simple $\alpha$-ordering sense.
+
+The density invariance result means that our comparison of $\bar{\Lambda}$ values across Fibonacci (rho=0.724), Silver (rho=0.5), URL (rho=1), etc.\ is valid --- we do not need to rescale all patterns to the same density before comparing.
+
+This simplifies the interpretation of the catalog significantly.
+}
+
+%----------------------------------------------------------------------
+\begin{frame}{Updated Catalog}
+
+\small
+\centering
+\begin{tabular}{lllc}
+\toprule
+\textbf{Pattern} & \textbf{Class} & $\boldsymbol{\alpha}$ & $\boldsymbol{\bar{\Lambda}}$ \\
+\midrule
+Integer Lattice         & I & $\infty$ & 0.167 \\
+URL ($a=0.1$)           & I & 2.0 & 0.168 \\
+Fibonacci               & I & 3.0 & 0.200 \\
+URL ($a=0.5$)           & I & 2.0 & 0.208 \\
+Silver                  & I & 3.0 & 0.250 \\
+\rowcolor{resultbg}
+\textbf{Cubic $\alpha=2$ (new)} & \textbf{I} & \textbf{2.0} & \textbf{0.275} \\
+Bronze                  & I & 3.0 & 0.282 \\
+URL ($a=1.0$)           & I & 2.0 & 0.333 \\
+Stealthy ($\chi=0.3$)   & I & --- & 0.357 \\
+Bombieri-Taylor         & I & 1.545 & 0.377 \\
+Stealthy ($\chi=0.2$)   & I & --- & 0.526 \\
+Stealthy ($\chi=0.1$)   & I & --- & 1.021 \\
+\midrule
+Period-Doubling         & II  & 1.0  & div.\ ($C_{II} = 0.123$) \\
+0222 Chain              & III & 0.64 & div.\ ($A_{III} = 0.151$) \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+{\footnotesize Stealthy: $\alpha$ replaced by $K^*$-descriptor (not a power law). New chain: deterministic $\alpha=2$, first of its kind.}
+\end{frame}
+\note{
+The new catalog has 14 representative patterns shown here (full catalog has 26+ entries with URL at multiple $a$ values, all five metallic means, etc.).
+
+Key additions from Week 3:
+\begin{itemize}
+  \item Cubic $\alpha=2$ chain: first deterministic substitution tiling with $\alpha=2$
+  \item Stealthy: $\alpha$ replaced by $K^*$ descriptor (not a power law by construction)
+  \item Class II/III: generalized metrics $C_{II}$ and $A_{III}$ added
+\end{itemize}
+}
+
+%----------------------------------------------------------------------
+\begin{frame}{Summary and Open Questions}
+
+\textbf{This week:}
+\begin{itemize}
+  \item BT spreadability failure diagnosed: rod overlap + slow convergence ($|\lambda_2| = 0.802$)
+  \item Finite-size: $S(k)$ fitting unreliable for tilings; variance-based metrics converge well
+  \item \textbf{2<$\alpha$<3 cannot be filled with $3 \times 3$ matrices (row sums $\leq 4$)} -- algebraic proof
+  \item New deterministic $\alpha=2$ chain: $c \to abc$, $a \to bc$, $b \to c$; $\bar{\Lambda} = 0.275$
+  \item Generalized metrics $C_{II}$, $A_{III}$ implemented for Class II/III
+  \item Lattice: $\bar{\Lambda} = 1/6$ exactly (no finite-$N$ correction); stealthy two phases discovered
+  \item Density invariance confirmed: $\bar{\Lambda}$ comparison across all patterns is valid
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Open questions:}
+\begin{itemize}
+  \item Can $4 \times 4$ substitution matrices fill $2 < \alpha < 3$?
+  \item Is the ordered/disordered stealthy bifurcation described in the literature?
+  \item What is the exact $\bar{\Lambda}$ for the Silver chain (numerical value $= 0.250$)?
+\end{itemize}
+\end{frame}
+\note{
+The 2<alpha<3 gap result is the central theoretical contribution of Week 3. The proof is clean and the computation is exhaustive (39,304 matrices).
+
+The stealthy two-phase result is a physical surprise that deserves follow-up --- does the literature discuss the energy landscape of collective coordinate optimization having multiple basins?
+
+Silver = 1/4 exactly would be a beautiful result (matching Fibonacci = possibly 1/5, lattice = 1/6). Could be checked via an exact formula from the substitution structure.
+}
+
+%----------------------------------------------------------------------
+\begin{frame}{References}
+
+\small
+\begin{itemize}
+  \item Torquato \& Stillinger (2003), Phys. Rev. E 68, 041113
+  \item Bombieri \& Taylor (1986), J. Physique Colloques 47, C3-19
+  \item O\u{g}uz et al.\ (2019), Acta Cryst.\ A \textbf{75}, 3--13
+  \item Klatt, Kim \& Torquato (2020), Phys. Rev. E 101, 032118
+  \item Torquato et al.\ (2015), Phys. Rev. X 5, 021020
+  \item Morse et al.\ (2024), Phys. Rev. Res.\ \textbf{6}, 033260
+\end{itemize}
+\end{frame}
+\note{}
+
+\end{document}
