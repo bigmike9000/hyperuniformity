@@ -72,7 +72,7 @@ March 2026
         Silver              & I   & 3.0      & 0.250 \\
         Bronze              & I   & 3.0      & 0.282 \\
         URL ($a=1$)         & I   & 2.0      & 0.333 \\
-        Stealthy ($\chi=0.3$) & I & $\infty$ & 0.357 \\
+        Stealthy ($\chi=0.3$) & I & ---      & 0.357 \\
         \rowcolor{resultbg}
         Bombieri-Taylor     & I   & 1.545    & 0.377 \\
         \midrule
@@ -134,7 +134,7 @@ March 2026
 \end{frame}
 \note{
   Rod overlap: minimum BT spacing $=1.000$; need $2a<1.000$; corrected to $a_\text{rod}=0.45$.
-  Fibonacci has $|\lambda_2|=0.445=1/\theta_1$, much smaller, so its spreadability converges well.
+  Fibonacci has $|\lambda_2|=0.618=1/\varphi$, much smaller than BT's 0.802, so its spreadability converges faster.
   The variance-based $\bar\Lambda=0.377$ is reliable and stable.
 }
 
@@ -238,7 +238,8 @@ March 2026
   \end{minipage}}
 \end{frame}
 \note{
-  All primitive $3\times 3$ substitution matrices satisfy $|\det M|=1$ (Pisot-Vijayaraghavan property).
+  The Pisot-Vijayaraghavan condition requires $|\lambda_i|<1$ for $i\geq 2$ (pure Bragg diffraction).
+  Among the 4,882 Pisot matrices found, those with complex-conjugate pairs all satisfy $|\det M|=1$ (unimodular).
   The complex-conjugate case: $\det M=\lambda_1\cdot\lambda_2\cdot\bar\lambda_2=\lambda_1|\lambda_2|^2=1$,
   so $|\lambda_2|=1/\sqrt{\lambda_1}$ exactly, giving $\alpha=2$ regardless of the specific value of $\lambda_1$.
   The all-real case can in principle yield $\alpha\neq 2,3$, but within row sums $\leq 4$ no such case exists.
@@ -256,21 +257,20 @@ March 2026
       {\footnotesize Normalized variances plateau at large $R$, confirming asymptotic scaling.}
     \end{column}
     \begin{column}{0.44\textwidth}
-      $\bar\Lambda$ is finite only for Class~I.\smallskip
+      $\bar\Lambda$ is finite only for Class~I.
 
-      \textbf{Class II}\; ($\sigma^2\sim C_{II}\ln R$):
+      \medskip
+      \textbf{Class II} ($\sigma^2\sim C_{II}\ln R$):
       \[
         C_{II} = \lim_{R\to\infty}\frac{\sigma^2(R)}{\ln R}
       \]
-      \vspace{-0.5em}
       Period-Doubling: \fcolorbox{black}{resultbg}{$C_{II}=0.123\pm 0.016$}
 
-      \medskip
-      \textbf{Class III}\; ($\sigma^2\sim A_{III}\,R^{1-\alpha}$):
+      \bigskip
+      \textbf{Class III} ($\sigma^2\sim A_{III}\,R^{1-\alpha}$):
       \[
         A_{III} = \lim_{R\to\infty}\frac{\sigma^2(R)}{R^{1-\alpha}}
       \]
-      \vspace{-0.5em}
       0222 ($\alpha=0.639$): \fcolorbox{black}{resultbg}{$A_{III}=0.151\pm 0.014$}
     \end{column}
   \end{columns}
