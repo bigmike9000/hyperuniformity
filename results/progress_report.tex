@@ -63,6 +63,267 @@ taken place to date, yielding 27 characterized patterns and a Junior Paper
 (§1--§3 complete, 9 pages; results sections pending).
 
 %==============================================================================
+\section{Literature Review}
+%==============================================================================
+
+\noindent This section surveys the primary literature that motivates, informs, and
+contextualizes the project. Twelve papers are reviewed, organized thematically.
+
+%------------------------------------------------------------------------------
+\subsection{Foundations of Hyperuniformity}
+%------------------------------------------------------------------------------
+
+\noindent\textbf{Torquato \& Stillinger (2003).}
+The foundational paper defines \textbf{hyperuniformity} as the condition
+$S(\mathbf{k}\to\mathbf{0}) = 0$, where $S(\mathbf{k})$ is the structure factor.
+For a $d$-dimensional point pattern the \textbf{number variance}
+$\sigma^2(R) \equiv \langle N(R)^2\rangle - \langle N(R)\rangle^2$
+grows at most as the surface area $R^{d-1}$ for large $R$, in contrast to the
+$R^d$ growth of a Poisson process.
+Three universality classes are introduced: Class~I ($\alpha>1$, bounded $\bar\Lambda$),
+Class~II ($\alpha=1$, $\sigma^2\sim C_{II}\ln R$), Class~III ($0<\alpha<1$,
+$\sigma^2\sim A_{III}R^{1-\alpha}$).
+
+The \textbf{surface-area coefficient}
+\[
+  \bar\Lambda = \lim_{R\to\infty} \frac{\sigma^2(R)}{2\rho R^{d-1}A_1(R)}
+\]
+(with $A_1(R)$ the window surface area) serves as an order metric for Class~I patterns.
+For $d=1$ the integer lattice achieves
+$\bar\Lambda_{\min} = 1/6$, derived from the exact formula
+$\sigma^2(R) = \{R\}(1-2\{R\})$ where $\{R\}$ is the fractional part of $R$.
+In higher dimensions, Bravais lattices minimize $\bar\Lambda$ among periodic patterns.
+The paper establishes the conceptual framework adopted throughout this project.
+
+\vspace{0.4em}
+\noindent\textbf{Zachary \& Torquato (2009).}
+This paper extends hyperuniformity to \textbf{two-phase heterogeneous media}.
+In this setting the relevant quantity is the \textbf{spectral density}
+$\tilde\chi_V(\mathbf{k})$ --- the Fourier transform of the two-point correlation
+of the indicator function $I(\mathbf{x})$ for phase 2.
+Hyperuniformity now requires $\tilde\chi_V(\mathbf{k}\to\mathbf{0}) = 0$, in direct
+analogy with $S(\mathbf{k}\to\mathbf{0}) = 0$ for point patterns.
+
+A central technical contribution is the \textbf{theta-function (Bragg-sum) method}
+for computing $\bar\Lambda$ analytically from the Fourier-space structure of the
+pattern: Bragg peaks at reciprocal-lattice vectors $\mathbf{k}_j$ contribute to
+$\sigma^2(R)$ through overlap integrals of the window function.
+This method is applied to tabulate $\bar\Lambda$ for $d=1,2,3$ Bravais lattices and
+one-dimensional quasicrystals.
+The Fibonacci chain result \textbf{$\bar\Lambda = 0.20110$} (Table~1 of that paper)
+serves as the primary literature benchmark for this project's numerical validation.
+
+%------------------------------------------------------------------------------
+\subsection{Substitution Tilings: Classification}
+%------------------------------------------------------------------------------
+
+\noindent\textbf{Öguz, Socolar, Steinhardt, Torquato (2019).}
+This paper provides a comprehensive classification of hyperuniformity and
+\textbf{anti-hyperuniformity} in all one-dimensional substitution tilings.
+Given a substitution matrix $\mathbf{M}$ with Perron--Frobenius eigenvalue $\lambda_1$
+and second-largest eigenvalue $\lambda_2$, the \textbf{eigenvalue formula}
+\[
+  \alpha = 1 - \frac{2\ln|\lambda_2|}{\ln\lambda_1}
+\]
+expresses the hyperuniformity exponent entirely in terms of the matrix spectrum.
+The exponent $\alpha$ fills $[-1,3]$ densely over the space of all valid substitution
+matrices, including anti-hyperuniform cases ($\alpha < 0$) where the structure factor
+\emph{diverges} at the origin.
+
+The Pisot--Vijayaraghavan (PV) property --- $|\lambda_i|<1$ for all $i\geq2$ ---
+is shown to be necessary and sufficient for the existence of \textbf{Bragg peaks}
+(non-zero weight in the diffraction measure at isolated $k$-values).
+Non-Pisot substitutions lack Bragg peaks entirely, and their diffraction measure is
+purely continuous; $Z(k)$ then decays faster than any power law, placing them
+outside the $\alpha$-classification scheme.
+Concrete results: Fibonacci $\alpha=3$ (Class~I), Period-Doubling $\alpha=1$ (Class~II).
+These two cases are used throughout this project.
+
+\vspace{0.4em}
+\noindent\textbf{Bombieri \& Taylor (1986).}
+Although no PDF is available, this paper is a key reference: the authors studied the
+\emph{cubic} 3-letter substitution $a\to aac$, $b\to ac$, $c\to b$ (equivalently
+encoded by a $3\times3$ integer matrix) and showed that it produces a well-defined
+diffraction pattern with Bragg peaks.
+With $\lambda_1 \approx 2.247$ and $|\lambda_2| \approx 0.802$ the eigenvalue formula
+gives $\alpha = 1.545$, the \textbf{first known example filling the gap $1<\alpha<2$}.
+This chain was reproduced in the present project with $\bar\Lambda = 0.377$.
+
+%------------------------------------------------------------------------------
+\subsection{Quasicrystals and Projection Methods}
+%------------------------------------------------------------------------------
+
+\noindent\textbf{Shechtman, Blech, Gratias, Cahn (1984).}
+The experimental discovery of an Al-Mn alloy with icosahedral diffraction symmetry ---
+forbidden by classical crystallography --- launched the field of quasicrystals.
+Bragg peaks appear at irrational wavevector ratios, implying long-range order without
+periodicity. This motivates the theoretical framework of \emph{cut-and-project}
+(projection) methods in which a higher-dimensional periodic lattice is projected
+onto a lower-dimensional physical space along an irrational direction.
+
+\vspace{0.4em}
+\noindent\textbf{Öguz, Macé, Torquato (2017).}
+This paper analyzes hyperuniformity of projection-method quasicrystals analytically.
+For the ideal Fibonacci strip (projection window aligned with the golden ratio),
+the structure factor satisfies $Z(k) \sim k^4$, giving $\alpha=3$ (Class~I).
+A nonideal strip (irrational window boundary) degrades to $\alpha=1$ (logarithmic variance,
+Class~II): the rational approximants to the boundary introduce quasi-periodic modulations
+that slow the decay of $S(k)$.
+
+The paper derives an \textbf{analytical upper bound} $\sigma^2(R) \leq 1/4$ for the
+Fibonacci chain, consistent with the numerical Fibonacci $\bar\Lambda = 0.201 < 1/4$
+found in this project (and with $\bar\Lambda_{\rm Silver} = 1/4$ as a candidate upper-bound
+saturation for $n=2$).
+The two-point correlation $g_2(r)$ is shown to be piecewise quadratic with inflection
+points at the Fibonacci spacings $1$ and $\tau = (1+\sqrt5)/2$.
+
+%------------------------------------------------------------------------------
+\subsection{Stealthy Hyperuniform Ground States}
+%------------------------------------------------------------------------------
+
+\noindent\textbf{Batten, Stillinger, Torquato (2008).}
+This paper introduced the concept of \textbf{collective-coordinate optimization}:
+given a target function $\Phi = \sum_{|\mathbf{k}|\leq K} S(\mathbf{k})$, gradient
+descent on particle positions drives $S(\mathbf{k}) \to 0$ for $|k| \leq K$,
+engineering a \textbf{stealthy} configuration.
+The resulting patterns are highly degenerate ground states (many configurations
+satisfy the stealth condition) and are generally \emph{disordered}.
+Special cases include super-ideal gas variants and equi-luminous structures.
+A key insight: stealth can be achieved with particles that appear to have no macroscopic
+order, yet exhibit complete isotropy and hidden long-range correlations.
+This paper predates the thermodynamic ensemble framework of Torquato et al.\ (2015)
+and provides the algorithmic foundation for all stealthy ensemble generation.
+
+\vspace{0.4em}
+\noindent\textbf{Torquato, Zhang, Stillinger (2015) --- \emph{Physical Review X}.}
+This paper develops the \textbf{exact ensemble theory} for stealthy hyperuniform
+disordered ground states.
+The control parameter is
+\[
+  \chi = \frac{M(K)}{d(N-1)},
+\]
+where $M(K)$ is the number of independently constrained wavevectors within a ball
+of radius $K$, $N$ is the particle number, and $d$ the dimension.
+For $\chi < 1/2$ the ground-state manifold is \emph{disordered} (positive entropy);
+for $\chi > 1/2$ only periodic configurations satisfy the constraints.
+All thermodynamic quantities --- isothermal compressibility $\kappa_T$, pair
+correlations $g_2(r)$, structure factor $S(k)$ --- are derived analytically in the
+ensemble limit.
+The paper also derives the relation $K^* = 4\pi\rho\chi$ (for $d=1$) between the
+exclusion radius $K^*$ and the control parameter $\chi$.
+
+In $d=1$ the paper's Table~V provides reference values of $\bar\Lambda$ for stealthy
+configurations, which are well approximated by $\bar\Lambda \approx 1/(\pi^2\chi)$
+--- a formula derived independently in this project and validated against the
+collaborator's ensemble data.
+
+%------------------------------------------------------------------------------
+\subsection{Perturbed Lattices and Cloaking}
+%------------------------------------------------------------------------------
+
+\noindent\textbf{Klatt, Kim, Torquato (2020).}
+This paper introduces and analyzes the \textbf{uncorrelated random lattice (URL)}:
+each site of the integer lattice $\mathbb{Z}^d$ is displaced independently and
+uniformly within a hypercube $[-a/2,a/2]^d$.
+In one dimension the \textbf{exact formula}
+\[
+  \bar\Lambda(a) = \frac{1+a^2}{6}
+\]
+is derived analytically (for $a \leq 1$) and extended via periodicity to all $a>0$.
+Crucially, the URL always has $\alpha=2$ regardless of $a$: the uniform displacement
+smears the lattice Bragg peaks into a continuous background, but the origin
+$k=0$ retains the same power-law suppression $S(k)\sim k^2$.
+
+The central discovery is \textbf{cloaking}: when the displacement amplitude $a$
+equals an integer (1, 2, 3, \ldots), the form factor $\tilde f(k) = \sin(\pi k a)/(\pi k a)$
+vanishes at every non-zero reciprocal lattice vector, completely eliminating the
+Bragg peaks from the diffraction pattern.
+At $a=1$: $\bar\Lambda = 1/3$, which this project identifies as the \emph{exact limit}
+of the metallic-mean sequence $\bar\Lambda(\mu_n) \to 1/3$ as $n\to\infty$.
+The $\tau$ order metric (based on pair correlations) diverges between cloaking events,
+providing a complementary characterization of the structural transition.
+
+%------------------------------------------------------------------------------
+\subsection{Diffusion Spreadability}
+%------------------------------------------------------------------------------
+
+\noindent\textbf{Torquato (2021) --- \emph{Physical Review E}.}
+This paper introduces \textbf{diffusion spreadability} $\mathcal{S}(t)$ as a dynamic
+probe of microstructure.
+Consider a two-phase medium (phases 1 and 2) with a solute initially confined to
+phase 1; $\mathcal{S}(t)$ measures the fraction of solute transferred to phase 2 by
+time $t$.
+For hyperuniform media with exponent $\alpha$ the long-time behavior is
+\[
+  E(t) \equiv \mathcal{S}(\infty) - \mathcal{S}(t) \;\sim\; t^{-(d+\alpha)/2},
+\]
+while stealthy media show \emph{exponential} decay $E(t)\sim e^{-ct}$.
+At short times $\mathcal{S}(t) \sim t^{1/2}$ in all cases, providing access to the
+\textbf{specific surface} $s$ (surface area per unit volume of the interface).
+Applications include NMR/MRI characterization of porous media, where the diffusion
+signal encodes structural information across length scales.
+The 1D formula $E(t) \sim t^{-(1+\alpha)/2}$ is used in this project to extract $\alpha$
+via a log-log regression of the excess spreadability.
+
+\vspace{0.4em}
+\noindent\textbf{Wang \& Torquato (2022) --- \emph{Physical Review Applied}.}
+This paper applies spreadability to a broad set of 2D and 3D model microstructures:
+URL packings, stealthy ground states, Debye random media (nonhyperuniform),
+Bravais lattices, and real porous media (Fontainebleau sandstone).
+A practical algorithm is presented to extract $\alpha$ from the slope of
+$\ln E(t)$ versus $\ln t$ in the asymptotic regime.
+For one-dimensional structures the paper gives $\phi_2 = 0.35$ for the Fibonacci
+chain (volume fraction of phase~2 in the two-phase embedding), which is used throughout
+this project for all 1D spreadability calculations.
+
+\vspace{0.4em}
+\noindent\textbf{Hitin-Bialus, Maher, Steinhardt, Torquato (2024).}
+This paper achieves high-precision extraction of $\alpha$ for quasiperiodic tilings
+via spreadability.
+By exploiting the \textbf{self-similarity} of substitution tilings, the small-$k$
+Bragg-peak regime (where oscillations dominate) can be truncated, leaving a clean
+power-law tail in $E(t)$.
+Results: Fibonacci $\alpha = 3.0000 \pm 0.000008$; Period-Doubling
+$\alpha = 1.0000 \pm 0.00001$; Penrose tiling (2D) $\alpha = 5.97\pm0.06$
+(close to the Class~I value $d+1=3$ for a 2D tiling with the Pisot property).
+The paper confirms $\phi_2 = 0.35$ for all 1D chains studied and provides the
+most precise numerical validation of the eigenvalue formula~(Öguz et al.\ 2019)
+to date.
+
+%------------------------------------------------------------------------------
+\subsection{Order Metrics and Comparative Rankings}
+%------------------------------------------------------------------------------
+
+\noindent\textbf{Middlemas, Stillinger, Torquato (2019).}
+This paper computes $\bar\Lambda$ for all Barlow sphere-packing sequences in $d=3$,
+parametrized by fcc/hcp stacking codes.
+A linear model $\bar\Lambda(\alpha) = \alpha\bar\Lambda_{\rm fcc} + (1-\alpha)\bar\Lambda_{\rm hcp}$
+holds for periodic stacking sequences (where $\alpha$ is the fraction of fcc layers).
+The dominant factor in $\bar\Lambda$ is the local cluster geometry: fcc-like
+environments ($60^\circ$ tetrahedral) are more hyperuniform than hcp-like
+environments ($90^\circ$ tetrahedral).
+Theta-series methods are used for all Bragg-peak sums, establishing the
+Zachary--Torquato (2009) technique as standard.
+The paper demonstrates that $\bar\Lambda$ serves as a sensitive discriminator among
+structures that share the same pair-correlation function to short range.
+
+\vspace{0.4em}
+\noindent\textbf{Morse, Steinhardt, Torquato (2024).}
+This paper studies ordered versus disordered stealthy hyperuniform systems across
+spatial dimensions $d = 1$--$4$.
+In $d=1$ the densest Fourier-space hard-sphere packing --- which saturates the
+stealthy constraint with the fewest degrees of freedom --- corresponds exactly to
+a Bravais lattice.
+In higher dimensions, disordered stealthy configurations can achieve \emph{lower}
+packing density than their crystalline counterparts, counter to the usual expectation.
+The \textbf{order metric} $\tau$ (based on pair-distance statistics) is used as a
+complement to $\bar\Lambda$: $\tau$ is large for ordered (lattice-like) stealthy
+configurations and small for disordered ones.
+The results motivate using both $\bar\Lambda$ and $\tau$ to fully characterize
+stealthy hyperuniform materials, and demonstrate that stealth alone does not
+determine the degree of order.
+
+%==============================================================================
 \section{Week 1}
 %==============================================================================
 
@@ -206,7 +467,7 @@ A new $\alpha=2$ chain was also added (first deterministic substitution tiling a
 previously only the stochastic URL occupied $\alpha=2$):
 \[
   a \to bc,\; b \to c,\; c \to abc \quad
-  \Rightarrow \quad \lambda_1 \approx 1.839,\; |\lambda_2| \approx 0.737,\;
+  \Rightarrow \quad \lambda_1 \approx 2.148,\; |\lambda_{2,3}| \approx 0.682\text{ (complex pair)},\;
   \alpha = 2.000,\; \bar\Lambda = 0.275.
 \]
 
@@ -319,7 +580,6 @@ both phases are stealthy but differ drastically in spatial structure.
 
 \subsection{Catalog Cleanup and Density Normalization}
 
-\textbf{Script:} \texttt{catalog\_cleanup.py} \quad
 \textbf{Figure:} \texttt{fig\_catalog\_updated.png}
 
 Stealthy patterns relabeled: $\alpha$ removed, $K^* = 4\pi\rho\chi$ added.
@@ -479,17 +739,15 @@ Green rows: literature-confirmed benchmarks. Yellow: novel additions.
 \texttt{stealthy\_analysis.py}        & Collaborator stealthy ensemble analysis \\
 \texttt{research\_catalog.py}         & Full pipeline $\to$ \texttt{catalog.json} \\
 \texttt{make\_figures.py}             & Figures from catalog + stealthy results \\
-\texttt{analyze\_bombieri\_taylor.py} & BT-specific analysis \\
 \midrule
 \texttt{bt\_deep\_dive.py}            & (Mtg 2--3) BT oscillations, $S(k)$ density, $E(t)$ \\
 \texttt{finite\_size\_scaling.py}     & (Mtg 2--3) $\bar\Lambda(N)$, $C_{II}(N)$, $\hat\alpha(N)$ \\
-\texttt{finite\_size\_scaling\_landscape.py} & (Mtg 2--3) Landscape $1\times4$ version \\
 \texttt{search\_cubic\_tilings.py}    & (Mtg 2--3) Exhaustive $3\times3$ matrix search \\
 \texttt{generalized\_metrics.py}      & (Mtg 2--3) $C_{II}$, $A_{III}$; patches variance module \\
 \texttt{finite\_size\_lambda\_bar.py} & (Mtg 2--3) Lattice formula; stealthy two phases \\
-\texttt{catalog\_cleanup.py}          & (Mtg 2--3) Stealthy re-classification, density invariance \\
 \texttt{metallic\_mean\_convergence.py} & (Mtg 2--3) $\bar\Lambda(\mu_n)$ for $n=1\ldots20$ \\
 \texttt{search\_4x4\_tilings.py}      & (Mtg 2--3) $4\times4$ matrix search (24M matrices) \\
+\texttt{silver\_precision\_analysis.py} & (Mtg 2--3) High-precision Silver/Bronze $\bar\Lambda$ \\
 \texttt{fig\_nonunimodular\_chain.py} & (Mtg 2--3) Figure for $\alpha=2.071$ non-unimodular chain \\
 \bottomrule
 \end{tabular}

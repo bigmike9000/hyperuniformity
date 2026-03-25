@@ -983,22 +983,44 @@ This is computationally more involved than 1D substitution and is marked as Phas
 
 ```
 project/
-├── KNOWLEDGE.md                        ← this file
-├── CONTEXT.md                          ← project roadmap / phase log
+├── KNOWLEDGE.md                        ← this file (technical reference)
 ├── jp/
-│   ├── jp_hyperuniformity.tex          ← Princeton Junior Paper (LaTeX)
-│   ├── jp_hyperuniformity.pdf          ← compiled output (14 pages)
-│   └── references.bib                  ← stub bibliography
+│   ├── jp_hyperuniformity.tex          ← JP: §1–§3 only (9 pages, results pending)
+│   ├── jp_results_draft.tex            ← displaced §4–§8 + appendix (draft)
+│   ├── jp_hyperuniformity.pdf          ← compiled output
+│   └── references.bib                  ← bibliography (biblatex+biber)
 ├── resources/
-│   ├── old_jp.tex                      ← previous JP (active anchoring in nematics)
 │   └── Biased_sampling_11_27_23 (example presentation).pdf
-├── literature/                         ← all reference PDFs (11 papers)
+├── literature/                         ← all reference PDFs (16 papers)
 ├── results/
-│   ├── figures/                        ← all PNG figures (fig1–fig14, figA–figJ, etc.)
+│   ├── figures/                        ← all PNG figures
 │   ├── data/                           ← catalog.json, stealthy_collab_results.json
-│   ├── project_summary/                ← project_summary.tex/.pdf
-│   └── week2/                          ← week2_full_presentation.tex/.pdf
-├── *.py                                ← analysis scripts (substitution_tilings.py, etc.)
+│   ├── 4x4_search_results.json         ← 4×4 matrix search (24M matrices)
+│   ├── cubic_search_results.json       ← cubic tiling search results
+│   ├── progress_report.tex/.pdf        ← primary progress tracking document
+│   ├── week1/                          ← week1_presentation.tex/.pdf
+│   ├── week2/                          ← week2_presentation.tex/.pdf
+│   └── week3/                          ← week3_presentation.tex/.pdf
+├── Core analysis scripts:
+│   ├── substitution_tilings.py         ← all chains (fibonacci/silver/bronze/...)
+│   ├── quasicrystal_variance.py        ← number variance + Λ̄
+│   ├── two_phase_media.py              ← spectral density + spreadability
+│   ├── disordered_patterns.py          ← URL, stealthy, lambda_bar_url_exact()
+│   ├── stealthy_analysis.py            ← collab stealthy ensemble
+│   ├── research_catalog.py             ← full pipeline → results/data/catalog.json
+│   ├── make_figures.py                 ← all figures from catalog.json
+│   ├── generalized_metrics.py          ← Class II/III metrics
+│   ├── metallic_mean_convergence.py    ← n=1..20 Λ̄ computation
+│   ├── search_4x4_tilings.py           ← 4×4 matrix search
+│   ├── silver_precision_analysis.py    ← high-precision Silver Λ̄
+│   ├── finite_size_scaling.py          ← finite-size convergence
+│   ├── compute_lambda_bar_analytical.py← Bragg sum formula for Λ̄
+│   ├── compute_lambda_bar_v2.py        ← Zachary-Torquato theta-series
+│   └── fig_nonunimodular_chain.py      ← figure for α=2.071 chain
+├── Auxiliary scripts (unique functionality, not replaced):
+│   ├── stealthy_hyperuniform.py        ← stealthy pattern generator (optimization)
+│   ├── perturbed_lattices.py           ← URL, Gaussian, Cauchy, stable perturbations
+│   └── projection_method.py            ← cut-and-project quasicrystal generation
 └── stealthy_configurations/            ← raw stealthy data from collaborator
 ```
 

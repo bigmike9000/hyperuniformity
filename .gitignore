@@ -16,6 +16,10 @@ __pycache__/
 # LaTeX auxiliary files (additional)
 *.fdb_latexmk
 *.fls
+*.bcf
+*.bbl
+*.blg
+*.run.xml
 
 # Raw stealthy configuration data (too large for git; processed results in results/)
 stealthy_configurations/0.1_patterns/

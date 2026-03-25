@@ -26,7 +26,7 @@ LOG_PERIOD = np.log(LAM1)          # ~ 1.493   period in log(R)
 ALPHA_THEORY = 1.0 - 2.0*np.log(LAM2)/np.log(LAM1)  # = 2.071
 LAMBDA_BAR   = 0.650
 LAMBDA_ERR   = 0.015
-N_ITER       = 9       # gives ~900k points from seed 'a'
+N_ITER       = 10      # gives ~3M points from seed 'a'
 
 # ── Generate sequence ────────────────────────────────────────────────────────
 def generate_chain(n_iter):
@@ -61,7 +61,7 @@ R_arr = np.logspace(np.log10(R_min), np.log10(R_max), n_R)
 
 print("Computing sigma^2(R)  (this may take ~30s)...")
 rng = np.random.default_rng(42)
-sig2, _ = compute_number_variance_1d(pts, L, R_arr, num_windows=8000, rng=rng)
+sig2, _ = compute_number_variance_1d(pts, L, R_arr, num_windows=12000, rng=rng)
 print("Done.")
 
 # ── Running Lambda_bar ───────────────────────────────────────────────────────
@@ -88,7 +88,7 @@ for k in range(n_periods):
 period_mean = np.mean(period_avgs) if period_avgs else LAMBDA_BAR
 
 # ── Plot ─────────────────────────────────────────────────────────────────────
-fig, axes = plt.subplots(1, 2, figsize=(12, 4.5))
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
 # ─ Panel (a): sigma^2(R) ────────────────────────────────────────────────────
 ax = axes[0]
@@ -110,10 +110,10 @@ ax.text(0.97, 0.96,
         transform=ax.transAxes, fontsize=8.5, va='top', ha='right',
         bbox=dict(boxstyle='round,pad=0.3', fc='lightyellow', ec='goldenrod', alpha=0.9))
 
-ax.set_xlabel('$R$', fontsize=12)
-ax.set_ylabel(r'$\sigma^2(R)$', fontsize=12)
-ax.set_title(r'(a) Log-periodic oscillations in $\sigma^2(R)$', fontsize=11)
-ax.legend(fontsize=10, loc='lower right')
+ax.set_xlabel('$R$', fontsize=13)
+ax.set_ylabel(r'$\sigma^2(R)$', fontsize=13)
+ax.set_title(r'(a) Log-periodic oscillations in $\sigma^2(R)$', fontsize=12)
+ax.legend(fontsize=11, loc='lower right')
 ax.set_ylim(bottom=-0.02)
 
 # ─ Panel (b): running Lambda_bar ────────────────────────────────────────────
@@ -128,19 +128,16 @@ ax.axhline(LAMBDA_BAR, color='crimson', ls='--', lw=1.5,
 ax.fill_between([R_min, R_max],
                 LAMBDA_BAR - LAMBDA_ERR, LAMBDA_BAR + LAMBDA_ERR,
                 color='crimson', alpha=0.12)
-ax.axhline(13/20, color='darkorange', ls=':', lw=1.2, alpha=0.7,
-           label=r'Candidate $0.650$')
-
-ax.set_xlabel('$R$', fontsize=12)
-ax.set_ylabel(r'$\bar\Lambda(R)$', fontsize=12)
-ax.set_title(r'(b) Running average: slow convergence due to large amplitude', fontsize=11)
-ax.legend(fontsize=9, loc='upper right')
+ax.set_xlabel('$R$', fontsize=13)
+ax.set_ylabel(r'Running $\bar\Lambda(R)$', fontsize=13)
+ax.set_title(r'(b) Running average converges slowly (large oscillation amplitude)', fontsize=12)
+ax.legend(fontsize=11, loc='upper right')
 ax.set_ylim([0.0, 1.2])
 
 fig.suptitle(
     r'Non-unimodular chain $a\!\to\!b,\;b\!\to\!aabbbb$: '
-    r'$|\det M|=2$, $\alpha=2.071$, $N\approx 900\mathrm{k}$',
-    fontsize=11.5, y=1.01
+    rf'$|\det M|=2$, $\alpha=2.071$, $N\approx{N:,}$',
+    fontsize=12, y=1.01
 )
 plt.tight_layout()
 

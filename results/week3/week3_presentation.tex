@@ -14,7 +14,14 @@
 \usepackage{xcolor}
 \usepackage{pgfpages}
 
+% Notes: shows slide on left, speaker notes on right in a dual-screen PDF.
+% Open with Pympress or similar for presenter view.
+% Comment out to get a standard single-page PDF.
 \setbeameroption{show notes on second screen=right}
+\setbeamertemplate{note page}{%
+  \vspace{0.5em}%
+  \small\rmfamily\insertnote%
+}
 
 \graphicspath{{../}}
 
@@ -41,13 +48,14 @@ Michael Fang
 March 2026
 \end{frame}
 \note{
-Six main investigations from the meeting, plus some extensions.
-The central surprise: the 2<alpha<3 gap can only be filled by
-non-unimodular matrices --- a first example was found.
+Six questions from the last meeting, addressed in order (slides 3--9).
+Extensions I pursued beyond those tasks come after (slides 10--14).
+Central new result: the $2{<}\alpha{<}3$ gap is inaccessible to all unimodular
+substitution matrices, but a non-unimodular construction achieves $\alpha=2.071$.
 }
 
 %----------------------------------------------------------------------
-\begin{frame}{Recap and plan for this week}
+\begin{frame}[shrink=7]{Recap and plan for this week}
 
 \begin{columns}[T]
 \begin{column}{0.48\textwidth}
@@ -77,7 +85,7 @@ Questions from the meeting:
   \item Spreadability gives $\hat\alpha\approx1.9$ for BT, not 1.545 --- why?
   \item How do estimates converge with $N$?
   \item Can we fill the $2<\alpha<3$ gap with a substitution chain?
-  \item What plays the role of $\bar\Lambda$ for Classes II and III?
+  \item What plays the role of $\bar\Lambda$ for Classes~II and~III?
   \item Does $\bar\Lambda$ have a finite-$N$ correction?
   \item Stealthy: is $\alpha$ well-defined? Are densities comparable?
 \end{itemize}
@@ -85,14 +93,15 @@ Questions from the meeting:
 \end{columns}
 \end{frame}
 \note{
-The metallic-mean chains all give alpha=3 because the 2x2 det=1 constraint forces
-|lambda_2| = 1/lambda_1.  BT breaks this with a 3x3 matrix.
-Stealthy: S(k)=0 over a finite k-interval by design, not a power law -- alpha=infinity is misleading.
-URL cloaked Lambda-bar=1/3 exact from Klatt et al. 2020.
+The metallic-mean chains all give $\alpha=3$ because $|\det M|=1$ forces
+$|\lambda_2|=1/\lambda_1$. BT breaks this with a $3\times3$ matrix.
+Stealthy: $S(k)=0$ over a finite $k$-interval by design --- not a power law;
+$\alpha$ is not a meaningful exponent here.
+URL cloaked $\bar\Lambda=1/3$ exact from Klatt et al.\ 2020.
 }
 
 %----------------------------------------------------------------------
-\begin{frame}{Why spreadability fails for Bombieri-Taylor}
+\begin{frame}[shrink=6]{Why spreadability fails for Bombieri-Taylor}
 
 \begin{columns}[T]
 \begin{column}{0.56\textwidth}
@@ -113,34 +122,32 @@ masking any power-law decay.
 \medskip
 \textbf{Large sub-leading eigenvalue.}
 $|\lambda_2|=0.802$ for BT vs.\ 0.618 for Fibonacci.
-The oscillations die out very slowly.
-Even over $t\in[10^5,10^9]$, the fit gives
+Even over $t\in[10^5,10^9]$ the fit gives
 $\hat\alpha=1.67$ instead of 1.545.
 
 \medskip
 \colorbox{resultbg}{\parbox{0.96\linewidth}{
   $\bar\Lambda$ from $\sigma^2(R)$ works fine: it averages
-  over these oscillations.
-  $\bar\Lambda=0.377$, stable from $N\sim2000$.
+  over oscillations. $\bar\Lambda=0.377$, stable from $N\sim2000$.
 }}
 \end{column}
 \end{columns}
 \end{frame}
 \note{
-Rod overlap also matters: minimum BT inter-point spacing = 1.000; need 2a < 1.000; corrected
-rod radius to a=0.45.
-The variance-based Lambda-bar is robust because it's a running average over R, so the
-log-periodic oscillations cancel.
-Conclusion: use Lambda-bar (not spreadability) for any quasicrystal with large |lambda_2|.
+Rod overlap: minimum BT spacing $=1.000$; needed $2a<1.000$;
+corrected rod radius to $a=0.45$.
+Variance-based $\bar\Lambda$ is robust because the running average over $R$
+cancels log-periodic oscillations.
+Conclusion: use $\bar\Lambda$ (not spreadability) for any chain with large $|\lambda_2|$.
 }
 
 %----------------------------------------------------------------------
-\begin{frame}{How well do our estimates converge with $N$?}
+\begin{frame}[shrink=3]{How well do our estimates converge with $N$?}
 
 \begin{columns}[T]
 \begin{column}{0.57\textwidth}
 \centering
-\includegraphics[width=\linewidth]{figures/fig_finite_size_alpha_landscape.png}
+\includegraphics[width=\linewidth]{figures/fig_finite_size_alpha.png}
 \end{column}
 \begin{column}{0.41\textwidth}
 \small
@@ -148,95 +155,90 @@ Conclusion: use Lambda-bar (not spreadability) for any quasicrystal with large |
 \toprule
 \textbf{Pattern} & $N\!\sim\!10^3$ & $N\!\sim\!10^6$ \\
 \midrule
-BT\ \ $\bar\Lambda$   & 0.378 & 0.379 \\
-Fib.\ $\bar\Lambda$   & 0.199 & 0.198 \\
-PD\ \ $C_{II}$        & 0.128 & 0.123 \\
-0222 $\hat\alpha$     & 1.05  & 0.78  \\
+BT\ \ $\bar\Lambda$        & 0.378 & 0.379 \\
+Fib.\ $\bar\Lambda$        & 0.199 & 0.198 \\
+PD\ \ $C_{II}^{\,\dagger}$ & 0.128 & 0.123 \\
+0222 $\hat\alpha$           & 1.05  & 0.78  \\
 \bottomrule
 \end{tabular}
 
-\vspace{0.8em}
+\vspace{0.3em}
+{\footnotesize ${}^\dagger$Plateau estimator (biased high;
+curve fit gives $C_{II}=0.080$, see slide 7.)}
+
+\vspace{0.4em}
+\normalsize
 Key takeaways:
 \begin{itemize}
-  \item Fitting $S(k)\sim k^\alpha$ directly fails ---
-    substitution tilings have Bragg peaks, not a smooth background
-  \item Class~I $\bar\Lambda$ is stable from $N\sim1000$
-  \item Class~III is slow because $|\lambda_2|=1.24>1$
-    (not Pisot, diffuse spectrum)
+  \item $S(k)\sim k^\alpha$ fitting fails ---
+    Bragg peaks dominate; no smooth background
+  \item Class~I $\bar\Lambda$ stable from $N\sim1000$
+  \item Class~III slow: $|\lambda_2|=1.24>1$
+    (not Pisot; diffuse spectrum)
 \end{itemize}
 \end{column}
 \end{columns}
 \end{frame}
 \note{
-S(k) for a substitution tiling = superposition of delta functions at Bragg positions.
-There is no smooth k^alpha background to fit.
-0222 chain: |lambda_2| = sqrt(5)-1 ~ 1.236 > 1; not a Pisot number, so S(k) has a diffuse
-component and alpha-hat oscillates widely across N values.
-Class I Lambda-bar is a spatial average: big fluctuations at individual R values cancel
-when averaged, giving stable convergence from N~1000.
+$S(k)$ for a substitution tiling is a superposition of delta functions; no smooth
+$k^\alpha$ background to fit.
+0222: $|\lambda_2|=\sqrt{5}-1\approx1.236>1$ (not Pisot); $\hat\alpha$ oscillates
+widely across $N$.
+Class~I $\bar\Lambda$ is a spatial average; fluctuations cancel when averaged,
+giving stable convergence from $N\sim1000$.
 }
 
 %----------------------------------------------------------------------
 \begin{frame}{Searching for a $2<\alpha<3$ quasicrystal}
 
-\begin{columns}[T]
-\begin{column}{0.50\textwidth}
-\centering
-\includegraphics[width=\linewidth]{figures/fig_new_tilings.png}
-\end{column}
-\begin{column}{0.48\textwidth}
-I enumerated all $3\times3$ substitution matrices with row sums $\leq4$:
+Enumerated all $3\times3$ unimodular Pisot matrices with row sums $\leq4$:
 \[
   39{,}304\ \xrightarrow{\text{Pisot}}\ 4{,}882
-  \ \xrightarrow{\text{target}\ \alpha\in(2,3)}\ 305
+  \ \xrightarrow{\text{candidate }\alpha\in(2,3)}\ 305
 \]
-\colorbox{newbg}{All 305 give $\alpha=2$ or $\alpha=3$. The gap is empty.}
+\colorbox{newbg}{\parbox{0.97\linewidth}{%
+  All 305 give $\alpha=2$ or $\alpha=3$ exactly. \textbf{The gap is empty.}}}
 
 \medskip
 This is not a coincidence.
-For any $3\times3$ unimodular matrix with a complex eigenvalue pair:
-\[
-  \underbrace{\det M}_{=1} = \lambda_1|\lambda_2|^2
-  \;\Rightarrow\; |\lambda_2| = \frac{1}{\sqrt{\lambda_1}}
-  \;\Rightarrow\; \alpha = 2
-\]
-For all-real sub-leading eigenvalues, the search finds only $\alpha=3$.
-\end{column}
-\end{columns}
+For any unimodular matrix with a complex conjugate sub-leading eigenvalue pair:
+\begin{gather*}
+  \underbrace{|\det M|}_{=1} = \lambda_1|\lambda_2|^2
+  \;\Rightarrow\; |\lambda_2| = \tfrac{1}{\sqrt{\lambda_1}} \\[0.3em]
+  \Rightarrow\; \alpha = 1-\frac{2\ln|\lambda_2|}{\ln\lambda_1} = 2
+  \quad\text{(exactly, for any }\lambda_1\text{)}
+\end{gather*}
+For all-real sub-leading eigenvalues: exhaustive search finds only $\alpha=3$.
 \end{frame}
 \note{
-The Pisot condition requires all sub-leading eigenvalues to have |lambda_i| < 1 (pure Bragg
-diffraction); non-Pisot matrices give diffuse spectra.
-The complex-pair identity: det M = lambda_1 * lambda_2 * conj(lambda_2) = lambda_1 |lambda_2|^2.
-For det=1: |lambda_2| = 1/sqrt(lambda_1) EXACTLY, regardless of the specific lambda_1.
-This pins alpha=2 for every 3x3 unimodular matrix with a complex pair.
+Pisot condition: all sub-leading eigenvalues have $|\lambda_i|<1$ (pure Bragg
+diffraction, no diffuse component).
+Complex-pair identity: $\det M=\lambda_1|\lambda_2|^2$. For $\det M=1$:
+$|\lambda_2|=1/\sqrt{\lambda_1}$ exactly, pinning $\alpha=2$ regardless of $\lambda_1$.
+All-real case confirmed exhaustively; no analytical proof yet.
 }
 
 %----------------------------------------------------------------------
-\begin{frame}{A new deterministic substitution tiling at $\alpha=2$}
-
-A nice byproduct of the search.
-\medskip
+\begin{frame}[shrink=3]{A new deterministic substitution tiling at $\alpha=2$}
 
 \begin{columns}[T]
-\begin{column}{0.48\textwidth}
+\begin{column}{0.52\textwidth}
+\centering
+\includegraphics[width=\linewidth]{figures/fig_new_tilings.png}
+\end{column}
+\begin{column}{0.46\textwidth}
 \textbf{Substitution:}\; $a\!\to\!bc,\; b\!\to\!c,\; c\!\to\!abc$
 \[
-  M = \begin{pmatrix}0&1&1\\0&0&1\\1&1&1\end{pmatrix},\quad
-  |\det M| = 1
+  M = \begin{pmatrix}0&1&1\\0&0&1\\1&1&1\end{pmatrix},\;|\det M|=1
 \]
-$\lambda_1\approx2.148$,\; $|\lambda_{2,3}|\approx0.682$ (complex pair)
-\[
-  \alpha = 1 - \frac{2\ln(0.682)}{\ln(2.148)} = \textbf{2.000 (exact)}
-\]
-$\bar\Lambda=0.275$, Class~I, $N\approx1.8$ million points.
-\end{column}
-\begin{column}{0.50\textwidth}
-Previously, only the URL reached $\alpha=2$ --- through random displacements
-from an integer lattice. This is the first \emph{deterministic} quasiperiodic
-substitution tiling with $\alpha=2$.
+$\lambda_1\!\approx\!2.148$,\;$|\lambda_{2,3}|\!\approx\!0.682$
+$\;\Rightarrow\;\alpha=\mathbf{2.000}$ (exact), $\bar\Lambda=0.275$
 
-\vspace{0.8em}
+\smallskip
+First \emph{deterministic} quasiperiodic chain with $\alpha=2$;
+the URL achieves $\alpha=2$ via random displacements.
+
+\smallskip
 \small
 \begin{tabular}{lcc}
 \toprule
@@ -249,23 +251,18 @@ Bronze             & 3     & 0.282 \\
 URL ($a=1$)        & 2     & 0.333 \\
 \bottomrule
 \end{tabular}
-
-\vspace{0.5em}
-$\bar\Lambda=0.275$ sits between Silver and Bronze.
 \end{column}
 \end{columns}
 \end{frame}
 \note{
-Characteristic polynomial: x^3-x^2-2x-1=0.
-Lambda_bar=0.275 lies between Silver (0.250) and Bronze (0.282).
-Pattern generated to N~1.8 million points.
-The alpha=2 value is exact by the algebraic argument: det=1 + complex pair -> alpha=2.
-The URL achieves alpha=2 stochastically (independent random displacements); this chain
-achieves it through a deterministic substitution rule.
+Characteristic polynomial: $x^3-x^2-2x-1=0$; $\lambda_1\approx2.148$.
+$\alpha=2$ is exact: $\det M=1$ + complex pair $\Rightarrow|\lambda_2|=1/\sqrt{\lambda_1}
+\Rightarrow\alpha=2$.
+The URL achieves $\alpha=2$ stochastically; this chain achieves it via a deterministic rule.
 }
 
 %----------------------------------------------------------------------
-\begin{frame}{Metrics for Classes II and III}
+\begin{frame}[shrink=2]{Metrics for Classes II and III}
 
 \begin{columns}[T]
 \begin{column}{0.58\textwidth}
@@ -273,7 +270,7 @@ achieves it through a deterministic substitution rule.
 \includegraphics[width=\linewidth]{figures/fig_generalized_metrics.png}
 
 \vspace{0.2em}
-{\footnotesize Each normalized variance plateaus at large $R$, confirming the asymptotic scaling.}
+{\footnotesize Each normalized variance plateaus at large $R$, confirming asymptotic scaling.}
 \end{column}
 \begin{column}{0.40\textwidth}
 $\bar\Lambda$ diverges outside Class~I.
@@ -284,22 +281,22 @@ The natural generalizations:
 \[
   C_{II} = \lim_{R\to\infty}\frac{\sigma^2(R)}{\ln R}
 \]
-Period-Doubling: $C_{II} = 0.123\pm0.016$
+Period-Doubling:\; $C_{II} = 0.080$ (curve fit)
 
 \bigskip
 \textbf{Class III}\; ($\sigma^2\sim A_{III}\,R^{1-\alpha}$):
 \[
   A_{III} = \lim_{R\to\infty}\frac{\sigma^2(R)}{R^{1-\alpha}}
 \]
-0222 chain ($\alpha=0.639$): $A_{III} = 0.151\pm0.014$
+0222 chain ($\alpha=0.639$):\; $A_{III} = 0.209$ (curve fit)
 \end{column}
 \end{columns}
 \end{frame}
 \note{
-Period-Doubling: |lambda_2|=1 exactly (alpha=1, boundary Pisot).
-0222: |lambda_2| = sqrt(5)-1 > 1 (not Pisot), hence diffuse component.
-C_II requires N > 100k to converge; A_III convergence is slow.
-These have been added as compute_generalized_metric() in quasicrystal_variance.py.
+Plateau method converges as $C+b/\ln R$ from above for Class~II and from below
+for Class~III --- biased at finite $R$.
+Curve fit to the full $\sigma^2(R)$ profile is unbiased: $C_{II}=0.080$, $A_{III}=0.209$.
+Plateau cross-checks ($0.123$, $0.151$) systematically over/under-estimate.
 }
 
 %----------------------------------------------------------------------
@@ -308,7 +305,7 @@ These have been added as compute_generalized_metric() in quasicrystal_variance.p
 \begin{columns}[T]
 \begin{column}{0.54\textwidth}
 \centering
-\includegraphics[width=\linewidth]{figures/fig_finite_size_lambda.png}
+\includegraphics[width=\linewidth]{figures/figH_stealthy_variance.png}
 \end{column}
 \begin{column}{0.44\textwidth}
 \textbf{Integer lattice.}
@@ -329,7 +326,7 @@ No finite-$N$ correction at all.
 \textbf{Initial condition} & $\bar\Lambda$ \\
 \midrule
 Perturbed lattice  & $\approx 1/6$ \\
-Random positions  & $1/(\pi^2\chi)$ \\
+Random positions   & $1/(\pi^2\chi)$ \\
 \bottomrule
 \end{tabular}
 
@@ -342,108 +339,94 @@ of the same optimization problem.
 \end{columns}
 \end{frame}
 \note{
-Lattice sigma^2(R) = {2R}(1-{2R}) integrates exactly to 1/12 over each half-period,
-so the running average is always 1/6 at integer R_max.
-Stealthy: starting from a perturbed lattice, the optimizer finds a near-lattice ground state
-(Lambda_bar ~ 1/6).  Starting from random positions (collaborator data), it finds the
-disordered phase (Lambda_bar = 1/(pi^2 chi)).
-Key insight: stealthy hyperuniform configurations are highly non-unique.
+Lattice: $\sigma^2(R)=\{2R\}(1-\{2R\})$ integrates to $1/12$ over each half-period,
+so the running average is always $1/6$ at integer $R_\text{max}$.
+Stealthy: starting from a perturbed lattice, the optimizer finds a near-lattice
+ground state ($\bar\Lambda\approx1/6$); starting from random positions (collaborator
+data), it finds the disordered phase ($\bar\Lambda=1/(\pi^2\chi)$).
+Stealthy ground states are highly non-unique.
 }
 
 %----------------------------------------------------------------------
-\begin{frame}{Updated catalog}
+\begin{frame}[shrink=8]{Updated catalog}
 
 \begin{columns}[T]
-\begin{column}{0.50\textwidth}
+\begin{column}{0.52\textwidth}
 \centering
 \includegraphics[width=\linewidth]{figures/fig_catalog_updated.png}
 \end{column}
-\begin{column}{0.48\textwidth}
+\begin{column}{0.46\textwidth}
 Two corrections from this week:
 
 \medskip
 \textbf{Stealthy reclassified.}
-Reporting $\alpha=\infty$ for stealthy patterns
-is misleading: $S(k)=0$ is a design constraint,
-not a power-law suppression.
+$\alpha=\infty$ is misleading: $S(k)=0$ is a design
+constraint, not a power-law suppression.
 Now described by $\chi$ and $K^*=2\pi\rho\chi$.
 
 \medskip
 \textbf{Density comparison is valid.}
-$\bar\Lambda$ is invariant under density rescaling
-$x_i\to x_i/\rho$ in $d=1$ (verified numerically,
-difference $<0.001$).
-Direct $\bar\Lambda$ comparisons across all patterns
-are fine.
+$\bar\Lambda$ is invariant under rescaling $x_i\to x_i/\rho$
+in $d=1$ (verified: difference~$<0.001$).
+Direct $\bar\Lambda$ comparisons across all patterns are fine.
 
 \medskip
-\small
-\begin{tabular}{llcc}
-\toprule
-\textbf{Pattern} & \textbf{Cl.} & $\alpha$ & $\bar\Lambda$ \\
-\midrule
-Integer lattice    & I   & $\infty$ & $1/6$ \\
-Fibonacci          & I   & 3      & 0.201 \\
-Silver             & I   & 3      & 0.250 \\
-\rowcolor{newbg}
-Cubic $\alpha{=}2$ & I   & 2      & 0.275 \\
-Bronze--Nickel     & I   & 3      & 0.282--0.310 \\
-URL ($a{=}1$)      & I   & 2      & $1/3$ \\
-Bombieri-Taylor    & I   & 1.545  & 0.377 \\
-\bottomrule
-\end{tabular}
+The new Cubic $\alpha{=}2$ tiling sits between Silver and
+Bronze in the ranking.
 \end{column}
 \end{columns}
 \end{frame}
 \note{
-Density invariance in d=1: Lambda_bar = (1/R) int sigma^2 dR has units of length.
-When x_i -> x_i/rho, R -> R/rho and sigma^2 -> sigma^2 (dimensionless), so Lambda_bar -> Lambda_bar.
-Verified: Fibonacci at rho=0.724 vs. rescaled to rho=1; diff < 0.001.
-The new cubic alpha=2 tiling (yellow) sits between Silver and Bronze.
-Stealthy values removed from alpha axis; Lambda_bar still meaningful.
+Density invariance: under $x_i\to x_i/\rho$, window radii rescale too,
+leaving $\bar\Lambda$ unchanged. Verified: Fibonacci at $\rho=0.724$
+vs.\ rescaled to $\rho=1$; difference $<0.001$.
+Stealthy $\alpha$ removed from the ranking axis; $\bar\Lambda$ still meaningful.
 }
 
 %----------------------------------------------------------------------
-\begin{frame}{Going further: does any unimodular matrix fill the gap?}
+\begin{frame}[shrink=5]{Going further: does any unimodular matrix fill the gap?}
 
-Extended the search to $4\times4$ matrices (24 million candidates, 1.36 million Pisot).
-Still nothing in $2<\alpha<3$.
-
-\vspace{0.4em}
-\centering
-\includegraphics[width=0.72\linewidth]{figures/fig_4x4_alpha_dist.png}
-
-\vspace{0.2em}
 \begin{columns}[T]
-\begin{column}{0.50\textwidth}
-\small
-\textbf{Why? Complex-pair sub-leading eigenvalues:}
-\begin{itemize}
-  \item Rank 3: $\det M = \lambda_1|\lambda_2|^2 = 1 \Rightarrow \alpha=2$
-  \item Rank $\geq4$: extra Pisot factor $|\lambda_3|<1$\\
-    forces $|\lambda_2|>1/\sqrt{\lambda_1} \Rightarrow \alpha<2$
-\end{itemize}
-\end{column}
-\begin{column}{0.48\textwidth}
-\small
-All-real sub-leading eigenvalues: no $\alpha\in(2,3)$ found in exhaustive search to rank~4.
+\begin{column}{0.57\textwidth}
+\centering
+\includegraphics[width=\linewidth]{figures/fig_4x4_alpha_dist.png}
 
 \vspace{0.3em}
-\textbf{No unimodular substitution matrix at any rank fills $2<\alpha<3$.}
+{\small Extended to $4\times4$: 24M candidates, 1.36M Pisot.
+Still nothing in $2<\alpha<3$.}
+\end{column}
+\begin{column}{0.41\textwidth}
+\textbf{Why? Complex-pair sub-leading eigenvalues:}
+
+\medskip
+\begin{tabular}{ll}
+\toprule
+\textbf{Rank} & \textbf{Result} \\
+\midrule
+3        & $\det{=}1 \Rightarrow \alpha=2$ \\
+$\geq 4$ & Pisot product $\Rightarrow \alpha<2$ \\
+All real & no $\alpha\in(2,3)$ found \\
+\bottomrule
+\end{tabular}
+
+\medskip
+\colorbox{proofbg}{\parbox{0.88\linewidth}{
+  \textbf{No unimodular substitution matrix
+  at any rank fills $2{<}\alpha{<}3$.}
+}}
 \end{column}
 \end{columns}
 \end{frame}
 \note{
-4x4 candidates = all matrices with row sums <= 4; 24M is the full enumeration.
-Rank >= 4 complex-pair case: det = lambda_1 |lambda_2|^2 |lambda_3| = 1.
-Since |lambda_3| < 1 (Pisot), lambda_1 |lambda_2|^2 = 1/|lambda_3| > 1,
-so |lambda_2| > 1/sqrt(lambda_1), giving alpha = 2 + ln|lambda_3|/ln(lambda_1) < 2.
-The complex pair actually HURTS: it pushes alpha below 2 rather than above it.
-All-real 4x4 case: confirmed numerically; no analytical proof yet.
+Rank-3 proof: $\det M=\lambda_1|\lambda_2|^2=1\Rightarrow|\lambda_2|=1/\sqrt{\lambda_1}
+\Rightarrow\alpha=2$ exactly.
+Rank-$\geq4$: $\det M=\lambda_1|\lambda_2|^2|\lambda_3|=1$; since $|\lambda_3|<1$
+(Pisot), $|\lambda_2|>1/\sqrt{\lambda_1}$, so $\alpha<2$.
+The complex pair hurts at higher rank: it pushes $\alpha$ below 2, not above it.
 }
 
 %----------------------------------------------------------------------
-\begin{frame}{Breaking the constraint: non-unimodular matrices}
+\begin{frame}[shrink=8]{Breaking the constraint: non-unimodular matrices}
 
 If $|\det M|=1$ forces $\alpha\leq2$, what happens when we drop that?
 
@@ -451,13 +434,13 @@ If $|\det M|=1$ forces $\alpha\leq2$, what happens when we drop that?
 For any $2\times2$ Pisot matrix with all-real eigenvalues:
 \[
   |\lambda_2| = \frac{|\det M|}{\lambda_1}
-  \qquad\Rightarrow\qquad
+  \quad\Rightarrow\quad
   \boxed{\;\alpha = 3 - \frac{2\ln|\det M|}{\ln\lambda_1}\;}
 \]
 
-\vspace{0.2em}
 \begin{columns}[T]
 \begin{column}{0.50\textwidth}
+\small
 \begin{tabular}{lcc}
 \toprule
 $|\det M|$ & Result & Example \\
@@ -470,34 +453,31 @@ $\sqrt{\lambda_1}$ & $\alpha=2$ & (boundary) \\
 
 \vspace{0.5em}
 28 non-unimodular $2\times2$ examples found;\\
-all give $\alpha\in(2.0,\,2.2)$.
+all have $|\det|=2$, giving $\alpha\in(2.0,\,2.2)$.
 \end{column}
 \begin{column}{0.48\textwidth}
 Smallest example ($|\det M|=2$):
 \[
-  M=\begin{pmatrix}0&1\\2&4\end{pmatrix},\quad
-  a\to b,\; b\to aabbbb
+  M=\begin{pmatrix}0&1\\2&4\end{pmatrix}
 \]
-$\lambda_1=2{+}\sqrt{6}\approx4.449$,\;
+\textit{Rules:} $a\to b$,\; $b\to aabbbb$
+$\lambda_1=2{+}\sqrt{6}\approx4.449$,\\
 $|\det M|=2 < \sqrt{\lambda_1}\approx2.11$
 \[
-  \alpha = 3-\frac{2\ln2}{\ln(2+\sqrt{6})} = \colorbox{newbg}{\textbf{2.071}}
+  \alpha = 3-\frac{2\ln2}{\ln(2+\sqrt{6})} = \mathbf{2.071}
 \]
 \end{column}
 \end{columns}
 \end{frame}
 \note{
-The formula alpha = 3 - 2 ln|det M| / ln lambda_1 unifies all 2x2 cases.
-For det=1: recovers alpha=3 (all metallic means).
-For det=2 and lambda_1=2+sqrt(6): alpha = 3 - 2*0.693/1.493 = 2.071.
-Gap condition: |det M| in (1, sqrt(lambda_1)).  For lambda_1=4.449: sqrt(4.449)~2.109.
-So |det|=2 is just inside the gap-filling range.
-All 28 examples use |det|=2; all give alpha in (2.0, 2.2) because lambda_1 values are similar.
-To get alpha closer to 3, need |det M| close to 1 (harder to achieve with integers).
+Formula $\alpha=3-2\ln|\det M|/\ln\lambda_1$ unifies all $2\times2$ cases.
+For $\det=1$: recovers $\alpha=3$. Gap condition: $|\det M|\in(1,\sqrt{\lambda_1})$.
+For $\lambda_1=4.449$: $\sqrt{\lambda_1}\approx2.109$, so $|\det|=2$ just fits.
+To get $\alpha$ closer to 3, need $|\det M|$ close to 1 (hard with integers).
 }
 
 %----------------------------------------------------------------------
-\begin{frame}{First 1D quasicrystal with $2<\alpha<3$}
+\begin{frame}[shrink=4]{First 1D quasicrystal with $2<\alpha<3$}
 
 \begin{columns}[T]
 \begin{column}{0.54\textwidth}
@@ -512,37 +492,36 @@ $\alpha$ (eigenvalue) & 2.071 (exact) \\
 Class                 & I ($\sigma^2$ bounded) \\
 $|\det M|$            & 2 \\
 $\rho$                & 0.296 \\
-$\bar\Lambda$ ($N=4$M, period-avg) & $0.650\pm0.015$ \\
+$\bar\Lambda$ (rough, $N\!\approx\!900\mathrm{k}$) & $\approx0.65$ \\
 \bottomrule
 \end{tabular}
 
 \medskip
+\normalsize
 The variance oscillates over $[0.001,\,0.87]$,
 more than 15$\times$ the amplitude of Fibonacci.
-The running average converges very slowly;
-period-aware averaging over complete
-log-periods of $\ln\lambda_1$ is needed.
+Period-aware averaging over complete
+$\ln\lambda_1$ intervals is needed.
 
 \medskip
-\colorbox{newbg}{\parbox{0.95\linewidth}{
-  First known 1D Class~I chain with $\alpha\in(2,3)$.\\
-  Candidate: $\bar\Lambda=13/20=0.650$.
+\colorbox{newbg}{\parbox{0.88\linewidth}{
+  First known 1D Class~I chain with $\alpha\in(2,3)$.\\[0.2em]
+  {\small Rough estimate $\bar\Lambda\approx0.650$;
+  large oscillations prevent precision measurement.}
 }}
 \end{column}
 \end{columns}
 \end{frame}
 \note{
-Tile lengths: ell_a=1, ell_b=lambda_1=2+sqrt(6) ~ 4.449.
-Pisot condition holds: |lambda_2|=0.449 < 1, pure Bragg diffraction.
-Log-period = ln(lambda_1) = 1.493; shown as vertical dotted lines in the figure.
-The amplitude 0.43 is why convergence is slow: residual oscillation in running average ~
-A/sqrt(1+omega^2) ~ 0.10, so N~4M still has uncertainty +/-0.015.
-13/20 = 0.650 is exactly the period-averaged estimate (0 sigma deviation).
-Lambda_bar=0.650 is the highest of any deterministic substitution tiling studied.
+Tile lengths: $\ell_a=1$, $\ell_b=2+\sqrt{6}\approx4.449$.
+Pisot: $|\lambda_2|=0.449<1$; pure Bragg diffraction.
+Log-period $=\ln\lambda_1\approx1.493$; shown as dotted lines.
+At $N\approx900$k, residual oscillation gives uncertainty $\approx\pm0.015$.
+$\bar\Lambda\approx0.650$ is the highest of any deterministic chain studied.
 }
 
 %----------------------------------------------------------------------
-\begin{frame}{Is $\bar\Lambda$ exactly $1/4$ for the Silver chain?}
+\begin{frame}[shrink=7]{Is $\bar\Lambda$ exactly $1/4$ for the Silver chain?}
 
 \begin{columns}[T]
 \begin{column}{0.55\textwidth}
@@ -552,7 +531,7 @@ Lambda_bar=0.650 is the highest of any deterministic substitution tiling studied
 {\footnotesize $N=3.88\times10^6$ points, $3\times10^4$ independent windows.}
 \end{column}
 \begin{column}{0.43\textwidth}
-The numerical value $\bar\Lambda=0.250$ for Silver
+The value $\bar\Lambda=0.250$ for Silver
 caught my attention --- could it be exactly $1/4$?
 
 \medskip
@@ -564,26 +543,24 @@ That's $0.3\sigma$ from $1/4$.
 
 \medskip
 \colorbox{resultbg}{\parbox{0.96\linewidth}{
-  \textbf{Conjecture:} $\bar\Lambda(\text{Silver}) = 1/4$ exactly.\\
+  \textbf{Conjecture:} $\bar\Lambda(\text{Silver}) = 1/4$ exactly.\\[0.2em]
   {\small No analytical proof yet; Zachary's
   theta-function method for Fibonacci would
   be the natural approach.}
 }}
 
 \medskip
-For reference: Fibonacci gives $0.20110$ analytically
-(Zachary \& Torquato 2009), and Bronze $0.2822\pm0.0006$
-(no obvious closed form).
+{\small Bronze gives $0.2822\pm0.0006$ (no obvious closed form).
+Fibonacci gives $0.20110$ analytically (Zachary \& Torquato 2009).}
 \end{column}
 \end{columns}
 \end{frame}
 \note{
-Silver density rho=1/2 exactly.
-Zachary & Torquato (2009) gives Fibonacci Lambda-bar analytically via running average
-over a theta-function expansion of sigma^2(R).  Their method would need Silver's
-cut-and-project window parameter.
-If Silver=1/4 is exact: lattice=1/6, Silver=1/4, URL=1/3 would be a clean sequence.
-Bronze 0.2822 --- closest simple fractions: 11/39 (0.28205, 0.2sigma) or 17/60 (0.2833, 0.6sigma).
+Silver density $\rho=1/2$ exactly; mean spacing $=2$.
+Zachary \& Torquato (2009) computed Fibonacci $\bar\Lambda$ via theta-function
+expansion of $\sigma^2(R)$; applying to Silver requires the Silver window parameter.
+If Silver$=1/4$: lattice$=1/6$, Silver$=1/4$, URL$=1/3$ --- a clean rational sequence.
+Bronze $0.2822$: closest simple fraction $11/39=0.28205$ ($0.2\sigma$, non-obvious).
 }
 
 %----------------------------------------------------------------------
@@ -617,34 +594,32 @@ The gap closes as $0.22/n^{1.43}$.
 \medskip
 \colorbox{resultbg}{\parbox{0.96\linewidth}{
   Limit $= 1/3 = \bar\Lambda$ of the URL cloaked lattice
-  (exact, from Klatt et al.\ 2020).\\
-  Monotone convergence from below.
+  (exact, Klatt et al.\ 2020). Monotone from below.
 }}
 \end{column}
 \end{columns}
 \end{frame}
 \note{
-As the metallic-mean index n increases, the chain "tiles" become more uniform in length
-(the ratio L/S -> 1), approaching the integer lattice with cloaked disorder.
-URL cloaked lattice: Lambda-bar = (1+a^2)/6 at a=1 gives 1/3 exact.
-Open question: is there a closed-form formula Lambda-bar(mu_n) = f(mu_n)?
-Increments: n=1->2 is 0.049, n=2->3 is 0.032, n=4->5 is 0.017.  Power-law convergence.
+As $n\to\infty$, tile lengths $L/S\to1$, approaching an integer lattice with cloaked disorder.
+URL cloaked: $\bar\Lambda=(1+a^2)/6$ at $a=1$ gives $1/3$ exact.
+Open question: closed-form formula $\bar\Lambda(\mu_n)=f(\mu_n)$?
+Increments: $n{:}1{\to}2$ gives 0.049, $n{:}2{\to}3$ gives 0.032, $n{:}4{\to}5$ gives 0.017.
 }
 
 %----------------------------------------------------------------------
-\begin{frame}{Summary}
+\begin{frame}[shrink=7]{Summary}
 
 \begin{columns}[T]
 \begin{column}{0.49\textwidth}
-\textbf{From the assigned investigations:}
+\textbf{From the assigned questions:}
 \begin{itemize}
   \item BT: spreadability fails (dense Bragg + large $|\lambda_2|$);
     use $\bar\Lambda=0.377$
   \item $S(k)$ fitting unreliable; $\bar\Lambda$ stable from $N\sim1000$
-  \item $2{<}\alpha{<}3$ is empty for all $3\times3$ unimodular matrices;
-    new $\alpha{=}2$ chain ($\bar\Lambda{=}0.275$)
-  \item $C_{II}{=}0.123$ (Period-Doubling),
-    $A_{III}{=}0.151$ (0222)
+  \item $2{<}\alpha{<}3$ empty for all $3\times3$ unimodular matrices;
+    new $\alpha{=}2$ chain ($\bar\Lambda{=}0.275$) as byproduct
+  \item $C_{II}{=}0.080$ (Period-Doubling),
+    $A_{III}{=}0.209$ (0222 chain)
   \item Lattice $\bar\Lambda{=}1/6$ exact at all $N$;
     stealthy has ordered and disordered phases
   \item Stealthy $\alpha$ not well-defined; $\bar\Lambda$
@@ -657,7 +632,8 @@ Increments: n=1->2 is 0.049, n=2->3 is 0.032, n=4->5 is 0.017.  Power-law conver
   \item[$\star$] No unimodular matrix (any rank) fills $2{<}\alpha{<}3$
   \item[$\star$] General formula $\alpha{=}3{-}2\ln|\det M|/\ln\lambda_1$
     for $2\times2$ Pisot matrices
-  \item[$\star$] First $\alpha{=}2.071$ quasicrystal ($\bar\Lambda{=}0.650$)
+  \item[$\star$] First $\alpha{=}2.071$ chain
+    ($\bar\Lambda{\approx}0.650$, rough est.)
   \item[$\star$] Silver $\bar\Lambda{=}1/4$ confirmed at $0.3\sigma$
   \item[$\star$] Metallic-mean limit $=1/3$ (URL cloaked)
 \end{itemize}
@@ -666,19 +642,19 @@ Increments: n=1->2 is 0.049, n=2->3 is 0.032, n=4->5 is 0.017.  Power-law conver
 \textbf{Open questions:}
 \begin{itemize}
   \item Analytical proof of $\bar\Lambda(\text{Silver})=1/4$?
-  \item Closed form for $\bar\Lambda\approx0.650$?
-  \item Formula for $\bar\Lambda(\mu_n)$?
+  \item Precise $\bar\Lambda$ for the $\alpha=2.071$ chain?
+  \item Closed form for $\bar\Lambda(\mu_n)$?
   \item Can we find $\alpha$ closer to 3?
 \end{itemize}
 \end{column}
 \end{columns}
 \end{frame}
 \note{
-The non-unimodular discovery is the main new result: the alpha=(2,3) gap CAN be filled,
-but only by breaking the unimodular constraint.
-Silver=1/4 would be the first metallic-mean chain with a rational Lambda-bar (like lattice=1/6).
-The limit 1/3 = URL cloaked is structurally satisfying: as the chain approaches maximum
-Class I disorder, it converges to the disordered limit.
+The non-unimodular result is the main new finding: the $\alpha\in(2,3)$ gap CAN
+be filled, but only by breaking the unimodular constraint.
+Silver$=1/4$ would be the first metallic-mean chain with a rational $\bar\Lambda$.
+The limit $1/3=$ URL cloaked is structurally satisfying: as the chain approaches
+maximum Class~I disorder, it converges to the disordered limit.
 }
 
 %----------------------------------------------------------------------
