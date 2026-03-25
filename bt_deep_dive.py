@@ -1,5 +1,5 @@
 """
-Investigation 1: Bombieri-Taylor Deep Dive
+Bombieri-Taylor Deep Dive
 
 Detailed analysis of BT oscillation structure and spreadability diagnosis.
 - Fine-resolution sigma^2(R) with oscillation periods labeled
@@ -49,7 +49,7 @@ theta2 = lam2
 period_log = 2.0 * np.log(theta1)   # oscillation period in log(R) or log(t)
 
 print("=" * 65)
-print("  Investigation 1: Bombieri-Taylor Deep Dive")
+print("  Bombieri-Taylor Deep Dive")
 print("=" * 65)
 print(f"  theta_1  = {theta1:.6f}")
 print(f"  |lambda_2| = {theta2:.6f}")

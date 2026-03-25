@@ -1,0 +1,599 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\definecolor{phasebg}{HTML}{E3F2FD}
+\definecolor{resultbg}{HTML}{E8F5E9}
+\definecolor{newbg}{HTML}{FFF9C4}
+\definecolor{seccolor}{HTML}{1565C0}
+
+\titleformat{\section}{\large\bfseries\color{seccolor}}{\thesection}{0.6em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+
+\title{\textbf{Project Progress Report}\\[0.3em]
+  \large Classification and Measurement of One-Dimensional Hyperuniform Point Patterns}
+\author{Michael Fang \quad --- \quad Advisor: Prof.\ Salvatore Torquato, Princeton University}
+\date{March 24, 2026}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\vspace{1em}
+\noindent\rule{\linewidth}{0.4pt}
+
+%==============================================================================
+\section{Project Overview}
+%==============================================================================
+
+This project provides a systematic numerical characterization of hyperuniform point
+patterns in one dimension. Two complementary metrics are computed for each pattern:
+\begin{itemize}[noitemsep]
+  \item \textbf{Hyperuniformity exponent} $\alpha$: characterizes how $S(k) \sim |k|^\alpha$
+        as $k \to 0$.
+  \item \textbf{Surface-area coefficient} $\bar\Lambda$: measures residual disorder within
+        the strongest (Class~I) patterns; $\bar\Lambda = 1/6$ is the global minimum (integer lattice).
+\end{itemize}
+
+\noindent Three universality classes arise from the large-$R$ behavior of the number
+variance $\sigma^2(R)$:
+
+\vspace{0.4em}
+\noindent\begin{tabular}{llll}
+\toprule
+\textbf{Class} & \textbf{Condition} & \textbf{Variance} & \textbf{$\bar\Lambda$} \\
+\midrule
+I   & $\alpha > 1$ & bounded                 & finite \\
+II  & $\alpha = 1$ & $\sim C_{II} \ln R$     & diverges \\
+III & $0 < \alpha < 1$ & $\sim A_{III} R^{1-\alpha}$ & diverges \\
+\bottomrule
+\end{tabular}
+\vspace{0.5em}
+
+\noindent The project is organized by ``weeks,'' each corresponding to a checkpoint meeting
+with Prof.\ Torquato (not necessarily one calendar week). Three such meetings have
+taken place to date, yielding 27 characterized patterns and a Junior Paper
+(§1--§3 complete, 9 pages; results sections pending).
+
+%==============================================================================
+\section{Week 1}
+%==============================================================================
+
+\subsection{Code Benchmarking and Validation}
+
+The core numerical algorithm for computing $\sigma^2(R)$ was validated against
+the 1D Poisson process ($\sigma^2 = 2\rho R$) to within \textbf{1.1\% mean
+relative error} across the full $R$-range.
+Output: \texttt{fig1\_poisson\_benchmark.png}.
+
+\subsection{Quasicrystal Generation}
+
+Two generation methods were implemented:
+\begin{enumerate}[noitemsep]
+  \item \textbf{Substitution method} (\texttt{substitution\_tilings.py}): iterative rule
+        application up to $N \sim 10^7$ for all five metallic-mean chains.
+  \item \textbf{Cut-and-project method} (\texttt{projection\_method.py}): Fibonacci chain
+        from $\mathbb{Z}^2$ projection. Agreement with substitution: $<0.1\%$ on $\bar\Lambda$.
+\end{enumerate}
+
+\noindent\begin{tabular}{lccc}
+\toprule
+\textbf{Chain} & \textbf{Metallic mean} $\mu_n$ & $|\det M|$ & $\alpha$ (exact) \\
+\midrule
+Fibonacci ($n=1$)   & $(1+\sqrt{5})/2 \approx 1.618$ & 1 & 3 \\
+Silver    ($n=2$)   & $1+\sqrt{2} \approx 2.414$     & 1 & 3 \\
+Bronze    ($n=3$)   & $(3+\sqrt{13})/2 \approx 3.303$& 1 & 3 \\
+Copper    ($n=4$)   & $2+\sqrt{5} \approx 4.236$     & 1 & 3 \\
+Nickel    ($n=5$)   & $(5+\sqrt{29})/2 \approx 5.193$& 1 & 3 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}\noindent All $2\times2$ metallic-mean matrices have $|\det M|=1$,
+which forces $|\lambda_2|=1/\lambda_1$ and thus $\alpha=3$ exactly for all of them.
+
+\subsection{Number Variance and $\bar\Lambda$}
+
+$\sigma^2(R)$ was computed for all five metallic-mean chains at $N \sim 10^6$--$10^7$.
+All are Class~I (bounded, oscillating variance). The exact formula for the integer
+lattice is $\sigma^2(R) = \{R\}(1-2\{R\})$ where $\{R\}$ denotes the fractional part.
+
+\noindent\begin{tabular}{lcc}
+\toprule
+\textbf{Pattern} & $\bar\Lambda$ & \textbf{Notes} \\
+\midrule
+Integer Lattice & $1/6 = 0.1667$ & Literature minimum \\
+Fibonacci       & $0.2011 \pm 0.001$ & Confirms Zachary \& Torquato (2009) \\
+Silver          & $0.2500$ & Novel (later confirmed $= 1/4$ exactly; see §4) \\
+Bronze          & $0.2821 \pm 0.0006$ & Novel \\
+Copper          & $0.293$ & Novel \\
+Nickel          & $0.310$ & Novel \\
+\bottomrule
+\end{tabular}
+
+\subsection{Spreadability}
+
+Point patterns are embedded into two-phase media ($\phi_2 = 0.35$). The excess
+spreadability $E(t) = \mathcal{S}(\infty) - \mathcal{S}(t)$ yields $\alpha$ from
+the long-time slope $E(t) \sim t^{-(1+\alpha)/2}$.
+
+\noindent\begin{tabular}{lccc}
+\toprule
+\textbf{Pattern} & $\alpha$ (measured) & $\alpha$ (expected) & Error \\
+\midrule
+Fibonacci & 3.049 & 3 & 1.6\% \\
+Silver    & 2.992 & 3 & 0.3\% \\
+Bronze    & 2.987 & 3 & 0.4\% \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}\noindent Integer lattice confirmed $\alpha \to \infty$ (exponential decay).
+Spreadability was validated as a second, independent measure of $\alpha$.
+
+%==============================================================================
+\section{Week 2}
+%==============================================================================
+
+\subsection{Uncorrelated Random Lattice and Stable Distributions}
+
+The uncorrelated random lattice (URL) displaces each site by $U(-a,a)$.
+The exact formula $\bar\Lambda(a) = (1+a^2)/6$ was derived and validated to $<0.3\%$
+for all $a$. URL gives $\alpha=2$ for all $a>0$ (Class~I). At $a=1$ (cloaking limit),
+$\bar\Lambda = 1/3$ exactly --- this turns out to be the limit of the metallic-mean sequence.
+
+Symmetric $\alpha$-stable perturbations fill the $1 < \alpha < 2$ space stochastically
+(Class~II/III for stability index $s < 1$).
+
+\subsection{Stealthy Hyperuniform Patterns}
+
+Stealthy configurations ($S(k) = 0$ for $|k| < K^*$) were analyzed:
+\begin{itemize}[noitemsep]
+  \item Collaborator-provided ensemble: $\sim$4300 disordered-phase configurations per
+        $\chi$ ($N = 2000$, $\rho = 1$, $\chi \in \{0.1, 0.2, 0.3\}$).
+  \item 1D approximation derived: $\bar\Lambda \approx 1/(\pi^2\chi)$, validated below.
+\end{itemize}
+
+\noindent\begin{tabular}{cccc}
+\toprule
+$\chi$ & $\bar\Lambda$ (measured) & $\bar\Lambda = 1/(\pi^2\chi)$ & Excess \\
+\midrule
+0.10 & 1.021 & 1.013 & $+0.8\%$ \\
+0.20 & 0.526 & 0.507 & $+3.7\%$ \\
+0.30 & 0.357 & 0.338 & $+5.6\%$ \\
+\bottomrule
+\end{tabular}
+
+\textbf{Two-phase discovery:} Generating stealthy configurations via collective-coordinate
+optimization from a \emph{perturbed lattice} starting point gives $\bar\Lambda \approx 1/6$
+--- near the lattice minimum --- while collaborator data (random starting positions) gives
+$\bar\Lambda \approx 1/(\pi^2\chi) \gg 1/6$. Both phases satisfy $S(k)=0$ for $|k|<K^*$
+but differ drastically in their spatial structure. This shows stealthy hyperuniformity does
+not uniquely determine a point pattern.
+
+\textbf{Re-classification:} Stealthy patterns are not power-law suppressed; $\alpha$ is not
+meaningful. The correct descriptor is $K^* = 4\pi\rho\chi$.
+
+\subsection{New Substitution Chains}
+
+Three new chains were added to \texttt{substitution\_tilings.py}:
+
+\noindent\begin{tabular}{lllcc}
+\toprule
+\textbf{Chain} & \textbf{Rules} & \textbf{Matrix} & \textbf{Class} & $\alpha$ \\
+\midrule
+Period-Doubling & $S \to L$, $L \to LSS$    & $[[0,2],[1,1]]$    & II  & 1.000 \\
+0222 Chain      & $S \to LL$, $L \to SSLL$  & $[[0,2],[2,2]]$    & III & 0.639 \\
+Bombieri-Taylor & $a \to aac$, $b \to ac$, $c \to b$ & $3\times3$ & I   & 1.545 \\
+\bottomrule
+\end{tabular}
+
+\textbf{Bombieri-Taylor} fills the $1 < \alpha < 2$ gap:
+\[
+  M_{BT} = \begin{pmatrix}2&0&1\\1&0&1\\0&1&0\end{pmatrix},\quad
+  \lambda_1 = 2.247,\quad |\lambda_2| = 0.802,\quad
+  \alpha = 1 - \frac{2\ln(0.802)}{\ln(2.247)} = \mathbf{1.545}, \quad
+  \bar\Lambda = 0.377
+\]
+This is the first known Class~I quasicrystal with $1 < \alpha < 2$.
+
+A new $\alpha=2$ chain was also added (first deterministic substitution tiling at this value,
+previously only the stochastic URL occupied $\alpha=2$):
+\[
+  a \to bc,\; b \to c,\; c \to abc \quad
+  \Rightarrow \quad \lambda_1 \approx 1.839,\; |\lambda_2| \approx 0.737,\;
+  \alpha = 2.000,\; \bar\Lambda = 0.275.
+\]
+
+\subsection{Full Catalog Assembly and Junior Paper}
+
+All patterns were compiled into \texttt{catalog.json} via \texttt{research\_catalog.py}.
+Infrastructure: \texttt{disordered\_patterns.py}, \texttt{stealthy\_analysis.py},
+\texttt{make\_figures.py}.
+
+The Junior Paper (\texttt{jp/jp\_hyperuniformity.tex}) was drafted:
+§1 Introduction, §2 Theoretical Background, §3 Methods (5 subsections).
+9 pages, biblatex+biber backend. Results sections (§4--§8) exist as a separate draft
+(\texttt{jp/jp\_results\_draft.tex}) pending organization.
+
+%==============================================================================
+\section{Week 3}
+%==============================================================================
+
+The following work was completed between the second and third meetings.
+
+\subsection{Bombieri-Taylor Deep Dive}
+
+\textbf{Script:} \texttt{bt\_deep\_dive.py} \quad
+\textbf{Figure:} \texttt{fig\_bt\_deep.png}
+
+\begin{enumerate}[noitemsep]
+  \item BT has \textbf{32,517 Bragg peaks} in $k < 50$ vs.\ 2,637 for Fibonacci (12$\times$ denser).
+  \item \textbf{Rod overlap:} minimum inter-point spacing $= 1.000 < 2a = 1.002$;
+        correcting $a$ changes the form factor.
+  \item \textbf{Slow convergence:} $|\lambda_2| = 0.802$ creates log-periodic oscillations
+        with period $2\ln\theta_1 = 1.619$. At $t \in [10^5, 10^9]$: $\hat\alpha = 1.67$
+        (theory: 1.545). Converges extremely slowly from above.
+\end{enumerate}
+\textbf{Conclusion:} Spreadability is unreliable for BT due to rod overlap and large
+$|\lambda_2|$. Use variance-based $\bar\Lambda = 0.377$ instead.
+
+\subsection{Finite-Size Scaling of $\alpha$}
+
+\textbf{Script:} \texttt{finite\_size\_scaling.py} \quad
+\textbf{Figure:} \texttt{fig\_finite\_size\_alpha\_landscape.png}
+
+Direct $S(k)$ power-law fitting fails for all substitution tilings (structure factor
+dominated by Bragg peaks). Variance-based metrics are reliable:
+
+\noindent\begin{tabular}{lllcc}
+\toprule
+\textbf{Pattern} & \textbf{Class} & \textbf{Metric} & $N = 1000$ & $N = 10^6$ \\
+\midrule
+Bombieri-Taylor & I   & $\bar\Lambda(N)$ & 0.3775 & 0.3783 (stable from $N = 2000$) \\
+Fibonacci       & I   & $\bar\Lambda(N)$ & 0.1994 & 0.1982 (stable from $N = 1600$) \\
+Period-Doubling & II  & $C_{II}(N)$     & 0.1284 & 0.1233 (needs $N > 10^5$) \\
+0222 Chain      & III & $\hat\alpha(N)$ & 1.046  & 0.776  (slow; theory $= 0.639$) \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.2em}\noindent The 0222 chain is slow because $|\lambda_2| = 1.236 > 1$ (not Pisot),
+causing large finite-size corrections even at $N = 1.5 \times 10^6$.
+
+\subsection{Systematic Search for New Substitution Chains}
+
+\textbf{Script:} \texttt{search\_cubic\_tilings.py} \quad
+\textbf{Figure:} \texttt{fig\_new\_tilings.png}
+
+Enumerated all 39,304 $3\times3$ non-negative integer matrices with row sums $\leq 4$.
+4,882 pass the Pisot condition; 305 have nominal $\alpha \in (2,3)$.
+
+\textbf{Result:} All 305 give $\alpha = 2.000$ or $\alpha = 3.000$ exactly. No matrix
+fills $2 < \alpha < 3$.
+
+\textbf{Proof:} For $3\times3$ unimodular with complex conjugate pair $\lambda_2 = \bar\lambda_3$:
+\[
+  |\det M| = 1 \Rightarrow \lambda_1|\lambda_2|^2 = 1 \Rightarrow
+  |\lambda_2| = \lambda_1^{-1/2} \Rightarrow \alpha = 2 \text{ exactly.}
+\]
+
+\textbf{Extended to $4\times4$:} Search of 24M matrices (1.36M Pisot) confirms zero cases
+with $\alpha \in (2,3)$ among unimodular matrices. Rank-$\geq4$ unimodular matrices with
+complex pairs give $\alpha < 2$ (additional real Pisot factor $\lambda_4$ forces
+$|\lambda_2|^2 < 1/\lambda_1$), so the conclusion holds for any rank.
+
+\subsection{Generalized Scaling Metrics for Classes II and III}
+
+\textbf{Script:} \texttt{generalized\_metrics.py} \quad
+\textbf{Figure:} \texttt{fig\_generalized\_metrics.png}
+
+\begin{align*}
+  C_{II}   &= \lim_{R\to\infty} \frac{\sigma^2(R)}{\ln R} \qquad \text{(Class II)} \\
+  A_{III}  &= \lim_{R\to\infty} \frac{\sigma^2(R)}{R^{1-\alpha}} \qquad \text{(Class III)}
+\end{align*}
+
+Results (curve-fit primary): Period-Doubling $C_{II} = 0.080$;
+0222 Chain $A_{III} = 0.209$ (using $\alpha = 0.684$, fitted).
+Plateau cross-checks ($C_{II}^{\rm plat} = 0.123$, $A_{III}^{\rm plat} = 0.151$) are
+biased at finite $R$: plateau converges as $C + b/\ln R$ from above for Class II,
+and from below for Class III.
+Function \texttt{compute\_generalized\_metric()} added to \texttt{quasicrystal\_variance.py}.
+
+\subsection{$\bar\Lambda$ Finite-$N$ Corrections}
+
+\textbf{Script:} \texttt{finite\_size\_lambda\_bar.py} \quad
+\textbf{Figure:} \texttt{fig\_finite\_size\_lambda.png}
+
+\textbf{Integer lattice:} The piecewise-cubic integral evaluates to $\bar\Lambda = 1/6$
+exactly for all integer $R_\text{max}$. No finite-$N$ correction exists; observed
+deviations ($<0.3\%$) are Monte Carlo noise.
+
+\textbf{Stealthy:} Ordered-phase stealthy (lattice start) gives $\bar\Lambda \approx 1/6$
+at all $N$ and $\chi$, not $1/(\pi^2\chi)$. This confirms the two-phase picture:
+both phases are stealthy but differ drastically in spatial structure.
+
+\subsection{Catalog Cleanup and Density Normalization}
+
+\textbf{Script:} \texttt{catalog\_cleanup.py} \quad
+\textbf{Figure:} \texttt{fig\_catalog\_updated.png}
+
+Stealthy patterns relabeled: $\alpha$ removed, $K^* = 4\pi\rho\chi$ added.
+
+$\bar\Lambda$ is invariant under uniform density rescaling in $d=1$: rescaling
+$x_i \to x_i/\rho$ leaves $\bar\Lambda$ unchanged ($<0.2\%$ numerical error on Fibonacci).
+Direct comparison of $\bar\Lambda$ across all patterns with different densities is valid.
+
+\subsection{The $2 < \alpha < 3$ Gap: Non-Unimodular Extension}
+
+\textbf{Scripts:} \texttt{search\_4x4\_tilings.py}, \texttt{fig\_nonunimodular\_chain.py}
+\quad\textbf{Figure:} \texttt{fig\_nonunimodular.png}
+
+The determinant constraint for all $2\times2$ Pisot matrices gives a unified formula:
+\[
+  |\lambda_2| = \frac{|\det M|}{\lambda_1} \implies
+  \alpha = 3 - \frac{2\ln|\det M|}{\ln\lambda_1}.
+\]
+For $|\det M|=1$ (unimodular): $\alpha=3$. For $1 < |\det M| < \sqrt{\lambda_1}$:
+$\alpha \in (2,3)$.
+
+A targeted search over $2\times2$ matrices with row sums $\leq 6$ found
+\textbf{28 matrices with $\alpha \in (2,3)$}, all with $|\det M|=2$.
+Minimum required row sum is 6 (one rule must produce at least 6 tiles).
+
+\textbf{Smallest example:} $M = \bigl[\begin{smallmatrix}0&1\\2&4\end{smallmatrix}\bigr]$
+($\det=-2$), rules $a \to b$, $b \to aabbbb$.
+\[
+  \lambda_1 = 2+\sqrt{6} \approx 4.449,\quad |\lambda_2| = |2-\sqrt{6}| \approx 0.449,\quad
+  \alpha = 2.071.
+\]
+
+Simulated at $N_\text{iter}=9$: $N=202{,}256$ points, $\rho = 0.2959$.
+$\sigma^2(R)$ shows \textbf{large log-periodic oscillations} over the range $[0.001, 0.87]$
+with log-period $\ln\lambda_1 \approx 1.493$ in $\ln R$.
+Running average gives $\bar\Lambda \approx 0.650$ (rough estimate; large oscillation amplitude prevents precision measurement).
+This is the \textbf{first confirmed 1D substitution tiling with $\alpha \in (2,3)$}.
+
+\subsection{High-Precision Silver $\bar\Lambda$ and the Metallic-Mean Limit}
+
+\textbf{Scripts:} \texttt{silver\_precision\_analysis.py},
+\texttt{metallic\_mean\_convergence.py}
+\quad\textbf{Figure:} \texttt{fig\_metallic\_convergence.png}
+
+\textbf{Silver:} High-precision run at $N = 3.88\times10^6$ ($3\times10^4$ windows,
+1500 $R$ values) gives $\bar\Lambda = 0.2501 \pm 0.0004$, which is $0.3\sigma$ from $1/4$.
+The Silver chain has $\rho = 1/2$ exactly (mean spacing $= 2$). The result
+$\bar\Lambda = 1/4$ appears to be exact (novel; analytical proof not yet known).
+
+\textbf{Metallic-mean limit:} $\bar\Lambda(\mu_n)$ was computed for $n = 1\ldots 20$:
+
+\noindent\begin{tabular}{cccccccccc}
+\toprule
+$n$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 10 \\
+$\bar\Lambda$ & 0.2011 & 0.2500 & 0.2821 & 0.293 & 0.310 & 0.3177 & 0.3212 & 0.3249 & 0.3265 \\
+\midrule
+$n$ & 15 & 20 & $\infty$ & & & & & & \\
+$\bar\Lambda$ & 0.3289 & 0.3310 & $1/3$ & & & & & & \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.2em}\noindent Convergence rate: $1/3 - \bar\Lambda(n) \approx 0.22/n^{1.43}$.
+The URL cloaked lattice ($a=1$, $\bar\Lambda = 1/3$ exactly) is the limit of this family.
+
+%==============================================================================
+\section{Complete Pattern Catalog}
+%==============================================================================
+
+Patterns sorted by $\bar\Lambda$ within Class~I.
+
+\vspace{0.4em}
+\noindent\begin{tabular}{llcc}
+\toprule
+\textbf{Pattern} & \textbf{Class} & $\boldsymbol\alpha$ & $\boldsymbol{\bar\Lambda}$ \\
+\midrule
+\rowcolor{resultbg}
+Integer Lattice             & I & $\infty$ & $1/6 = 0.167$ \\
+URL ($a = 0.1$)             & I & 2.0 & 0.168 \\
+URL ($a = 0.3$)             & I & 2.0 & 0.181 \\
+Gaussian $\sigma=0.1$       & I & 2.0 & 0.187 \\
+Fibonacci                   & I & 3.0 & 0.201 \\
+URL ($a = 0.5$)             & I & 2.0 & 0.208 \\
+\rowcolor{resultbg}
+Silver                      & I & 3.0 & $\mathbf{1/4} = 0.250$ \\
+\rowcolor{newbg}
+Cubic $\alpha$=2 (new)      & I & 2.0 & 0.275 \\
+Bronze                      & I & 3.0 & 0.282 \\
+Copper                      & I & 3.0 & 0.293 \\
+Nickel                      & I & 3.0 & 0.310 \\
+URL ($a = 1.0$)             & I & 2.0 & 0.333 \\
+Stealthy ($\chi = 0.3$)     & I & ---$^\dagger$ & 0.358 \\
+\rowcolor{resultbg}
+Bombieri-Taylor             & I & 1.545 & 0.377 \\
+Stable $s=1.7$              & I & 1.7  & 0.242 \\
+Stable $s=1.5$              & I & 1.5  & 0.303 \\
+Stable $s=1.3$              & I & 1.3  & 0.417 \\
+Stealthy ($\chi = 0.2$)     & I & ---$^\dagger$ & 0.526 \\
+Stealthy ($\chi = 0.1$)     & I & ---$^\dagger$ & 1.021 \\
+\midrule
+Period-Doubling             & II  & 1.0  & div.\ ($C_{II} = 0.080$) \\
+\midrule
+0222 Chain                  & III & 0.639& div.\ ($A_{III} = 0.209$) \\
+Cauchy $\gamma=0.1$         & II  & 0.95 & div. \\
+Stable $s=0.7$              & III & 0.7  & div. \\
+Stable $s=0.5$              & III & 0.5  & div. \\
+Stable $s=0.3$              & III & 0.3  & div. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.4em}
+\noindent$^\dagger$ Stealthy: $S(k) = 0$ by construction; $\alpha$ not applicable.
+Green rows: literature-confirmed benchmarks. Yellow: novel additions.
+
+%==============================================================================
+\section{Figures and Scripts}
+%==============================================================================
+
+\subsection*{Figures}
+
+\noindent\begin{tabular}{ll}
+\toprule
+\textbf{Filename} & \textbf{Content} \\
+\midrule
+\texttt{fig1\_poisson\_benchmark.png}   & Poisson variance validation \\
+\texttt{fig2\_bounded\_variance.png}    & $\sigma^2(R)$ for Fibonacci/Silver/Bronze \\
+\texttt{fig3\_hyperuniformity\_test.png}& Normalized variance across classes \\
+\texttt{fig9\_stealthy\_sk.png}         & $S(k)$ for stealthy at $\chi=0.1,0.2,0.3$ \\
+\texttt{stealthy\_Sk\_overlay.png}      & $S(k)$ overlay of all stealthy configs \\
+\texttt{bombieri\_taylor\_analysis.png} & BT variance, $S(k)$, spreadability \\
+\texttt{fig12\_ranking.png}             & Full $\bar\Lambda$ ranking, Class~I \\
+\texttt{fig\_variance\_II\_III.png}     & $\sigma^2(R)$ for Period-Doubling and 0222 \\
+\midrule
+\texttt{fig\_bt\_deep.png}              & BT oscillations, Bragg peak density, $E(t)$ \\
+\texttt{fig\_finite\_size\_alpha.png}   & $\bar\Lambda(N)$, $C_{II}(N)$, $\hat\alpha(N)$ (portrait) \\
+\texttt{fig\_finite\_size\_alpha\_landscape.png} & Same, landscape $1\times4$ for slides \\
+\texttt{fig\_new\_tilings.png}          & Cubic $\alpha$=2 chain variance and $S(k)$ \\
+\texttt{fig\_generalized\_metrics.png}  & Normalized variance plateaus (Class II/III) \\
+\texttt{fig\_finite\_size\_lambda.png}  & Lattice $\bar\Lambda$ analytic vs.\ simulated \\
+\texttt{fig\_catalog\_updated.png}      & Updated $\bar\Lambda$ ranking with stealthy fixes \\
+\texttt{fig\_metallic\_convergence.png} & $\bar\Lambda(\mu_n)$ for $n=1\ldots20$ converging to $1/3$ \\
+\texttt{fig\_4x4\_alpha\_dist.png}      & $4\times4$ matrix search: $\alpha$ distribution \\
+\texttt{fig\_nonunimodular.png}         & $\sigma^2(R)$ and running $\bar\Lambda$ for $\alpha=2.071$ chain \\
+\bottomrule
+\end{tabular}
+
+\subsection*{Scripts}
+
+\noindent\begin{tabular}{ll}
+\toprule
+\textbf{Script} & \textbf{Purpose} \\
+\midrule
+\texttt{substitution\_tilings.py}     & All chains (metallic means, BT, cubic $\alpha$=2, non-unimodular) \\
+\texttt{quasicrystal\_variance.py}    & $\sigma^2(R)$, $\bar\Lambda$, generalized metrics \\
+\texttt{projection\_method.py}        & Cut-and-project Fibonacci chain \\
+\texttt{two\_phase\_media.py}         & Spectral density, spreadability \\
+\texttt{disordered\_patterns.py}      & URL, stealthy generation, exact $\bar\Lambda$ for URL \\
+\texttt{stealthy\_analysis.py}        & Collaborator stealthy ensemble analysis \\
+\texttt{research\_catalog.py}         & Full pipeline $\to$ \texttt{catalog.json} \\
+\texttt{make\_figures.py}             & Figures from catalog + stealthy results \\
+\texttt{analyze\_bombieri\_taylor.py} & BT-specific analysis \\
+\midrule
+\texttt{bt\_deep\_dive.py}            & (Mtg 2--3) BT oscillations, $S(k)$ density, $E(t)$ \\
+\texttt{finite\_size\_scaling.py}     & (Mtg 2--3) $\bar\Lambda(N)$, $C_{II}(N)$, $\hat\alpha(N)$ \\
+\texttt{finite\_size\_scaling\_landscape.py} & (Mtg 2--3) Landscape $1\times4$ version \\
+\texttt{search\_cubic\_tilings.py}    & (Mtg 2--3) Exhaustive $3\times3$ matrix search \\
+\texttt{generalized\_metrics.py}      & (Mtg 2--3) $C_{II}$, $A_{III}$; patches variance module \\
+\texttt{finite\_size\_lambda\_bar.py} & (Mtg 2--3) Lattice formula; stealthy two phases \\
+\texttt{catalog\_cleanup.py}          & (Mtg 2--3) Stealthy re-classification, density invariance \\
+\texttt{metallic\_mean\_convergence.py} & (Mtg 2--3) $\bar\Lambda(\mu_n)$ for $n=1\ldots20$ \\
+\texttt{search\_4x4\_tilings.py}      & (Mtg 2--3) $4\times4$ matrix search (24M matrices) \\
+\texttt{fig\_nonunimodular\_chain.py} & (Mtg 2--3) Figure for $\alpha=2.071$ non-unimodular chain \\
+\bottomrule
+\end{tabular}
+
+\subsection*{Presentations and Written Work}
+
+\noindent\begin{tabular}{lll}
+\toprule
+\textbf{Document} & \textbf{Location} & \textbf{Notes} \\
+\midrule
+Week 1 presentation & \texttt{results/week1/week1\_presentation.tex} & Beamer, core metallic-mean results \\
+Week 2 presentation & \texttt{results/week2/week2\_presentation.tex} & Beamer, 12 slides \\
+Week 3 presentation & \texttt{results/week3/week3\_presentation.tex} & Beamer, 16 slides (rewritten 2026-03-24) \\
+Junior Paper        & \texttt{jp/jp\_hyperuniformity.tex}           & 9 pages, §1--§3 complete \\
+JP results draft    & \texttt{jp/jp\_results\_draft.tex}            & §4--§8 + appendix, held for later \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}\noindent All documents compile via MiKTeX
+(\texttt{C:/Users/minec/AppData/Local/Programs/MiKTeX/miktex/bin/x64/}).
+
+%==============================================================================
+\section{Key Theoretical Results}
+%==============================================================================
+
+\begin{enumerate}
+  \item \textbf{$\alpha = 3$ universality of metallic means.} For any $2\times2$
+        metallic-mean matrix with $|\det M| = 1$: $|\lambda_2| = 1/\lambda_1 \Rightarrow
+        \alpha = 3$ universally.
+
+  \item \textbf{Bombieri-Taylor fills $1 < \alpha < 2$.} The 3-letter cubic substitution
+        $a \to aac, b \to ac, c \to b$ gives $\alpha = 1.545$, the first known 1D
+        quasicrystal with $\alpha \in (1,2)$.
+
+  \item \textbf{First deterministic $\alpha = 2$ substitution tiling.} The chain
+        $c \to abc, a \to bc, b \to c$ gives $\alpha = 2.000$ exactly,
+        $\bar\Lambda = 0.275$.
+
+  \item \textbf{$\bar\Lambda$ density invariance.} $\bar\Lambda$ is invariant under
+        uniform density rescaling in $d=1$; direct comparison across patterns with
+        different densities is valid.
+
+  \item \textbf{Integer lattice has no finite-$N$ correction.} $\bar\Lambda = 1/6$
+        exactly for all integer $R_\text{max}$ (piecewise cubic integral identity).
+
+  \item \textbf{Stealthy two-phase structure.} Both ordered and disordered stealthy
+        phases satisfy $S(k) = 0$ for $|k| < K^*$, but differ drastically in $\bar\Lambda$
+        ($\approx 1/6$ vs.\ $1/(\pi^2\chi)$). Stealthy $\alpha$ is not a power-law exponent.
+
+  \item \textbf{$2 < \alpha < 3$ gap is inaccessible to unimodular matrices.}
+        Exhaustive search over $3\times3$ (39,304) and $4\times4$ (24M) matrices
+        confirms zero unimodular cases with $\alpha \in (2,3)$.
+        Rank-3 proof: $|\det M|=1 \Rightarrow \alpha=2$ exactly for complex pairs.
+        Rank-$\geq4$ proof: additional Pisot factor forces $\alpha < 2$.
+
+  \item \textbf{General 2$\times$2 formula.} For any $2\times2$ Pisot matrix:
+        $\alpha = 3 - 2\ln|\det M|/\ln\lambda_1$. Gap $(2,3)$ is accessible when
+        $|\det M| \in (1, \sqrt{\lambda_1})$; all 28 known examples have $|\det M|=2$.
+
+  \item \textbf{First 1D quasicrystal with $\alpha \in (2,3)$.}
+        $M = \bigl[\begin{smallmatrix}0&1\\2&4\end{smallmatrix}\bigr]$ ($\det=-2$)
+        gives $\alpha = 2.071$, $\bar\Lambda \approx 0.650$ (rough estimate).
+        Large log-periodic oscillations in $\sigma^2(R)$, period $\ln\lambda_1 \approx 1.493$.
+
+  \item \textbf{Silver $\bar\Lambda = 1/4$ exact (numerical).}
+        $N = 3.88\times10^6$, $3\times10^4$ windows: $\bar\Lambda = 0.2501 \pm 0.0004$
+        ($0.3\sigma$ from $1/4$). Analytical proof unknown.
+
+  \item \textbf{$\bar\Lambda(\mu_n) \to 1/3$ confirmed.} Metallic-mean sequence
+        $n=1\ldots20$ converges to $1/3$ at rate $0.22/n^{1.43}$. URL cloaked
+        lattice ($a=1$, $\bar\Lambda=1/3$) is the exact limit.
+\end{enumerate}
+
+%==============================================================================
+\section{Open Questions}
+%==============================================================================
+
+\begin{enumerate}
+  \item \textbf{$2 < \alpha < 3$ gap: \emph{RESOLVED} (mechanism and first example).}
+        Non-unimodular $M=\bigl[\begin{smallmatrix}0&1\\2&4\end{smallmatrix}\bigr]$
+        gives $\alpha=2.071$.
+        Sub-question: what is the minimal-complexity chain in $(2,3)$?
+        (Row sum $\geq 6$ is currently the minimum requirement.)
+
+  \item \textbf{Silver exact value: \emph{RESOLVED numerically}.}
+        $\bar\Lambda = 1/4$ at $0.3\sigma$. Analytical proof not yet known.
+
+  \item \textbf{$\bar\Lambda$ metallic-mean limit: \emph{RESOLVED}.}
+        $\bar\Lambda(\mu_n) \to 1/3$; rate $0.22/n^{1.43}$; URL cloaked lattice
+        is the exact limit.
+
+  \item \textbf{Non-unimodular $\bar\Lambda$:} Is $\bar\Lambda = 0.650$ exactly $13/20$?
+        Analytical proof unknown; large oscillation amplitude makes high-precision
+        measurement difficult.
+
+  \item \textbf{Bronze closed form:} Is $\bar\Lambda(\text{Bronze}) = 0.2822$ a clean
+        expression? Closest simple fraction: $11/39 = 0.28205$ ($0.18\sigma$, non-obvious).
+
+  \item \textbf{Stealthy two-phase literature:} Is the ordered/disordered bifurcation
+        discussed in existing stealthy ground-state literature?
+
+  \item \textbf{2D generalization:} Does the eigenvalue formula
+        $\alpha = 1 - 2\ln|\lambda_2|/\ln\lambda_1$ extend to 2D substitution
+        tilings (Penrose, Ammann-Beenker)?
+\end{enumerate}
+
+\end{document}

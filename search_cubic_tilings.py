@@ -1,5 +1,5 @@
 """
-Investigation 3: Systematic Search for New Cubic (3x3) Substitution Tilings
+Systematic Search for New Cubic (3x3) Substitution Tilings
 
 Searches 3x3 substitution matrices for Pisot property and interesting alpha values,
 with focus on filling the 2 < alpha < 3 gap (Class I, between metallic means and BT).
@@ -101,7 +101,7 @@ def compute_alpha_from_matrix(M):
 # Main search
 # ============================================================
 print("=" * 70)
-print("  Investigation 3: Systematic Search for Cubic Substitution Tilings")
+print("  Systematic Search for Cubic Substitution Tilings")
 print("=" * 70)
 
 rows = enum_rows(max_sum=4)

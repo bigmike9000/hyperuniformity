@@ -56,6 +56,12 @@ def compute_number_variance_1d(points, L, R_array, num_windows=20000, rng=None,
         counts = (idx_hi - idx_lo).astype(np.float64)
 
         if periodic:
+            if R >= L / 2.0:
+                # Window covers entire domain — all N points are inside
+                counts[:] = float(N)
+                variances[j] = 0.0
+                mean_counts[j] = float(N)
+                continue
             # Fix wrap-left: window extends past x=0
             wrap_left = lo < 0
             if np.any(wrap_left):
@@ -161,6 +167,14 @@ def compute_generalized_metric(R_array, var, class_type, alpha=None):
         Std over last 1/3 of R range.
     normalized_var : ndarray
         sigma^2(R) divided by the appropriate normalizer.
+
+    Notes
+    -----
+    Finite-R bias of the plateau method: sigma^2(R) = C*ln(R) + b (Class II)
+    implies sigma^2/ln(R) = C + b/ln(R), converging to C from above at finite R.
+    The plateau metric therefore overestimates C_II and underestimates A_III.
+    For unbiased values, use a direct curve fit to sigma^2 which absorbs the
+    additive offset b.
     """
     R = np.asarray(R_array, dtype=float)
     v = np.asarray(var, dtype=float)

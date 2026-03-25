@@ -88,7 +88,7 @@ CHAINS = {
     },
     # ----------------------------------------------------------------
     # Alpha=2 cubic substitution (discovered by systematic search, Week 3)
-    # From Investigation 3: 3x3 Pisot matrix with det=1, complex conjugate
+    # 3x3 Pisot matrix with det=1, complex conjugate
     # eigenvalue pair -> alpha = 2 EXACTLY (same as URL, but deterministic/ordered)
     # Characteristic equation from matrix [[0,1,1],[0,0,1],[1,1,1]]:
     #   x^3 - x^2 - 2x - 1 = 0

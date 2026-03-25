@@ -2398,13 +2398,18 @@
     <bcf:citekey order="20" intorder="2">oguz2019substitution</bcf:citekey>
     <bcf:citekey order="21" intorder="1">bombieri1986which</bcf:citekey>
     <bcf:citekey order="21" intorder="2">oguz2019substitution</bcf:citekey>
-    <bcf:citekey order="22" intorder="1">klatt2020perturbed</bcf:citekey>
+    <bcf:citekey order="22" intorder="1">torquato2021spreadability</bcf:citekey>
+    <bcf:citekey order="22" intorder="2">wang2022spreadability</bcf:citekey>
     <bcf:citekey order="23" intorder="1">klatt2020perturbed</bcf:citekey>
     <bcf:citekey order="24" intorder="1">torquato2015ensemble</bcf:citekey>
-    <bcf:citekey order="24" intorder="2">oguz2017hyperuniform</bcf:citekey>
-    <bcf:citekey order="25" intorder="1">torquato2015ensemble</bcf:citekey>
-    <bcf:citekey order="26" intorder="1">torquato2015ensemble</bcf:citekey>
-    <bcf:citekey order="27" intorder="1">bombieri1986which</bcf:citekey>
+    <bcf:citekey order="25" intorder="1">torquato2003local</bcf:citekey>
+    <bcf:citekey order="26" intorder="1">oguz2019substitution</bcf:citekey>
+    <bcf:citekey order="27" intorder="1">torquato2021spreadability</bcf:citekey>
+    <bcf:citekey order="27" intorder="2">wang2022spreadability</bcf:citekey>
+    <bcf:citekey order="28" intorder="1">torquato2021spreadability</bcf:citekey>
+    <bcf:citekey order="29" intorder="1">hitinbialus2024</bcf:citekey>
+    <bcf:citekey order="30" intorder="1">klatt2020perturbed</bcf:citekey>
+    <bcf:citekey order="31" intorder="1">zachary2009hyperuniform</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

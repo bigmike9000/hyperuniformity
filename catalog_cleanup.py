@@ -1,5 +1,5 @@
 """
-Investigation 6: Catalog Cleanup + Density Normalization
+Catalog Cleanup + Density Normalization
 
 Tasks:
 1. Stealthy re-classification:
@@ -42,7 +42,7 @@ rng = np.random.default_rng(2026)
 # ============================================================
 cat_path = os.path.join(DATA_DIR, 'catalog.json')
 print("=" * 65)
-print("  Investigation 6: Catalog Cleanup + Density Normalization")
+print("  Catalog Cleanup + Density Normalization")
 print("=" * 65)
 print(f"\nLoading catalog from {cat_path} ...")
 

@@ -22,3 +22,4 @@ stealthy_configurations/0.1_patterns/
 stealthy_configurations/0.2_patterns/
 stealthy_configurations/0.3_patterns/
 stealthy_configurations/*.tar.gz
+stealthy_data/

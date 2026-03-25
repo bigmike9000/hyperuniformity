@@ -1,5 +1,5 @@
 """
-Investigation 5: Lambda_bar Finite-N Corrections
+Lambda_bar Finite-N Corrections
 
 (a) Integer lattice: analytic Lambda_bar(R_max) + simulation vs N
     - sigma^2(R) = 2*frac(R)*(1-2*frac(R)) for frac(R)<0.5, piecewise quadratic
@@ -81,7 +81,7 @@ def lambda_bar_lattice_analytic(R_max):
 # Part (a): Integer lattice — analytic vs simulated Lambda_bar(N)
 # ============================================================
 print("=" * 65)
-print("  Investigation 5: Lambda_bar Finite-N Corrections")
+print("  Lambda_bar Finite-N Corrections")
 print("=" * 65)
 print("\n[Part a] Integer Lattice: analytic vs simulated Lambda_bar(N)")
 

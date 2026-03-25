@@ -71,6 +71,7 @@
       \strng{authornamehash}{c3a792c01d1ad328590c8549b2dae94c}
       \strng{authorfullhash}{c3a792c01d1ad328590c8549b2dae94c}
       \strng{authorfullhashraw}{c3a792c01d1ad328590c8549b2dae94c}
+      \field{extraname}{1}
       \field{sortinit}{1}
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
@@ -295,6 +296,72 @@
       \verb 10.1103/PhysRevB.95.054119
       \endverb
     \endentry
+    \entry{torquato2021spreadability}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=c3a792c01d1ad328590c8549b2dae94c}{%
+           family={Torquato},
+           familyi={T\bibinitperiod},
+           given={Salvatore},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{c3a792c01d1ad328590c8549b2dae94c}
+      \strng{fullhash}{c3a792c01d1ad328590c8549b2dae94c}
+      \strng{fullhashraw}{c3a792c01d1ad328590c8549b2dae94c}
+      \strng{bibnamehash}{c3a792c01d1ad328590c8549b2dae94c}
+      \strng{authorbibnamehash}{c3a792c01d1ad328590c8549b2dae94c}
+      \strng{authornamehash}{c3a792c01d1ad328590c8549b2dae94c}
+      \strng{authorfullhash}{c3a792c01d1ad328590c8549b2dae94c}
+      \strng{authorfullhashraw}{c3a792c01d1ad328590c8549b2dae94c}
+      \field{extraname}{2}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Physical Review E}
+      \field{title}{Diffusion spreadability as a probe of the microstructure of complex media across length scales}
+      \field{volume}{104}
+      \field{year}{2021}
+      \field{pages}{054102}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1103/PhysRevE.104.054102
+      \endverb
+    \endentry
+    \entry{wang2022spreadability}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=81adb6935d3fd094f3a41db00780ba12}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Haina},
+           giveni={H\bibinitperiod}}}%
+        {{hash=c3a792c01d1ad328590c8549b2dae94c}{%
+           family={Torquato},
+           familyi={T\bibinitperiod},
+           given={Salvatore},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{7ca827a294f49da8be2474e3cd50e7d3}
+      \strng{fullhash}{7ca827a294f49da8be2474e3cd50e7d3}
+      \strng{fullhashraw}{7ca827a294f49da8be2474e3cd50e7d3}
+      \strng{bibnamehash}{7ca827a294f49da8be2474e3cd50e7d3}
+      \strng{authorbibnamehash}{7ca827a294f49da8be2474e3cd50e7d3}
+      \strng{authornamehash}{7ca827a294f49da8be2474e3cd50e7d3}
+      \strng{authorfullhash}{7ca827a294f49da8be2474e3cd50e7d3}
+      \strng{authorfullhashraw}{7ca827a294f49da8be2474e3cd50e7d3}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Physical Review Applied}
+      \field{title}{Dynamic measure of hyperuniformity and nonhyperuniformity in heterogeneous media via the diffusion spreadability}
+      \field{volume}{17}
+      \field{year}{2022}
+      \field{pages}{034022}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1103/PhysRevApplied.17.034022
+      \endverb
+    \endentry
     \entry{klatt2020perturbed}{article}{}{}
       \name{author}{3}{}{%
         {{hash=74f7285d381c7e0d0e964c7ac00b2882}{%
@@ -375,6 +442,51 @@
       \range{pages}{1}
       \verb{doi}
       \verb 10.1103/PhysRevX.5.021020
+      \endverb
+    \endentry
+    \entry{hitinbialus2024}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=860eacb9e76a13204993b645d480d8fa}{%
+           family={Hitin-Bialus},
+           familyi={H\bibinithyphendelim B\bibinitperiod},
+           given={Eli},
+           giveni={E\bibinitperiod}}}%
+        {{hash=933456d6b41e940d9e33f101881ae589}{%
+           family={Maher},
+           familyi={M\bibinitperiod},
+           given={Jared\bibnamedelima D.},
+           giveni={J\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=d6ce498e534c4aa4e853c99ca6da7cb5}{%
+           family={Steinhardt},
+           familyi={S\bibinitperiod},
+           given={Paul\bibnamedelima J.},
+           giveni={P\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=c3a792c01d1ad328590c8549b2dae94c}{%
+           family={Torquato},
+           familyi={T\bibinitperiod},
+           given={Salvatore},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{4fe778b103f10b1a9782fa8c45578474}
+      \strng{fullhash}{3069cf58e42ab7333ff1dbe15e057e57}
+      \strng{fullhashraw}{3069cf58e42ab7333ff1dbe15e057e57}
+      \strng{bibnamehash}{4fe778b103f10b1a9782fa8c45578474}
+      \strng{authorbibnamehash}{4fe778b103f10b1a9782fa8c45578474}
+      \strng{authornamehash}{4fe778b103f10b1a9782fa8c45578474}
+      \strng{authorfullhash}{3069cf58e42ab7333ff1dbe15e057e57}
+      \strng{authorfullhashraw}{3069cf58e42ab7333ff1dbe15e057e57}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Physical Review E}
+      \field{title}{Hyperuniformity classes of quasiperiodic tilings via diffusion spreadability}
+      \field{volume}{109}
+      \field{year}{2024}
+      \field{pages}{064108}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1103/PhysRevE.109.064108
       \endverb
     \endentry
   \enddatalist

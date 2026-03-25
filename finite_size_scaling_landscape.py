@@ -188,7 +188,7 @@ for name, label, alpha_th, cls, color in PATTERNS:
 # ============================================================
 print("\nGenerating fig_finite_size_alpha.png ...")
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 11))
+fig, axes = plt.subplots(1, 4, figsize=(18, 5))
 fig.suptitle('Finite-Size Convergence of Hyperuniformity Metrics',
              fontsize=13, fontweight='bold')
 
@@ -222,7 +222,7 @@ for ax_idx, (name, label, alpha_th, cls, color) in enumerate(PATTERNS):
 
     elif cls == 'II':
         # Plot C_II(N) vs N
-        # True C depends on chain; from research_catalog: C_PD ~ 0.080
+        # True C depends on chain; from research_catalog: C_PD ≈ 0.080
         ax.semilogx(N_arr[valid], m_arr[valid], 'o-', color=color, ms=7, lw=1.5,
                     label=r'$C_{II}(N) = \langle\sigma^2/\ln R\rangle$')
         ax.set_ylabel(r'$C_{II}(N) = \langle\sigma^2/\ln R\rangle$', fontsize=11)
@@ -258,7 +258,7 @@ fig.text(0.5, 0.01,
          ha='center', fontsize=9, style='italic', color='gray')
 
 plt.tight_layout(rect=[0, 0.05, 1, 1])
-out_path = os.path.join(RESULTS_DIR, 'fig_finite_size_alpha.png')
+out_path = os.path.join(RESULTS_DIR, 'fig_finite_size_alpha_landscape.png')
 plt.savefig(out_path, dpi=150, bbox_inches='tight')
 plt.close()
 print(f"  Saved: {out_path}")
