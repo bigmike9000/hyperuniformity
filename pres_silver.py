@@ -27,9 +27,9 @@ os.makedirs(RESULTS_DIR, exist_ok=True)
 
 rng = np.random.default_rng(2026)
 
-TARGET_N    = 1_000_000
-NUM_WINDOWS = 30_000
-NUM_R       = 600
+TARGET_N    = 5_000_000
+NUM_WINDOWS = 50_000
+NUM_R       = 1000
 
 # ── Generate Silver chain ──────────────────────────────────────────────────────
 print(f"Generating Silver chain (~{TARGET_N:,} pts)...")
@@ -45,7 +45,7 @@ ms  = 1.0 / rho   # mean spacing (= 2 for Silver)
 print(f"  N={N:,}  rho={rho:.4f}  mean-spacing={ms:.4f}")
 
 # ── Compute variance ──────────────────────────────────────────────────────────
-R_max = min(L / 4, 200 * ms)
+R_max = min(L / 5, 3000 * ms)
 R_arr = np.linspace(ms, R_max, NUM_R)
 
 print(f"Computing variance ({NUM_WINDOWS} windows, {NUM_R} R values)...")

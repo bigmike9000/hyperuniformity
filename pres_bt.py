@@ -29,9 +29,9 @@ os.makedirs(RESULTS_DIR, exist_ok=True)
 rng = np.random.default_rng(2026)
 
 # ── Parameters ────────────────────────────────────────────────────────────────
-TARGET_N = 600_000
-NUM_WINDOWS = 20_000
-NUM_R = 300
+TARGET_N = 2_000_000
+NUM_WINDOWS = 30_000
+NUM_R = 800
 
 alpha_bt,  lam1_bt,  lam2_bt  = verify_eigenvalue_prediction('bombieri_taylor')
 alpha_fib, lam1_fib, lam2_fib = verify_eigenvalue_prediction('fibonacci')
@@ -77,9 +77,20 @@ var_bt,  _ = compute_number_variance_1d(pts_bt,  L_bt,  R_bt,  num_windows=NUM_W
 print("Computing Fibonacci variance...")
 var_fib, _ = compute_number_variance_1d(pts_fib, L_fib, R_fib, num_windows=NUM_WINDOWS, rng=rng)
 
-lb_bt  = float(np.mean(var_bt [len(var_bt)//3:]))
-lb_fib = float(np.mean(var_fib[len(var_fib)//3:]))
-print(f"  Lbar_BT={lb_bt:.4f}  Lbar_Fib={lb_fib:.4f}")
+# Compute Λ̄ via trapezoidal integration: (1/R) ∫₀ᴿ σ²(r) dr, then average last 1/3
+def running_lambda_bar(R, var):
+    running = np.zeros(len(R))
+    running[0] = var[0]
+    for i in range(1, len(R)):
+        dx = np.diff(R[:i+1])
+        integrand = 0.5*(var[:i] + var[1:i+1])
+        running[i] = np.dot(integrand, dx) / R[i]
+    return running
+
+# Use catalog values for reference lines (best-known from high-precision runs)
+lb_bt  = 0.377   # catalog value (Bombieri-Taylor)
+lb_fib = 0.201   # Zachary & Torquato 2009
+print(f"  Lbar_BT={lb_bt:.3f} (catalog)  Lbar_Fib={lb_fib:.3f} (Z&T 2009)")
 
 # ── Structure factor: count Bragg peaks ──────────────────────────────────────
 K_MAX = 50
@@ -102,63 +113,79 @@ print(f"  BT peaks: {n_peaks_bt}  Fib peaks: {n_peaks_fib}")
 del pts_bt, pts_fib
 
 # ── Figure ────────────────────────────────────────────────────────────────────
-fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+COL_BT  = '#1565C0'
+COL_FIB = '#2E7D32'
 
-# ─ Left: σ²(R) ────────────────────────────────────────────────────────────────
+fig, axes = plt.subplots(1, 2, figsize=(12, 4.8), gridspec_kw={'wspace': 0.32})
+
+# ─ (a) σ²(R) ─────────────────────────────────────────────────────────────────
 ax = axes[0]
+ax.semilogx(R_fib/ms_fib, var_fib, color=COL_FIB, lw=0.6, alpha=0.8)
+ax.semilogx(R_bt/ms_bt,   var_bt,  color=COL_BT,  lw=0.5, alpha=0.7)
+ax.axhline(lb_bt,  color=COL_BT,  ls='--', lw=2.0)
+ax.axhline(lb_fib, color=COL_FIB, ls='--', lw=2.0)
 
-# Normalize R by mean spacing for readability
-ax.semilogx(R_bt/ms_bt,  var_bt,  color='#1565C0', lw=0.9, alpha=0.85,
-            label=f'Bombieri-Taylor  ($|\\lambda_2|={lam2_bt:.3f}$)')
-ax.semilogx(R_fib/ms_fib, var_fib, color='#2E7D32', lw=0.9, alpha=0.85,
-            label=f'Fibonacci  ($|\\lambda_2|={lam2_fib:.3f}$)')
-ax.axhline(lb_bt,  color='#1565C0', ls='--', lw=1.8,
-           label=rf'$\bar\Lambda_{{BT}}={lb_bt:.3f}$')
-ax.axhline(lb_fib, color='#2E7D32', ls='--', lw=1.8,
-           label=rf'$\bar\Lambda_{{Fib}}={lb_fib:.3f}$')
-
-# Mark one log-period for BT
-x_period = 10**(np.log10(R_bt[0]/ms_bt) + period_log_bt/2)
-ax.annotate('', xy=(x_period * np.exp(period_log_bt/2), lb_bt*1.1),
-            xytext=(x_period * np.exp(-period_log_bt/2), lb_bt*1.1),
-            arrowprops=dict(arrowstyle='<->', color='#1565C0', lw=1.2))
-ax.text(x_period, lb_bt*1.12, f'period $={period_log_bt:.2f}$ in $\\ln R$',
-        ha='center', va='bottom', fontsize=9, color='#1565C0')
+# Text annotations instead of legend (cleaner at slide scale)
+ax.text(0.97, 0.97, rf'$\bar\Lambda_{{\rm BT}}={lb_bt:.3f}$',
+        transform=ax.transAxes, ha='right', va='top', fontsize=12,
+        color=COL_BT, fontweight='bold',
+        bbox=dict(fc='white', ec='none', alpha=0.8, pad=2))
+ax.text(0.97, 0.06, rf'$\bar\Lambda_{{\rm Fib}}={lb_fib:.3f}$',
+        transform=ax.transAxes, ha='right', va='bottom', fontsize=12,
+        color=COL_FIB, fontweight='bold',
+        bbox=dict(fc='white', ec='none', alpha=0.8, pad=2))
+# Curve labels at right edge
+ax.text(0.52, 0.78, 'Bombieri-Taylor', transform=ax.transAxes,
+        fontsize=10, color=COL_BT, alpha=0.9)
+ax.text(0.52, 0.30, 'Fibonacci', transform=ax.transAxes,
+        fontsize=10, color=COL_FIB, alpha=0.9)
 
 ax.set_xlabel(r'$R\,/\,$mean spacing', fontsize=13)
 ax.set_ylabel(r'$\sigma^2(R)$', fontsize=13)
-ax.set_title(r'Number variance: BT oscillates 12$\times$ more than Fibonacci', fontsize=11)
-ax.legend(fontsize=10, loc='upper left')
-ax.grid(alpha=0.3)
-ax.set_ylim(bottom=-0.02)
+ax.set_title('(a)  Number variance', fontsize=12, fontweight='bold', loc='left')
+ax.grid(alpha=0.25, ls=':')
+ax.set_ylim(-0.02, 0.52)
+ax.set_xlim(1, R_bt[-1]/ms_bt)
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 
-# ─ Right: S(k) ────────────────────────────────────────────────────────────────
+# ─ (b) Cumulative Bragg peak count ───────────────────────────────────────────
 ax = axes[1]
-ax.semilogy(k_bt,  Sk_bt,  color='#1565C0', lw=0.6, alpha=0.7,
-            label=f'BT ({n_peaks_bt:,} peaks, $k<{K_MAX}$)')
-ax.semilogy(k_fib, Sk_fib, color='#2E7D32', lw=0.6, alpha=0.7,
-            label=f'Fibonacci ({n_peaks_fib:,} peaks, $k<{K_MAX}$)')
-ax.axhline(threshold, color='gray', ls=':', lw=1.0, alpha=0.6,
-           label='threshold = 1')
+
+# For each k value, count how many peaks with k' <= k exceed threshold
+# Sort peaks by k, then cumulative sum
+peaks_bt  = np.sort(k_bt [Sk_bt  > threshold])
+peaks_fib = np.sort(k_fib[Sk_fib > threshold])
+cum_bt  = np.arange(1, len(peaks_bt)  + 1)
+cum_fib = np.arange(1, len(peaks_fib) + 1)
+
+ax.plot(peaks_fib, cum_fib, color=COL_FIB, lw=2.5,
+        label=f'Fibonacci ({n_peaks_fib:,})')
+ax.plot(peaks_bt,  cum_bt,  color=COL_BT,  lw=2.5,
+        label=f'BT ({n_peaks_bt:,})')
+
+# Set x-axis to actual data extent
+k_max_actual = max(peaks_bt[-1], peaks_fib[-1]) * 1.1 if len(peaks_bt) > 0 else K_MAX
+ax.set_xlim(0, k_max_actual)
+
+# Ratio annotation (positioned relative to actual data)
+ratio = n_peaks_bt / max(n_peaks_fib, 1)
+ax.text(0.55, 0.45, rf'{ratio:.0f}$\times$' + '\nmore peaks',
+        transform=ax.transAxes, fontsize=14, fontweight='bold',
+        color=COL_BT, ha='center', va='center')
 
 ax.set_xlabel(r'$k$', fontsize=13)
-ax.set_ylabel(r'$S(k)$', fontsize=13)
-ax.set_title(f'Dense Bragg spectrum: BT has {n_peaks_bt//n_peaks_fib}$\\times$ more peaks\n'
-             r'$\Rightarrow$ spreadability $\mathcal{S}(t)$ cannot recover $\alpha$', fontsize=11)
-ax.legend(fontsize=10)
-ax.set_xlim(0, K_MAX)
-ax.grid(alpha=0.3)
+ax.set_ylabel(r'Cumulative Bragg peaks  ($S(k) > 1$)', fontsize=12)
+ax.set_title('(b)  Peak density in $S(k)$', fontsize=12,
+             fontweight='bold', loc='left')
+ax.legend(fontsize=11, loc='upper left', framealpha=0.9)
+ax.set_ylim(bottom=0)
+ax.grid(alpha=0.25, ls=':')
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 
-plt.suptitle(
-    r'Why $\bar\Lambda$ works for BT but spreadability does not',
-    fontsize=13, y=1.01
-)
 plt.tight_layout()
 out = os.path.join(RESULTS_DIR, 'fig_bt_deep.png')
-plt.savefig(out, dpi=150, bbox_inches='tight')
+plt.savefig(out, dpi=200, bbox_inches='tight')
 plt.close()
 print(f'Saved {out}')
