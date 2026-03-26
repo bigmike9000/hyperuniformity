@@ -146,8 +146,8 @@ def compute_generalized_metric(R_array, var, class_type, alpha=None):
     Compute the generalized hyperuniformity metric for any class.
 
     For Class I  (alpha > 1): sigma^2(R) bounded -> metric = Lambda_bar = lim sigma^2(R)
-    For Class II (alpha = 1): sigma^2(R) ~ C*ln R -> metric = C_II = lim sigma^2(R)/ln(R)
-    For Class III (0<alpha<1): sigma^2(R) ~ A*R^{1-alpha} -> metric = A_III = lim sigma^2/R^{1-alpha}
+    For Class II (alpha = 1): sigma^2(R) ~ C*ln R -> metric = Lambda_II = lim sigma^2(R)/ln(R)
+    For Class III (0<alpha<1): sigma^2(R) ~ A*R^{1-alpha} -> metric = Lambda_III = lim sigma^2/R^{1-alpha}
 
     Parameters
     ----------
@@ -172,7 +172,7 @@ def compute_generalized_metric(R_array, var, class_type, alpha=None):
     -----
     Finite-R bias of the plateau method: sigma^2(R) = C*ln(R) + b (Class II)
     implies sigma^2/ln(R) = C + b/ln(R), converging to C from above at finite R.
-    The plateau metric therefore overestimates C_II and underestimates A_III.
+    The plateau metric therefore overestimates Lambda_II and underestimates Lambda_III.
     For unbiased values, use a direct curve fit to sigma^2 which absorbs the
     additive offset b.
     """

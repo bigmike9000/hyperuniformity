@@ -107,7 +107,7 @@ for k in range(20):
 ax.text(0.97, 0.96,
         f"Period in $\\ln R$: $\\ln\\lambda_1 = {LOG_PERIOD:.3f}$\n"
         f"Amplitude: [{sig2.min():.3f}, {sig2.max():.3f}]",
-        transform=ax.transAxes, fontsize=8.5, va='top', ha='right',
+        transform=ax.transAxes, fontsize=10, va='top', ha='right',
         bbox=dict(boxstyle='round,pad=0.3', fc='lightyellow', ec='goldenrod', alpha=0.9))
 
 ax.set_xlabel('$R$', fontsize=13)
@@ -142,5 +142,5 @@ fig.suptitle(
 plt.tight_layout()
 
 out = os.path.join(BASE, 'results', 'figures', 'fig_nonunimodular.png')
-plt.savefig(out, dpi=150, bbox_inches='tight')
+plt.savefig(out, dpi=200, bbox_inches='tight')
 print(f"Saved {out}")

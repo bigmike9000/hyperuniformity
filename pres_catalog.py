@@ -54,7 +54,7 @@ for xv, lbl, ls in [(1/6, '1/6', '--'), (1/4, '1/4', ':'), (1/3, '1/3', '--')]:
 # Value + alpha labels on bars
 for i, (val, alpha_lbl) in enumerate(zip(values, alphas)):
     ax.text(val + 0.01, i, f'{val:.3f}  {alpha_lbl}',
-            va='center', ha='left', fontsize=9.5)
+            va='center', ha='left', fontsize=11)
 
 ax.set_yticks(y)
 ax.set_yticklabels(labels, fontsize=11)
@@ -70,12 +70,12 @@ ax.spines['right'].set_visible(False)
 ax.text(0.98, 0.02,
         'Period-Doubling (Class II) and 0222 chain (Class III)\n'
         r'have $\bar\Lambda=\infty$; described by $C_{II}$, $A_{III}$ instead.',
-        transform=ax.transAxes, fontsize=8.5, va='bottom', ha='right',
+        transform=ax.transAxes, fontsize=10, va='bottom', ha='right',
         color='#555555',
         bbox=dict(boxstyle='round,pad=0.3', fc='#f5f5f5', ec='#cccccc', alpha=0.9))
 
 plt.tight_layout()
 out = os.path.join(RESULTS_DIR, 'fig_catalog_updated.png')
-plt.savefig(out, dpi=150, bbox_inches='tight')
+plt.savefig(out, dpi=200, bbox_inches='tight')
 plt.close()
 print(f'Saved {out}')

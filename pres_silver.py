@@ -94,7 +94,7 @@ ax.set_xlabel(r'$R\,/\,$mean spacing', fontsize=13)
 ax.set_ylabel(r'Running $\bar\Lambda(R) - 1/4$', fontsize=13)
 nsigma = abs(lb_mean - 0.25) / lb_err if lb_err > 0 else 0
 ax.set_title(
-    rf'Running $\bar\Lambda$ converges toward $1/4$ (see slide text for full result)',
+    rf'Running $\bar\Lambda$ converges toward $1/4$',
     fontsize=11
 )
 ax.legend(fontsize=11)
@@ -109,6 +109,6 @@ plt.suptitle(
 )
 plt.tight_layout()
 out = os.path.join(RESULTS_DIR, 'fig_silver_lambda_quarter.png')
-plt.savefig(out, dpi=150, bbox_inches='tight')
+plt.savefig(out, dpi=200, bbox_inches='tight')
 plt.close()
 print(f'Saved {out}')

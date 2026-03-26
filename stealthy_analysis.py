@@ -374,7 +374,7 @@ for chi_val in CHI_VALUES:
 ax1.set_xlabel(r'$R$', fontsize=12)
 ax1.set_ylabel(r'$\sigma^2(R)$', fontsize=12)
 ax1.set_title('Ensemble-Averaged Number Variance', fontsize=12, fontweight='bold')
-ax1.legend(fontsize=9)
+ax1.legend(fontsize=10)
 ax1.grid(True, ls=':', alpha=0.4)
 
 # Lambda_bar vs chi
@@ -397,7 +397,7 @@ ax2.set_ylim(0)
 
 plt.tight_layout()
 path = os.path.join(RESULTS_DIR, 'figH_stealthy_variance.png')
-plt.savefig(path, dpi=150, bbox_inches='tight')
+plt.savefig(path, dpi=200, bbox_inches='tight')
 plt.close()
 print(f"  Saved: {path}")
 

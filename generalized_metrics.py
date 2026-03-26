@@ -5,8 +5,8 @@ Defines and computes generalizations of Lambda_bar for non-Class-I patterns.
 
 Theory:
   Class I  (alpha > 1):  sigma^2(R) bounded     -> Lambda_bar = lim sigma^2(R)
-  Class II (alpha = 1):  sigma^2(R) ~ C * ln(R) -> C_II = lim sigma^2(R) / ln(R)
-  Class III (0 < alpha < 1): sigma^2(R) ~ A * R^{1-alpha} -> A_III = lim sigma^2(R)/R^{1-alpha}
+  Class II (alpha = 1):  sigma^2(R) ~ C * ln(R) -> Lambda_II = lim sigma^2(R) / ln(R)
+  Class III (0 < alpha < 1): sigma^2(R) ~ A * R^{1-alpha} -> Lambda_III = lim sigma^2(R)/R^{1-alpha}
 
 Output:
   - Normalized variance plots for Period-Doubling and 0222
@@ -141,9 +141,9 @@ except Exception as e:
     print(f"    Curve fit failed: {e}")
 
 # Generalized metric
-C_II, C_II_err, norm_pd = compute_generalized_metric(R_pd, var_pd, 'II')
-print(f"    C_II (PRIMARY: curve fit)           = {C_pd_fit:.5f} +/- {C_pd_err_fit:.5f}")
-print(f"    C_II (cross-check: plateau)         = {C_II:.5f} +/- {C_II_err:.5f}  [biased high at finite R]")
+Lambda_II, Lambda_II_err, norm_pd = compute_generalized_metric(R_pd, var_pd, 'II')
+print(f"    Lambda_II (PRIMARY: curve fit)           = {C_pd_fit:.5f} +/- {C_pd_err_fit:.5f}")
+print(f"    Lambda_II (cross-check: plateau)         = {Lambda_II:.5f} +/- {Lambda_II_err:.5f}  [biased high at finite R]")
 
 
 # ============================================================
@@ -189,17 +189,17 @@ except Exception as e:
     print(f"    Curve fit failed: {e}")
 
 # Generalized metric using theoretical alpha (cross-check; plateau biased low at finite R)
-A_III, A_III_err, norm_0222 = compute_generalized_metric(
+Lambda_III, Lambda_III_err, norm_0222 = compute_generalized_metric(
     R_0222, var_0222, 'III', alpha=alpha_0222)
-print(f"    A_III (PRIMARY: curve fit)                     = {A_0222_fit:.5f} +/- {A_err_fit:.5f}")
-print(f"    A_III (cross-check: plateau, th. alpha={alpha_0222:.4f}) = {A_III:.5f} +/- {A_III_err:.5f}  [biased low at finite R]")
+print(f"    Lambda_III (PRIMARY: curve fit)                     = {A_0222_fit:.5f} +/- {A_err_fit:.5f}")
+print(f"    Lambda_III (cross-check: plateau, th. alpha={alpha_0222:.4f}) = {Lambda_III:.5f} +/- {Lambda_III_err:.5f}  [biased low at finite R]")
 # Self-consistency: plateau with fitted alpha
 if not np.isnan(alpha_0222_num):
-    A_III_fa, A_III_fa_err, _ = compute_generalized_metric(
+    Lambda_III_fa, Lambda_III_fa_err, _ = compute_generalized_metric(
         R_0222, var_0222, 'III', alpha=alpha_0222_num)
-    print(f"    A_III (plateau, fitted alpha={alpha_0222_num:.4f})   = {A_III_fa:.5f} +/- {A_III_fa_err:.5f}")
+    print(f"    Lambda_III (plateau, fitted alpha={alpha_0222_num:.4f})   = {Lambda_III_fa:.5f} +/- {Lambda_III_fa_err:.5f}")
 else:
-    A_III_fa, A_III_fa_err = np.nan, np.nan
+    Lambda_III_fa, Lambda_III_fa_err = np.nan, np.nan
 
 
 # ============================================================
@@ -261,20 +261,20 @@ use_pd = R_pd > 10 * mean_sp_pd
 ln_R_pd = np.log(R_pd[use_pd])
 ax.semilogx(R_pd[use_pd], norm_pd[use_pd], '#ff7f0e', lw=1.0, alpha=0.85)
 ax.axhline(C_pd_fit, color='r', ls='--', lw=2,
-           label=rf'$C_{{II}} = {C_pd_fit:.4f}$ (fit, primary)')
+           label=rf'$\Lambda_{{II}} = {C_pd_fit:.4f}$ (fit, primary)')
 ax.fill_between([R_pd[use_pd][0], R_pd[use_pd][-1]],
                 C_pd_fit - C_pd_err_fit, C_pd_fit + C_pd_err_fit, alpha=0.15, color='r')
-ax.axhline(C_II, color='k', ls=':', lw=1.5, alpha=0.7,
-           label=rf'Plateau $C = {C_II:.4f}$ (biased high)')
+ax.axhline(Lambda_II, color='k', ls=':', lw=1.5, alpha=0.7,
+           label=rf'Plateau $\Lambda_{{II}} = {Lambda_II:.4f}$ (biased high)')
 ax.set_xlabel(r'$R$', fontsize=12)
 ax.set_ylabel(r'$\sigma^2(R) / \ln R$', fontsize=12)
 ax.set_title(r'Class II: Period-Doubling ($\alpha=1$)' '\n'
-             r'Metric: $C_{II} = \lim \sigma^2(R)/\ln R$', fontsize=10)
+             r'Metric: $\Lambda_{II} = \lim \sigma^2(R)/\ln R$', fontsize=10)
 ax.legend(fontsize=10)
 ax.grid(True, ls=':', alpha=0.4)
 ax.text(0.05, 0.95,
-        rf'Fit: $C_{{II}} = {C_pd_fit:.4f} \pm {C_pd_err_fit:.4f}$'
-        '\n' rf'Plateau: $C_{{II}} = {C_II:.4f}$ (biased high)',
+        rf'Fit: $\Lambda_{{II}} = {C_pd_fit:.4f} \pm {C_pd_err_fit:.4f}$'
+        '\n' rf'Plateau: $\Lambda_{{II}} = {Lambda_II:.4f}$ (biased high)',
         transform=ax.transAxes, va='top', fontsize=10,
         bbox=dict(boxstyle='round', fc='lightyellow', alpha=0.9))
 
@@ -284,21 +284,21 @@ use_0222 = R_0222 > 10 * mean_sp_0222
 ax.semilogx(R_0222[use_0222], norm_0222[use_0222], '#1f77b4', lw=1.0, alpha=0.85)
 if not np.isnan(A_0222_fit):
     ax.axhline(A_0222_fit, color='r', ls='--', lw=2,
-               label=rf'$A_{{III}} = {A_0222_fit:.4f}$ (fit, primary)')
+               label=rf'$\Lambda_{{III}} = {A_0222_fit:.4f}$ (fit, primary)')
     ax.fill_between([R_0222[use_0222][0], R_0222[use_0222][-1]],
                     A_0222_fit - A_err_fit, A_0222_fit + A_err_fit, alpha=0.15, color='r')
-ax.axhline(A_III, color='k', ls=':', lw=1.5, alpha=0.7,
-           label=rf'Plateau $A = {A_III:.4f}$ (biased low)')
+ax.axhline(Lambda_III, color='k', ls=':', lw=1.5, alpha=0.7,
+           label=rf'Plateau $\Lambda_{{III}} = {Lambda_III:.4f}$ (biased low)')
 ax.set_xlabel(r'$R$', fontsize=12)
 ax.set_ylabel(rf'$\sigma^2(R) / R^{{1-\alpha}}$', fontsize=12)
 ax.set_title(rf'Class III: 0222 Chain ($\alpha={alpha_0222:.3f}$)' '\n'
-             rf'Metric: $A_{{III}} = \lim \sigma^2(R)/R^{{1-\alpha}}$', fontsize=10)
+             rf'Metric: $\Lambda_{{III}} = \lim \sigma^2(R)/R^{{1-\alpha}}$', fontsize=10)
 ax.legend(fontsize=10)
 ax.grid(True, ls=':', alpha=0.4)
 ax.text(0.05, 0.95,
         rf'$\alpha_{{num}} = {alpha_0222_num:.4f}$, $\alpha_{{th}} = {alpha_0222:.4f}$'
-        '\n' rf'Fit: $A_{{III}} = {A_0222_fit:.4f}$ (primary)'
-        '\n' rf'Plateau: $A_{{III}} = {A_III:.4f}$ (biased low)',
+        '\n' rf'Fit: $\Lambda_{{III}} = {A_0222_fit:.4f}$ (primary)'
+        '\n' rf'Plateau: $\Lambda_{{III}} = {Lambda_III:.4f}$ (biased low)',
         transform=ax.transAxes, va='top', fontsize=10,
         bbox=dict(boxstyle='round', fc='lightyellow', alpha=0.9))
 
@@ -318,14 +318,14 @@ print(f"  Class I  — Fibonacci (alpha=3):")
 print(f"    Lambda_bar = {lb_fib:.5f} ± {lb_fib_err:.5f}  [lim sigma^2(R)]")
 print()
 print(f"  Class II — Period-Doubling (alpha=1):")
-print(f"    C_II  = {C_pd_fit:.5f} +/- {C_pd_err_fit:.5f}  [PRIMARY: curve fit]")
-print(f"    C_II  = {C_II:.5f} +/- {C_II_err:.5f}  [cross-check: plateau; biased high at finite R]")
+print(f"    Lambda_II  = {C_pd_fit:.5f} +/- {C_pd_err_fit:.5f}  [PRIMARY: curve fit]")
+print(f"    C_II  = {Lambda_II:.5f} +/- {Lambda_II_err:.5f}  [cross-check: plateau; biased high at finite R]")
 print()
 print(f"  Class III — 0222 Chain (alpha={alpha_0222:.4f}):")
-print(f"    A_III = {A_0222_fit:.5f}  [PRIMARY: curve fit, alpha_num={alpha_0222_num:.4f}]")
-if not np.isnan(A_III_fa):
-    print(f"    A_III = {A_III_fa:.5f} +/- {A_III_fa_err:.5f}  [plateau, fitted alpha={alpha_0222_num:.4f} (self-consistency)]")
-print(f"    A_III = {A_III:.5f} +/- {A_III_err:.5f}  [cross-check: plateau, theory alpha; biased low]")
+print(f"    Lambda_III = {A_0222_fit:.5f}  [PRIMARY: curve fit, alpha_num={alpha_0222_num:.4f}]")
+if not np.isnan(Lambda_III_fa):
+    print(f"    A_III = {Lambda_III_fa:.5f} +/- {Lambda_III_fa_err:.5f}  [plateau, fitted alpha={alpha_0222_num:.4f} (self-consistency)]")
+print(f"    A_III = {Lambda_III:.5f} +/- {Lambda_III_err:.5f}  [cross-check: plateau, theory alpha; biased low]")
 print(f"    alpha_numeric = {alpha_0222_num:.4f}  (theory = {alpha_0222:.4f})")
 print("=" * 65)
 
@@ -342,8 +342,8 @@ def compute_generalized_metric(R_array, var, class_type, alpha=None):
     Compute the generalized hyperuniformity metric for any class.
 
     For Class I  (alpha > 1): sigma^2(R) bounded -> metric = Lambda_bar = lim sigma^2(R)
-    For Class II (alpha = 1): sigma^2(R) ~ C*ln R -> metric = C_II = lim sigma^2(R)/ln(R)
-    For Class III (0<alpha<1): sigma^2(R) ~ A*R^{1-alpha} -> metric = A_III = lim sigma^2/R^{1-alpha}
+    For Class II (alpha = 1): sigma^2(R) ~ C*ln R -> metric = Lambda_II = lim sigma^2(R)/ln(R)
+    For Class III (0<alpha<1): sigma^2(R) ~ A*R^{1-alpha} -> metric = Lambda_III = lim sigma^2/R^{1-alpha}
 
     Parameters
     ----------

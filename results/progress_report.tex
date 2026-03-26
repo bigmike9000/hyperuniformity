@@ -51,8 +51,8 @@ variance $\sigma^2(R)$:
 \textbf{Class} & \textbf{Condition} & \textbf{Variance} & \textbf{$\bar\Lambda$} \\
 \midrule
 I   & $\alpha > 1$ & bounded                 & finite \\
-II  & $\alpha = 1$ & $\sim C_{II} \ln R$     & diverges \\
-III & $0 < \alpha < 1$ & $\sim A_{III} R^{1-\alpha}$ & diverges \\
+II  & $\alpha = 1$ & $\sim \Lambda_{II} \ln R$     & diverges \\
+III & $0 < \alpha < 1$ & $\sim \Lambda_{III} R^{1-\alpha}$ & diverges \\
 \bottomrule
 \end{tabular}
 \vspace{0.5em}
@@ -81,8 +81,8 @@ $\sigma^2(R) \equiv \langle N(R)^2\rangle - \langle N(R)\rangle^2$
 grows at most as the surface area $R^{d-1}$ for large $R$, in contrast to the
 $R^d$ growth of a Poisson process.
 Three universality classes are introduced: Class~I ($\alpha>1$, bounded $\bar\Lambda$),
-Class~II ($\alpha=1$, $\sigma^2\sim C_{II}\ln R$), Class~III ($0<\alpha<1$,
-$\sigma^2\sim A_{III}R^{1-\alpha}$).
+Class~II ($\alpha=1$, $\sigma^2\sim \Lambda_{II}\ln R$), Class~III ($0<\alpha<1$,
+$\sigma^2\sim \Lambda_{III}R^{1-\alpha}$).
 
 The \textbf{surface-area coefficient}
 \[
@@ -560,7 +560,7 @@ dominated by Bragg peaks). Variance-based metrics are reliable:
 \midrule
 Bombieri-Taylor & I   & $\bar\Lambda(N)$ & 0.3775 & 0.3783 (stable from $N = 2000$) \\
 Fibonacci       & I   & $\bar\Lambda(N)$ & 0.1994 & 0.1982 (stable from $N = 1600$) \\
-Period-Doubling & II  & $C_{II}(N)$     & 0.1284 & 0.1233 (needs $N > 10^5$) \\
+Period-Doubling & II  & $\Lambda_{II}(N)$     & 0.1284 & 0.1233 (needs $N > 10^5$) \\
 0222 Chain      & III & $\hat\alpha(N)$ & 1.046  & 0.776  (slow; theory $= 0.639$) \\
 \bottomrule
 \end{tabular}
@@ -574,9 +574,9 @@ causing large finite-size corrections even at $N = 1.5 \times 10^6$.
 \textbf{Figure:} \texttt{fig\_new\_tilings.png}
 
 Enumerated all 39,304 $3\times3$ non-negative integer matrices with row sums $\leq 4$.
-4,882 pass the Pisot condition; 305 have nominal $\alpha \in (2,3)$.
+4,882 pass the Pisot condition; 504 have complex conjugate eigenvalue pairs.
 
-\textbf{Result:} All 305 give $\alpha = 2.000$ or $\alpha = 3.000$ exactly. No matrix
+\textbf{Result:} All 504 give $\alpha = 2.000$ exactly (18 distinct $\lambda_1$ values). No matrix
 fills $2 < \alpha < 3$.
 
 \textbf{Proof:} For $3\times3$ unimodular with complex conjugate pair $\lambda_2 = \bar\lambda_3$:
@@ -596,13 +596,13 @@ $|\lambda_2|^2 < 1/\lambda_1$), so the conclusion holds for any rank.
 \textbf{Figure:} \texttt{fig\_generalized\_metrics.png}
 
 \begin{align*}
-  C_{II}   &= \lim_{R\to\infty} \frac{\sigma^2(R)}{\ln R} \qquad \text{(Class II)} \\
-  A_{III}  &= \lim_{R\to\infty} \frac{\sigma^2(R)}{R^{1-\alpha}} \qquad \text{(Class III)}
+  \Lambda_{II}   &= \lim_{R\to\infty} \frac{\sigma^2(R)}{\ln R} \qquad \text{(Class II)} \\
+  \Lambda_{III}  &= \lim_{R\to\infty} \frac{\sigma^2(R)}{R^{1-\alpha}} \qquad \text{(Class III)}
 \end{align*}
 
-Results (curve-fit primary): Period-Doubling $C_{II} = 0.080$;
-0222 Chain $A_{III} = 0.209$ (using $\alpha = 0.684$, fitted).
-Plateau cross-checks ($C_{II}^{\rm plat} = 0.123$, $A_{III}^{\rm plat} = 0.151$) are
+Results (curve-fit primary): Period-Doubling $\Lambda_{II} = 0.080$;
+0222 Chain $\Lambda_{III} = 0.209$ (using $\alpha = 0.684$, fitted).
+Plateau cross-checks ($\Lambda_{II}^{\rm plat} = 0.123$, $\Lambda_{III}^{\rm plat} = 0.151$) are
 biased at finite $R$: plateau converges as $C + b/\ln R$ from above for Class II,
 and from below for Class III.
 Function \texttt{compute\_generalized\_metric()} added to \texttt{quasicrystal\_variance.py}.
@@ -721,9 +721,9 @@ Stable $s=1.3$              & I & 1.3  & 0.417 \\
 Stealthy ($\chi = 0.2$)     & I & ---$^\dagger$ & 0.526 \\
 Stealthy ($\chi = 0.1$)     & I & ---$^\dagger$ & 1.021 \\
 \midrule
-Period-Doubling             & II  & 1.0  & div.\ ($C_{II} = 0.080$) \\
+Period-Doubling             & II  & 1.0  & div.\ ($\Lambda_{II} = 0.080$) \\
 \midrule
-0222 Chain                  & III & 0.639& div.\ ($A_{III} = 0.209$) \\
+0222 Chain                  & III & 0.639& div.\ ($\Lambda_{III} = 0.209$) \\
 Cauchy $\gamma=0.1$         & II  & 0.95 & div. \\
 Stable $s=0.7$              & III & 0.7  & div. \\
 Stable $s=0.5$              & III & 0.5  & div. \\
@@ -755,7 +755,7 @@ Green rows: literature-confirmed benchmarks. Yellow: novel additions.
 \texttt{fig\_variance\_II\_III.png}     & $\sigma^2(R)$ for Period-Doubling and 0222 \\
 \midrule
 \texttt{fig\_bt\_deep.png}              & BT oscillations, Bragg peak density, $E(t)$ \\
-\texttt{fig\_finite\_size\_alpha.png}   & $\bar\Lambda(N)$, $C_{II}(N)$, $\hat\alpha(N)$ (portrait) \\
+\texttt{fig\_finite\_size\_alpha.png}   & $\bar\Lambda(N)$, $\Lambda_{II}(N)$, $\hat\alpha(N)$ (portrait) \\
 \texttt{fig\_finite\_size\_alpha\_landscape.png} & Same, landscape $1\times4$ for slides \\
 \texttt{fig\_new\_tilings.png}          & Cubic $\alpha$=2 chain variance and $S(k)$ \\
 \texttt{fig\_generalized\_metrics.png}  & Normalized variance plateaus (Class II/III) \\
@@ -783,9 +783,9 @@ Green rows: literature-confirmed benchmarks. Yellow: novel additions.
 \texttt{make\_figures.py}             & Figures from catalog + stealthy results \\
 \midrule
 \texttt{bt\_deep\_dive.py}            & (Mtg 2--3) BT oscillations, $S(k)$ density, $E(t)$ \\
-\texttt{finite\_size\_scaling.py}     & (Mtg 2--3) $\bar\Lambda(N)$, $C_{II}(N)$, $\hat\alpha(N)$ \\
+\texttt{finite\_size\_scaling.py}     & (Mtg 2--3) $\bar\Lambda(N)$, $\Lambda_{II}(N)$, $\hat\alpha(N)$ \\
 \texttt{search\_cubic\_tilings.py}    & (Mtg 2--3) Exhaustive $3\times3$ matrix search \\
-\texttt{generalized\_metrics.py}      & (Mtg 2--3) $C_{II}$, $A_{III}$; patches variance module \\
+\texttt{generalized\_metrics.py}      & (Mtg 2--3) $\Lambda_{II}$, $\Lambda_{III}$; patches variance module \\
 \texttt{finite\_size\_lambda\_bar.py} & (Mtg 2--3) Lattice formula; stealthy two phases \\
 \texttt{metallic\_mean\_convergence.py} & (Mtg 2--3) $\bar\Lambda(\mu_n)$ for $n=1\ldots20$ \\
 \texttt{search\_4x4\_tilings.py}      & (Mtg 2--3) $4\times4$ matrix search (24M matrices) \\

@@ -15,6 +15,7 @@ For **Class I hyperuniform** systems, sigma^2(R) is bounded as R -> infinity. It
     Lambda-bar = lim_{R->inf} (1/R) * integral_0^R sigma^2(R') dR'
 
 Lambda-bar is a universal "surface-area coefficient" that ranks how ordered a Class I system is. Lower = more ordered:
+
 - **Integer lattice** (perfectly periodic): Lambda-bar = 1/6 (global minimum for any 1D point process)
 - **Fibonacci chain** (n=1 metallic mean): Lambda-bar = 0.20110 (Zachary & Torquato 2009)
 - **Silver chain** (n=2): Lambda-bar = 1/4 exactly (our numerical finding, confirmed to 0.2501 +/- 0.0004)
@@ -27,6 +28,7 @@ Lambda-bar is a universal "surface-area coefficient" that ranks how ordered a Cl
 ## The Metallic-Mean Substitution Chains
 
 The n-th metallic-mean chain is defined by:
+
 - **Substitution rules:** S -> L, L -> L^n S (i.e., L maps to n copies of L followed by one S)
 - **Substitution matrix:** M_n = [[0, 1], [1, n]]
 - **Eigenvalues:**
@@ -39,7 +41,8 @@ The n-th metallic-mean chain is defined by:
 - **Mean spacing:** ell-bar = (2 + n*lambda_1) / (1 + lambda_1)
 - **Density:** rho = 1/ell-bar
 
-### Key special cases:
+### Key special cases
+
 | n | Name | lambda_1 | rho | Lambda-bar |
 |---|------|----------|-----|------------|
 | 1 | Fibonacci | (1+sqrt(5))/2 = 1.618... | 0.7236 | 0.20110 |
@@ -48,7 +51,8 @@ The n-th metallic-mean chain is defined by:
 
 **Note:** Silver is special because rho = 1/2 exactly (mean spacing = 2). This happens because ell-bar = (2 + 2*lambda_1)/(1 + lambda_1) = 2(1 + lambda_1)/(1 + lambda_1) = 2. This exact simplification may be key to the derivation.
 
-### Hyperuniformity exponent:
+### Hyperuniformity exponent
+
 All metallic-mean chains have alpha = 3 (Class I), by the Oguz et al. eigenvalue formula:
     alpha = 1 - 2*ln|lambda_2| / ln|lambda_1|
 Since |lambda_2| = 1/lambda_1 (unimodular determinant), this gives alpha = 1 + 2 = 3.
@@ -62,19 +66,22 @@ For a system with a pure Bragg (discrete) diffraction spectrum, Lambda-bar can b
     Lambda-bar = (2*rho / pi) * sum_{G > 0} I_G / G^2
 
 where:
+
 - G are the Bragg peak positions (wavevectors)
 - I_G are the peak intensities (as appearing in the structure factor S(k) = sum_G I_G * delta(k - G))
 
 This follows from plugging the discrete S(k) into the variance formula:
-    sigma^2(R) = (rho / pi) * integral S(k) * (2*sin(kR)/k)^2 dk
+    sigma^2(R) = (rho / pi) *integral S(k)* (2*sin(kR)/k)^2 dk
 
 and then taking the running average over R.
 
-### Bragg peak positions for metallic-mean chains:
+### Bragg peak positions for metallic-mean chains
+
 The peaks lie at wavevectors:
     G_{p,q} = 2*pi * (p + q*lambda_1) / ell-bar,  for (p,q) in Z^2, not both zero
 
-### Bragg peak intensities (cut-and-project):
+### Bragg peak intensities (cut-and-project)
+
 The intensities involve the Fourier transform of the acceptance window in the "perpendicular space" of the cut-and-project construction:
 
     I_{p,q} ~ |sinc(q_perp * W / 2)|^2
@@ -92,6 +99,7 @@ Zachary & Torquato (2009) computed Lambda-bar = 0.20110 for Fibonacci using a th
     B_N = lim_{beta -> 0+} [ phi / (2*beta) - (1/2) * sum_k Z_k * r_k * exp(-beta * r_k^2) ]
 
 where:
+
 - phi is the packing fraction
 - r_k are pair distances
 - Z_k are coordination numbers
@@ -117,7 +125,7 @@ Then Lambda-bar = 2*phi*B_N (in d=1). They used N ~ 10^6 points and careful beta
 
 ## Promising Derivation Strategies
 
-1. **Exploit rho = 1/2 in the Bragg sum formula.** With rho = 1/2 and ell-bar = 2, the Bragg peak positions simplify to G_{p,q} = pi*(p + q*(1+sqrt(2))). The prefactor becomes (2*rho/pi) = 1/pi. So Lambda-bar = (1/pi) * sum_{G>0} I_G/G^2. Can this sum be evaluated in closed form?
+1. **Exploit rho = 1/2 in the Bragg sum formula.** With rho = 1/2 and ell-bar = 2, the Bragg peak positions simplify to G_{p,q} = pi*(p + q*(1+sqrt(2))). The prefactor becomes (2*rho/pi) = 1/pi. So Lambda-bar = (1/pi)* sum_{G>0} I_G/G^2. Can this sum be evaluated in closed form?
 
 2. **Lattice theta-function approach.** The cut-and-project lattice for Silver is Z^2 with slope 1/(1+sqrt(2)). The perpendicular-space window has width related to |lambda_2| = sqrt(2)-1. The theta function of this lattice restricted to the acceptance strip might simplify at n=2.
 

@@ -312,7 +312,7 @@ def make_figure(pisot_matrices, gap_23_matrices, max_row_sum, out_path):
                  color='darkred', fontweight='bold')
 
     plt.tight_layout()
-    plt.savefig(out_path, dpi=150, bbox_inches='tight')
+    plt.savefig(out_path, dpi=200, bbox_inches='tight')
     plt.close()
     print(f"  Figure saved: {out_path}")
 

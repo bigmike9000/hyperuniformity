@@ -26,12 +26,10 @@ lb_err = np.array([0.0003, 0.0004, 0.0006, 0.0008, 0.0006,
 LIMIT = 1/3
 names = {1: 'Fibonacci', 2: 'Silver', 3: 'Bronze', 4: 'Copper', 5: 'Nickel'}
 
-fig, axes = plt.subplots(1, 2, figsize=(11, 5))
+fig, ax = plt.subplots(figsize=(8, 5.5))
 
-# ── Panel (a): Λ̄(n) vs n ──────────────────────────────────────────────────
-ax = axes[0]
 ax.errorbar(n_vals, lb_vals, yerr=lb_err, fmt='o-', color='#1f77b4',
-            ms=7, lw=2, capsize=4, label=r'Measured $\bar\Lambda(\mu_n)$')
+            ms=8, lw=2, capsize=4, label=r'Measured $\bar\Lambda(\mu_n)$')
 ax.axhline(LIMIT, color='darkorange', ls='--', lw=2,
            label=r'Limit $= 1/3$ (URL cloaked, exact)')
 ax.axhline(1/4, color='#43A047', ls=':', lw=1.5, alpha=0.7,
@@ -41,46 +39,21 @@ ax.axhline(1/4, color='#43A047', ls=':', lw=1.5, alpha=0.7,
 for n, name in names.items():
     idx = list(n_vals).index(n)
     ax.annotate(name, xy=(n, lb_vals[idx]),
-                xytext=(n + 0.4, lb_vals[idx] - 0.006),
-                fontsize=9, color='#333333',
+                xytext=(n + 0.5, lb_vals[idx] - 0.007),
+                fontsize=11, color='#333333',
                 arrowprops=dict(arrowstyle='->', color='gray', lw=0.8))
 
-ax.set_xlabel('Metallic-mean index $n$', fontsize=13)
-ax.set_ylabel(r'$\bar\Lambda(\mu_n)$', fontsize=13)
-ax.set_title(r'$\bar\Lambda$ increases monotonically toward $1/3$', fontsize=12)
-ax.legend(fontsize=10, loc='lower right')
+ax.set_xlabel('Metallic-mean index $n$', fontsize=14)
+ax.set_ylabel(r'$\bar\Lambda(\mu_n)$', fontsize=14)
+ax.set_title(r'$\bar\Lambda(\mu_n) \to 1/3$ as $n\to\infty$', fontsize=13)
+ax.legend(fontsize=11, loc='lower right')
 ax.set_xlim(0, 21)
 ax.set_ylim(0.18, 0.36)
 ax.grid(alpha=0.3)
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
-
-# ── Panel (b): 1/3 − Λ̄(n) vs n on log-log ────────────────────────────────
-ax = axes[1]
-gap = LIMIT - lb_vals
-n_plot = n_vals[gap > 0]
-gap_plot = gap[gap > 0]
-
-ax.loglog(n_plot, gap_plot, 'o-', color='#1f77b4', ms=7, lw=2,
-          label=r'$1/3 - \bar\Lambda(\mu_n)$')
-
-# Power-law fit: 0.22/n^1.43
-n_fit = np.linspace(1, 21, 200)
-ax.loglog(n_fit, 0.22 / n_fit**1.43, 'r--', lw=1.8,
-          label=r'Fit: $0.22\,/\,n^{1.43}$')
-
-ax.set_xlabel('Metallic-mean index $n$', fontsize=13)
-ax.set_ylabel(r'$1/3 - \bar\Lambda(\mu_n)$', fontsize=13)
-ax.set_title(r'Convergence rate to limit', fontsize=12)
-ax.legend(fontsize=10)
-ax.grid(alpha=0.3, which='both')
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-
-plt.suptitle(r'Metallic-mean chains: $\bar\Lambda(\mu_n) \to 1/3$ as $n\to\infty$',
-             fontsize=13, y=1.01)
 plt.tight_layout()
 out = os.path.join(RESULTS_DIR, 'fig_metallic_convergence.png')
-plt.savefig(out, dpi=150, bbox_inches='tight')
+plt.savefig(out, dpi=200, bbox_inches='tight')
 plt.close()
 print(f'Saved {out}')

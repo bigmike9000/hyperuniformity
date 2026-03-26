@@ -65,57 +65,25 @@ lb_mean = float(np.mean(running[NUM_R//3:]))
 lb_err  = float(np.std(running[NUM_R//3:]))
 print(f"  Lambda_bar = {lb_mean:.4f} +/- {lb_err:.4f}")
 
-# -- Figure --------------------------------------------------------------------
-fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+# -- Figure (single panel: sigma^2) --------------------------------------------
+fig, ax = plt.subplots(figsize=(8, 5))
 
-# Left: sigma^2(R)
-ax = axes[0]
 ax.semilogx(R_arr / ms, var, color='#1565C0', lw=0.8, alpha=0.85,
             label=r'$\sigma^2(R)$')
 ax.axhline(lb_mean, color='#B71C1C', ls='--', lw=2.0,
            label=rf'$\bar\Lambda = {lb_mean:.3f}$')
-ax.set_xlabel(r'$R\,/\,$mean spacing', fontsize=13)
-ax.set_ylabel(r'$\sigma^2(R)$', fontsize=13)
-ax.set_title(rf'Cubic $\alpha=2$ chain ($N={N:,}$)', fontsize=12)
-ax.legend(fontsize=11)
+ax.set_xlabel(r'$R\,/\,$mean spacing', fontsize=14)
+ax.set_ylabel(r'$\sigma^2(R)$', fontsize=14)
+ax.set_title(rf'Cubic $\alpha=2$ chain: $a\!\to\!bc,\; b\!\to\!c,\; c\!\to\!abc$  ($N={N:,}$)',
+             fontsize=13)
+ax.legend(fontsize=12)
 ax.set_xlim(1, R_arr[-1] / ms)
 ax.grid(alpha=0.3)
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 
-# Right: Running Lambda_bar(R) with reference values
-ax = axes[1]
-ax.plot(R_arr / ms, running, color='#1565C0', lw=1.2,
-        label=rf'Running $\bar\Lambda(R)$')
-ax.axhline(lb_mean, color='#B71C1C', ls='--', lw=2.0,
-           label=rf'Mean $= {lb_mean:.3f}$')
-# Reference values
-ax.axhline(0.2500, color='#388E3C', ls=':', lw=1.5, alpha=0.7,
-           label=r'Silver $= 1/4$')
-ax.axhline(1/3, color='#FF6F00', ls=':', lw=1.5, alpha=0.7,
-           label=r'URL $a\!=\!1$ $= 1/3$')
-ax.axhline(0.2011, color='#7B1FA2', ls=':', lw=1.5, alpha=0.7,
-           label=r'Fibonacci $= 0.201$')
-ax.axhline(1/6, color='gray', ls=':', lw=1.5, alpha=0.5,
-           label=r'Lattice $= 1/6$')
-
-ax.set_xlabel(r'$R\,/\,$mean spacing', fontsize=13)
-ax.set_ylabel(r'Running $\bar\Lambda(R)$', fontsize=13)
-ax.set_title(r'$\bar\Lambda$ sits between Silver and URL', fontsize=12)
-ax.legend(fontsize=9, loc='upper right')
-ax.set_xlim(1, R_arr[-1] / ms)
-ax.set_ylim(0.12, 0.42)
-ax.grid(alpha=0.3)
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-
-plt.suptitle(
-    rf'Cubic $\alpha=2$ Substitution Tiling  '
-    rf'($a\!\to\!bc,\; b\!\to\!c,\; c\!\to\!abc$;  $N={N:,}$)',
-    fontsize=13, fontweight='bold', y=1.01
-)
 plt.tight_layout()
 out = os.path.join(RESULTS_DIR, 'fig_new_tilings.png')
-plt.savefig(out, dpi=150, bbox_inches='tight')
+plt.savefig(out, dpi=200, bbox_inches='tight')
 plt.close()
 print(f'Saved {out}')

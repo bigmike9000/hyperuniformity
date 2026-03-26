@@ -11,7 +11,7 @@ NOTE: Direct S(k) power-law fitting fails for substitution tilings because
 the structure factor is dominated by Bragg peaks, not a smooth background.
 This script instead uses the variance-based approach:
   - Class I:   track Lambda_bar(N) = mean(sigma^2) vs N (should converge to true Lambda_bar)
-  - Class II:  extract C_II(N) from plateau of sigma^2/ln(R) vs N
+  - Class II:  extract Lambda_II(N) from plateau of sigma^2/ln(R) vs N
   - Class III: fit sigma^2 ~ A * R^{1-alpha} to extract alpha(N) at each N
 
 For Class I, the "effective" S(k) slope at small k can also be estimated from
@@ -78,7 +78,7 @@ def extract_alpha_variance(R_arr, var, class_type, alpha_theory=None):
     Extract alpha (or equivalent metric) from sigma^2(R).
 
     Class I:   return Lambda_bar (average sigma^2, no alpha extraction)
-    Class II:  return C_II = lim sigma^2(R)/ln(R)
+    Class II:  return Lambda_II = lim sigma^2(R)/ln(R)
     Class III: fit sigma^2 ~ A * R^{1-alpha} to get alpha
     """
     R = np.asarray(R_arr)
@@ -93,7 +93,7 @@ def extract_alpha_variance(R_arr, var, class_type, alpha_theory=None):
         log_R = np.log(np.maximum(R[start:], 1e-10))
         normalized = v[start:] / log_R
         C = np.mean(normalized)
-        return C, 'C_II'
+        return C, 'Lambda_II'
 
     if class_type == 'III':
         # Fit sigma^2 ~ A * R^beta in large-R regime
@@ -167,7 +167,7 @@ for name, label, alpha_th, cls, color in PATTERNS:
             print(f"    N={N_actual:>9,}  Lambda_bar={metric:.5f}  "
                   f"[gen={gen_t:.1f}s, var={var_t:.1f}s]")
         elif cls == 'II':
-            print(f"    N={N_actual:>9,}  C_II={metric:.5f}  "
+            print(f"    N={N_actual:>9,}  Lambda_II={metric:.5f}  "
                   f"[gen={gen_t:.1f}s, var={var_t:.1f}s]")
         else:
             print(f"    N={N_actual:>9,}  alpha_fit={metric:.4f}  "
@@ -221,7 +221,7 @@ for ax_idx, (name, label, alpha_th, cls, color) in enumerate(PATTERNS):
         ax.set_title(f'{label} (Class I, α={alpha_true:.3f})', fontsize=10)
 
     elif cls == 'II':
-        # Plot C_II(N) vs N
+        # Plot Lambda_II(N) vs N
         # True C depends on chain; from research_catalog: C_PD ~ 0.080
         ax.semilogx(N_arr[valid], m_arr[valid], 'o-', color=color, ms=7, lw=1.5,
                     label=r'$C_{II}(N) = \langle\sigma^2/\ln R\rangle$')
@@ -295,7 +295,7 @@ for name, label, alpha_th, cls, color in PATTERNS:
         print(f"  {label:22s}  Class I  | Lambda_bar:  @1k={fmt(m1k)}, "
               f"@100k={fmt(m100k)}, @1M={fmt(m1M)}  (true~={lb_true})")
     elif cls == 'II':
-        print(f"  {label:22s}  Class II | C_II:         @1k={fmt(m1k)}, "
+        print(f"  {label:22s}  Class II | Lambda_II:         @1k={fmt(m1k)}, "
               f"@100k={fmt(m100k)}, @1M={fmt(m1M)}")
     else:
         print(f"  {label:22s}  Class III| alpha_fit:   @1k={fmt(m1k)}, "
@@ -306,6 +306,6 @@ print("\n  CONCLUSION:")
 print("  - S(k) direct fitting fails for substitution tilings (Bragg-peak dominated)")
 print("  - Variance-based metrics are robust and converge reliably with N")
 print("  - Class I: Lambda_bar(N) converges from below (monotone, as theory predicts)")
-print("  - Class II: C_II requires N > 10^5 for reliable estimate")
+print("  - Class II: Lambda_II requires N > 10^5 for reliable estimate")
 print("  - Class III: alpha_fit from sigma^2 power law needs N > 10^5 for 5% accuracy")
 print("  Done.")
