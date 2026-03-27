@@ -1,0 +1,28 @@
+{
+  "lattice_gas": {
+    "lambda_bar": 0.33285362522455086,
+    "err": 0.0001844267806513569,
+    "lambda_bar_exact": 0.2,
+    "description": "g2(r) = r/D for r <= D, 1 for r > D"
+  },
+  "url_a1": {
+    "lambda_bar": 0.3328055012350299,
+    "err": 0.00018105866466694537,
+    "lambda_bar_exact": 0.3333333333333333
+  },
+  "shuffled_sigma_0.1": {
+    "lambda_bar": 0.20029737291916166,
+    "err": 0.023255152598691684,
+    "sigma": 0.1
+  },
+  "shuffled_sigma_0.2": {
+    "lambda_bar": 0.25028255652694614,
+    "err": 0.007257416349966845,
+    "sigma": 0.2
+  },
+  "shuffled_sigma_0.3": {
+    "lambda_bar": 0.34204221108532934,
+    "err": 0.0009092521812587284,
+    "sigma": 0.3
+  }
+}

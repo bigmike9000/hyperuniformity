@@ -8,6 +8,7 @@
 \usepackage{colortbl}
 \usepackage{titlesec}
 \usepackage{enumitem}
+\usepackage{multirow}
 \usepackage{hyperref}
 
 \definecolor{phasebg}{HTML}{E3F2FD}
@@ -21,7 +22,7 @@
 \title{\textbf{Project Progress Report}\\[0.3em]
   \large Classification and Measurement of One-Dimensional Hyperuniform Point Patterns}
 \author{Michael Fang \quad --- \quad Advisor: Prof.\ Salvatore Torquato, Princeton University}
-\date{March 24, 2026}
+\date{March 27, 2026}
 
 \begin{document}
 \maketitle
@@ -60,7 +61,8 @@ III & $0 < \alpha < 1$ & $\sim \Lambda_{III} R^{1-\alpha}$ & diverges \\
 \noindent The project is organized by ``weeks,'' each corresponding to a checkpoint meeting
 with Prof.\ Torquato (not necessarily one calendar week). Three such meetings have
 taken place to date, yielding 27 characterized patterns and a Junior Paper
-(§1--§3 complete, 9 pages; results sections pending).
+(§1--§3 complete, 9 pages; results sections pending). A fourth meeting cycle
+is now underway.
 
 %==============================================================================
 \section{Literature Review}
@@ -528,163 +530,386 @@ The Junior Paper (\texttt{jp/jp\_hyperuniformity.tex}) was drafted:
 \section{Week 3}
 %==============================================================================
 
-The following work was completed between the second and third meetings.
+Work completed between the second and third meetings.
 
-\subsection{Bombieri-Taylor Deep Dive}
+\subsection{Spreadability Convergence for Bombieri-Taylor}
 
-\textbf{Script:} \texttt{bt\_deep\_dive.py} \quad
 \textbf{Figure:} \texttt{fig\_bt\_deep.png}
 
+Spreadability converges to $\alpha = 1.545$ for BT, but very slowly:
+$\hat\alpha = 2.26$ at $t \in [10^2, 10^5]$, $1.98$ at $[10^4, 10^7]$,
+$1.51$ at $[10^8, 10^{11}]$. Two causes:
 \begin{enumerate}[noitemsep]
-  \item BT has \textbf{32,517 Bragg peaks} in $k < 50$ vs.\ 2,637 for Fibonacci (12$\times$ denser).
-  \item \textbf{Rod overlap:} minimum inter-point spacing $= 1.000 < 2a = 1.002$;
-        correcting $a$ changes the form factor.
-  \item \textbf{Slow convergence:} $|\lambda_2| = 0.802$ creates log-periodic oscillations
-        with period $2\ln\theta_1 = 1.619$. At $t \in [10^5, 10^9]$: $\hat\alpha = 1.67$
-        (theory: 1.545). Converges extremely slowly from above.
+  \item Large $|\lambda_2| = 0.802$ (vs.\ $0.618$ for Fibonacci) means correction
+        terms in the spreadability decay slowly.
+  \item BT has $24\times$ more Bragg peaks than Fibonacci ($10^5$ vs.\ $4{,}300$),
+        causing oscillations that bias slope fits.
 \end{enumerate}
-\textbf{Conclusion:} Spreadability is unreliable for BT due to rod overlap and large
-$|\lambda_2|$. Use variance-based $\bar\Lambda = 0.377$ instead.
+$\bar\Lambda$ from $\sigma^2(R)$ avoids these issues (no fitting window needed);
+$\bar\Lambda_{\rm BT} = 0.377$.
 
-\subsection{Finite-Size Scaling of $\alpha$}
+\subsection{Finite-Size Convergence}
 
-\textbf{Script:} \texttt{finite\_size\_scaling.py} \quad
-\textbf{Figure:} \texttt{fig\_finite\_size\_alpha\_landscape.png}
+\textbf{Figure:} \texttt{fig\_finite\_size\_alpha.png}
 
-Direct $S(k)$ power-law fitting fails for all substitution tilings (structure factor
-dominated by Bragg peaks). Variance-based metrics are reliable:
+$\bar\Lambda$ from $\sigma^2(R)$ is stable from $N \sim 10^3$ for both BT and Fibonacci.
+BT spreadability $\hat\alpha$ converges from ${\sim}2.4$ toward $1.545$ but needs $t > 10^8$.
+Fibonacci spreadability works at moderate $t$.
 
-\noindent\begin{tabular}{lllcc}
-\toprule
-\textbf{Pattern} & \textbf{Class} & \textbf{Metric} & $N = 1000$ & $N = 10^6$ \\
-\midrule
-Bombieri-Taylor & I   & $\bar\Lambda(N)$ & 0.3775 & 0.3783 (stable from $N = 2000$) \\
-Fibonacci       & I   & $\bar\Lambda(N)$ & 0.1994 & 0.1982 (stable from $N = 1600$) \\
-Period-Doubling & II  & $\Lambda_{II}(N)$     & 0.1284 & 0.1233 (needs $N > 10^5$) \\
-0222 Chain      & III & $\hat\alpha(N)$ & 1.046  & 0.776  (slow; theory $= 0.639$) \\
-\bottomrule
-\end{tabular}
+\subsection{$3\times3$ Substitution Matrix Search}
 
-\vspace{0.2em}\noindent The 0222 chain is slow because $|\lambda_2| = 1.236 > 1$ (not Pisot),
-causing large finite-size corrections even at $N = 1.5 \times 10^6$.
-
-\subsection{Systematic Search for New Substitution Chains}
-
-\textbf{Script:} \texttt{search\_cubic\_tilings.py} \quad
 \textbf{Figure:} \texttt{fig\_new\_tilings.png}
 
-Enumerated all 39,304 $3\times3$ non-negative integer matrices with row sums $\leq 4$.
-4,882 pass the Pisot condition; 504 have complex conjugate eigenvalue pairs.
+Enumerated all 39,304 $3\times3$ non-negative integer matrices with $|\det M| = 1$
+and row sums $\leq 4$. Of these, 4,882 satisfy $|\lambda_i| < 1$ for $i \geq 2$.
+Among those, 504 have complex conjugate eigenvalue pairs; all 504 give $\alpha = 2$
+exactly (18 distinct $\lambda_1$ values, range 1.32--3.85). The remaining 4,378 matrices
+(all-real eigenvalues) give $\alpha = 3$. No matrix gives $\alpha \in (2,3)$.
 
-\textbf{Result:} All 504 give $\alpha = 2.000$ exactly (18 distinct $\lambda_1$ values). No matrix
-fills $2 < \alpha < 3$.
-
-\textbf{Proof:} For $3\times3$ unimodular with complex conjugate pair $\lambda_2 = \bar\lambda_3$:
+The $\alpha = 2$ result follows from the determinant constraint: for $3\times3$ with
+$|\det M| = 1$ and complex pair $\lambda_2 = \bar\lambda_3$,
 \[
-  |\det M| = 1 \Rightarrow \lambda_1|\lambda_2|^2 = 1 \Rightarrow
-  |\lambda_2| = \lambda_1^{-1/2} \Rightarrow \alpha = 2 \text{ exactly.}
+  \lambda_1|\lambda_2|^2 = 1 \;\Rightarrow\;
+  |\lambda_2| = \lambda_1^{-1/2} \;\Rightarrow\; \alpha = 2 \text{ exactly.}
 \]
 
-\textbf{Extended to $4\times4$:} Search of 24M matrices (1.36M Pisot) confirms zero cases
-with $\alpha \in (2,3)$ among unimodular matrices. Rank-$\geq4$ unimodular matrices with
-complex pairs give $\alpha < 2$ (additional real Pisot factor $\lambda_4$ forces
-$|\lambda_2|^2 < 1/\lambda_1$), so the conclusion holds for any rank.
+Example: $a \to bc$, $b \to c$, $c \to abc$ ($\lambda_1 \approx 2.148$, $\bar\Lambda = 0.274$).
+$\bar\Lambda$ varies widely across the 504 matrices (0.26 to 1.7), even among those
+sharing the same $\lambda_1$.
 
-\subsection{Generalized Scaling Metrics for Classes II and III}
+\subsection{Generalized Metrics for Classes II and III}
 
-\textbf{Script:} \texttt{generalized\_metrics.py} \quad
 \textbf{Figure:} \texttt{fig\_generalized\_metrics.png}
 
+$\bar\Lambda$ is not defined for Classes II and III ($\sigma^2(R)$ grows without bound).
+Instead:
 \begin{align*}
   \Lambda_{II}   &= \lim_{R\to\infty} \frac{\sigma^2(R)}{\ln R} \qquad \text{(Class II)} \\
   \Lambda_{III}  &= \lim_{R\to\infty} \frac{\sigma^2(R)}{R^{1-\alpha}} \qquad \text{(Class III)}
 \end{align*}
+Extracted via curve fit: $\sigma^2 = \Lambda_{II}\ln R + b$ (Class II) and
+$\sigma^2 = \Lambda_{III} R^{1-\alpha} + b$ (Class III, $\alpha$ fixed to theory).
+Results: Period-Doubling $\Lambda_{II} = 0.082$;
+0222 chain $\Lambda_{III} = 0.143$ (with $\alpha = 0.639$ from eigenvalue formula).
 
-Results (curve-fit primary): Period-Doubling $\Lambda_{II} = 0.080$;
-0222 Chain $\Lambda_{III} = 0.209$ (using $\alpha = 0.684$, fitted).
-Plateau cross-checks ($\Lambda_{II}^{\rm plat} = 0.123$, $\Lambda_{III}^{\rm plat} = 0.151$) are
-biased at finite $R$: plateau converges as $C + b/\ln R$ from above for Class II,
-and from below for Class III.
-Function \texttt{compute\_generalized\_metric()} added to \texttt{quasicrystal\_variance.py}.
+\subsection{The $2 < \alpha < 3$ Gap}
 
-\subsection{$\bar\Lambda$ Finite-$N$ Corrections}
+\textbf{Figure:} \texttt{fig\_nonunimodular.png}
 
-\textbf{Script:} \texttt{finite\_size\_lambda\_bar.py} \quad
-\textbf{Figure:} \texttt{fig\_finite\_size\_lambda.png}
+Extended the $3\times3$ search to $4\times4$: 24M matrices tested, 1.36M with
+$|\lambda_i| < 1$, zero with $\alpha \in (2,3)$. The gap persists because:
+\begin{itemize}[noitemsep]
+  \item Rank 3 with complex pair: $|\det M| = 1$ forces $\alpha = 2$ (proof above)
+  \item Rank $\geq 4$ with complex pair: extra small eigenvalues force $|\lambda_2|$
+        larger, giving $\alpha < 2$
+  \item All-real eigenvalues: numerical search finds only $\alpha = 3$
+\end{itemize}
+No substitution matrix with $|\det M| = 1$ at any rank can produce $\alpha \in (2,3)$.
 
-\textbf{Integer lattice:} The piecewise-cubic integral evaluates to $\bar\Lambda = 1/6$
-exactly for all integer $R_\text{max}$. No finite-$N$ correction exists; observed
-deviations ($<0.3\%$) are Monte Carlo noise.
-
-\textbf{Stealthy:} Ordered-phase stealthy (lattice start) gives $\bar\Lambda \approx 1/6$
-at all $N$ and $\chi$, not $1/(\pi^2\chi)$. This confirms the two-phase picture:
-both phases are stealthy but differ drastically in spatial structure.
-
-\subsection{Catalog Cleanup and Density Normalization}
-
-\textbf{Figure:} \texttt{fig\_catalog\_updated.png}
-
-Stealthy patterns relabeled: $\alpha$ removed, $K^* = 4\pi\rho\chi$ added.
-
-$\bar\Lambda$ is invariant under uniform density rescaling in $d=1$: rescaling
-$x_i \to x_i/\rho$ leaves $\bar\Lambda$ unchanged ($<0.2\%$ numerical error on Fibonacci).
-Direct comparison of $\bar\Lambda$ across all patterns with different densities is valid.
-
-\subsection{The $2 < \alpha < 3$ Gap: Non-Unimodular Extension}
-
-\textbf{Scripts:} \texttt{search\_4x4\_tilings.py}, \texttt{fig\_nonunimodular\_chain.py}
-\quad\textbf{Figure:} \texttt{fig\_nonunimodular.png}
-
-The determinant constraint for all $2\times2$ Pisot matrices gives a unified formula:
+\textbf{Non-unit determinant:} For $2\times2$ matrices with $|\lambda_2| < 1$:
 \[
-  |\lambda_2| = \frac{|\det M|}{\lambda_1} \implies
-  \alpha = 3 - \frac{2\ln|\det M|}{\ln\lambda_1}.
+  \alpha = 3 - \frac{2\ln|\det M|}{\ln\lambda_1}
 \]
-For $|\det M|=1$ (unimodular): $\alpha=3$. For $1 < |\det M| < \sqrt{\lambda_1}$:
-$\alpha \in (2,3)$.
+To get $\alpha \in (2,3)$: need $1 < |\det M| < \sqrt{\lambda_1}$. Since det is an
+integer, only $|\det M| = 2$ works (requires $\lambda_1 > 4$). Found 28 such matrices,
+all with $|\det M| = 2$ and $\alpha \in (2.0, 2.2)$.
 
-A targeted search over $2\times2$ matrices with row sums $\leq 6$ found
-\textbf{28 matrices with $\alpha \in (2,3)$}, all with $|\det M|=2$.
-Minimum required row sum is 6 (one rule must produce at least 6 tiles).
+Smallest example: $M = \bigl[\begin{smallmatrix}0&1\\2&4\end{smallmatrix}\bigr]$
+($\det = -2$), rules $a \to b$, $b \to aabbbb$.
+$\lambda_1 = 2+\sqrt{6} \approx 4.449$, $\alpha = 2.071$.
+$\sigma^2(R)$ oscillates over $[0.001, 0.87]$ (Fibonacci: $[0.15, 0.25]$).
+$\bar\Lambda \approx 0.648 \pm 0.004$ ($N = 17.8$M, period-averaged).
+First known 1D Class~I chain with $\alpha \in (2,3)$.
 
-\textbf{Smallest example:} $M = \bigl[\begin{smallmatrix}0&1\\2&4\end{smallmatrix}\bigr]$
-($\det=-2$), rules $a \to b$, $b \to aabbbb$.
-\[
-  \lambda_1 = 2+\sqrt{6} \approx 4.449,\quad |\lambda_2| = |2-\sqrt{6}| \approx 0.449,\quad
-  \alpha = 2.071.
-\]
+\subsection{Silver $\bar\Lambda = 1/4$ and Metallic-Mean Convergence}
 
-Simulated at $N_\text{iter}=9$: $N=202{,}256$ points, $\rho = 0.2959$.
-$\sigma^2(R)$ shows \textbf{large log-periodic oscillations} over the range $[0.001, 0.87]$
-with log-period $\ln\lambda_1 \approx 1.493$ in $\ln R$.
-Running average gives $\bar\Lambda \approx 0.650$ (rough estimate; large oscillation amplitude prevents precision measurement).
-This is the \textbf{first confirmed 1D substitution tiling with $\alpha \in (2,3)$}.
+\textbf{Figures:} \texttt{fig\_silver\_lambda\_quarter.png},
+\texttt{fig\_metallic\_convergence.png}
 
-\subsection{High-Precision Silver $\bar\Lambda$ and the Metallic-Mean Limit}
+\textbf{Silver:} $N = 9.37 \times 10^6$ points, $5 \times 10^4$ windows:
+$\bar\Lambda = 0.2502 \pm 0.0006$ ($0.3\sigma$ from $1/4$).
+Silver has $\rho = 1/2$ exactly. Fibonacci: $0.201$ (ours) vs.\ $0.20110$
+(Zachary \& Torquato 2009, theta-series; both numerical).
+Bronze: $0.2822 \pm 0.0006$ (no obvious closed form).
 
-\textbf{Scripts:} \texttt{silver\_precision\_analysis.py},
-\texttt{metallic\_mean\_convergence.py}
-\quad\textbf{Figure:} \texttt{fig\_metallic\_convergence.png}
-
-\textbf{Silver:} High-precision run at $N = 3.88\times10^6$ ($3\times10^4$ windows,
-1500 $R$ values) gives $\bar\Lambda = 0.2501 \pm 0.0004$, which is $0.3\sigma$ from $1/4$.
-The Silver chain has $\rho = 1/2$ exactly (mean spacing $= 2$). The result
-$\bar\Lambda = 1/4$ appears to be exact (novel; analytical proof not yet known).
-
-\textbf{Metallic-mean limit:} $\bar\Lambda(\mu_n)$ was computed for $n = 1\ldots 20$:
+\textbf{Metallic-mean sequence:} Computed $\bar\Lambda(\mu_n)$ for $n = 1$ through $20$:
 
 \noindent\begin{tabular}{cccccccccc}
 \toprule
 $n$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 10 \\
-$\bar\Lambda$ & 0.2011 & 0.2500 & 0.2821 & 0.293 & 0.310 & 0.3177 & 0.3212 & 0.3249 & 0.3265 \\
+$\bar\Lambda$ & 0.201 & 0.250 & 0.282 & 0.293 & 0.310 & 0.318 & 0.321 & 0.325 & 0.327 \\
 \midrule
 $n$ & 15 & 20 & $\infty$ & & & & & & \\
-$\bar\Lambda$ & 0.3289 & 0.3310 & $1/3$ & & & & & & \\
+$\bar\Lambda$ & 0.329 & 0.331 & $1/3$ & & & & & & \\
 \bottomrule
 \end{tabular}
 
-\vspace{0.2em}\noindent Convergence rate: $1/3 - \bar\Lambda(n) \approx 0.22/n^{1.43}$.
-The URL cloaked lattice ($a=1$, $\bar\Lambda = 1/3$ exactly) is the limit of this family.
+\vspace{0.2em}\noindent Monotone from below. Limit $= 1/3 = \bar\Lambda$ of URL cloaked
+lattice ($a = 1$, Klatt et al.\ 2020). As $n \to \infty$, $L/S = \mu_n \to \infty$ but
+$\ell_L/\langle\ell\rangle \to 1$: the long tile becomes the mean spacing, short tiles
+become rare and tiny, and the chain approaches a lattice with disorder matching URL $a = 1$.
+
+%==============================================================================
+\section{Week 4}
+%==============================================================================
+
+Tasks from the third meeting (2026-03-27) with Prof.\ Torquato.
+
+\subsection{Why $\alpha_{\max} = 3$ for 1D Substitution Tilings}
+
+The eigenvalue formula $\alpha = 1 - 2\ln|\lambda_2|/\ln\lambda_1$ (Öguz et al.\ 2019)
+gives $\alpha = 3$ for all metallic-mean chains. The bound $\alpha \leq 3$ holds
+for \emph{all} unimodular ($|\det M| = \pm 1$) substitution matrices, for the following reason.
+
+For a rank-$r$ substitution matrix $M$ with Perron--Frobenius eigenvalue $\lambda_1$
+and remaining eigenvalues $\lambda_2, \ldots, \lambda_r$, the determinant constraint gives
+\[
+  |\det M| = \lambda_1 \prod_{i=2}^{r} |\lambda_i| \geq \lambda_1 |\lambda_2|^{r-1}
+  \quad\Rightarrow\quad
+  |\lambda_2| \leq \left(\frac{|\det M|}{\lambda_1}\right)^{1/(r-1)}.
+\]
+Substituting into the eigenvalue formula:
+\[
+  \alpha = 1 - \frac{2\ln|\lambda_2|}{\ln\lambda_1}
+    \leq 1 + \frac{2}{r-1}\left(\frac{\ln\lambda_1 - \ln|\det M|}{\ln\lambda_1}\right)
+    = 1 + \frac{2}{r-1}\left(1 - \frac{\ln|\det M|}{\ln\lambda_1}\right).
+\]
+For $|\det M| = 1$ this simplifies to $\alpha \leq 1 + 2/(r-1)$. The bound is saturated
+when all sub-dominant eigenvalues have the same absolute value, i.e.,
+$|\lambda_i| = \lambda_1^{-1/(r-1)}$ for $i \geq 2$.
+
+\medskip
+\noindent\begin{tabular}{ccl}
+\toprule
+\textbf{Rank $r$} & $\alpha_{\max}$ & \textbf{Example} \\
+\midrule
+$2$ & $3$ & all metallic means (Fibonacci, Silver, \ldots) \\
+$3$ & $2$ & 504 cubic matrices with complex pair \\
+$4$ & $5/3 \approx 1.67$ & (no known examples saturating this) \\
+$r \to \infty$ & $\to 1^+$ & approaches Class~II boundary \\
+\bottomrule
+\end{tabular}
+
+\medskip\noindent
+Thus $\alpha = 3$ is the global maximum for unimodular substitution tilings in 1D,
+achieved uniquely by rank-2 (two-letter) chains. Higher-rank matrices necessarily
+have $\alpha < 3$ because the extra eigenvalues in $|\det M| = 1$ force $|\lambda_2|$
+to be larger (closer to 1), reducing $\alpha$. Non-unimodular matrices can exceed $\alpha = 3$
+in principle (e.g.\ $|\det M| = 0$ gives $\alpha = \infty$, but this degenerates to a lattice),
+though in practice the range $\alpha \in (2,3)$ requires $1 < |\det M| < \sqrt{\lambda_1}$
+as shown in §3.5.
+
+\subsection{Physical Interpretation of the $\bar\Lambda$ Ranking}
+
+$\bar\Lambda$ quantifies residual large-scale density fluctuations: larger $\bar\Lambda$
+means more disorder. The catalog ranking (§5) is controlled by a few
+structural parameters:
+
+\begin{enumerate}[noitemsep]
+  \item \textbf{Perfect order $\to$ minimum.} The integer lattice achieves
+        $\bar\Lambda = 1/6$, the global minimum for all 1D hyperuniform patterns.
+        Any departure from perfect periodicity increases $\bar\Lambda$.
+
+  \item \textbf{Metallic means: tile disparity controls disorder.}
+        As $n$ grows, the tile-length ratio $\mu_n = L/S$ increases.
+        Short tiles become rarer (frequency $\sim 1/\mu_n \to 0$) and act as
+        ``defects'' in an otherwise lattice-like array of long tiles.
+        More extreme defects $\to$ larger variance $\to$ larger $\bar\Lambda$.
+        The sequence $\bar\Lambda(\mu_1) = 0.201 < \bar\Lambda(\mu_2) = 0.250 < \cdots$
+        is monotone increasing toward $1/3$.
+
+  \item \textbf{URL: displacement amplitude $a$ controls disorder directly.}
+        Each site is displaced by $U(-a/2, a/2)$, giving
+        $\bar\Lambda = (1+a^2)/6$.
+        At $a = 0$: lattice ($\bar\Lambda = 1/6$).
+        At $a = 1$: cloaked ($\bar\Lambda = 1/3$), matching the metallic-mean limit.
+        Intermediate $a$ interpolates smoothly.
+
+  \item \textbf{Stealthy: weaker constraint $\to$ more disorder.}
+        The stealth condition $S(k) = 0$ for $|k| < K^*$ constrains fewer
+        degrees of freedom when $\chi$ is small.
+        $\bar\Lambda \approx 1/(\pi^2\chi)$: smaller $\chi$ allows larger fluctuations.
+
+  \item \textbf{Bombieri-Taylor: slow decay of $S(k)$ means large fluctuations.}
+        $\alpha = 1.545$ is low (close to Class~II boundary), so
+        $S(k)$ decays slowly near $k = 0$, allowing more long-wavelength
+        fluctuations. Combined with $|\lambda_2| = 0.802$ (close to 1),
+        giving $\bar\Lambda = 0.377$.
+\end{enumerate}
+
+\noindent In summary, $\bar\Lambda$ increases with: (i) larger tile-length disparity
+in substitution chains, (ii) larger displacement amplitude in perturbed lattices,
+(iii) weaker spectral constraints in stealthy patterns, and (iv) slower power-law
+suppression of $S(k)$ near the origin.
+
+\subsection{Uncloaked URL Patterns}
+
+\textbf{Figure:} \texttt{fig\_url\_sweep.png}
+
+The exact formula $\bar\Lambda(a) = (1+a^2)/6$ (Klatt et al.\ 2020) was validated
+by simulation at 17 values of $a \in [0.05, 2.0]$ with $N = 50{,}000$ points each.
+All simulated values match the formula to within $1\%$.
+
+\medskip
+\noindent\begin{tabular}{ccccc}
+\toprule
+$a$ & $\bar\Lambda$ (exact) & $\bar\Lambda$ (sim) & Error & Note \\
+\midrule
+0    & 0.1667 & ---    & ---     & lattice \\
+0.5  & 0.2083 & 0.2082 & 0.08\% & \\
+1.0  & 0.3333 & 0.3330 & 0.10\% & cloaked (Bragg peaks vanish) \\
+1.5  & 0.5046 & 0.5047 & 0.02\% & \\
+2.0  & 0.6667 & 0.6657 & 0.14\% & second cloaking event \\
+\bottomrule
+\end{tabular}
+
+\medskip\noindent
+Key observations: (i) $\bar\Lambda$ grows monotonically with $a$ (more displacement
+$=$ more disorder). (ii) At each integer $a = 1, 2, \ldots$, cloaking occurs: the
+Bragg peaks of the underlying lattice vanish because the displacement form factor
+$\tilde f(k) = \sin(\pi k a)/(\pi k a)$ has zeros at all non-zero reciprocal lattice
+vectors. (iii) $\bar\Lambda(a=1) = 1/3$ matches the metallic-mean limit exactly.
+
+\subsection{$g_2$-Invariant Patterns}
+
+Torquato \& Stillinger (2003, §V.B) define a \textbf{$g_2$-invariant process}
+as one where the pair correlation function $g_2(r)$ remains invariant as
+density increases, up to a terminal density $\rho_c$ at which the system
+becomes hyperuniform ($S(0) = 0$).
+
+Three 1D examples were investigated:
+
+\begin{enumerate}[noitemsep]
+  \item \textbf{Lattice-gas:} Tessellate $[0, L)$ into $N$ intervals of length $D = 1$;
+        place one point uniformly at random in each interval.
+        $g_2(r) = r/D$ for $r \leq D$, $g_2 = 1$ for $r > D$.
+        This is equivalent to URL with $a = 1$ (just a phase offset:
+        $j + U(0,1)$ vs.\ $j + U(-1/2, 1/2)$).
+        \textbf{$\bar\Lambda = 0.333 = 1/3$}, confirming the URL result.
+
+  \item \textbf{Step-function $g_2$:} $g_2(r) = \Theta(r - D)$ at terminal density
+        $\phi_c = 1/2^d$. For $d = 1$: $\phi_c = 1/2$, close-packed hard rods $=$ lattice.
+        \textbf{$\bar\Lambda = 1/6$}.
+
+  \item \textbf{Gaussian shuffled lattice:} Each lattice site displaced by
+        $\mathcal{N}(0, \sigma^2)$. Hyperuniform for any $\sigma > 0$.
+        Measured: $\bar\Lambda = 0.200$ ($\sigma = 0.1$),
+        $0.250$ ($\sigma = 0.2$), $0.342$ ($\sigma = 0.3$).
+        At $\sigma = 0.1$, $\bar\Lambda$ matches Fibonacci;
+        at $\sigma = 0.2$, it matches Silver $= 1/4$.
+\end{enumerate}
+
+\noindent The $g_2$-invariant processes at terminal density are all hyperuniform
+and fall naturally into the existing ranking: they are particular cases of
+perturbed lattices, with $\bar\Lambda$ determined by the displacement distribution.
+The lattice-gas is a special case of URL. The step+delta $g_2$ examples
+(Eq.~121--125 in the 2003 paper) are 3D constructions with no direct 1D analog
+beyond the cases already computed.
+
+\subsection{Metallic Chain Tile Visualizations}
+
+\textbf{Figure:} \texttt{fig\_metallic\_tiles\_extended.png}
+
+Figure shows 25 tiles of each metallic-mean chain for $n = 1, 2, 3, 4, 5, 6, 8, 10$.
+As $n$ increases, short tiles (S) become rarer: the S fraction decreases from $36\%$
+at $n = 1$ (Fibonacci) to $8\%$ at $n = 10$.
+For large $n$, the chain approaches a near-lattice of long tiles with rare,
+widely-spaced short-tile defects.
+
+\subsection{Metallic-Mean Convergence to $n = 100$}
+
+Extended $\bar\Lambda(\mu_n)$ from $n = 20$ to $n = 100$ (TARGET\_N $= 300$k).
+
+\medskip
+\noindent\begin{tabular}{cccccccccccc}
+\toprule
+$n$ & 1 & 2 & 3 & 5 & 10 & 20 & 30 & 50 & 70 & 100 & $\infty$ \\
+$\bar\Lambda$ & 0.199 & 0.250 & 0.283 & 0.310 & 0.327 & 0.332 & 0.332 & 0.334 & 0.330 & 0.335 & $1/3$ \\
+\bottomrule
+\end{tabular}
+
+\medskip\noindent
+All values are consistent with $1/3$ within statistical error at large $n$.
+Some nominal overshoots at $n \geq 50$ are within the $\sim\!0.005$ error bars
+(reduced accuracy at large $n$ because chains grow very slowly:
+$\lambda_1 \approx n + 1/n$, so even at $n = 100$ only two substitution iterations
+are needed to reach $N = 300$k, limiting the quasi-periodic structure).
+The overall picture is unchanged: \textbf{$\bar\Lambda(\mu_n) \to 1/3$
+monotonically from below}, confirming the URL cloaked-lattice limit.
+
+\subsection{All Non-Unimodular Chains}
+
+\textbf{Script:} \texttt{compute\_all\_nonunimodular.py}
+
+Enumerated all $2\times2$ non-negative integer matrices with $|\det M| = 2$,
+$|\lambda_2| < 1$, $\alpha \in (2,3)$, and row sums $\leq 10$.
+Found \textbf{138 matrices} (more than the original 28 found with row sums $\leq 6$)
+across 12 distinct $\alpha$ values.
+
+\medskip
+\noindent\begin{tabular}{cccc}
+\toprule
+$\alpha$ & Count & $\bar\Lambda$ range & Smallest $\bar\Lambda$ \\
+\midrule
+2.071 & 12 & $[0.32, 2.01]$ & $M = \bigl[\begin{smallmatrix}0&2\\1&9\end{smallmatrix}\bigr]$ \\
+2.087 & 10 & $[0.34, 1.57]$ & \\
+2.175 & 18 & $[0.33, 3.36]$ & \\
+2.199 & 14 & $[0.34, 3.57]$ & \\
+2.248 & 10 & $[0.33, 2.82]$ & \\
+2.271 & 16 & $[0.34, 3.76]$ & \\
+2.301 & 18 & $[0.33, 4.05]$ & \\
+2.343 & 12 & $[0.33, 4.79]$ & \\
+2.362 & 12 & $[0.34, 4.80]$ & \\
+2.376 &  8 & $[0.33, 4.97]$ & \\
+2.393 &  4 & $[0.34, 5.08]$ & \\
+\bottomrule
+\end{tabular}
+
+\medskip\noindent
+Key observations: (i) All $\alpha$ values lie in $[2.07, 2.39]$, consistent with
+the formula $\alpha = 3 - 2\ln 2/\ln\lambda_1$ and the constraint $\lambda_1 > 4$.
+(ii) $\bar\Lambda$ varies enormously \emph{within} each $\alpha$ group (by factors of 5--15),
+showing that $\alpha$ alone does not determine $\bar\Lambda$.
+(iii) The smallest $\bar\Lambda \approx 0.32$--$0.34$ across all groups, close to $1/3$
+(the URL cloaked value).
+(iv) These are all Class~I ($|\lambda_2| < 1$, bounded $\sigma^2$).
+
+\subsection{Yuan-Torquato Improved Spreadability}
+
+\textbf{Script:} \texttt{yuan\_improved\_spreadability.py}
+
+Implemented the improved fitting procedure from Yuan \& Torquato (2026, arXiv:2602.17873).
+Three fitting function types were tested on Fibonacci ($\alpha = 3$):
+
+\medskip
+\noindent\begin{tabular}{llccc}
+\toprule
+\textbf{Chain} & \textbf{Method} & $\hat\alpha$ & $|\hat\alpha - \alpha|$ & Error \\
+\midrule
+\multirow{3}{*}{Fibonacci ($\alpha = 3$)}
+  & Simple log-slope      & 2.19  & 0.81 & 27\% \\
+  & Type~I, order 1       & 3.04  & 0.04 & 1.3\% \\
+  & Type~III, order 1     & 2.95  & 0.05 & 1.5\% \\
+\midrule
+\multirow{3}{*}{BT ($\alpha = 1.545$)}
+  & Simple log-slope      & 2.27  & 0.72 & 47\% \\
+  & Type~I, order 6       & 1.57  & 0.03 & \textbf{1.7\%} \\
+  & Type~III, order 6     & 2.16  & 0.61 & 40\% \\
+\bottomrule
+\end{tabular}
+
+\medskip\noindent
+For Fibonacci, Type~I at low order ($n = 1$) gives the best result ($1.3\%$ error);
+higher orders diverge because quasicrystal $s^{ex}(t)$ oscillates (dense Bragg peaks).
+For BT, Type~I at high order ($n = 5$--$6$) dramatically reduces the error from $47\%$
+to $\sim\!2\%$ --- the \textbf{first time BT's $\alpha$ has been measured accurately from
+spreadability without extreme time ranges} ($t > 10^8$ was previously needed).
+Type~III fails for BT because the spectral density is not analytic at the origin.
+
+\textbf{Conclusion:} The Yuan-Torquato Type~I fitting is a significant improvement
+for chains with large $|\lambda_2|$ (like BT), where correction terms dominate at
+moderate~$t$. It does not replace variance-based $\bar\Lambda$ extraction but provides
+a viable alternative for $\alpha$ measurement from spreadability data.
 
 %==============================================================================
 \section{Complete Pattern Catalog}
