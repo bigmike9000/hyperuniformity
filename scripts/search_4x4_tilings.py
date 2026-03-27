@@ -38,7 +38,7 @@ from collections import Counter
 # ----------------------------------------------------------------
 # Paths
 # ----------------------------------------------------------------
-BASE_DIR    = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RESULTS_DIR = os.path.join(BASE_DIR, 'results', 'figures')
 DATA_DIR    = os.path.join(BASE_DIR, 'results')
 os.makedirs(RESULTS_DIR, exist_ok=True)

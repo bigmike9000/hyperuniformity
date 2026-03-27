@@ -21,7 +21,8 @@ import sys
 import os
 
 # Add project directory to path
-sys.path.insert(0, '/c/Users/minec/OneDrive/Desktop/Hyperuniformity')
+SCRIPT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, SCRIPT_DIR)
 
 from substitution_tilings import (
     CHAINS, generate_substitution_sequence, sequence_to_points,

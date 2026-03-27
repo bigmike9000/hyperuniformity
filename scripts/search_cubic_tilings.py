@@ -22,6 +22,8 @@ Reference: Oguz et al. (2019) eigenvalue formula for 1D hyperuniformity
 
 import os
 import sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import sys
 import time
 import itertools
 import json

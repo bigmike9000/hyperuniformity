@@ -27,7 +27,7 @@ from glob import glob
 from concurrent.futures import ProcessPoolExecutor
 import multiprocessing
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from quasicrystal_variance import compute_number_variance_1d, compute_lambda_bar
 from two_phase_media import (
     compute_spectral_density, compute_excess_spreadability, extract_alpha_fit

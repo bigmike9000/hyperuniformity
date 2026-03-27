@@ -23,7 +23,7 @@ import itertools
 import numpy as np
 
 # Add project root to path
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE_DIR)
 
 from substitution_tilings import CHAINS

@@ -17,7 +17,7 @@ import json
 import time
 import numpy as np
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+SCRIPT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, SCRIPT_DIR)
 
 from quasicrystal_variance import compute_number_variance_1d, compute_lambda_bar
