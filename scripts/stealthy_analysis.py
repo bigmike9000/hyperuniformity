@@ -33,9 +33,9 @@ from two_phase_media import (
     compute_spectral_density, compute_excess_spreadability, extract_alpha_fit
 )
 
-RESULTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results')
-STEALTHY_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                             'stealthy_configurations')
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RESULTS_DIR = os.path.join(PROJECT_ROOT, 'results')
+STEALTHY_DIR = os.path.join(PROJECT_ROOT, 'stealthy_data')
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 SEED = 2026
