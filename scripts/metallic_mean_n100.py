@@ -1,7 +1,8 @@
 """
-Metallic-mean convergence extended to n=100.
+Metallic-mean study extended to n=100.
 
-Extends the n=1..50 computation to n=100 to verify Lb → 1/3.
+Extends the n=1..50 computation to n=100 to compare the large-n data with
+the URL benchmark Lb = 1/3.
 Uses same infrastructure as metallic_mean_extended.py.
 
 Output: results/metallic_n100.json
@@ -100,7 +101,7 @@ def compute_lb(n):
 
 if __name__ == '__main__':
     print("=" * 70)
-    print("  Metallic-Mean Convergence: n=1 to 100")
+    print("  Metallic-Mean Study: n=1 to 100")
     print("=" * 70)
 
     results = {}
@@ -118,7 +119,7 @@ if __name__ == '__main__':
         diff = 1/3 - r['lambda_bar']
         print(f"  {n:4d}  {mu:10.4f}  {r['lambda_bar']:12.5f}  "
               f"{r['err']:8.5f}  {diff:10.5f}")
-    print(f"  {'inf':>4s}  {'inf':>10s}  {1/3:12.5f}  "
+    print(f"  {'URL':>4s}  {'a=1':>10s}  {1/3:12.5f}  "
           f"{'exact':>8s}  {0.0:10.5f}")
 
     # Checks

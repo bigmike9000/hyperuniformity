@@ -139,19 +139,19 @@ Zachary & Torquato (2009) report 0.20110 via theta-series, which is higher preci
 
 ---
 
-## Slide 13: Metallic-mean convergence to 1/3
+## Slide 13: Metallic means and the URL value 1/3
 
-**Q: Why does the limit equal 1/3?**
-As n -> infinity, the metallic-mean ratio mu_n -> infinity, so the tile ratio L/S -> 1. The chain approaches a lattice where each point is displaced quasi-randomly within its unit cell -- matching a URL with cloaking parameter a=1, which has lambda-bar = (1+a^2)/6 = 1/3 exactly (Klatt et al. 2020).
+**Q: Why compare to 1/3?**
+As n grows, the metallic-mean ratio mu_n becomes large and the chain looks increasingly like a lattice with rare defects. That makes the cloaked URL value at a=1, where lambda-bar = (1+a^2)/6 = 1/3 exactly (Klatt et al. 2020), a natural comparison point.
 
 **Q: Is the convergence to 1/3 proven?**
-No, it's a numerical observation. We computed lambda-bar for n=1 through 20. The convergence is monotone from below and fits 1/3 - lambda-bar ~ 0.22/n^1.43. But there's no analytical proof.
+No. It was a numerical observation from the n=1 through 20 data. More recent larger-n runs are noisy and can overshoot 1/3, so the asymptotic limit should be treated as open rather than established.
 
 **Q: Is there a closed-form formula for lambda-bar(mu_n)?**
-Open question. We have 20 data points. Silver might be 1/4 exactly. The limit is 1/3. But we don't have a formula connecting them.
+Open question. Silver might be 1/4 exactly. The relation between the metallic-mean sequence and the URL value 1/3 is still not understood analytically.
 
 **Q: How is this related to URL?**
-The URL (Uniform Random Lattice) with parameter a has lambda-bar = (1+a^2)/6. At a=0 it's a perfect lattice (lambda-bar = 1/6). At a=1 it's maximally disordered (lambda-bar = 1/3). The metallic-mean chains interpolate between these as n increases.
+The URL (Uniform Random Lattice) with parameter a has lambda-bar = (1+a^2)/6. At a=0 it's a perfect lattice (lambda-bar = 1/6). At a=1 it's maximally disordered (lambda-bar = 1/3). The metallic-mean data move toward that scale for moderate n, but the exact asymptotic relationship is unresolved.
 
 ---
 

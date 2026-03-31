@@ -68,304 +68,229 @@ is now underway.
 \section{Literature Review}
 %==============================================================================
 
-\noindent This section surveys the primary literature that motivates, informs, and
-contextualizes the project. Twelve papers are reviewed, organized thematically.
+\noindent The literature most relevant to the present project falls into four layers:
+(i) the definition of hyperuniformity and its order metrics, (ii) one-dimensional
+substitution tilings and quasicrystals, (iii) comparison families such as perturbed
+lattices and stealthy systems, and (iv) measurement methods based on spreadability.
+Read together, these papers suggest that the project is not simply ``finding more
+examples'' of hyperuniform patterns; the deeper problem is how to organize the
+one-dimensional landscape using both an asymptotic class parameter ($\alpha$) and an
+intra-Class-I ranking metric ($\bar\Lambda$).
 
 %------------------------------------------------------------------------------
-\subsection{Foundations of Hyperuniformity}
+\subsection{Foundational Framework: Hyperuniformity and Order Metrics}
 %------------------------------------------------------------------------------
 
 \noindent\textbf{Torquato \& Stillinger (2003).}
-The foundational paper defines \textbf{hyperuniformity} as the condition
-$S(\mathbf{k}\to\mathbf{0}) = 0$, where $S(\mathbf{k})$ is the structure factor.
-For a $d$-dimensional point pattern the \textbf{number variance}
-$\sigma^2(R) \equiv \langle N(R)^2\rangle - \langle N(R)\rangle^2$
-grows at most as the surface area $R^{d-1}$ for large $R$, in contrast to the
-$R^d$ growth of a Poisson process.
-Three universality classes are introduced: Class~I ($\alpha>1$, bounded $\bar\Lambda$),
-Class~II ($\alpha=1$, $\sigma^2\sim \Lambda_{II}\ln R$), Class~III ($0<\alpha<1$,
-$\sigma^2\sim \Lambda_{III}R^{1-\alpha}$).
+This is the foundational reference for the project. It defines hyperuniformity as
+$S(\mathbf{k}\to\mathbf{0}) = 0$ and proves the equivalent large-window criterion that
+the local number variance grows more slowly than the window volume.
+For statistically homogeneous point patterns, the paper establishes the real-space and
+Fourier-space formulas linking $\sigma^2(R)$, $g_2(r)$, and $S(k)$.
+Most importantly for the present work, it identifies the \textbf{surface-area
+coefficient} $\bar\Lambda$ as the natural order metric within Class~I and proves that
+the one-dimensional integer lattice attains the exact minimum
+$\bar\Lambda_{\min} = 1/6$.
+This gives the project both its baseline comparison pattern and its guiding idea that
+bounded-variance systems still require a secondary metric beyond hyperuniform/nonhyperuniform.
 
-The \textbf{surface-area coefficient}
-\[
-  \bar\Lambda = \lim_{R\to\infty} \frac{\sigma^2(R)}{2\rho R^{d-1}A_1(R)}
-\]
-(with $A_1(R)$ the window surface area) serves as an order metric for Class~I patterns.
-For $d=1$ the integer lattice achieves
-$\bar\Lambda_{\min} = 1/6$, derived from the exact formula
-$\sigma^2(R) = \{R\}(1-2\{R\})$ where $\{R\}$ is the fractional part of $R$.
-In higher dimensions, Bravais lattices minimize $\bar\Lambda$ among periodic patterns.
-The paper establishes the conceptual framework adopted throughout this project.
+\vspace{0.4em}
+\noindent\textbf{Torquato (2018).}
+The Physics Reports review broadens the 2003 framework into a general theory of
+\emph{hyperuniform states of matter}.
+It collects examples from crystals, quasicrystals, jammed matter, photonic materials,
+biological tissues, and cosmology, while emphasizing the three universality classes
+defined by the small-$k$ behavior of $S(k)$ or, equivalently, the large-$R$ behavior of
+$\sigma^2(R)$.
+For the present project, this review is important less for specific formulas than for
+scope: it makes clear that one-dimensional substitution tilings should be viewed as a
+clean laboratory for a much broader structural question, namely how long-wavelength
+order can coexist with strong local disorder.
 
 \vspace{0.4em}
 \noindent\textbf{Zachary \& Torquato (2009).}
-This paper extends hyperuniformity to \textbf{two-phase heterogeneous media}.
-In this setting the relevant quantity is the \textbf{spectral density}
-$\tilde\chi_V(\mathbf{k})$ --- the Fourier transform of the two-point correlation
-of the indicator function $I(\mathbf{x})$ for phase 2.
-Hyperuniformity now requires $\tilde\chi_V(\mathbf{k}\to\mathbf{0}) = 0$, in direct
-analogy with $S(\mathbf{k}\to\mathbf{0}) = 0$ for point patterns.
-
-A central technical contribution is the \textbf{theta-function (Bragg-sum) method}
-for computing $\bar\Lambda$ analytically from the Fourier-space structure of the
-pattern: Bragg peaks at reciprocal-lattice vectors $\mathbf{k}_j$ contribute to
-$\sigma^2(R)$ through overlap integrals of the window function.
-This method is applied to tabulate $\bar\Lambda$ for $d=1,2,3$ Bravais lattices and
-one-dimensional quasicrystals.
-The Fibonacci chain result \textbf{$\bar\Lambda = 0.20110$} (Table~1 of that paper)
-serves as the primary literature benchmark for this project's numerical validation.
+This paper extends the theory to two-phase heterogeneous media and, crucially, develops
+the \textbf{theta-function / Bragg-sum method} for computing $\bar\Lambda$ analytically
+from diffraction data.
+For this project, its most important role is practical: it provides the published
+Fibonacci benchmark $\bar\Lambda = 0.20110$ and establishes a standard route from Bragg
+peaks to variance-based order metrics.
+It also motivates the project's repeated distinction between point-pattern hyperuniformity
+and its two-phase embedding, a distinction that becomes essential when spreadability is used.
 
 %------------------------------------------------------------------------------
-\subsection{Substitution Tilings: Classification}
+\subsection{Substitution Tilings and Quasicrystals}
 %------------------------------------------------------------------------------
 
-\noindent\textbf{Öguz, Socolar, Steinhardt, Torquato (2019).}
-This paper provides a comprehensive classification of hyperuniformity and
-\textbf{anti-hyperuniformity} in all one-dimensional substitution tilings.
-Given a substitution matrix $\mathbf{M}$ with Perron--Frobenius eigenvalue $\lambda_1$
-and second-largest eigenvalue $\lambda_2$, the \textbf{eigenvalue formula}
-\[
-  \alpha = 1 - \frac{2\ln|\lambda_2|}{\ln\lambda_1}
-\]
-expresses the hyperuniformity exponent entirely in terms of the matrix spectrum.
-The exponent $\alpha$ fills $[-1,3]$ densely over the space of all valid substitution
-matrices, including anti-hyperuniform cases ($\alpha < 0$) where the structure factor
-\emph{diverges} at the origin.
-
-The Pisot--Vijayaraghavan (PV) property --- $|\lambda_i|<1$ for all $i\geq2$ ---
-is shown to be necessary and sufficient for the existence of \textbf{Bragg peaks}
-(non-zero weight in the diffraction measure at isolated $k$-values).
-Non-Pisot substitutions lack Bragg peaks entirely, and their diffraction measure is
-purely continuous; $Z(k)$ then decays faster than any power law, placing them
-outside the $\alpha$-classification scheme.
-Concrete results: Fibonacci $\alpha=3$ (Class~I), Period-Doubling $\alpha=1$ (Class~II).
-These two cases are used throughout this project.
-
-\vspace{0.4em}
-\noindent\textbf{Bombieri \& Taylor (1986).}
-Although no PDF is available, this paper is a key reference: the authors studied the
-\emph{cubic} 3-letter substitution $a\to aac$, $b\to ac$, $c\to b$ (equivalently
-encoded by a $3\times3$ integer matrix) and showed that it produces a well-defined
-diffraction pattern with Bragg peaks.
-With $\lambda_1 \approx 2.247$ and $|\lambda_2| \approx 0.802$ the eigenvalue formula
-gives $\alpha = 1.545$, the \textbf{first known example filling the gap $1<\alpha<2$}.
-This chain was reproduced in the present project with $\bar\Lambda = 0.377$.
-
-%------------------------------------------------------------------------------
-\subsection{Quasicrystals and Projection Methods}
-%------------------------------------------------------------------------------
-
-\noindent\textbf{Shechtman, Blech, Gratias, Cahn (1984).}
-The experimental discovery of an Al-Mn alloy with icosahedral diffraction symmetry ---
-forbidden by classical crystallography --- launched the field of quasicrystals.
-Bragg peaks appear at irrational wavevector ratios, implying long-range order without
-periodicity. This motivates the theoretical framework of \emph{cut-and-project}
-(projection) methods in which a higher-dimensional periodic lattice is projected
-onto a lower-dimensional physical space along an irrational direction.
+\noindent\textbf{Shechtman et al.\ (1984).}
+The discovery of quasicrystals is not directly a one-dimensional result, but it supplies
+the historical reason substitution tilings matter at all.
+The observation of sharp diffraction with forbidden rotational symmetry established that
+long-range order need not imply periodicity.
+For the present project, that fact justifies treating one-dimensional substitution tilings
+as genuine models of quasicrystalline order rather than as merely combinatorial sequences.
 
 \vspace{0.4em}
 \noindent\textbf{Öguz, Macé, Torquato (2017).}
-This paper analyzes hyperuniformity of projection-method quasicrystals analytically.
-For the ideal Fibonacci strip (projection window aligned with the golden ratio),
-the structure factor satisfies $Z(k) \sim k^4$, giving $\alpha=3$ (Class~I).
-A nonideal strip (irrational window boundary) degrades to $\alpha=1$ (logarithmic variance,
-Class~II): the rational approximants to the boundary introduce quasi-periodic modulations
-that slow the decay of $S(k)$.
-
-The paper derives an \textbf{analytical upper bound} $\sigma^2(R) \leq 1/4$ for the
-Fibonacci chain, consistent with the numerical Fibonacci $\bar\Lambda = 0.201 < 1/4$
-found in this project (and with $\bar\Lambda_{\rm Silver} = 1/4$ as a candidate upper-bound
-saturation for $n=2$).
-The two-point correlation $g_2(r)$ is shown to be piecewise quadratic with inflection
-points at the Fibonacci spacings $1$ and $\tau = (1+\sqrt5)/2$.
-
-%------------------------------------------------------------------------------
-\subsection{Stealthy Hyperuniform Ground States}
-%------------------------------------------------------------------------------
-
-\noindent\textbf{Batten, Stillinger, Torquato (2008).}
-This paper introduced the concept of \textbf{collective-coordinate optimization}:
-given a target function $\Phi = \sum_{|\mathbf{k}|\leq K} S(\mathbf{k})$, gradient
-descent on particle positions drives $S(\mathbf{k}) \to 0$ for $|k| \leq K$,
-engineering a \textbf{stealthy} configuration.
-The resulting patterns are highly degenerate ground states (many configurations
-satisfy the stealth condition) and are generally \emph{disordered}.
-Special cases include super-ideal gas variants and equi-luminous structures.
-A key insight: stealth can be achieved with particles that appear to have no macroscopic
-order, yet exhibit complete isotropy and hidden long-range correlations.
-This paper predates the thermodynamic ensemble framework of Torquato et al.\ (2015)
-and provides the algorithmic foundation for all stealthy ensemble generation.
+This paper studies hyperuniformity in projection-method quasicrystals and is particularly
+important for the project's interpretation of the Fibonacci chain.
+It shows analytically that the ideal Fibonacci strip has $Z(k) \sim k^4$ and hence
+$\alpha = 3$, while nonideal strips can fall to $\alpha = 1$.
+The paper also derives a useful upper bound $\sigma^2(R) \leq 1/4$ for Fibonacci.
+Conceptually, this paper matters because it ties the exponent $\alpha$ not just to a
+substitution rule, but to the underlying geometric construction of the quasicrystal.
+It therefore supports the project's use of Fibonacci as both a substitution chain and a
+cut-and-project benchmark.
 
 \vspace{0.4em}
-\noindent\textbf{Torquato, Zhang, Stillinger (2015) --- \emph{Physical Review X}.}
-This paper develops the \textbf{exact ensemble theory} for stealthy hyperuniform
-disordered ground states.
-The control parameter is
+\noindent\textbf{Öguz, Socolar, Steinhardt, Torquato (2019).}
+This is the central paper for the project's substitution-tiling program.
+Its key result is the \textbf{eigenvalue formula}
 \[
-  \chi = \frac{M(K)}{d(N-1)},
+  \alpha = 1 - \frac{2\ln|\lambda_2|}{\ln\lambda_1},
 \]
-where $M(K)$ is the number of independently constrained wavevectors within a ball
-of radius $K$, $N$ is the particle number, and $d$ the dimension.
-For $\chi < 1/2$ the ground-state manifold is \emph{disordered} (positive entropy);
-for $\chi > 1/2$ only periodic configurations satisfy the constraints.
-All thermodynamic quantities --- isothermal compressibility $\kappa_T$, pair
-correlations $g_2(r)$, structure factor $S(k)$ --- are derived analytically in the
-ensemble limit.
-The paper also derives the relation $K^* = 4\pi\rho\chi$ (for $d=1$) between the
-exclusion radius $K^*$ and the control parameter $\chi$.
+which expresses the hyperuniformity exponent entirely in terms of the substitution
+matrix spectrum.
+The paper also distinguishes Pisot and non-Pisot behavior, showing that the former is
+associated with Bragg diffraction and the latter with more diffuse spectral types.
+For this project, the paper provides the main algebraic bridge from symbolic dynamics to
+measurable fluctuation exponents.
+At the same time, it leaves open a large structural question that the current project
+has gradually moved toward: once $\alpha$ is fixed by the matrix spectrum, what controls
+the \emph{magnitude} of residual Class~I disorder as measured by $\bar\Lambda$?
 
-In $d=1$ the paper's Table~V provides reference values of $\bar\Lambda$ for stealthy
-configurations, which are well approximated by $\bar\Lambda \approx 1/(\pi^2\chi)$
---- a formula derived independently in this project and validated against the
-collaborator's ensemble data.
+\vspace{0.4em}
+\noindent\textbf{Bombieri \& Taylor (1986).}
+Bombieri and Taylor studied the cubic substitution
+$a\to aac$, $b\to ac$, $c\to b$, showing that it has a well-defined diffraction pattern
+with Bragg peaks.
+In the language of the later eigenvalue formula, this chain has
+$\lambda_1 \approx 2.247$ and $|\lambda_2| \approx 0.802$, giving $\alpha = 1.545$.
+Its importance for the project is therefore twofold: historically it is a classic
+quasicrystal diffraction example, and structurally it supplies the first natural
+one-dimensional occupant of the interval $1<\alpha<2$.
+That makes it the key counterpoint to the metallic-mean family, which sits rigidly at
+$\alpha = 3$.
 
 %------------------------------------------------------------------------------
-\subsection{Perturbed Lattices and Cloaking}
+\subsection{Comparison Families: Perturbed Lattices and Stealthy Systems}
 %------------------------------------------------------------------------------
 
 \noindent\textbf{Klatt, Kim, Torquato (2020).}
-This paper introduces and analyzes the \textbf{uncorrelated random lattice (URL)}:
-each site of the integer lattice $\mathbb{Z}^d$ is displaced independently and
-uniformly within a hypercube $[-a/2,a/2]^d$.
-In one dimension the \textbf{exact formula}
+This paper introduces the uncorrelated random lattice (URL), in which each lattice site
+is displaced independently and uniformly.
+In one dimension it provides an exact closed form
 \[
-  \bar\Lambda(a) = \frac{1+a^2}{6}
+  \bar\Lambda(a) = \frac{1+a^2}{6},
 \]
-is derived analytically (for $a \leq 1$) and extended via periodicity to all $a>0$.
-Crucially, the URL always has $\alpha=2$ regardless of $a$: the uniform displacement
-smears the lattice Bragg peaks into a continuous background, but the origin
-$k=0$ retains the same power-law suppression $S(k)\sim k^2$.
-
-The central discovery is \textbf{cloaking}: when the displacement amplitude $a$
-equals an integer (1, 2, 3, \ldots), the form factor $\tilde f(k) = \sin(\pi k a)/(\pi k a)$
-vanishes at every non-zero reciprocal lattice vector, completely eliminating the
-Bragg peaks from the diffraction pattern.
-At $a=1$: $\bar\Lambda = 1/3$, which this project identifies as the \emph{exact limit}
-of the metallic-mean sequence $\bar\Lambda(\mu_n) \to 1/3$ as $n\to\infty$.
-The $\tau$ order metric (based on pair correlations) diverges between cloaking events,
-providing a complementary characterization of the structural transition.
-
-%------------------------------------------------------------------------------
-\subsection{Diffusion Spreadability}
-%------------------------------------------------------------------------------
-
-\noindent\textbf{Torquato (2021) --- \emph{Physical Review E}.}
-This paper introduces \textbf{diffusion spreadability} $\mathcal{S}(t)$ as a dynamic
-probe of microstructure.
-Consider a two-phase medium (phases 1 and 2) with a solute initially confined to
-phase 1; $\mathcal{S}(t)$ measures the fraction of solute transferred to phase 2 by
-time $t$.
-For hyperuniform media with exponent $\alpha$ the long-time behavior is
-\[
-  E(t) \equiv \mathcal{S}(\infty) - \mathcal{S}(t) \;\sim\; t^{-(d+\alpha)/2},
-\]
-while stealthy media show \emph{exponential} decay $E(t)\sim e^{-ct}$.
-At short times $\mathcal{S}(t) \sim t^{1/2}$ in all cases, providing access to the
-\textbf{specific surface} $s$ (surface area per unit volume of the interface).
-Applications include NMR/MRI characterization of porous media, where the diffusion
-signal encodes structural information across length scales.
-The 1D formula $E(t) \sim t^{-(1+\alpha)/2}$ is used in this project to extract $\alpha$
-via a log-log regression of the excess spreadability.
+and shows that $\alpha = 2$ for all $a>0$.
+The most relevant idea for the present project is \textbf{cloaking}: at integer $a$,
+all nonzero Bragg peaks vanish even though the underlying lattice order remains encoded
+in higher structure.
+For the project, URL plays three roles at once:
+(i) an exact validation family, (ii) the canonical stochastic example at $\alpha = 2$,
+and (iii) a reference scale for comparing deterministic chains at moderate and large $n$.
 
 \vspace{0.4em}
-\noindent\textbf{Wang \& Torquato (2022) --- \emph{Physical Review Applied}.}
-This paper applies spreadability to a broad set of 2D and 3D model microstructures:
-URL packings, stealthy ground states, Debye random media (nonhyperuniform),
-Bravais lattices, and real porous media (Fontainebleau sandstone).
-A practical algorithm is presented to extract $\alpha$ from the slope of
-$\ln E(t)$ versus $\ln t$ in the asymptotic regime.
-For one-dimensional structures the paper gives $\phi_2 = 0.35$ for the Fibonacci
-chain (volume fraction of phase~2 in the two-phase embedding), which is used throughout
-this project for all 1D spreadability calculations.
+\noindent\textbf{Batten, Stillinger, Torquato (2008).}
+This paper introduced the collective-coordinate construction of stealthy hyperuniform
+ground states by directly suppressing $S(k)$ inside a prescribed reciprocal-space region.
+Its importance here is methodological: it shows that one can generate hyperuniformity
+``from Fourier space downward,'' in contrast to substitution tilings, which generate it
+``from inflation rules upward.''
+That contrast is useful for the project because it prevents the discussion of
+hyperuniformity from collapsing into substitution-specific language.
 
 \vspace{0.4em}
-\noindent\textbf{Hitin-Bialus, Maher, Steinhardt, Torquato (2024).}
-This paper achieves high-precision extraction of $\alpha$ for quasiperiodic tilings
-via spreadability.
-By exploiting the \textbf{self-similarity} of substitution tilings, the small-$k$
-Bragg-peak regime (where oscillations dominate) can be truncated, leaving a clean
-power-law tail in $E(t)$.
-Results: Fibonacci $\alpha = 3.0000 \pm 0.000008$; Period-Doubling
-$\alpha = 1.0000 \pm 0.00001$; Penrose tiling (2D) $\alpha = 5.97\pm0.06$
-(close to the Class~I value $d+1=3$ for a 2D tiling with the Pisot property).
-The paper confirms $\phi_2 = 0.35$ for all 1D chains studied and provides the
-most precise numerical validation of the eigenvalue formula~(Öguz et al.\ 2019)
-to date.
-
-%------------------------------------------------------------------------------
-\subsection{Order Metrics and Comparative Rankings}
-%------------------------------------------------------------------------------
-
-\noindent\textbf{Middlemas, Stillinger, Torquato (2019).}
-This paper computes $\bar\Lambda$ for all Barlow sphere-packing sequences in $d=3$,
-parametrized by fcc/hcp stacking codes.
-A linear model $\bar\Lambda(\alpha) = \alpha\bar\Lambda_{\rm fcc} + (1-\alpha)\bar\Lambda_{\rm hcp}$
-holds for periodic stacking sequences (where $\alpha$ is the fraction of fcc layers).
-The dominant factor in $\bar\Lambda$ is the local cluster geometry: fcc-like
-environments ($60^\circ$ tetrahedral) are more hyperuniform than hcp-like
-environments ($90^\circ$ tetrahedral).
-Theta-series methods are used for all Bragg-peak sums, establishing the
-Zachary--Torquato (2009) technique as standard.
-The paper demonstrates that $\bar\Lambda$ serves as a sensitive discriminator among
-structures that share the same pair-correlation function to short range.
+\noindent\textbf{Torquato, Zhang, Stillinger (2015).}
+The Physical Review X paper develops the ensemble theory for stealthy hyperuniform
+disordered ground states and introduces the control parameter
+\[
+  \chi = \frac{M(K)}{d(N-1)}.
+\]
+For $\chi < 1/2$ the ground states are disordered and highly degenerate; for
+$\chi > 1/2$ crystalline order dominates.
+In $d=1$ the paper tabulates reference values of $\bar\Lambda$ for stealthy systems,
+making it directly useful for this project's ranking comparisons.
+More broadly, it shows that perfect small-$k$ suppression does \emph{not} determine a
+unique local structure, reinforcing the project's emerging view that hyperuniformity
+classification and order ranking are distinct problems.
 
 \vspace{0.4em}
 \noindent\textbf{Morse, Steinhardt, Torquato (2024).}
-This paper studies ordered versus disordered stealthy hyperuniform systems across
-spatial dimensions $d = 1$--$4$.
-In $d=1$ the densest Fourier-space hard-sphere packing --- which saturates the
-stealthy constraint with the fewest degrees of freedom --- corresponds exactly to
-a Bravais lattice.
-In higher dimensions, disordered stealthy configurations can achieve \emph{lower}
-packing density than their crystalline counterparts, counter to the usual expectation.
-The \textbf{order metric} $\tau$ (based on pair-distance statistics) is used as a
-complement to $\bar\Lambda$: $\tau$ is large for ordered (lattice-like) stealthy
-configurations and small for disordered ones.
-The results motivate using both $\bar\Lambda$ and $\tau$ to fully characterize
-stealthy hyperuniform materials, and demonstrate that stealth alone does not
-determine the degree of order.
+This recent paper sharpens that point by comparing ordered and disordered stealthy states
+across dimensions and by emphasizing the order metric $\tau$ as a complement to
+$\bar\Lambda$.
+Its lesson for the present project is conceptual rather than computational:
+small-$k$ constraints alone do not determine the full degree of structural order.
+That perspective supports the project's shift from asking only ``what is $\alpha$?''
+to also asking ``where does a pattern sit in the residual-disorder ranking?''
 
 %------------------------------------------------------------------------------
-\subsection{Published Reference Values}
+\subsection{Measurement Papers: Spreadability and Its Limits}
 %------------------------------------------------------------------------------
 
-\noindent The table below collects all $\alpha$ and $\bar\Lambda$ values that appear
-explicitly in the published literature, restricted to the $d=1$ patterns directly
-relevant to this project plus the 2D Penrose tiling.
-Values marked \dag{} were confirmed independently by this project.
+\noindent\textbf{Torquato (2021) and Wang \& Torquato (2022).}
+These papers introduce and operationalize \textbf{diffusion spreadability} as a dynamic
+probe of microstructure.
+If $E(t) = \mathcal{S}(\infty) - \mathcal{S}(t)$ denotes the excess spreadability, then
+for ordinary hyperuniform media one expects
+\[
+  E(t) \sim t^{-(d+\alpha)/2},
+\]
+while stealthy systems instead display exponential decay.
+For the current project, these papers justify using spreadability as a second route to
+$\alpha$, especially when direct fitting of $S(k)$ is awkward.
+At the same time, they also foreshadow a limitation that the project has encountered in
+practice: for substitution tilings with dense Bragg spectra, finite-time oscillations can
+seriously contaminate slope extraction.
 
 \vspace{0.4em}
-\noindent\begin{tabular}{llccl}
-\toprule
-\textbf{Pattern} & \textbf{Class} & $\alpha$ \textbf{(published)} & $\bar\Lambda$ \textbf{(published)} & \textbf{Source} \\
-\midrule
-Integer lattice ($d=1$)
-  & I   & $\infty$        & $1/6$ \dag         & Torquato \& Stillinger (2003) \\
-Fibonacci chain
-  & I   & $3$ (exact) \dag & $0.20110$ \dag    & Zachary \& Torquato (2009); \\
-  &     &                 &                    & Öguz et al.\ (2019); Hitin-Bialus et al.\ (2024) \\
-Period-Doubling chain
-  & II  & $1$ (exact) \dag & diverges          & Öguz et al.\ (2019); Hitin-Bialus et al.\ (2024) \\
-Bombieri-Taylor chain
-  & I   & $1.545$ \dag    & ---                & Bombieri \& Taylor (1986); Öguz et al.\ (2019) \\
-URL ($a > 0$, $d=1$)
-  & I   & $2$ \dag        & $(1 + a^2)/6$ \dag & Klatt, Kim, Torquato (2020) \\
-URL cloaked ($a = 1$)
-  & I   & $2$ \dag        & $1/3$ \dag         & Klatt, Kim, Torquato (2020) \\
-Stealthy (d=1, various $\chi$)
-  & I   & n/a \dag        & see PRX Table~V    & Torquato, Zhang, Stillinger (2015) \\
-Penrose tiling ($d=2$)
-  & I   & $5.97 \pm 0.06$ & ---                & Hitin-Bialus et al.\ (2024) \\
-\bottomrule
-\end{tabular}
+\noindent\textbf{Hitin-Bialus et al.\ (2024).}
+This paper is the strongest published demonstration to date that spreadability can recover
+high-precision hyperuniformity exponents for quasiperiodic tilings by carefully exploiting
+self-similarity.
+It confirms Fibonacci and Period-Doubling with essentially exact precision and extends the
+approach to Penrose in two dimensions.
+For the present project, the paper is important in two opposite ways:
+it validates spreadability as a serious measurement tool, but it also raises the bar for
+when one should trust it.
+The message is that spreadability can work extremely well, but only when the asymptotic
+window is handled with substantial care.
 
-\vspace{0.3em}
-\noindent\dag{} Independently confirmed by numerical computation in this project.
-``---'' indicates the value was not reported in the cited work.
-$\bar\Lambda$ values for the Period-Doubling and Bombieri-Taylor chains were
-\emph{not} published prior to this project.
-The Penrose tiling $\alpha$ is consistent with $d + \alpha_{\rm 1D} = 2 + 3 = 5$ but the
-precise interpretation in 2D remains open.
+\vspace{0.4em}
+\noindent\textbf{Yuan \& Torquato (2026).}
+The 2026 preprint revisits spreadability asymptotics and derives improved fitting forms
+that incorporate correction terms beyond the naive log-slope method.
+Its relevance to the current project is immediate because it suggests a path for rescuing
+chains like Bombieri--Taylor, where ordinary power-law fitting converges very slowly.
+At the same time, the paper explicitly notes that dense-Bragg quasicrystals are not fully
+covered by the simplest regular-expansion theory.
+This is exactly the kind of nuance the project now needs: spreadability is useful, but it
+should be treated as an auxiliary diagnostic rather than the sole arbiter of $\alpha$.
+
+%------------------------------------------------------------------------------
+\subsection{What the Literature Leaves Open}
+%------------------------------------------------------------------------------
+
+\noindent Taken together, the literature supplies the project's core ingredients but not its
+full organizing structure.
+The foundational papers define hyperuniformity, the substitution papers explain how
+$\alpha$ emerges from matrix spectra, the URL and stealthy papers provide comparison
+families with exact or ensemble-based benchmarks, and the spreadability papers offer a
+dynamic measurement route.
+What remains relatively underdeveloped in the published record is the \emph{joint}
+organization of one-dimensional patterns by both:
+\begin{enumerate}[noitemsep]
+  \item a \textbf{classification axis} ($\alpha$, or its Class~I/II/III consequences), and
+  \item a \textbf{ranking axis} ($\bar\Lambda$ within Class~I).
+\end{enumerate}
+
+\noindent In particular, the literature gives exact or near-exact values for a few
+benchmark systems (integer lattice, Fibonacci, URL, stealthy ensembles), but does not yet
+provide a comprehensive numerical map of how deterministic substitution chains compare to
+stochastic and stealthy families on the same $\bar\Lambda$ scale.
+This is the gap the present project has gradually moved to occupy.
 
 %==============================================================================
 \section{Week 1}
@@ -450,7 +375,8 @@ Spreadability was validated as a second, independent measure of $\alpha$.
 The uncorrelated random lattice (URL) displaces each site by $U(-a,a)$.
 The exact formula $\bar\Lambda(a) = (1+a^2)/6$ was derived and validated to $<0.3\%$
 for all $a$. URL gives $\alpha=2$ for all $a>0$ (Class~I). At $a=1$ (cloaking limit),
-$\bar\Lambda = 1/3$ exactly --- this turns out to be the limit of the metallic-mean sequence.
+$\bar\Lambda = 1/3$ exactly --- a useful reference value when comparing large-$n$
+metallic-mean chains.
 
 Symmetric $\alpha$-stable perturbations fill the $1 < \alpha < 2$ space stochastically
 (Class~II/III for stability index $s < 1$).
@@ -639,13 +565,13 @@ Bronze: $0.2822 \pm 0.0006$ (no obvious closed form).
 $n$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 10 \\
 $\bar\Lambda$ & 0.201 & 0.250 & 0.282 & 0.293 & 0.310 & 0.318 & 0.321 & 0.325 & 0.327 \\
 \midrule
-$n$ & 15 & 20 & $\infty$ & & & & & & \\
+$n$ & 15 & 20 & URL $a{=}1$ & & & & & & \\
 $\bar\Lambda$ & 0.329 & 0.331 & $1/3$ & & & & & & \\
 \bottomrule
 \end{tabular}
 
-\vspace{0.2em}\noindent Monotone from below. Limit $= 1/3 = \bar\Lambda$ of URL cloaked
-lattice ($a = 1$, Klatt et al.\ 2020). As $n \to \infty$, $L/S = \mu_n \to \infty$ but
+\vspace{0.2em}\noindent For $n \le 20$, the measured values increase monotonically and
+approach the cloaked-URL benchmark $\bar\Lambda = 1/3$ from below. As $n \to \infty$, $L/S = \mu_n \to \infty$ but
 $\ell_L/\langle\ell\rangle \to 1$: the long tile becomes the mean spacing, short tiles
 become rare and tiny, and the chain approaches a lattice with disorder matching URL $a = 1$.
 
@@ -715,14 +641,16 @@ structural parameters:
         Short tiles become rarer (frequency $\sim 1/\mu_n \to 0$) and act as
         ``defects'' in an otherwise lattice-like array of long tiles.
         More extreme defects $\to$ larger variance $\to$ larger $\bar\Lambda$.
-        The sequence $\bar\Lambda(\mu_1) = 0.201 < \bar\Lambda(\mu_2) = 0.250 < \cdots$
-        is monotone increasing toward $1/3$.
+        For the low- and moderate-$n$ chains studied, the sequence
+        $\bar\Lambda(\mu_1) = 0.201 < \bar\Lambda(\mu_2) = 0.250 < \cdots$
+        increases overall, but its large-$n$ behavior remains unresolved.
 
   \item \textbf{URL: displacement amplitude $a$ controls disorder directly.}
         Each site is displaced by $U(-a/2, a/2)$, giving
         $\bar\Lambda = (1+a^2)/6$.
         At $a = 0$: lattice ($\bar\Lambda = 1/6$).
-        At $a = 1$: cloaked ($\bar\Lambda = 1/3$), matching the metallic-mean limit.
+        At $a = 1$: cloaked ($\bar\Lambda = 1/3$), comparable to the large-$n$
+        metallic-mean values.
         Intermediate $a$ interpolates smoothly.
 
   \item \textbf{Stealthy: weaker constraint $\to$ more disorder.}
@@ -768,7 +696,8 @@ Key observations: (i) $\bar\Lambda$ grows monotonically with $a$ (more displacem
 $=$ more disorder). (ii) At each integer $a = 1, 2, \ldots$, cloaking occurs: the
 Bragg peaks of the underlying lattice vanish because the displacement form factor
 $\tilde f(k) = \sin(\pi k a)/(\pi k a)$ has zeros at all non-zero reciprocal lattice
-vectors. (iii) $\bar\Lambda(a=1) = 1/3$ matches the metallic-mean limit exactly.
+vectors. (iii) $\bar\Lambda(a=1) = 1/3$ provides a useful benchmark for comparison with
+the large-$n$ metallic-mean data.
 
 \subsection{$g_2$-Invariant Patterns}
 
@@ -823,19 +752,20 @@ Extended $\bar\Lambda(\mu_n)$ from $n = 20$ to $n = 100$ (TARGET\_N $= 300$k).
 \medskip
 \noindent\begin{tabular}{cccccccccccc}
 \toprule
-$n$ & 1 & 2 & 3 & 5 & 10 & 20 & 30 & 50 & 70 & 100 & $\infty$ \\
+$n$ & 1 & 2 & 3 & 5 & 10 & 20 & 30 & 50 & 70 & 100 & URL $a{=}1$ \\
 $\bar\Lambda$ & 0.199 & 0.250 & 0.283 & 0.310 & 0.327 & 0.332 & 0.332 & 0.334 & 0.330 & 0.335 & $1/3$ \\
 \bottomrule
 \end{tabular}
 
 \medskip\noindent
-All values are consistent with $1/3$ within statistical error at large $n$.
+The values for moderate $n$ rise toward the URL benchmark $1/3$, but the largest-$n$
+runs do not support treating this as a settled asymptotic limit.
 Some nominal overshoots at $n \geq 50$ are within the $\sim\!0.005$ error bars
 (reduced accuracy at large $n$ because chains grow very slowly:
 $\lambda_1 \approx n + 1/n$, so even at $n = 100$ only two substitution iterations
 are needed to reach $N = 300$k, limiting the quasi-periodic structure).
-The overall picture is unchanged: \textbf{$\bar\Lambda(\mu_n) \to 1/3$
-monotonically from below}, confirming the URL cloaked-lattice limit.
+The overall picture is that $1/3$ remains a plausible comparison value, but the present
+data do not establish monotone convergence to the cloaked-URL limit.
 
 \subsection{All Non-Unimodular Chains}
 
@@ -986,7 +916,7 @@ Green rows: literature-confirmed benchmarks. Yellow: novel additions.
 \texttt{fig\_generalized\_metrics.png}  & Normalized variance plateaus (Class II/III) \\
 \texttt{fig\_finite\_size\_lambda.png}  & Lattice $\bar\Lambda$ analytic vs.\ simulated \\
 \texttt{fig\_catalog\_updated.png}      & Updated $\bar\Lambda$ ranking with stealthy fixes \\
-\texttt{fig\_metallic\_convergence.png} & $\bar\Lambda(\mu_n)$ for $n=1\ldots20$ converging to $1/3$ \\
+\texttt{fig\_metallic\_convergence.png} & $\bar\Lambda(\mu_n)$ for $n=1\ldots20$, compared with the URL $a{=}1$ value $1/3$ \\
 \texttt{fig\_4x4\_alpha\_dist.png}      & $4\times4$ matrix search: $\alpha$ distribution \\
 \texttt{fig\_nonunimodular.png}         & $\sigma^2(R)$ and running $\bar\Lambda$ for $\alpha=2.071$ chain \\
 \bottomrule
@@ -1083,9 +1013,9 @@ JP results draft    & \texttt{jp/jp\_results\_draft.tex}            & §4--§8 +
         $N = 3.88\times10^6$, $3\times10^4$ windows: $\bar\Lambda = 0.2501 \pm 0.0004$
         ($0.3\sigma$ from $1/4$). Analytical proof unknown.
 
-  \item \textbf{$\bar\Lambda(\mu_n) \to 1/3$ confirmed.} Metallic-mean sequence
-        $n=1\ldots20$ converges to $1/3$ at rate $0.22/n^{1.43}$. URL cloaked
-        lattice ($a=1$, $\bar\Lambda=1/3$) is the exact limit.
+  \item \textbf{Large-$n$ metallic-mean comparison with URL.} For $n=1\ldots20$,
+        the metallic-mean sequence rises toward the cloaked-URL value
+        $\bar\Lambda=1/3$, but the asymptotic limit is not established.
 \end{enumerate}
 
 %==============================================================================
@@ -1102,9 +1032,9 @@ JP results draft    & \texttt{jp/jp\_results\_draft.tex}            & §4--§8 +
   \item \textbf{Silver exact value: \emph{RESOLVED numerically}.}
         $\bar\Lambda = 1/4$ at $0.3\sigma$. Analytical proof not yet known.
 
-  \item \textbf{$\bar\Lambda$ metallic-mean limit: \emph{RESOLVED}.}
-        $\bar\Lambda(\mu_n) \to 1/3$; rate $0.22/n^{1.43}$; URL cloaked lattice
-        is the exact limit.
+  \item \textbf{$\bar\Lambda$ metallic-mean large-$n$ behavior:}
+        The data suggest a relationship to the cloaked URL value $1/3$, but the
+        asymptotic limit remains unresolved.
 
   \item \textbf{Non-unimodular $\bar\Lambda$:} Is $\bar\Lambda = 0.650$ exactly $13/20$?
         Analytical proof unknown; large oscillation amplitude makes high-precision

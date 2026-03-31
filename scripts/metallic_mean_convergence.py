@@ -7,8 +7,8 @@ For the metallic-mean substitution chain of index n:
   Eigenvalues: lambda_1 = (n + sqrt(n^2+4))/2 (metallic mean mu_n), lambda_2 = -1/lambda_1
   Alpha = 3 for all n (Class I hyperuniform, same exponent)
 
-We compute Lambda_bar for each n and extrapolate the limit as n -> infinity.
-Conjecture: Lambda_bar -> 1/3 as n -> infinity (matching the cloaked URL at a=1).
+We compute Lambda_bar for each n and compare the large-n trend with the cloaked URL
+value at a=1, where Lambda_bar = 1/3 exactly.
 
 Existing values from MEMORY.md:
   n=1 (Fibonacci) -> 0.201
@@ -209,7 +209,7 @@ for n in n_list:
     mu = metallic_mean(n)
     print(f"  {n:4d}  {mu:8.4f}  {r['rho']:8.5f}  {r['lambda_bar']:12.5f}  "
           f"{r['err']:8.5f}  {r['N']:12,d}")
-print(f"  {'URL (n->inf)':>14s}  {'---':>8s}  {1/3:12.5f}  "
+print(f"  {'URL (a=1)':>14s}  {'---':>8s}  {1/3:12.5f}  "
       f"{'(exact)':>8s}")
 
 # ----------------------------------------------------------------
@@ -331,7 +331,7 @@ ax2.plot(inv_n_dense, model_2(n_from_inv, L_inf_2, A_2, B_2), 'g:', lw=1.5,
 ax2.axvline(0, color='gray', lw=0.5, ls=':')
 ax2.axhline(1/3, color='orange', ls='-', lw=2, label='$1/3$')
 ax2.scatter([0], [1/3], color='orange', s=80, zorder=5,
-            label=f'$n\\to\\infty$ (URL): $1/3$')
+            label=f'URL $a=1$: $1/3$')
 
 ax2.set_xlabel('$1/n$', fontsize=12)
 ax2.set_ylabel(r'$\bar{\Lambda}$', fontsize=13)
@@ -366,14 +366,14 @@ if len(n_list) >= 4:
         n_dense2 = np.linspace(1, max(n_list) + 2, 200)
         ax3.plot(n_dense2, power_law(n_dense2, C_pw, p_pw), 'r--', lw=1.5,
                  label=f'Power law: $C/n^p$\n$p={p_pw:.3f}$')
-        print(f"\n  Convergence rate (power law fit): 1/3 - Lambda_bar ~ {C_pw:.4f}/n^{p_pw:.3f}")
+        print(f"\n  Power-law fit to 1/3 - Lambda_bar: ~ {C_pw:.4f}/n^{p_pw:.3f}")
     except Exception as e:
         print(f"\n  Power law fit failed: {e}")
 
 ax3.axhline(0, color='gray', lw=0.5, ls=':')
 ax3.set_xlabel('Metallic-mean index $n$', fontsize=12)
 ax3.set_ylabel(r'$1/3 - \bar{\Lambda}(n)$', fontsize=12)
-ax3.set_title('Convergence to $1/3$', fontsize=12)
+ax3.set_title('Comparison with $1/3$', fontsize=12)
 ax3.legend(fontsize=9)
 ax3.grid(True, ls=':', alpha=0.5, which='both')
 ax3.set_ylim(bottom=1e-4)
@@ -397,15 +397,15 @@ plt.close()
 print("\n" + "=" * 70)
 print("  CONCLUSION")
 print("=" * 70)
-print(f"  Lambda_bar increases monotonically with n.")
+print(f"  Lambda_bar increases with n over the computed range.")
 print(f"  Fit 1 (linear in 1/n):     limit = {L_inf_1:.5f}  "
       f"(1/3 = {1/3:.5f}, diff = {abs(L_inf_1-1/3):.5f})")
 print(f"  Fit 2 (quadratic in 1/n):  limit = {L_inf_2:.5f}  "
       f"(1/3 = {1/3:.5f}, diff = {abs(L_inf_2-1/3):.5f})")
 
 if delta1 < 0.005 or delta2 < 0.005:
-    verdict = "CONFIRMED"
+    verdict = "CONSISTENT WITH 1/3"
 else:
     verdict = "INCONCLUSIVE"
-print(f"\n  Conjecture Lambda_bar(mu_n) -> 1/3 as n->inf: {verdict}")
+print(f"\n  Comparison of extrapolated large-n behavior with 1/3: {verdict}")
 print("=" * 70)

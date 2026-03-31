@@ -31,7 +31,7 @@ fig, ax = plt.subplots(figsize=(8, 5.5))
 ax.errorbar(n_vals, lb_vals, yerr=lb_err, fmt='o-', color='#1f77b4',
             ms=8, lw=2, capsize=4, label=r'Measured $\bar\Lambda(\mu_n)$')
 ax.axhline(LIMIT, color='darkorange', ls='--', lw=2,
-           label=r'Limit $= 1/3$ (URL cloaked, exact)')
+           label=r'URL $a=1$: $\bar\Lambda = 1/3$ (exact)')
 ax.axhline(1/4, color='#43A047', ls=':', lw=1.5, alpha=0.7,
            label=r'Silver: $\bar\Lambda = 1/4$ (conjectured)')
 
@@ -45,7 +45,7 @@ for n, name in names.items():
 
 ax.set_xlabel('Metallic-mean index $n$', fontsize=14)
 ax.set_ylabel(r'$\bar\Lambda(\mu_n)$', fontsize=14)
-ax.set_title(r'$\bar\Lambda(\mu_n) \to 1/3$ as $n\to\infty$', fontsize=13)
+ax.set_title(r'$\bar\Lambda(\mu_n)$ compared with the URL value $1/3$', fontsize=13)
 ax.legend(fontsize=11, loc='lower right')
 ax.set_xlim(0, 21)
 ax.set_ylim(0.18, 0.36)

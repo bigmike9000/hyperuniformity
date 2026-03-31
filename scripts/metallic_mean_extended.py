@@ -1,5 +1,5 @@
 """
-Extended Metallic-Mean Convergence: Lambda_bar for n up to 50.
+Extended Metallic-Mean Study: Lambda_bar for n up to 50.
 
 Computes Lambda_bar(mu_n) for n = 1, 2, 3, 5, 10, 15, 20, 25, 30, 40, 50
 with reduced parameters (TARGET_N=300k, NUM_WINDOWS=15k, NUM_R=400) for speed.
@@ -122,7 +122,7 @@ def compute_lb(n, verbose=True):
 # ----------------------------------------------------------------
 if __name__ == '__main__':
     print("=" * 70)
-    print("  Extended Metallic-Mean Convergence: Lambda_bar up to n=50")
+    print("  Extended Metallic-Mean Study: Lambda_bar up to n=50")
     print("=" * 70)
 
     results = {}
@@ -150,7 +150,7 @@ if __name__ == '__main__':
         diff = 1/3 - r['lambda_bar']
         print(f"  {n:4d}  {mu:10.4f}  {r['rho']:8.5f}  {r['lambda_bar']:12.5f}  "
               f"{r['err']:8.5f}  {diff:10.5f}  {r['N']:10,d}")
-    print(f"  {'inf':>4s}  {'inf':>10s}  {'0+':>8s}  {1/3:12.5f}  "
+    print(f"  {'URL':>4s}  {'a=1':>10s}  {'---':>8s}  {1/3:12.5f}  "
           f"{'(exact)':>8s}  {0.0:10.5f}  {'---':>10s}")
 
     # ----------------------------------------------------------------
