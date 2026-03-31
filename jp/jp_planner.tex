@@ -1,0 +1,337 @@
+% !TEX program = pdflatex
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{parskip}
+
+\definecolor{seccolor}{HTML}{1565C0}
+\definecolor{figcolor}{HTML}{2E7D32}
+\definecolor{notecolor}{HTML}{B71C1C}
+
+\titleformat{\section}{\large\bfseries\color{seccolor}}{\thesection}{0.6em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+
+\newcommand{\fig}[1]{{\color{figcolor}\textsf{[Figure: #1]}}}
+\newcommand{\opn}[1]{{\color{notecolor}\textsf{[#1]}}}
+\newcommand{\Lb}{\bar\Lambda}
+
+\title{\textbf{Junior Paper Planner}\\[0.3em]
+  \large Classification and Measurement of\\
+  One-Dimensional Hyperuniform Point Patterns}
+\author{Michael Fang}
+\date{March 2026}
+
+\begin{document}
+\maketitle
+
+%==============================================================================
+\section{Thesis}
+%==============================================================================
+
+The coarse three-class scheme for hyperuniformity ($\alpha > 1$, $= 1$,
+$< 1$) does not distinguish between patterns that differ substantially in
+their spatial structure. This paper develops a two-axis framework for
+classifying and comparing one-dimensional hyperuniform point patterns:
+\begin{itemize}[noitemsep]
+  \item $\alpha$ (the hyperuniformity exponent) determines which
+        universality class a pattern belongs to;
+  \item $\Lb$ (the surface-area coefficient) ranks residual disorder
+        \emph{within} each class.
+\end{itemize}
+We build the first systematic numerical catalog of both metrics across
+substitution tilings, perturbed lattices, and stealthy configurations,
+computing $\Lb$ for patterns where it was previously unknown and extending
+the framework to Classes~II and~III via generalized scaling coefficients.
+The catalog reveals what controls each metric: the eigenvalue structure
+of the substitution matrix constrains which $\alpha$ values are accessible,
+while $\Lb$ is sensitive to the full spatial arrangement of tiles---patterns
+sharing the same $\alpha$ can differ in $\Lb$ by more than an order of
+magnitude.
+
+%==============================================================================
+\section{Paper Structure}
+%==============================================================================
+
+%------------------------------------------------------------------------------
+\subsection{\S1. Introduction}
+
+Frame the paper around the central question: how to classify and compare
+1D hyperuniform point patterns, especially substitution tilings, beyond the
+coarse three-class scheme.
+
+\begin{itemize}[leftmargin=1.5em]
+  \item What is hyperuniformity: $S(\mathbf{k}) \to 0$ as $\mathbf{k} \to 0$.
+        Density fluctuations suppressed at long wavelengths.
+        Contrast with Poisson ($\sigma^2 \sim R^d$).
+
+  \item Where it appears: quasicrystals, jammed packings, photonic materials,
+        avian photoreceptors, prime numbers, cosmological structure.
+
+  \item The three-class scheme is coarse: many structurally different patterns
+        share the same class. Motivate the need for both a
+        \emph{classification} metric ($\alpha$) and a \emph{ranking} metric
+        ($\Lb$).
+
+  \item Position relative to existing literature: Torquato \& Stillinger (2003)
+        defined $\Lb$; Zachary \& Torquato (2009) computed it for Fibonacci;
+        Oğuz et al.\ (2019) gave the eigenvalue formula for $\alpha$.
+        No prior systematic catalog exists.
+
+  \item What this paper does: compute $\alpha$ and $\Lb$ for a broad
+        collection of 1D patterns, identify the algebraic constraints on
+        $\alpha$, and characterize what controls $\Lb$.
+\end{itemize}
+
+\fig{Schematic of the three classes, or a visual comparing a lattice
+     vs.\ quasicrystal vs.\ disordered hyperuniform pattern}
+
+%------------------------------------------------------------------------------
+\subsection{\S2. Theory}
+
+Introduce the two-axis framework.
+
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{First axis: $\alpha$ classifies.}
+        Number variance $\sigma^2(R)$, pair correlations $h(r)$, structure
+        factor $S(k)$. Hyperuniformity condition $S(0) = 0$.
+        Power-law $S(k) \sim |k|^\alpha$ determines the class:
+        Class~I ($\alpha > 1$, bounded $\sigma^2$),
+        Class~II ($\alpha = 1$, $\sigma^2 \sim \ln R$),
+        Class~III ($0 < \alpha < 1$, $\sigma^2 \sim R^{1-\alpha}$).
+
+  \item \textbf{Second axis: $\Lb$ ranks.}
+        Definition as running average of $\sigma^2(R)$.
+        Properties: density-invariant, bounded for Class~I,
+        global minimum $\Lb = 1/6$ (integer lattice in 1D).
+        Literature value: $\Lb = 0.20110$ for Fibonacci
+        (Zachary \& Torquato 2009, theta-function method).
+
+  \item \textbf{Substitution tilings and the eigenvalue formula.}
+        Substitution rules, matrix $M$, inflation factor $\lambda_1$.
+        Oğuz et al.\ (2019): $\alpha = 1 - 2\ln|\lambda_2|/\ln\lambda_1$.
+        Pisot property ($|\lambda_i| < 1$ for $i \geq 2$) guarantees
+        Bragg diffraction.
+
+  \item \textbf{Determinant constraint on $\alpha$.}
+        For $|\det M| = 1$: product of eigenvalues is fixed, constraining
+        $|\lambda_2|$ from below. Result: $\alpha \leq 1 + 2/(r{-}1)$
+        for rank $r$. Rank 2 $\to$ $\alpha = 3$; rank 3 $\to$ $\alpha \leq 2$.
+        For $|\det M| > 1$: $\alpha = 3 - 2\ln|\det M|/\ln\lambda_1$.
+
+  \item \textbf{Perturbed lattices (URL).}
+        Uniform displacement $U(-a/2, a/2)$; $\alpha = 2$ for all $a > 0$.
+        Exact formula $\Lb = (1 + a^2)/6$ (Klatt et al.\ 2020).
+        Cloaking at integer $a$.
+
+  \item \textbf{Stealthy hyperuniform patterns.}
+        $S(k) \equiv 0$ for $|k| < K^*$.
+        $\chi = M(K)/(N{-}1)$; disordered for $\chi < 1/2$,
+        ordered for $\chi > 1/2$.
+\end{itemize}
+
+%------------------------------------------------------------------------------
+\subsection{\S3. Methods}
+
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Pattern generation.}
+        Substitution: iterative rule application, $N \sim 10^4$--$10^7$.
+        URL: lattice + uniform displacement.
+        Stealthy: collective coordinate optimization (collaborator data,
+        ${\sim}4300$ configs per $\chi$, $N = 2000$, $\rho = 1$).
+
+  \item \textbf{Number variance and $\Lb$ extraction.}
+        Monte Carlo window sampling (${\sim}30{,}000$ windows).
+        $\Lb$ as running average in the large-$R$ regime.
+        Convergence criterion.
+
+  \item \textbf{Structure factor and $\alpha$ extraction.}
+        FFT-based $S(k)$. For Bragg-peak systems: integrated intensity
+        $Z(k)$ near $k = 0$.
+
+  \item \textbf{Spreadability as a diagnostic.}
+        $E(t) \sim t^{-(1+\alpha)/2}$. Two-phase embedding with
+        $\phi_2 = 0.35$. Used as auxiliary consistency check,
+        not a coequal primary metric. Note its limitations
+        (slow convergence for BT).
+
+  \item \textbf{Generalized metrics for Classes~II and~III.}
+        $\Lambda_{II}$ from $\sigma^2 = \Lambda_{II} \ln R + b$.
+        $\Lambda_{III}$ from $\sigma^2 = \Lambda_{III} R^{1-\alpha} + b$
+        ($\alpha$ fixed to eigenvalue formula).
+        Plateau method is biased; curve fit is primary.
+
+  \item \textbf{Validation benchmarks.}
+        Poisson ($1.1\%$), URL exact formula ($< 0.3\%$),
+        Fibonacci $\Lb = 0.201$ vs.\ $0.20110$ literature.
+\end{itemize}
+
+%------------------------------------------------------------------------------
+\subsection{\S4. Structural Constraints on $\alpha$}
+
+What controls $\alpha$? The algebra of the substitution matrix.
+
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Rank-2, $|\det M| = 1$: metallic means.}
+        Five chains (Fibonacci through Nickel), all $\alpha = 3$.
+        Algebraic reason: $|\lambda_2| = 1/\lambda_1$.
+        General bound: $\alpha \leq 1 + 2/(r{-}1)$.
+        Table of chains with $n$, $\mu_n$, $\rho$, $\alpha$.
+
+  \item \textbf{Rank-3, $|\det M| = 1$: Bombieri-Taylor and cubic $\alpha = 2$.}
+        BT: $\alpha = 1.545$, $\Lb = 0.377$. First Class~I substitution
+        tiling with $1 < \alpha < 2$.
+        504 cubic matrices with complex pairs: all $\alpha = 2$ exactly.
+        Deterministic analogue of URL at the same exponent.
+        Example: $a \to bc$, $b \to c$, $c \to abc$; $\Lb = 0.275$.
+
+  \item \textbf{Exhaustive search.}
+        39,304 $3\times3$ matrices (row sums $\leq 4$), 24M $4\times4$
+        (row sums $\leq 3$): no $|\det M| = 1$ matrix gives
+        $\alpha \in (2,3)$.
+
+  \item \textbf{$|\det M| > 1$: non-unit determinant.}
+        Formula: $\alpha = 3 - 2\ln|\det M|/\ln\lambda_1$.
+        $|\det M| = 2$ with $\lambda_1 > 4$ gives $\alpha \in (2,3)$.
+        138 matrices found (row sums $\leq 10$), 12 distinct $\alpha$
+        values in $[2.07, 2.39]$.
+        Smallest: $M = \bigl[\begin{smallmatrix}0&1\\2&4\end{smallmatrix}\bigr]$,
+        $\alpha = 2.071$.
+
+  \item \textbf{Classes II and III.}
+        Period-Doubling: $\alpha = 1$ (Class~II); $\Lambda_{II} = 0.080$.
+        0222 chain: $\alpha = 0.639$ (Class~III); $\Lambda_{III} = 0.209$.
+\end{itemize}
+
+\fig{$\sigma^2(R)$ for Fibonacci/Silver/Bronze (bounded Class~I oscillation)}
+
+\fig{BT analysis: variance, $S(k)$, spreadability convergence}
+
+\fig{$\sigma^2(R)$ for Period-Doubling and 0222 (Class~II/III growth)}
+
+\fig{$\sigma^2(R)$ and running $\Lb$ for the $\alpha = 2.071$ chain}
+
+%------------------------------------------------------------------------------
+\subsection{\S5. Ranking Class~I Patterns by $\Lb$}
+
+$\alpha$ classifies; $\Lb$ \emph{ranks}.
+
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Integer lattice as the minimum benchmark.}
+        $\Lb = 1/6$: the global minimum for all 1D hyperuniform patterns.
+
+  \item \textbf{Metallic-mean chains.}
+        $\Lb$ values: Fibonacci $= 0.201$, Silver $= 0.250$,
+        Bronze $= 0.282$, Copper $= 0.293$, Nickel $= 0.310$.
+        Four of five are new (only Fibonacci previously known).
+        The sequence increases with $n$, approaching ${\sim}1/3$
+        (behavior near the limit not fully resolved).
+
+  \item \textbf{URL.}
+        $\Lb = (1 + a^2)/6$; validated at 17 values of $a$.
+        At $a = 1$: $\Lb = 1/3$ (cloaking).
+        Connection to metallic-mean limit.
+
+  \item \textbf{Bombieri-Taylor.}
+        $\Lb = 0.377$; higher than any metallic mean.
+        Large $|\lambda_2|$ produces more variance at intermediate scales.
+
+  \item \textbf{Stealthy patterns.}
+        $\Lb \approx 1/(\pi^2\chi)$ for disordered phase.
+        Two structural phases at same $\chi$:
+        ordered ($\Lb \approx 1/6$) vs.\ disordered ($\Lb \gg 1/6$).
+
+  \item \textbf{Key observation: $\alpha$ does not determine $\Lb$.}
+        The 138 chains with $|\det M| = 2$ share $\alpha$ values but
+        $\Lb$ varies by factors of 5--15 within each group.
+        The full substitution rule, not just the eigenvalues, matters.
+
+  \item \textbf{What controls $\Lb$:}
+        tile-length disparity (metallic means),
+        displacement amplitude (URL),
+        spectral constraint strength (stealthy),
+        rate of $S(k)$ suppression near $k = 0$ (BT).
+\end{itemize}
+
+\fig{Full $\Lb$ catalog table (all patterns, sorted by $\Lb$)}
+
+\fig{$\Lb$ ranking visualization (bar chart or dot plot)}
+
+\fig{Metallic-mean tile visualizations for $n = 1$ through $10$}
+
+\fig{$\Lb(\mu_n)$ convergence plot, $n = 1$ through $100$}
+
+\fig{URL $\Lb(a)$ sweep with exact formula overlay}
+
+%------------------------------------------------------------------------------
+\subsection{\S6. Comparative Case Studies}
+
+Deeper comparison of specific pattern families and measurement tools.
+
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{URL as validation and comparison family.}
+        Exact $\Lb$ formula provides a benchmark.
+        Cloaking physics. Connection to metallic-mean large-$n$ limit.
+
+  \item \textbf{Stealthy patterns as a contrasting mechanism.}
+        Hyperuniform by construction rather than by quasiperiodic structure.
+        Ordered vs.\ disordered phases: same $S(k)$ constraint,
+        very different $\Lb$.
+
+  \item \textbf{Spreadability: a supporting tool and its limitations.}
+        Works well for Fibonacci ($\alpha = 3$, fast convergence).
+        Fails for BT at moderate times ($|\lambda_2|$ too large).
+        Yuan-Torquato (2026) improved fitting helps
+        (BT error $47\% \to 1.7\%$),
+        but the method is designed for disordered media,
+        not quasicrystals with dense Bragg peaks.
+
+  \item \textbf{Additional comparisons.}
+        Cubic $\alpha = 2$ chains vs.\ URL (same $\alpha$, different structure).
+        $g_2$-invariant processes (lattice-gas $=$ URL $a{=}1$;
+        Gaussian shuffled lattice interpolates between lattice and disorder).
+\end{itemize}
+
+%------------------------------------------------------------------------------
+\subsection{\S7. Conclusion}
+
+\begin{itemize}[leftmargin=1.5em]
+  \item Return to the main thesis: 1D hyperuniformity needs both a
+        classification axis ($\alpha$) and a ranking axis ($\Lb$).
+
+  \item Summarize how substitution-matrix algebra constrains $\alpha$:
+        determinant condition, rank dependence, $|\det M| > 1$ opens
+        new ranges.
+
+  \item Summarize how structural disorder is reflected in $\Lb$:
+        tile disparity, displacement amplitude, spectral constraints.
+
+  \item Open questions:
+        \begin{itemize}[noitemsep]
+          \item Analytical formula for metallic-mean $\Lb$?
+          \item Exact limit of the metallic-mean $\Lb$ sequence?
+          \item Extension to 2D (Penrose, Ammann-Beenker)?
+          \item What structural features minimize $\Lb$ beyond the lattice?
+        \end{itemize}
+\end{itemize}
+
+%==============================================================================
+\section{Reference Material}
+%==============================================================================
+
+\begin{itemize}[leftmargin=1.5em]
+  \item \texttt{jp/jp\_hyperuniformity.tex} --- rough draft of theory/methods;
+        has usable equations and definitions to pull from.
+  \item \texttt{jp/jp\_outline.md} --- high-level structural outline
+        (merged into this planner).
+  \item \texttt{results/progress\_report.tex} --- progress report
+        with all numerical results and tables.
+  \item \texttt{results/figures/} --- all computed figures.
+  \item \texttt{results/*.json} --- raw numerical data.
+  \item \texttt{literature/} --- all cited PDFs.
+\end{itemize}
+
+\end{document}

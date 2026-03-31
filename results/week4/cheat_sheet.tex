@@ -1,0 +1,133 @@
+% !TEX program = pdflatex
+\documentclass[11pt]{article}
+\usepackage[margin=0.8in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\vspace{-0.3em}\rule{\textwidth}{0.4pt}]
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+
+\definecolor{qcolor}{HTML}{1565C0}
+\newcommand{\Q}[1]{\textcolor{qcolor}{\textbf{Q: #1}}}
+
+\begin{document}
+
+{\Large\textbf{Week 4 Meeting Cheat Sheet}}\\[0.3em]
+Anticipated questions and answers, organized by slide.
+
+\section{Why $\alpha$ can't exceed 3}
+
+\Q{Is this a proof?}
+Yes, for $|\det M|=1$ matrices. The bound $\alpha \leq 1 + 2/(r-1)$
+follows from $|\det M| = \lambda_1 \prod |\lambda_i| = 1$ and the
+constraint $|\lambda_i| < 1$ for $i \geq 2$ (Pisot property).
+The all-real case ($\alpha = 3$ for rank 2) is confirmed numerically
+but not proven analytically.
+
+\Q{Does this work for $|\det M| > 1$?}
+The bound generalizes:
+$\alpha \leq 1 + \frac{2}{r-1}(1 - \ln|\det M|/\ln\lambda_1)$.
+For $|\det M| = 2$, rank 2: $\alpha \leq 3 - 2\ln 2/\ln\lambda_1 < 3$.
+
+\Q{Could any 1D substitution tiling have $\alpha > 3$?}
+Not with $|\det M| = 1$ (proven).
+With $|\det M| > 1$, the bound is lower, not higher.
+To get $\alpha > 3$ you would need $|\det M| < 1$ (fractional),
+which is not possible for integer matrices.
+
+\section{$\bar\Lambda$ ranking}
+
+\Q{Is there a formula for $\bar\Lambda$ of substitution tilings?}
+No general formula. For URL: $\bar\Lambda = (1+a^2)/6$ (exact).
+For stealthy: $\bar\Lambda \approx 1/(\pi^2\chi)$.
+For substitutions: $\bar\Lambda$ is determined by the full spatial
+structure, not just the eigenvalues. We compute it numerically.
+
+\Q{Why is Fibonacci ($\bar\Lambda = 0.201$) so close to the lattice ($1/6 = 0.167$)?}
+Fibonacci has balanced tile lengths ($L/S = \varphi \approx 1.618$),
+so the spacing variation is modest. The Fibonacci chain is one of
+the most ``ordered'' quasicrystals.
+
+\section{URL parameter sweep}
+
+\Q{What happens at cloaking ($a = 1$)?}
+The form factor $\tilde f(k) = \sin(\pi k)/(\pi k)$ vanishes at all
+$k = 2\pi n$ ($n \neq 0$), eliminating all Bragg peaks.
+The diffraction pattern becomes purely continuous.
+$\bar\Lambda = 1/3$ exactly.
+
+\Q{Is there a connection to the metallic means?}
+Yes: $\bar\Lambda(\mu_n) \to 1/3$ as $n \to \infty$,
+matching URL $a = 1$ exactly.
+As $n$ grows, the metallic chain approaches a lattice with
+rare quasi-random defects, which has the same disorder
+as a uniformly displaced lattice.
+
+\section{$g_2$-invariant patterns}
+
+\Q{How is the lattice-gas different from URL $a=1$?}
+It isn't, statistically. Lattice-gas: $j + U(0,1)$.
+URL $a=1$: $j + U(-1/2, 1/2)$. Same distribution, shifted by $1/2$.
+
+\Q{Why does Gaussian $\sigma = 0.2$ match Silver?}
+Likely coincidence. The structures are completely different
+(disordered Gaussian vs.\ deterministic quasicrystal),
+but they produce the same large-scale fluctuation level.
+
+\section{Metallic-mean convergence to $n = 100$}
+
+\Q{Do any values overshoot $1/3$?}
+Yes. $n = 50$: $\bar\Lambda = 0.334$; $n = 100$: $0.335$, both above $1/3 = 0.333$.
+The trend is still upward. Error bars are $\sim 0.005$ but may be underestimated
+at large $n$ (only 2 substitution iterations, $N = 300$k).
+We cannot confirm convergence to exactly $1/3$ from this data.
+
+\Q{So does it converge to $1/3$ or not?}
+The $n = 1\ldots20$ data is clean and monotone from below.
+The large-$n$ overshoots could be noise (poor statistics)
+or could indicate a limit slightly above $1/3$.
+Higher-precision runs at large $n$ (larger $N$) are needed to resolve this.
+
+\Q{Is the convergence rate proven?}
+No. The empirical fit $1/3 - \bar\Lambda \sim 0.22/n^{1.43}$
+is from $n = 1\ldots20$ only and assumed convergence to $1/3$.
+
+\section{Yuan-Torquato improved spreadability}
+
+\Q{Why does this help for BT but not Fibonacci at high order?}
+BT: $\alpha = 1.545$ (non-integer), spectral density has slower
+oscillations $\to$ the asymptotic expansion converges at order 5--6.
+Fibonacci: $\alpha = 3$ (integer), dense Bragg peaks cause the
+expansion to diverge past order 1.
+
+\Q{Is this better than variance-based $\bar\Lambda$?}
+No. Variance converges at $N \sim 10^3$ with no fitting.
+Yuan method is useful when you only have spreadability data
+(e.g.\ NMR experiments) and need $\alpha$.
+
+\Q{Did Yuan \& Torquato test on quasicrystals?}
+No. Their Section VI explicitly notes that quasicrystalline media
+with dense Bragg peaks are not covered by the regular expansion.
+
+\section{$|\det M|{=}2$ chains}
+
+\Q{Why 138 instead of 28?}
+28 was from row sums $\leq 6$. Expanding to row sums $\leq 10$
+found many more matrices satisfying the constraints.
+
+\Q{Why does $\bar\Lambda$ vary so much within each $\alpha$ group?}
+Matrices with the same eigenvalues (same $\alpha$) can have
+very different substitution rules, producing different tile
+arrangements. $\alpha$ captures only the leading spectral behavior;
+$\bar\Lambda$ is sensitive to the full spatial structure.
+
+\Q{Could we get $\alpha$ closer to 3?}
+With $|\det M| = 2$: $\alpha = 3 - 2\ln 2/\ln\lambda_1$.
+Need $\lambda_1 \to \infty$, meaning enormous row sums.
+With $|\det M| = 3$: need $\lambda_1 > 9$.
+At $\lambda_1 = 100$: $\alpha = 2.52$. Slow approach to 3.
+
+\end{document}
