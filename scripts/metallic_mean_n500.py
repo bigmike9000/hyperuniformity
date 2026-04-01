@@ -5,6 +5,9 @@ Computes Lambda_bar for n = 1, 2, 3, 5, 10, 20, 50, 100, 200, 500
 with appropriate TARGET_N for each (larger N for smaller n where chains
 grow fast, smaller N for large n where growth is slow).
 
+Uncertainty is estimated from repeated Monte Carlo window sampling runs on the
+same deterministic chain, rather than from tail-block scatter of sigma^2(R).
+
 Output: results/metallic_n500.json, results/figures/fig_metallic_n500.png
 """
 
@@ -32,6 +35,7 @@ N_LIST = [1, 2, 3, 5, 10, 20, 50, 100, 200, 500]
 TARGET_N = 500_000
 NUM_WINDOWS = 20_000
 NUM_R = 500
+N_REPS = 4
 SEED = 2030
 
 rng = np.random.default_rng(SEED)
@@ -80,17 +84,16 @@ def compute_lb(n):
     R_max = min(300 * mean_spacing, L_domain / 4)
     R_array = np.linspace(mean_spacing, R_max, NUM_R)
 
-    variances, _ = compute_number_variance_1d(
-        points, L_domain, R_array, num_windows=NUM_WINDOWS, rng=rng, periodic=True)
+    rep_vals = []
+    for rep in range(N_REPS):
+        variances, _ = compute_number_variance_1d(
+            points, L_domain, R_array, num_windows=NUM_WINDOWS, rng=rng, periodic=True)
+        rep_vals.append(compute_lambda_bar(R_array, variances))
 
-    lb = compute_lambda_bar(R_array, variances)
-
-    # Bootstrap error: split tail into 8 blocks
-    tail = variances[len(variances) // 3:]
-    n_blocks = 8
-    splits = np.array_split(tail, n_blocks)
-    boots = [np.mean(s) for s in splits if len(s) > 0]
-    lb_err = np.std(boots) / np.sqrt(len(boots)) if len(boots) > 1 else 0.0
+    rep_vals = np.array(rep_vals, dtype=float)
+    lb = float(np.mean(rep_vals))
+    lb_err = (float(np.std(rep_vals, ddof=1) / np.sqrt(N_REPS))
+              if N_REPS > 1 else 0.0)
 
     elapsed = time.perf_counter() - t0
     print(f"  Lb={lb:.5f}+/-{lb_err:.5f}  ({elapsed:.1f}s)")
@@ -100,6 +103,7 @@ def compute_lb(n):
         'err': float(lb_err),
         'rho': float(rho),
         'N': int(N_actual),
+        'replicates': [float(x) for x in rep_vals],
     }
 
 
@@ -152,7 +156,7 @@ if __name__ == '__main__':
         'n_values': N_LIST,
         'results': {str(n): results[n] for n in N_LIST},
         'params': {'TARGET_N': TARGET_N, 'NUM_WINDOWS': NUM_WINDOWS,
-                   'NUM_R': NUM_R, 'SEED': SEED},
+                   'NUM_R': NUM_R, 'N_REPS': N_REPS, 'SEED': SEED},
     }
     with open(OUT_JSON, 'w') as f:
         json.dump(out_data, f, indent=2)
