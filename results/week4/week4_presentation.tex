@@ -26,7 +26,7 @@
 
 \title{Week 4 Update}
 \author{Michael Fang}
-\date{March 2026}
+\date{April 2026}
 
 \begin{document}
 
@@ -40,26 +40,26 @@
 Michael Fang
 
 \vspace{0.5em}
-March 2026
+April 2026
 \end{frame}
 \note{
-Topics this week:
+Short update this week. Main topics:
 \begin{itemize}
-  \item Why $\alpha$ can't exceed 3 (rank-dependent bound)
+  \item Why $\alpha$ can't exceed 3
   \item What controls the $\bar\Lambda$ ranking
-  \item URL sweep, $g_2$-invariant patterns, metallic chain figures
-  \item Yuan-Torquato improved spreadability for BT
+  \item Metallic-mean tiles and $\bar\Lambda$ limit (extended to $n = 500$)
+  \item Yuan-Torquato improved spreadability
   \item 138 $|\det M|{=}2$ chains
 \end{itemize}
 }
 
 %----------------------------------------------------------------------
-\begin{frame}[shrink=3]{Recap}
+\begin{frame}{Recap}
 
 \small
-\textbf{Last week:} proved $2{<}\alpha{<}3$ gap for $|\det M|{=}1$ matrices,
+\textbf{Last week:} proved $2{<}\alpha{<}3$ gap for $|\det M|{=}1$,
 found first $|\det M|{=}2$ example at $\alpha=2.071$,
-Silver $\bar\Lambda=1/4$, metallic-mean sequence approaching ${\sim}1/3$.
+Silver $\bar\Lambda \approx 1/4$, metallic-mean $\bar\Lambda$ approaching ${\sim}1/3$.
 
 \medskip
 \normalsize
@@ -67,27 +67,14 @@ Since last meeting:
 \begin{itemize}
   \item Worked out why $\alpha$ can't exceed 3 for $|\det M|{=}1$ substitutions
   \item Understood what determines the $\bar\Lambda$ ranking
-  \item Swept URL $\bar\Lambda(a)$ across $a \in [0, 2]$
-  \item Looked into $g_2$-invariant patterns from Torquato \& Stillinger (2003)
-  \item Generated metallic-mean tile visualizations for $n = 1$ through $10$
-  \item Extended metallic-mean $\bar\Lambda$ to $n = 100$
-  \item Implemented Yuan-Torquato (2026) improved spreadability fitting
-  \item Computed $\bar\Lambda$ for all 138 $|\det M|{=}2$ chains with $\alpha\in(2,3)$
+  \item Generated metallic-mean tile visualizations ($n = 1$ through $10$)
+  \item Extended metallic-mean $\bar\Lambda$ to $n = 500$
+  \item Implemented Yuan-Torquato (2026) improved spreadability
+  \item Computed $\bar\Lambda$ for all 138 $|\det M|{=}2$ chains
 \end{itemize}
 
 \end{frame}
 \note{
-Week 3 catalog for reference:
-\begin{tabular}{lccc}
-Pattern & $\alpha$ & $\bar\Lambda$ \\
-\hline
-Integer Lattice & --- & $1/6$ \\
-Fibonacci & 3 & 0.201 \\
-Silver & 3 & $1/4$ \\
-Bronze & 3 & 0.282 \\
-URL ($a{=}1$) & 2 & $1/3$ \\
-BT & 1.545 & 0.377 \\
-\end{tabular}
 }
 
 %----------------------------------------------------------------------
@@ -168,71 +155,6 @@ from $0.201$ (Fibonacci) toward ${\sim}1/3$.
 }
 
 %----------------------------------------------------------------------
-\begin{frame}{URL: $\bar\Lambda(a)$ for intermediate displacements}
-
-\centering
-\includegraphics[height=0.68\textheight]{figures/fig_url_sweep.png}
-
-\vspace{0.2em}
-\small
-17 values of $a \in [0.05,\, 2.0]$, $N = 50{,}000$.
-All match the exact formula $\bar\Lambda = (1+a^2)/6$ to $< 1\%$.
-At $a = 1$: Bragg peaks vanish (cloaking), $\bar\Lambda = 1/3$.
-
-\end{frame}
-\note{
-Cloaking: the displacement form factor
-$\tilde f(k) = \sin(\pi k a)/(\pi k a)$ vanishes at all non-zero
-reciprocal lattice vectors when $a$ is an integer.
-
-At $a=1$: $\bar\Lambda = 1/3$, close to where the metallic-mean sequence appears to be heading.
-
-For $a > 1$, displacement intervals overlap. $\bar\Lambda$ continues
-to increase: $\bar\Lambda(2) \approx 0.667$ at the second cloaking event.
-
-Klatt et al.\ (2020) derived the formula analytically.
-}
-
-%----------------------------------------------------------------------
-\begin{frame}{$g_2$-invariant patterns}
-
-From Torquato \& Stillinger (2003): a $g_2$-invariant process has a fixed
-pair correlation $g_2(r)$ across a range of densities.
-At terminal density: $S(0) = 0$ (hyperuniform).
-
-\medskip
-\centering
-\begin{tabular}{llc}
-\toprule
-\textbf{Pattern} & \textbf{Construction} & $\bar\Lambda$ \\
-\midrule
-Step-function $g_2$ & hard rods at close packing & $1/6$ (lattice) \\
-Lattice-gas & one point uniform per cell & $1/3$ (= URL $a{=}1$) \\
-Gauss.\ shuffled, $\sigma{=}0.1$ & $\mathcal{N}(0, 0.01)$ per site & $0.20 \pm 0.02$ \\
-Gauss.\ shuffled, $\sigma{=}0.2$ & $\mathcal{N}(0, 0.04)$ per site & $0.250 \pm 0.007$ \\
-Gauss.\ shuffled, $\sigma{=}0.3$ & $\mathcal{N}(0, 0.09)$ per site & $0.342 \pm 0.001$ \\
-\bottomrule
-\end{tabular}
-
-\medskip
-\small
-The lattice-gas is just URL $a{=}1$ with a phase offset.
-Gaussian shuffled lattice at $\sigma{=}0.1$ matches Fibonacci;
-$\sigma{=}0.2$ matches Silver ($1/4$).
-
-\end{frame}
-\note{
-The 1D $g_2$-invariant processes all reduce to perturbed lattices.
-``Lattice-gas'': tessellate line into unit cells, place one point
-uniformly in each. This is $j + U(0,1)$ vs.\ URL's $j + U(-1/2, 1/2)$.
-
-The Gaussian results are interesting: deterministic quasicrystals
-(Fibonacci, Silver) happen to match specific Gaussian displacements.
-The structures are completely different, but the large-scale fluctuations
-are the same.
-}
-
-%----------------------------------------------------------------------
 \begin{frame}{Metallic-mean tile sequences}
 
 \centering
@@ -254,16 +176,15 @@ $n=10$: $L \to LLLLLLLLLLS$. Almost all L tiles, rare S defects.
 
 S fraction $= 1/\mu_n \to 0$ as $n\to\infty$.
 The chain approaches a lattice with rare quasi-random defects.
-If the limit is $1/3$, this would match URL $a = 1$.
 }
 
 %----------------------------------------------------------------------
-\begin{frame}{Metallic-mean $\bar\Lambda$ extended to $n = 100$}
+\begin{frame}{Metallic-mean $\bar\Lambda$ extended to $n = 500$}
 
 \begin{columns}[c]
 \begin{column}{0.55\textwidth}
 \centering
-\includegraphics[width=\linewidth]{figures/fig_metallic_convergence.png}
+\includegraphics[width=\linewidth]{figures/fig_metallic_n500.png}
 \end{column}
 \begin{column}{0.43\textwidth}
 \centering
@@ -274,48 +195,41 @@ $n$ & $\bar\Lambda$ & $1/3 - \bar\Lambda$ \\
 \midrule
 1 (Fib) & 0.199 & 0.134 \\
 2 (Silv) & 0.250 & 0.083 \\
-5 & 0.310 & 0.024 \\
-10 & 0.327 & 0.007 \\
-20 & 0.332 & 0.002 \\
-50 & 0.334 & $-$0.001 \\
-100 & 0.335 & $-$0.002 \\
+10 & 0.326 & 0.007 \\
+50 & 0.333 & 0.000 \\
+100 & $0.334 \pm 0.005$ & $-$0.001 \\
+200 & $0.334 \pm 0.022$ & $-$0.000 \\
+500 & $0.324 \pm 0.027$ & $+$0.009 \\
 \bottomrule
 \end{tabular}
 
-\vspace{0.5em}
+\vspace{0.3em}
 \normalsize
-$n \geq 50$: slightly above $1/3$\\
-and still drifting up.
+Large-$n$ error bars grow fast.
 \end{column}
 \end{columns}
 
 \vspace{0.3em}
 \centering
 \colorbox{newbg}{\parbox{0.85\linewidth}{\centering
-  Approaches $1/3$ from below through $n = 20$,
-  but large-$n$ values ($n \geq 50$) overshoot.\\
-  Cannot confirm convergence to exactly $1/3$ from this data.
+  Consistent with $\bar\Lambda \to 1/3$, but error bars at large $n$
+  are too large to determine whether the limit is exactly $1/3$.
 }}
 
 \end{frame}
 \note{
-Extended from $n=20$ (last week) to $n=100$.
-
 $n = 1\ldots20$: monotone increasing toward $1/3$ from below.
-$n = 50$: $0.334$, $n = 100$: $0.335$ --- both slightly above $1/3 = 0.333$.
+$n = 50$: $0.333$, $n = 100$: $0.334$ --- right at $1/3$.
+$n = 200$: $0.334 \pm 0.022$ --- consistent but huge error bar.
+$n = 500$: $0.324 \pm 0.027$ --- actually below $1/3$, but noise dominates.
 
-Three possibilities:
-1. True limit is $1/3$, overshoots are noise (error bars $\sim 0.005$,
-   but may be underestimated at large $n$ where only 2 substitution
-   iterations fit in $N = 300$k).
-2. True limit is slightly above $1/3$.
-3. Doesn't converge (unlikely given the smooth trend for $n \leq 20$).
+At large $n$, chains grow by factor $\sim n$ per iteration.
+$n = 500$ with 3 iterations gives 125M tiles, but the quasi-periodic
+structure is so coarse (only 3 ``generations'') that variance
+estimation is very imprecise.
 
-The $n = 1\ldots20$ data strongly suggests a limit near $1/3$,
-but higher-precision measurements at large $n$ are needed to
-determine whether it's exactly $1/3$.
-
-Figure shows the original $n = 1\ldots20$ data only.
+Bottom line: data is consistent with $1/3$ as the limit,
+but we can't rule out a slightly different value.
 }
 
 %----------------------------------------------------------------------
@@ -361,7 +275,6 @@ the expansion to diverge at order $> 1$.
 
 Their Section VI notes that quasicrystals with dense Bragg peaks
 are not covered by the regular expansion theory.
-The method is designed for disordered media.
 }
 
 %----------------------------------------------------------------------
@@ -428,11 +341,8 @@ close to $1/3$ (URL cloaked value).
         $\alpha{=}3$ is the global maximum (rank 2 only)
   \item $\bar\Lambda$ ranking: controlled by tile disparity, displacement amplitude,
         spectral constraint strength
-  \item URL sweep confirms $(1+a^2)/6$ for $a \in [0,2]$; cloaking at $a{=}1$
-  \item $g_2$-invariant patterns: lattice-gas $=$ URL $a{=}1$;
-        Gaussian shuffled lattice matches Fibonacci/Silver at specific $\sigma$
   \item Metallic-mean tiles visualized ($n{=}1\ldots10$);
-        extended to $n{=}100$ (approaches ${\sim}1/3$ but overshoots)
+        $\bar\Lambda$ extended to $n{=}500$ (consistent with ${\sim}1/3$, noisy at large $n$)
   \item Yuan-Torquato: BT $\alpha$ error reduced from 47\% to 1.7\%
   \item 138 $|\det M|{=}2$ chains computed; $\alpha$ does not determine $\bar\Lambda$
 \end{itemize}
@@ -440,8 +350,8 @@ close to $1/3$ (URL cloaked value).
 \vspace{0.5em}
 \textbf{Possible next steps:}
 \begin{itemize}
-  \item Write JP results sections (\S4--\S8)
-  \item Prove Silver $\bar\Lambda = 1/4$ via theta-function method
+  \item Write JP results sections
+  \item Higher-precision metallic-mean runs at large $n$
   \item $|\det M| = 3$ chains to reach $\alpha$ closer to 3?
 \end{itemize}
 \end{frame}
@@ -456,11 +366,69 @@ close to $1/3$ (URL cloaked value).
   \item O\u{g}uz et al.\ (2019), Acta Cryst.\ A \textbf{75}, 3--13
   \item Klatt, Kim \& Torquato (2020), Phys.\ Rev.\ E \textbf{101}, 032118
   \item Torquato (2021), Phys.\ Rev.\ E \textbf{104}, 054102
-  \item Wang \& Torquato (2022), Phys.\ Rev.\ Appl.\ \textbf{17}, 034022
   \item Yuan \& Torquato (2026), arXiv:2602.17873
   \item Hitin-Bialus et al.\ (2024), Phys.\ Rev.\ E \textbf{109}, 064108
 \end{itemize}
 \end{frame}
 \note{}
+
+%======================================================================
+% EXTRAS — may or may not present these
+%======================================================================
+
+%----------------------------------------------------------------------
+\begin{frame}{URL: $\bar\Lambda(a)$ for intermediate displacements}
+
+\centering
+\includegraphics[height=0.68\textheight]{figures/fig_url_sweep.png}
+
+\vspace{0.2em}
+\small
+17 values of $a \in [0.05,\, 2.0]$, $N = 50{,}000$.
+All match the exact formula $\bar\Lambda = (1+a^2)/6$ to $< 1\%$.
+At $a = 1$: Bragg peaks vanish (cloaking), $\bar\Lambda = 1/3$.
+
+\end{frame}
+\note{
+Cloaking: the displacement form factor
+$\tilde f(k) = \sin(\pi k a)/(\pi k a)$ vanishes at all non-zero
+reciprocal lattice vectors when $a$ is an integer.
+
+Klatt et al.\ (2020) derived the formula analytically.
+}
+
+%----------------------------------------------------------------------
+\begin{frame}{$g_2$-invariant patterns}
+
+From Torquato \& Stillinger (2003): a $g_2$-invariant process has a fixed
+pair correlation $g_2(r)$ across a range of densities.
+At terminal density: $S(0) = 0$ (hyperuniform).
+
+\medskip
+\centering
+\begin{tabular}{llc}
+\toprule
+\textbf{Pattern} & \textbf{Construction} & $\bar\Lambda$ \\
+\midrule
+Step-function $g_2$ & hard rods at close packing & $1/6$ (lattice) \\
+Lattice-gas & one point uniform per cell & $1/3$ (= URL $a{=}1$) \\
+Gauss.\ shuffled, $\sigma{=}0.1$ & $\mathcal{N}(0, 0.01)$ per site & $0.20 \pm 0.02$ \\
+Gauss.\ shuffled, $\sigma{=}0.2$ & $\mathcal{N}(0, 0.04)$ per site & $0.250 \pm 0.007$ \\
+Gauss.\ shuffled, $\sigma{=}0.3$ & $\mathcal{N}(0, 0.09)$ per site & $0.342 \pm 0.001$ \\
+\bottomrule
+\end{tabular}
+
+\medskip
+\small
+The lattice-gas is just URL $a{=}1$ with a phase offset.
+Gaussian shuffled lattice at $\sigma{=}0.1$ matches Fibonacci;
+$\sigma{=}0.2$ matches Silver ($1/4$).
+
+\end{frame}
+\note{
+The 1D $g_2$-invariant processes all reduce to perturbed lattices.
+``Lattice-gas'': tessellate line into unit cells, place one point
+uniformly in each. This is $j + U(0,1)$ vs.\ URL's $j + U(-1/2, 1/2)$.
+}
 
 \end{document}
