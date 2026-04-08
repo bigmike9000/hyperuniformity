@@ -125,7 +125,6 @@ Introduce the two-axis framework.
   \item \textbf{Perturbed lattices (URL).}
         Uniform displacement $U(-a/2, a/2)$; $\alpha = 2$ for all $a > 0$.
         Exact formula $\Lb = (1 + a^2)/6$ (Klatt et al.\ 2020).
-        Cloaking at integer $a$.
 
   \item \textbf{Stealthy hyperuniform patterns.}
         $S(k) \equiv 0$ for $|k| < K^*$.
@@ -136,37 +135,35 @@ Introduce the two-axis framework.
 %------------------------------------------------------------------------------
 \subsection{\S3. Methods}
 
+Three subsections: pattern generation, extraction, and validation.
+
 \begin{itemize}[leftmargin=1.5em]
   \item \textbf{Pattern generation.}
-        Substitution: iterative rule application, $N \sim 10^4$--$10^7$.
-        URL: lattice + uniform displacement.
-        Stealthy: collective coordinate optimization (collaborator data,
-        ${\sim}4300$ configs per $\chi$, $N = 2000$, $\rho = 1$).
+        One paragraph covering all three families.
+        Substitution tilings: iterative rule application to a seed word,
+        $\geq 10^6$ tiles.
+        URL: integer lattice with independent uniform displacements on
+        $[-a/2, a/2]$; $N = 100{,}000$; 7 values of $a$.
+        Stealthy: collaborator-generated ensemble,
+        ${\sim}4300$ configurations per $\chi$, $N = 2000$, $\rho = 1$,
+        $\chi \in \{0.1, 0.2, 0.3\}$.
 
-  \item \textbf{Number variance and $\Lb$ extraction.}
-        Monte Carlo window sampling (${\sim}30{,}000$ windows).
-        $\Lb$ as running average in the large-$R$ regime.
-        Convergence criterion.
+  \item \textbf{Extraction of $\alpha$ and $\Lb$.}
+        $\sigma^2(R)$: sliding window, $30{,}000$ randomly placed windows,
+        periodic BCs, $R < L/4$, several hundred $R$ values.
+        $\Lb$: running average over upper two-thirds of sampled $R$ range.
+        Class~II: curve fit $\sigma^2 = \Lambda_{II}\ln R + b$.
+        Class~III: curve fit $\sigma^2 = A\,R^{\beta}$ with both $A$ and
+        $\beta$ free; $\Lambda_{III} = A$, $\alpha = 1 - \beta$.
+        $S(k)$ via DFT. For substitution tilings, $\alpha$ from eigenvalue
+        formula; for URL, $\alpha = 2$ analytically.
 
-  \item \textbf{Structure factor and $\alpha$ extraction.}
-        FFT-based $S(k)$. For Bragg-peak systems: integrated intensity
-        $Z(k)$ near $k = 0$.
-
-  \item \textbf{Spreadability as a diagnostic.}
-        $E(t) \sim t^{-(1+\alpha)/2}$. Two-phase embedding with
-        $\phi_2 = 0.35$. Used as auxiliary consistency check,
-        not a coequal primary metric. Note its limitations
-        (slow convergence for BT).
-
-  \item \textbf{Generalized metrics for Classes~II and~III.}
-        $\Lambda_{II}$ from $\sigma^2 = \Lambda_{II} \ln R + b$.
-        $\Lambda_{III}$ from $\sigma^2 = \Lambda_{III} R^{1-\alpha} + b$
-        ($\alpha$ fixed to eigenvalue formula).
-        Plateau method is biased; curve fit is primary.
-
-  \item \textbf{Validation benchmarks.}
-        Poisson ($1.1\%$), URL exact formula ($< 0.3\%$),
-        Fibonacci $\Lb = 0.201$ vs.\ $0.20110$ literature.
+  \item \textbf{Validation.}
+        Three benchmarks:
+        (i) Poisson: $\sigma^2(R) = 2\rho R$ recovered to $1.1\%$;
+        (ii) URL exact formula matched to $<0.3\%$ across 7 values of $a$;
+        (iii) Fibonacci $\Lb = 0.200$ vs.\ literature $0.20110$
+             (Zachary \& Torquato 2009), $0.55\%$.
 \end{itemize}
 
 %------------------------------------------------------------------------------
@@ -190,7 +187,7 @@ What controls $\alpha$? The algebra of the substitution matrix.
 
   \item \textbf{Exhaustive search.}
         39,304 $3\times3$ matrices (row sums $\leq 4$), 24M $4\times4$
-        (row sums $\leq 3$): no $|\det M| = 1$ matrix gives
+        (row sums $\leq 4$): no $|\det M| = 1$ matrix gives
         $\alpha \in (2,3)$.
 
   \item \textbf{$|\det M| > 1$: non-unit determinant.}
@@ -227,13 +224,13 @@ $\alpha$ classifies; $\Lb$ \emph{ranks}.
         $\Lb$ values: Fibonacci $= 0.201$, Silver $= 0.250$,
         Bronze $= 0.282$, Copper $= 0.293$, Nickel $= 0.310$.
         Four of five are new (only Fibonacci previously known).
-        The sequence increases with $n$, approaching ${\sim}1/3$
-        (behavior near the limit not fully resolved).
+        The sequence increases with $n$ and appears to approach
+        ${\sim}1/3$, but whether the limit is exactly $1/3$
+        remains an open question.
 
   \item \textbf{URL.}
-        $\Lb = (1 + a^2)/6$; validated at 17 values of $a$.
-        At $a = 1$: $\Lb = 1/3$ (cloaking).
-        Connection to metallic-mean limit.
+        $\Lb = (1 + a^2)/6$; validated at 7 values of $a$.
+        At $a = 1$: $\Lb = 1/3$.
 
   \item \textbf{Bombieri-Taylor.}
         $\Lb = 0.377$; higher than any metallic mean.
@@ -267,36 +264,7 @@ $\alpha$ classifies; $\Lb$ \emph{ranks}.
 \fig{URL $\Lb(a)$ sweep with exact formula overlay}
 
 %------------------------------------------------------------------------------
-\subsection{\S6. Comparative Case Studies}
-
-Deeper comparison of specific pattern families and measurement tools.
-
-\begin{itemize}[leftmargin=1.5em]
-  \item \textbf{URL as validation and comparison family.}
-        Exact $\Lb$ formula provides a benchmark.
-        Cloaking physics. Connection to metallic-mean large-$n$ limit.
-
-  \item \textbf{Stealthy patterns as a contrasting mechanism.}
-        Hyperuniform by construction rather than by quasiperiodic structure.
-        Ordered vs.\ disordered phases: same $S(k)$ constraint,
-        very different $\Lb$.
-
-  \item \textbf{Spreadability: a supporting tool and its limitations.}
-        Works well for Fibonacci ($\alpha = 3$, fast convergence).
-        Fails for BT at moderate times ($|\lambda_2|$ too large).
-        Yuan-Torquato (2026) improved fitting helps
-        (BT error $47\% \to 1.7\%$),
-        but the method is designed for disordered media,
-        not quasicrystals with dense Bragg peaks.
-
-  \item \textbf{Additional comparisons.}
-        Cubic $\alpha = 2$ chains vs.\ URL (same $\alpha$, different structure).
-        $g_2$-invariant processes (lattice-gas $=$ URL $a{=}1$;
-        Gaussian shuffled lattice interpolates between lattice and disorder).
-\end{itemize}
-
-%------------------------------------------------------------------------------
-\subsection{\S7. Conclusion}
+\subsection{\S6. Conclusion}
 
 \begin{itemize}[leftmargin=1.5em]
   \item Return to the main thesis: 1D hyperuniformity needs both a

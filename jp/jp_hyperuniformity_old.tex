@@ -1,0 +1,500 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{titlesec}
+\usepackage[
+  backend=biber,
+  style=numeric,
+  sorting=none
+]{biblatex}
+\addbibresource{references.bib}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+
+\begin{document}
+
+%==============================================================================
+% Title block
+%==============================================================================
+\begin{center}
+  {\Large \textbf{Classification and Measurement of One-Dimensional Hyperuniform Point Patterns}}\\[2ex]
+  Michael Fang \\
+  \today
+\end{center}
+
+\noindent
+{\small
+\begin{minipage}{\textwidth}
+\centering
+
+\begin{minipage}[t]{0.44\textwidth}\vspace{0pt}
+Primary advisor: Professor Salvatore Torquato\\
+Second reader: Professor Paul Steinhardt
+\end{minipage}
+\hspace{0.04\textwidth}%
+\begin{minipage}[t]{0.40\textwidth}\vspace{0pt}
+\raggedleft
+This paper represents my own work in accordance with University regulations.\\
+/s/\ Michael Fang
+\end{minipage}
+
+\end{minipage}
+}
+\vspace{-0.2cm}
+
+%==============================================================================
+% Abstract
+%==============================================================================
+\begin{abstract}
+We present a systematic numerical study of hyperuniformity in one-dimensional point
+patterns, characterizing 27 systems that span all three universality classes.
+Number variance, structure factor, and diffusion spreadability serve as complementary
+probes of long-wavelength density fluctuations, validated against exact analytical
+benchmarks before application to the full pattern catalog. We show that all five
+metallic-mean quasicrystal chains (Fibonacci through Nickel) are constrained to the
+hyperuniformity exponent $\alpha = 3$ by the unimodular determinant condition on their
+$2\!\times\!2$ substitution matrices, and report surface-area coefficients $\bar\Lambda$
+for all five chains, four of which are novel. Moving to $3\!\times\!3$ matrices, we
+identify the Bombieri-Taylor cubic substitution as the first known one-dimensional
+quasicrystal with $1 < \alpha < 2$, obtaining $\alpha = 1.545$ in quantitative agreement
+with the eigenvalue formula of Oğuz et al. An exhaustive enumeration of 39,304 candidate
+$3\!\times\!3$ non-negative integer matrices proves algebraically that the interval
+$2 < \alpha < 3$ is inaccessible at this matrix rank, while yielding a new deterministic
+substitution tiling with $\alpha = 2$ exactly --- to our knowledge the first quasiperiodic
+structural analogue of the stochastic uncorrelated random lattice. Generalized scaling
+coefficients are introduced to rank Class~II and~III patterns, and stealthy hyperuniform
+configurations are found to exist in two distinct structural phases that both satisfy the
+stealthy constraint while differing substantially in short-range order.
+\end{abstract}
+
+\tableofcontents
+\clearpage
+
+%==============================================================================
+\section{Introduction}
+\label{sec:introduction}
+%==============================================================================
+
+Long-range density fluctuations are a central diagnostic of order in many-body systems.
+When points are distributed at random with no correlations, the variance of the count
+inside a window of half-width $R$ grows in proportion to the window length:
+$\sigma^2_\text{Poisson}(R) = 2\rho R$, where $\rho$ is the mean density. This linear
+growth is the Poisson baseline --- the generic behavior of uncorrelated disordered matter.
+\textit{Hyperuniform} systems are those for which large-scale density fluctuations are
+anomalously suppressed relative to this baseline~\cite{torquato2003local,torquato2018hyperuniform}.
+Hyperuniformity is not a statement about short-range structure: a hyperuniform pattern can
+appear locally disordered while being globally organized in a precise statistical sense.
+This combination of apparent local randomness with long-range suppression of density
+fluctuations places hyperuniform systems in a structurally distinct class, intermediate
+between perfect crystals and uncorrelated fluids.
+
+Hyperuniform arrangements appear across a remarkable range of physical and biological
+contexts. The photoreceptor mosaic of bird retinas forms a hyperuniform pattern, a design
+that enables near-uniform visual sampling without the periodic artifacts of a
+crystal~\cite{torquato2018hyperuniform}. Systems of hard spheres near their jamming point
+exhibit hyperuniformity, suggesting that the suppression of density fluctuations is a
+signature of mechanical criticality. At the largest accessible scales, the distribution of
+galaxies in cosmological surveys appears nearly hyperuniform, hinting at long-range
+correlations established in the early universe. Quasicrystals --- aperiodic materials
+with long-range orientational order but no translational periodicity, first observed in
+an aluminium-manganese alloy by Shechtman and coworkers~\cite{shechtman1984metallic} ---
+are naturally hyperuniform because their long-range aperiodic structure prevents macroscopic
+density imbalances. From an engineering perspective, computationally designed disordered
+hyperuniform networks have been shown to support photonic band gaps rivaling those of
+periodic photonic crystals, offering a route to isotropic wave-guiding that does not
+require strict periodicity~\cite{torquato2018hyperuniform}.
+
+The formal definition of hyperuniformity, due to Torquato and
+Stillinger~\cite{torquato2003local}, is that the structure factor $S(k)$ --- the
+Fourier-space measure of density fluctuations at spatial wavelength $2\pi/k$ --- satisfies
+$S(k) \to 0$ as $k \to 0$. The \textit{rate} of this vanishing defines a spectrum of
+hyperuniformity. For systems where $S(k) \sim |k|^\alpha$ near $k = 0$, the exponent
+$\alpha > 0$ quantifies the degree of suppression: larger $\alpha$ means faster vanishing
+and more strongly reduced fluctuations at long wavelengths. Three universality classes arise
+from the asymptotic behavior of $\sigma^2(R)$~\cite{torquato2018hyperuniform}. Class~I
+($\alpha > 1$) is the strongest: the number variance is bounded at large $R$, approaching
+a constant plateau. Perfect crystals and many quasicrystals belong to this class, as do
+stealthy hyperuniform systems for which $S(k) = 0$ over an entire exclusion zone near
+$k = 0$. Class~II ($\alpha = 1$) is the marginal case where $\sigma^2(R)$ grows
+logarithmically; the period-doubling substitution chain is a one-dimensional example.
+Class~III ($0 < \alpha < 1$) gives power-law variance growth strictly slower than the
+Poisson baseline; certain substitution chains with non-Pisot eigenvalues fall here.
+
+One spatial dimension is a natural test bed for hyperuniformity theory. Point patterns in
+1D can be generated deterministically to sizes $N \sim 10^7$ by iterating substitution
+rules, exact analytical benchmarks exist, and the connection between a pattern's algebraic
+structure and its hyperuniformity class is particularly transparent. Yet the 1D landscape
+of known Class~I patterns is sparse. The survey in Ref.~\cite{torquato2018hyperuniform}
+lists only a handful of examples, and the interval $1 < \alpha < 2$ was previously
+unoccupied by any known 1D quasicrystal. As we show below, the reason is algebraic: all
+$2\times 2$ metallic-mean substitution matrices are unimodular ($|\det M| = \pm 1$), which forces
+$\alpha = 3$ exactly~\cite{oguz2019substitution}. Filling the $1 < \alpha < 2$ gap
+requires moving outside this family.
+
+In this work, we characterize 27 one-dimensional point patterns spanning all three
+hyperuniformity classes. The patterns include the five metallic-mean quasicrystals
+(Fibonacci, Silver, Bronze, Copper, and Nickel chains), all of which have $\alpha = 3$ by
+the determinant constraint; uncorrelated random lattice (URL) perturbations, which realize
+$\alpha = 2$ exactly and serve as key validation benchmarks; stealthy hyperuniform
+configurations generated by collective coordinate optimization; and several substitution
+chains that realize Class~II and Class~III behavior. The central new result is the
+identification of the Bombieri-Taylor cubic substitution~\cite{bombieri1986which} as a
+Class~I quasicrystal with $\alpha = 1.545$, the first known example with
+$1 < \alpha < 2$~\cite{oguz2019substitution}. We also report surface-area coefficients
+$\bar{\Lambda}$ for the Silver ($\bar{\Lambda} = 1/4$, confirmed by high-precision simulation),
+Bronze, Copper ($\bar{\Lambda} = 0.293$), and Nickel ($\bar{\Lambda} = 0.310$) chains;
+the Silver $\bar{\Lambda} = 1/4$ and the Copper and Nickel values are reported here for
+the first time.
+
+The remainder of this paper is organized as follows.
+Section~\ref{sec:theory} develops the theoretical framework: the number variance and its
+relation to the pair correlation function, the structure factor and hyperuniformity exponent,
+the surface-area coefficient $\bar{\Lambda}$, and the eigenvalue formula for substitution
+tilings.
+Section~\ref{sec:methods} describes the numerical methods and validation benchmarks used
+throughout this work. Results and conclusions will follow in subsequent sections.
+
+%==============================================================================
+\section{Theoretical Background}
+\label{sec:theory}
+%==============================================================================
+
+\subsection{Number Variance}
+\label{sec:variance}
+
+To quantify how density fluctuations depend on scale, we examine how many points fall
+inside a window of half-width $R$ placed at a random position along a one-dimensional
+point pattern of mean linear density $\rho$. The variance of this count across window
+placements is the \textit{number variance} $\sigma^2(R)$. For a Poisson (completely
+uncorrelated) point process with density $\rho$, the variance grows linearly with window
+size: $\sigma^2_\text{Poisson}(R) = 2\rho R$~\cite{torquato2003local}. This Poisson
+scaling is the baseline against which all other patterns are measured --- it reflects the
+fact that in an uncorrelated system, each region of space is independent, so larger windows
+simply accumulate more independent uncertainty.
+
+For a general stationary ergodic point process, $\sigma^2(R)$ can be expressed in terms of
+the pair correlation function $g_2(r)$, which encodes the probability of finding a second
+point at distance $r$ from a reference point relative to the uncorrelated
+expectation~\cite{torquato2003local}:
+\begin{equation}
+  \sigma^2(R) = 2\rho R \left[ 1 + 2\rho \int_0^{2R} \!\left(1 - \frac{r}{2R}\right)
+  \bigl[g_2(r) - 1\bigr]\, dr \right].
+  \label{eq:variance-integral}
+\end{equation}
+The first term, $2\rho R$, is the uncorrelated (Poisson) contribution. The integral
+represents the correction from inter-point correlations: where $g_2(r) > 1$ (clustering),
+the variance increases; where $g_2(r) < 1$ (anticorrelation), the variance decreases.
+A pattern is \textbf{hyperuniform} if the integral correction exactly cancels the Poisson
+term in the large-$R$ limit~\cite{torquato2003local}:
+\begin{equation}
+  \lim_{R \to \infty} \frac{\sigma^2(R)}{2\rho R} = 0.
+  \label{eq:hyperuniform-def}
+\end{equation}
+Physically, this requires that points be anticorrelated at large separations in precisely
+the right amount: $\int_0^\infty [g_2(r)-1]\,dr = -1/(2\rho)$.
+
+Based on how $\sigma^2(R)$ grows asymptotically, hyperuniform patterns fall into three
+universality classes~\cite{torquato2018hyperuniform}:
+\begin{itemize}
+  \item \textbf{Class~I} ($\alpha > 1$): $\sigma^2(R)$ approaches a finite (though
+        possibly oscillating) constant at large $R$. These patterns exhibit the strongest
+        suppression of density fluctuations. Perfect crystals and quasicrystals generated
+        by Pisot substitution rules belong here.
+  \item \textbf{Class~II} ($\alpha = 1$): $\sigma^2(R) \sim C\ln R$. The variance grows
+        without bound, but only logarithmically. The period-doubling chain is a 1D example.
+  \item \textbf{Class~III} ($0 < \alpha < 1$): $\sigma^2(R) \sim R^{1-\alpha}$, a
+        power-law growth strictly slower than the Poisson baseline. Aperiodic chains with
+        non-Pisot eigenvalue spectra can realize this behavior.
+\end{itemize}
+Non-hyperuniform patterns ($\alpha \leq 0$) have $\sigma^2(R) \sim R$ or faster.
+
+\subsection{Structure Factor and Hyperuniformity Exponent}
+\label{sec:alpha}
+
+The same information encoded in $\sigma^2(R)$ is also captured by the \textit{structure
+factor} in Fourier space. For a point pattern with $N$ points at positions $\{x_j\}$,
+\begin{equation}
+  S(k) = \frac{1}{N}\left|\sum_{j=1}^{N} e^{ikx_j}\right|^2.
+  \label{eq:sk-def}
+\end{equation}
+Physically, $S(k)$ measures the intensity of density fluctuations at spatial wavelength
+$2\pi/k$. For a Poisson process $S(k) = 1$ at all $k$; for a perfect crystal $S(k) = 0$
+for all $|k|$ below the first reciprocal lattice vector. The two observables are related
+by an exact integral~\cite{torquato2003local}:
+\begin{equation}
+  \sigma^2(R) = \frac{\rho}{\pi} \int_0^\infty S(k)\,
+  \left(\frac{2\sin(kR)}{k}\right)^2 dk.
+  \label{eq:variance-sk}
+\end{equation}
+Hyperuniformity requires $S(k) \to 0$ as $k \to 0$, which causes the integrand to vanish
+faster than for Poisson and yields sub-linear variance growth at large $R$.
+
+For systems where $S(k)$ approaches zero as a power law,
+\begin{equation}
+  S(k) \sim B|k|^\alpha \quad \text{as } k \to 0,
+  \label{eq:sk-power-law}
+\end{equation}
+the exponent $\alpha > 0$ is the \textit{hyperuniformity exponent}. Larger $\alpha$ implies
+more strongly suppressed fluctuations at long wavelengths. For quasicrystals, the structure
+factor consists of dense Bragg peaks rather than a smooth continuous envelope, so the
+exponent is extracted from the integrated intensity $Z(k) = 2\int_0^k S(q)\,dq \sim
+k^{1+\alpha}$ near $k = 0$~\cite{oguz2019substitution}. In practice, $\alpha$ is also
+estimated from the asymptotic slope of $\sigma^2(R)$ on a log-log scale, providing an
+independent numerical check.
+
+\subsection{Surface-Area Coefficient $\bar{\Lambda}$}
+\label{sec:lambda}
+
+Within Class~I, all patterns have bounded number variance, but two systems with the same
+$\alpha$ can differ substantially in their residual local disorder. The \textit{surface-area
+coefficient} $\bar{\Lambda}$ is the secondary metric that resolves this ambiguity and
+provides an absolute ranking within Class~I.
+
+For Class~I systems in one dimension, $\sigma^2(R)$ does not simply converge to a constant
+but typically oscillates about a plateau, particularly for quasicrystals with dense Bragg
+spectra. A pointwise limit is therefore not well-defined in general. Instead, $\bar{\Lambda}$
+is defined as the long-range running average~\cite{torquato2018hyperuniform,torquato2003local}:
+\begin{equation}
+  \bar{\Lambda} = \lim_{R \to \infty} \frac{1}{R}\int_0^R \sigma^2(R')\, dR'.
+  \label{eq:lambda-def}
+\end{equation}
+This running average converges to the mean level of the oscillating variance plateau, and
+reduces to the ordinary limit $\lim_{R\to\infty} \sigma^2(R)$ whenever that limit exists.
+For systems where the variance oscillates without converging, Eq.~\eqref{eq:lambda-def}
+extracts a unique, well-defined amplitude.
+
+The name ``surface-area coefficient'' refers to the $d$-dimensional interpretation: for a
+Class~I pattern in $d$ dimensions, the variance scales at large $R$ as
+$\sigma^2(R) \sim 2\bar{\Lambda}\, R^{d-1}$, where $R^{d-1}$ is proportional to the
+surface area of the observation window. In $d=1$ this reduces to $\sigma^2(R) \to \bar\Lambda$
+(a constant), consistent with the definition Eq.~\eqref{eq:lambda-def}.
+The quantity $\bar{\Lambda}$ is the primary ranking metric within Class~I: the perfect
+integer lattice achieves the global minimum $\bar{\Lambda} = 1/6$, proved exact in
+Ref.~\cite{torquato2003local}, and any deviation from perfect periodicity strictly increases
+$\bar{\Lambda}$. For the Fibonacci chain, Ref.~\cite{zachary2009hyperuniform} established
+$\bar{\Lambda} \approx 0.201$ by an analytical theta-function method.
+
+\subsection{Substitution Tilings and the Eigenvalue Formula}
+\label{sec:substitution}
+
+A one-dimensional \textit{substitution tiling} is an aperiodic sequence of tiles generated
+by repeatedly applying a fixed rewriting rule to each letter of a finite alphabet. Starting
+from a seed word, each letter is replaced by a fixed string of letters; iteration produces
+an increasingly long sequence that, when each tile is assigned a physical length and the
+tiles are stacked end to end, defines a one-dimensional point pattern. These tilings
+provide some of the cleanest examples of quasicrystalline order: they are fully
+deterministic, can be generated to arbitrary length by iteration, and their algebraic
+properties encode their hyperuniformity class in a precise and computable way.
+
+The growth of a substitution tiling is governed by its \textit{substitution matrix} $M$,
+whose entry $M_{ij}$ counts how many tiles of type $j$ appear in the substituted image of
+a single tile of type $i$. For the Fibonacci chain with alphabet $\{S, L\}$ and rules
+$S \to L$, $L \to LS$, the substitution matrix is
+\begin{equation}
+  M = \begin{pmatrix} 0 & 1 \\ 1 & 1 \end{pmatrix},
+  \label{eq:fibonacci-matrix}
+\end{equation}
+with eigenvalues $\lambda_1 = \tau = (1+\sqrt{5})/2 \approx 1.618$ (the golden ratio) and
+$\lambda_2 = -1/\tau \approx -0.618$. The Perron-Frobenius theorem guarantees that the
+largest eigenvalue $\lambda_1$ is positive and real, and its eigenvector gives the
+asymptotic relative frequencies of each tile type. Tile lengths are assigned by requiring
+that inflating every tile by $\lambda_1$ and then applying the substitution leaves the
+total domain length invariant, which fixes the ratio $L/S = \lambda_1$. For the Fibonacci
+chain this gives $L = \tau S$: the long tile is $\tau$ times the short tile.
+
+The key result connecting the matrix spectrum to hyperuniformity is due to
+Oğuz et al.~\cite{oguz2017hyperuniform,oguz2019substitution}: for a substitution tiling
+with Perron-Frobenius eigenvalue $\lambda_1$ and second-largest-magnitude eigenvalue
+$\lambda_2$,
+\begin{equation}
+  \alpha = 1 - \frac{2\ln|\lambda_2|}{\ln|\lambda_1|}.
+  \label{eq:eigenvalue-formula}
+\end{equation}
+This formula is the central predictive tool of this work: $\alpha$ is determined entirely
+by the substitution matrix spectrum, with no simulation required. The tiling is hyperuniform
+when $\alpha > 0$, which requires $|\lambda_2| < |\lambda_1|^{1/2}$. The physical
+interpretation is clear: $|\lambda_1|$ sets the inflation rate under substitution, while
+$|\lambda_2|$ controls how quickly spatial correlations across tile boundaries decay. A
+larger ratio $|\lambda_2|/|\lambda_1|^{1/2}$ means slower decorrelation and weaker
+hyperuniformity.
+
+For the metallic-mean chains and for the Bombieri-Taylor cubic substitution, the largest
+eigenvalue $\lambda_1$ is a
+\textit{Pisot-Vijayaraghavan (PV) number}: an algebraic integer greater than one all of
+whose algebraic conjugates lie strictly inside the unit circle
+($|\lambda_j| < 1$ for $j \geq 2$)~\cite{bombieri1986which,oguz2019substitution}.
+The PV property guarantees a pure Bragg diffraction spectrum --- the tiling is a true
+quasicrystal in the crystallographic sense, with delta-function peaks in $S(k)$ at a dense
+set of wavevectors. Equation~\eqref{eq:eigenvalue-formula} also reveals the structural
+reason why all $2\times 2$ metallic-mean matrices are locked to $\alpha = 3$ and why
+accessing intermediate exponents requires a higher-rank substitution matrix.
+
+%==============================================================================
+\section{Methods}
+\label{sec:methods}
+%==============================================================================
+
+We characterize each point pattern using three complementary observables: the number
+variance $\sigma^2(R)$, the structure factor $S(k)$, and the diffusion
+spreadability $\mathcal{S}(t)$~\cite{torquato2021spreadability,wang2022spreadability}.
+These are computed from finite point patterns generated to sizes large enough that
+finite-size effects are negligible on the window and wavenumber scales of interest.
+This section describes how each pattern type is generated, how each observable is
+computed, and how the results are validated against exact benchmarks.
+
+\subsection{Pattern Generation}
+\label{sec:generation}
+
+\textbf{Substitution tilings.}
+Each substitution tiling is generated by iterating the substitution rule on a seed word,
+continuing until the total point count exceeds a target $N_\text{target}$. At each
+iteration every tile of type $i$ is replaced by the string of tiles prescribed by row $i$
+of the substitution matrix $M$; after $n$ iterations the total tile count grows
+approximately as $\lambda_1^n$. Tile lengths are set by the Perron-Frobenius eigenvector
+of $M$: if $v_i > 0$ is the $i$-th component, the length of tile type $i$ is
+$\ell_i = v_i / \min_j v_j$, so that the shortest tile always has unit length. Points are
+placed at tile boundaries. The resulting pattern has $N$ points on a domain of length
+$L \approx N / \rho$, where the mean density is $\rho = 1/\bar\ell$ and
+$\bar\ell = \sum_i f_i \ell_i$ is the frequency-weighted mean tile length computed from
+the asymptotic tile frequencies $f_i$ given by the normalized Perron-Frobenius eigenvector.
+For the metallic-mean chains, $N$ ranges from $1.5 \times 10^4$ to $\sim 4 \times 10^7$
+depending on convergence requirements; for the Bombieri-Taylor cubic, 25 substitution
+iterations yield $N \approx 9.5 \times 10^6$.
+
+\textbf{Uncorrelated random lattices.}
+The uncorrelated random lattice (URL) is generated by taking the integer lattice
+$\{1, 2, \ldots, N\}$ and displacing each site independently by a random variate drawn
+from a uniform distribution parameterized by amplitude $a$. Realizations at $a = 0.1$,
+$0.5$, and $1.0$ are used; for each, the variance is computed from a single large
+realization ($N = 10^6$) and compared with the exact formula $\bar\Lambda = (1+a^2)/6$
+derived by Klatt, Kim, and Torquato~\cite{klatt2020perturbed}.
+
+\textbf{Stealthy configurations.}
+Stealthy hyperuniform configurations, for which $S(k) = 0$ for all $|k| < K^*$, were
+generated by a collaborating group using collective coordinate
+optimization~\cite{torquato2015ensemble}. The ensemble consists of approximately 4,316
+independent configurations per value of the stealthiness ratio $\chi \in \{0.1, 0.2, 0.3\}$,
+each containing $N = 2000$ points at mean density $\rho = 1$.
+Rather than a single large system, the high-statistics ensemble average over thousands of
+configurations suppresses sample-to-sample noise and provides reliable estimates of both
+$S(k)$ and $\bar\Lambda$.
+
+\subsection{Number Variance and Surface-Area Coefficient}
+\label{sec:variance-method}
+
+For a pattern of $N$ points on a domain of length $L$, the number variance $\sigma^2(R)$
+at window half-width $R$ is estimated by Monte Carlo sampling. We place $N_\text{samp} =
+30{,}000$ windows of half-width $R$ at positions drawn uniformly at random along the
+domain, count the number of points $n_i$ in each window, and compute
+$\sigma^2(R) = \langle n^2 \rangle - \langle n \rangle^2$. The window half-width is swept
+over a logarithmic grid from $R_\text{min} = 1/\rho$ (one inter-point spacing) to
+$R_\text{max} = L/4$; the upper bound ensures that every window placement is fully
+contained within the domain and that the sampling is not dominated by boundary effects.
+At each $R$, the estimator is essentially unbiased because the window placements are
+independent of the point pattern itself.
+
+The surface-area coefficient $\bar\Lambda$ is extracted as the running average of the
+variance curve~\cite{torquato2003local},
+\begin{equation}
+  \bar\Lambda(R_\text{max}) = \frac{1}{R_\text{max}} \int_0^{R_\text{max}} \sigma^2(R')\,dR'.
+  \label{eq:lambda-running}
+\end{equation}
+For Class~I patterns, this running average converges to a plateau as $R_\text{max}$
+increases, providing the estimate of $\bar\Lambda$. Convergence is monitored by checking
+that Eq.~\eqref{eq:lambda-running} varies by less than $1\%$ as $R_\text{max}$ is doubled;
+for all substitution tilings and URL patterns studied here, this criterion is met well within
+the available domain length. For stealthy configurations, $\bar\Lambda$ is computed from
+the ensemble-averaged variance curve at $R_\text{max} = N/(4\rho)$, where $N = 2000$
+provides sufficient range for convergence at all three $\chi$ values studied.
+
+\subsection{Structure Factor and Hyperuniformity Exponent}
+\label{sec:sfactor-method}
+
+The structure factor $S(k)$ is evaluated on the discrete wavenumber grid $k_n = 2\pi n / L$
+for integers $n = 1, 2, \ldots, N/2$ using the direct sum in Eq.~\eqref{eq:sk-def},
+computed via a fast Fourier transform. The low-$k$ region, which determines the
+hyperuniformity class and exponent, is sampled at fine wavenumber resolution and the
+$S(k_n)$ values are logarithmically binned to reduce scatter before fitting.
+
+For patterns with a smooth $S(k)$ near $k = 0$ (URL, stable distributions, stealthy),
+the exponent $\alpha$ is extracted from an unweighted linear fit to $\log S(k)$ versus
+$\log k$ over the wavenumber range where a clear power law is evident. For substitution
+tilings, $S(k)$ consists entirely of isolated Bragg peaks rather than a smooth envelope;
+a direct log-log fit to peak heights is unreliable. Instead, we follow Oğuz
+et al.~\cite{oguz2019substitution} and fit the cumulative intensity
+\begin{equation}
+  Z(k) = 2\int_0^k S(q)\,dq \sim C\,k^{1+\alpha},
+  \label{eq:Zk-def}
+\end{equation}
+which is a smooth, monotonically increasing function of $k$ even when $S(k)$ is a
+discrete set of peaks. An unweighted linear fit to $\log Z(k)$ versus $\log k$ over a
+range spanning at least one decade in $k$ yields $\alpha$ with uncertainty estimated from
+the fit residuals. As an independent cross-check, $\alpha$ is also estimated from the
+log-log slope of $\sigma^2(R)$ at large $R$; for all Class~I patterns studied, the two
+methods agree to within $5\%$.
+
+\subsection{Diffusion Spreadability}
+\label{sec:spreadability-method}
+
+The diffusion spreadability $\mathcal{S}(t)$ quantifies the fraction of space not yet
+reached by a species diffusing from the point pattern at time
+$t$~\cite{torquato2021spreadability,wang2022spreadability}. In one dimension and for a
+two-phase medium with packing fraction $\phi_2$, the spreadability is related to $S(k)$ via
+\begin{equation}
+  \mathcal{S}(t) = \phi_2^2 + \frac{1}{\pi}\int_0^\infty S(k)\,e^{-2k^2 t}\,dk.
+  \label{eq:spreadability-def}
+\end{equation}
+For Class~I and Class~II hyperuniform patterns, the excess spreadability
+$E(t) = \mathcal{S}(t) - \phi_2^2$ decays as a power law at long times: $E(t) \sim
+t^{-(1+\alpha)/2}$~\cite{torquato2021spreadability}, while stealthy configurations exhibit
+exponential decay. We evaluate $\mathcal{S}(t)$ numerically by discretizing the integral
+over the precomputed structure factor values $\{S(k_n)\}$ at a two-phase packing fraction
+$\phi_2 = 0.35$~\cite{hitinbialus2024}. In practice, we use spreadability primarily as an
+independent qualitative consistency check on the class assignment. For substitution tilings
+with dense Bragg spectra --- in particular the Bombieri-Taylor cubic, which has 32,517
+Bragg peaks in $k < 50$ --- the integral~\eqref{eq:spreadability-def} requires
+extremely long times to converge, and the eigenvalue formula Eq.~\eqref{eq:eigenvalue-formula}
+is used instead for precise $\alpha$ estimates.
+
+\subsection{Validation Benchmarks}
+\label{sec:validation}
+
+Before applying these methods to the patterns under study, all three observables are
+validated against exact analytical benchmarks.
+
+\textbf{Poisson process.}
+For a Poisson point process at density $\rho = 1$ and system size $N = 10^6$, the
+exact results are $\sigma^2(R) = 2\rho R$ and $S(k) = 1$ for all $k$. Numerical estimates
+reproduce the Poisson variance to within $1.1\%$ across three decades of window size and
+$S(k) = 1.000 \pm 0.002$ at all sampled wavenumbers, confirming that the window-sampling
+estimator and the FFT-based structure factor introduce no systematic bias.
+
+\textbf{Uncorrelated random lattice.}
+For the URL at amplitudes $a = 0.1$, $0.5$, and $1.0$, the exact surface-area coefficient
+is $\bar\Lambda = (1+a^2)/6$, derived analytically in Ref.~\cite{klatt2020perturbed}.
+Numerical estimates agree with this formula to within $0.3\%$ at all three amplitudes,
+validating both the number-variance estimator and the running-average extraction of
+$\bar\Lambda$.
+
+\textbf{Fibonacci chain.}
+For the Fibonacci quasicrystal, Zachary and Torquato~\cite{zachary2009hyperuniform}
+computed $\bar\Lambda = 0.20110$ analytically using a theta-function representation of
+the pair correlation function. Our Monte Carlo estimate at $N \approx 1.5 \times 10^7$
+gives $\bar\Lambda = 0.200 \pm 0.001$, consistent with the analytical value at the level
+of numerical precision; this provides a cross-check on the method for quasiperiodic
+patterns where no simple closed-form formula exists.
+
+%==============================================================================
+% Bibliography
+%==============================================================================
+\printbibliography
+
+\end{document}
