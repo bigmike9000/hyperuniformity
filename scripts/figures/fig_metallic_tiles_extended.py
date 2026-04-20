@@ -113,8 +113,7 @@ def make_figure():
     ax.set_yticks([])
     for spine in ax.spines.values():
         spine.set_visible(False)
-    ax.set_title('Metallic-Mean Substitution Chains ($n=1$ to $10$)',
-                 fontsize=14, fontweight='bold', pad=12)
+    # no overall title — info goes in the LaTeX caption
 
     fig.tight_layout()
     fig.savefig(OUTPUT_PATH, dpi=200, bbox_inches='tight', facecolor='white')

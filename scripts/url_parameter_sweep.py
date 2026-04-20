@@ -97,7 +97,7 @@ def main():
 
     # Top panel: Lambda_bar(a)
     ax1.plot(A_FINE, lb_exact, 'b-', lw=2,
-             label=r'Exact: $\bar\Lambda = (1+a^2)/6$')
+             label=r'Exact formula')
 
     a_sim = [r['a'] for r in sim_results]
     lb_sim = [r['lambda_bar_sim'] for r in sim_results]
@@ -116,8 +116,7 @@ def main():
     ax1.text(1.02, 0.20, 'cloaking\n($a=1$)', fontsize=8, color='green')
 
     ax1.set_ylabel(r'$\bar\Lambda$', fontsize=12)
-    ax1.set_title(r'URL: $\bar\Lambda(a)$ for displacement amplitude $a$',
-                  fontsize=13, fontweight='bold')
+    # no title — info goes in the LaTeX caption
     ax1.legend(fontsize=10)
     ax1.set_xlim(0, 2.05)
 

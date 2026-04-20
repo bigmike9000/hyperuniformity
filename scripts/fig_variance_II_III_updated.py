@@ -75,27 +75,24 @@ print(f"  A = {A_0222:.4f}, beta = {beta_0222:.4f}, alpha_fit = {1-beta_0222:.4f
 
 # ---- Plot ----
 fig, axes = plt.subplots(1, 2, figsize=(11, 5))
-fig.suptitle(r'Number Variance $\sigma^2(R)$ — Classes II and III', fontsize=13)
+# no suptitle — info goes in the LaTeX caption
 
 # Left: Class II
 ax = axes[0]
-ax.set_title('Class II: Logarithmic Growth', fontsize=12, fontweight='bold')
+ax.set_title('(a) Class II: Logarithmic growth', fontsize=12)
 ax.loglog(R_pd, var_pd, color='#ff7f0e', lw=1.8, label='Period-Doubling')
 R_fit = R_pd[mask_pd]
 ax.loglog(R_fit, Lambda_II * np.log(R_fit) + b_pd, 'k--', lw=1.8, alpha=0.7,
-          label=rf'$C\ln R + b,\ C={Lambda_II:.3f}$')
+          label=r'$\Lambda_{\rm II}\ln R + b$, ' + f'$\\Lambda_{{\\rm II}}={Lambda_II:.3f}$')
 ax.set_xlabel(r'$R$', fontsize=12)
 ax.set_ylabel(r'$\sigma^2(R)$', fontsize=12)
 ax.legend(fontsize=10)
 ax.grid(True, ls=':', alpha=0.4)
-ax.text(0.05, 0.05,
-        r'Period-Doubling, $\alpha = 1$' '\n' r'$\sigma^2 \sim C\ln R$',
-        transform=ax.transAxes, fontsize=10, va='bottom',
-        bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+# no annotation box — info goes in the LaTeX caption
 
 # Right: Class III
 ax = axes[1]
-ax.set_title('Class III: Power-Law Growth', fontsize=12, fontweight='bold')
+ax.set_title('(b) Class III: Power-law growth', fontsize=12)
 ax.loglog(R_0222, var_0222, color='#17becf', lw=1.8, label='0222 Chain')
 R_fit3 = R_0222[mask_0222]
 ax.loglog(R_fit3, A_0222 * R_fit3**beta_0222, 'k--', lw=1.8, alpha=0.7,
@@ -104,14 +101,15 @@ ax.set_xlabel(r'$R$', fontsize=12)
 ax.set_ylabel(r'$\sigma^2(R)$', fontsize=12)
 ax.legend(fontsize=10)
 ax.grid(True, ls=':', alpha=0.4)
-ax.text(0.05, 0.05,
-        rf'0222 Chain, $\alpha = {alpha_0222:.3f}$' '\n' r'$\sigma^2 \sim R^{1-\alpha}$',
-        transform=ax.transAxes, fontsize=10, va='bottom',
-        bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+# no annotation box — info goes in the LaTeX caption
 
 plt.tight_layout()
 out = os.path.join(OUT_DIR, 'fig_variance_II_III.png')
-fig.savefig(out, dpi=200, bbox_inches='tight')
-fig.savefig(out.replace('.png', '.pdf'), bbox_inches='tight')
+fig.savefig(out, dpi=200, bbox_inches='tight', facecolor='white')
+# Also save to results/figures/ for graphicspath
+out2 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                    'results', 'figures', 'fig_variance_II_III.png')
+fig.savefig(out2, dpi=200, bbox_inches='tight', facecolor='white')
 plt.close()
 print(f"\nSaved: {out}")
+print(f"Saved: {out2}")

@@ -103,12 +103,7 @@ for k in range(20):
     if R_min < xv < R_max:
         ax.axvline(xv, color='gray', ls=':', lw=0.7, alpha=0.45)
 
-# Annotate oscillation period
-ax.text(0.97, 0.96,
-        f"Period in $\\ln R$: $\\ln\\lambda_1 = {LOG_PERIOD:.3f}$\n"
-        f"Amplitude: [{sig2.min():.3f}, {sig2.max():.3f}]",
-        transform=ax.transAxes, fontsize=10, va='top', ha='right',
-        bbox=dict(boxstyle='round,pad=0.3', fc='lightyellow', ec='goldenrod', alpha=0.9))
+# no annotation box — info goes in the LaTeX caption
 
 ax.set_xlabel('$R$', fontsize=13)
 ax.set_ylabel(r'$\sigma^2(R)$', fontsize=13)
@@ -130,17 +125,13 @@ ax.fill_between([R_min, R_max],
                 color='crimson', alpha=0.12)
 ax.set_xlabel('$R$', fontsize=13)
 ax.set_ylabel(r'Running $\bar\Lambda(R)$', fontsize=13)
-ax.set_title(r'(b) Running average converges slowly (large oscillation amplitude)', fontsize=12)
+ax.set_title(r'(b) Running average $\bar\Lambda(R)$', fontsize=12)
 ax.legend(fontsize=11, loc='upper right')
 ax.set_ylim([0.0, 1.2])
 
-fig.suptitle(
-    r'Non-unimodular chain $a\!\to\!b,\;b\!\to\!aabbbb$: '
-    rf'$|\det M|=2$, $\alpha=2.071$, $N\approx{N:,}$',
-    fontsize=12, y=1.01
-)
+# no suptitle — info goes in the LaTeX caption
 plt.tight_layout()
 
-out = os.path.join(BASE, 'results', 'figures', 'fig_nonunimodular.png')
+out = os.path.join(BASE, 'results', 'figures', 'fig_detgt1_chain.png')
 plt.savefig(out, dpi=200, bbox_inches='tight')
 print(f"Saved {out}")

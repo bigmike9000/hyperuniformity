@@ -6,6 +6,7 @@
 \usepackage{booktabs}
 \usepackage{float}
 \usepackage{xcolor}
+\usepackage[normalem]{ulem} % for \sout strikethrough (review only)
 \usepackage{tabularx}
 \usepackage{hyperref}
 \graphicspath{{figures/}{../results/figures/}}
@@ -54,7 +55,7 @@ This paper represents my own work in accordance with University regulations.\\
 %==============================================================================
 \begin{abstract}
 \noindent
-For an uncorrelated random point pattern in space, the variance in the number of points found in any given region grows in proportion to the window's size. Hyperuniform patterns break this scaling, as their density fluctuations are anomalously suppressed at large scales. The strength of suppression of these fluctuations differs from system to system, and is captured by the hyperuniformity exponent $\alpha$, which defines three distinct hyperuniformity classes. However, patterns within the same class can have very different fluctuation amplitudes, motivating the use of a separate surface-area coefficient $\bar\Lambda$ to measure the amplitude of the remaining fluctuations. In this work, we compute both $\alpha$ and $\bar\Lambda$ across a range of one-dimensional hyperuniform point patterns, including metallic-mean substitution chains, higher-rank substitution tilings, uniformly randomized lattices, and stealthy configurations. Starting from the eigenvalue formula for substitution matrices, we confirm that all metallic-mean chains share $\alpha = 3$ and find that $\bar\Lambda$ increases monotonically from Fibonacci toward an apparent limit near $1/3$. We then identify algebraic constraints on the substitution matrix and show how relaxing these constraints opens up new regions of the $\alpha$ spectrum. Across all systems studied, patterns sharing the same $\alpha$ were determined to be able to have very different $\bar\Lambda$, showing that $\alpha$ and $\bar\Lambda$ capture complementary and independent information about large-scale structure.
+For an uncorrelated random point pattern in space, the variance in the number of points found inside a spherical observation window of radius $R$ grows in proportion to $R^d$ in $d$ dimensions. Hyperuniform patterns break this scaling, as their density fluctuations are anomalously suppressed at large scales. How quickly the structure factor $S(k)$ vanishes as $k \to 0$ varies from system to system, and the power-law exponent $\alpha$ in $S(k) \sim |k|^\alpha$ defines three distinct hyperuniformity classes. However, patterns within the same class can have very different fluctuation amplitudes, motivating the use of a surface-area coefficient $\bar\Lambda$ for Class~I patterns to measure the amplitude of the remaining fluctuations. In this work, we compute both $\alpha$ and $\bar\Lambda$ across a range of one-dimensional hyperuniform point patterns, including metallic-mean substitution chains whose irrational tile-length ratios generate quasiperiodic order, higher-rank substitution tilings, uniformly randomized lattices, and stealthy configurations. Starting from the eigenvalue formula for substitution matrices, we confirm that all metallic-mean chains share $\alpha = 3$ and find that $\bar\Lambda$ increases monotonically from Fibonacci (the golden ratio) toward an apparent limit near $1/3$. We then identify algebraic constraints on the substitution matrix and show how relaxing these constraints opens up new regions of the $\alpha$ spectrum. Across all systems studied, patterns sharing the same $\alpha$ were determined to be able to have very different $\bar\Lambda$, showing that $\alpha$ and $\bar\Lambda$ capture complementary and independent information about large-scale structure.
 \end{abstract}
 
 \begingroup
@@ -68,11 +69,11 @@ For an uncorrelated random point pattern in space, the variance in the number of
 \label{sec:introduction}
 %==============================================================================
 
-Large-scale density fluctuations contain fundamental information about the structure of many-body systems. In particular, characterizing the local number variance of point patterns has widespread applications across condensed matter physics and beyond. From quasicrystals that exhibit sharp diffraction with forbidden rotational symmetries~\cite{shechtman1984metallic} to the photoreceptor mosaics of bird retinas and the distribution of prime numbers on the real line~\cite{torquato2018hyperuniform}, the large-scale density fluctuations are anomalously suppressed below what simple randomness would predict. The property that unites these systems is hyperuniformity.
+Large-scale density fluctuations contain fundamental information about the structure of many-body systems. In particular, characterizing the local number variance of point patterns has widespread applications across condensed matter physics and beyond. From quasicrystals that exhibit sharp diffraction with forbidden rotational symmetries~\cite{shechtman1984metallic} to the photoreceptor mosaics of bird retinas~\cite{jiao2014avian} and the distribution of prime numbers on the real line~\cite{torquato2018primes}, the large-scale density fluctuations are anomalously suppressed below what simple randomness would predict. The property that unites these systems is hyperuniformity.
 
-For any given point pattern, we can consider the variance in the number of points in some arbitrarily-centered local observation window. For a one-dimensional random (Poisson) distribution, this variance grows linearly in proportion to the region's size, according to $\sigma^2(R) = 2\rho R$. This linear growth is characteristic of uncorrelated matter and is known as the Poisson baseline~\cite{torquato2003local}. In a hyperuniform system, the variance will instead grow more slowly than the window size, even though the pattern may appear equally disordered at short distances~\cite{torquato2003local,torquato2018hyperuniform}. This can be formalized by the introduction of a structure factor $S(k)$, which measures the intensity of density fluctuations at wavenumber $k$. A point pattern is defined as hyperuniform if and only if $S(k) \rightarrow 0$ as $k \rightarrow 0$~\cite{torquato2003local}. 
+For any given point pattern, we can consider the variance in the number of points in some arbitrarily-centered local observation window. For a one-dimensional random (Poisson) distribution, this variance grows linearly in proportion to the region's size, according to $\sigma^2(R) = 2\rho R$. This linear growth is characteristic of uncorrelated matter and is known as the Poisson baseline~\cite{torquato2003local}. In a hyperuniform system, the variance will instead grow more slowly than the window size, even though the pattern may appear equally disordered at short distances~\cite{torquato2003local,torquato2018hyperuniform}. A point pattern is hyperuniform if and only if its structure factor $S(k)$ vanishes as $k \rightarrow 0$~\cite{torquato2003local}.
 
-Not all hyperuniform patterns suppress fluctuations equally. While for all hyperuniform patterns $S(k) \rightarrow 0$ as $k \rightarrow 0$, the rate at which $S(k)$ vanishes can vary. Generally, hyperuniform patterns are sorted into three main classes depending on how quickly $S(k)\rightarrow 0$ as $k \rightarrow 0$, assuming $S(k) \sim |k|^\alpha$. Here, $\alpha$ determines whether the number variance is bounded (Class~I, $\alpha > 1$), grows logarithmically (Class~II, $\alpha = 1$), or grows as a weak power law (Class~III, $0 < \alpha < 1$)~\cite{torquato2018hyperuniform}. While this classification scheme is useful, it is still not able to fully distinguish between hyperuniform patterns.
+The rate at which $S(k)$ vanishes determines the strength of hyperuniformity. Generally, hyperuniform patterns are sorted into three main classes depending on how quickly $S(k)\rightarrow 0$ as $k \rightarrow 0$, assuming $S(k) \sim |k|^\alpha$. Here, $\alpha$ determines whether the number variance is bounded (Class~I, $\alpha > 1$), grows logarithmically (Class~II, $\alpha = 1$), or grows as a weak power law (Class~III, $0 < \alpha < 1$)~\cite{torquato2003local,torquato2018hyperuniform}. While this classification scheme is useful, it is still not able to fully distinguish between hyperuniform patterns. For example, two Class~I patterns can both have $\alpha=3$, but differ substantially in how much their density fluctuates at any given scale. 
 
 \begin{figure}[H]                                                     
     \centering                                                          
@@ -81,26 +82,22 @@ Not all hyperuniform patterns suppress fluctuations equally. While for all hyper
     \label{fig:intro-chains}
   \end{figure}
 
-To distinguish between patterns within the same class, we need a metric that captures the amplitude of the fluctuations, not just their scaling rate. The surface-area coefficient $\bar\Lambda$, defined as the running average of the number variance at large $R$~\cite{torquato2003local}, serves this role. So far, $\bar\Lambda$ has only been computed for the integer lattice~\cite{torquato2003local} and Fibonacci chain~\cite{zachary2009hyperuniform}, leaving open the question of how other aperiodic hyperuniform patterns compare.
-
-In this work, we compute both $\alpha$ and $\bar\Lambda$ for a broad collection of one-dimensional hyperuniform point patterns, including substitution tilings, perturbed lattices, and stealthy configurations. We identify the algebraic constraints that determine which $\alpha$ values are accessible, and we use $\bar\Lambda$ to rank patterns within each class.
+To distinguish between patterns within the same class, we need a metric that captures the amplitude of the fluctuations, not just their scaling rate. The surface-area coefficient $\bar\Lambda$, defined as the running average of the number variance at large $R$~\cite{torquato2003local}, serves this role. In this work, we compute both $\alpha$ and $\bar\Lambda$ for a broad collection of one-dimensional hyperuniform point patterns, including substitution tilings, perturbed lattices, and stealthy configurations. We identify the algebraic constraints that determine which $\alpha$ values are accessible, and we use $\bar\Lambda$ to rank patterns within each class. Across all systems studied, we find that $\alpha$ and $\bar\Lambda$ capture independent information, as patterns sharing the same $\alpha$ can differ significantly in $\bar\Lambda$.
 
 %==============================================================================
 \section{Theory}
 \label{sec:theory}
 %==============================================================================
 
-We first define the number variance, structure factor, and the three hyperuniformity classes, then introduce the surface-area coefficient $\bar\Lambda$ as a finer ranking metric. We then describe the three families of patterns studied in this work: substitution tilings, perturbed lattices, and stealthy configurations.
-
-
 %----------------------------------------------------------------------
-\subsection{Number variance and structure factor}
+\subsection{Number variance, structure factor, and the hyperuniformity exponent $\alpha$}
 \label{sec:theory-variance}
+\label{sec:theory-alpha}
 %----------------------------------------------------------------------
 
-Let us start by considering a one-dimensional point pattern with number density $\rho$. If we slide a window with half-width $R$ along the pattern and count the number of points inside, the count will fluctuate from one window placement to the next. The variance of this count is the number variance, $\sigma^2(R)$, and how it grows with $R$ tells us a great deal about the spatial structure of the pattern.
+Let us start by considering a one-dimensional point pattern with number density $\rho$. If we slide a window with half-width $R$ along the pattern and count the number of points inside, the count will fluctuate from one window placement to the next. The variance of this count is the number variance, $\sigma^2(R)$.
 
-For a Poisson process, each part of the system is statistically independent of the rest, so bigger windows accumulate more noise and the variance grows linearly ($\sigma^2_\text{Poisson}(R) = 2\rho R$)~\cite{torquato2003local}. When points are spatially correlated, however, the variance picks up a correction that depends on the pair correlation function $g_2(r)$, defined as the ratio of the two-particle density to $\rho^2$~\cite{torquato2003local}. When $g_2(r) > 1$, points are more likely to be found at separation $r$ than in an uncorrelated system. When $g_2(r) < 1$, they are less likely. The variance is~\cite{torquato2003local}:
+For a Poisson process, each part of the system is statistically independent of the rest, so bigger windows accumulate more noise and the variance grows linearly ($\sigma^2_\text{Poisson}(R) = 2\rho R$)~\cite{torquato2003local}. When points are spatially correlated, however, the variance picks up a correction that depends on the pair correlation function $g_2(r)$, defined as the ratio of the two-particle density to $\rho^2$~\cite{torquato2003local}. When $g_2(r) > 1$, points are more likely to be found at separation $r$ than in an uncorrelated system. When $g_2(r) < 1$, they are less likely. The variance is~\cite{torquato2003local}
 
 \begin{equation}
  \sigma^2(R) = 2\rho R \left[ 1 + 2\rho \int_0^{2R}
@@ -108,7 +105,7 @@ For a Poisson process, each part of the system is statistically independent of t
  \label{eq:variance-g2}
 \end{equation}
 
-To connect the variance directly to the small-$k$ behavior of the pattern, it is useful to work in Fourier space with the structure factor~\cite{torquato2003local}
+To connect the variance to the small-$k$ behavior of the pattern, it is useful to work in Fourier space with the structure factor~\cite{torquato2003local}
 \begin{equation}
  S(k) = 1 + \rho\hat{h}(k),
  \label{eq:sk-def}
@@ -125,19 +122,12 @@ Because $4\sin^2(kR)/k^2$ is peaked near $k = 0$ for large $R$, the large-scale 
  \label{eq:hu-condition}
 \end{equation}
 
-When this condition holds, the integrand in Eq.~\eqref{eq:variance-sk} is suppressed at small $k$, and $\sigma^2(R)$ grows more slowly than $R$. 
-
-%----------------------------------------------------------------------
-\subsection{The hyperuniformity exponent and three classes}
-\label{sec:theory-alpha}
-%----------------------------------------------------------------------
-
-While the condition $S(0) = 0$ tells us that a pattern is hyperuniform, it does not tell us how strongly the fluctuations are suppressed. The rate at which $S(k)$ vanishes near the origin turns out to control the large-$R$ scaling of $\sigma^2(R)$ and defines a hierarchy of hyperuniformity strength. When $S(k)$ vanishes as a power law,
+The rate at which $S(k)$ vanishes near the origin controls the large-$R$ scaling of $\sigma^2(R)$ and defines three hyperuniformity classes. When $S(k)$ vanishes as a power law,
 \begin{equation}
  S(k) \sim |k|^\alpha \quad \text{as } k \to 0,
  \label{eq:sk-powerlaw}
 \end{equation}
-the exponent $\alpha > 0$ controls the large-$R$ scaling of the number variance. Substituting this power law into Eq.~\eqref{eq:variance-sk} and taking the $R \to \infty$ limit yields three qualitatively different behaviors~\cite{torquato2003local,torquato2018hyperuniform}:
+substituting into Eq.~\eqref{eq:variance-sk} and taking the $R \to \infty$ limit yields three qualitatively different behaviors~\cite{torquato2003local,torquato2018hyperuniform}:
 \begin{equation}
  \sigma^2(R) \sim
  \begin{cases}
@@ -148,22 +138,14 @@ the exponent $\alpha > 0$ controls the large-$R$ scaling of the number variance.
  \label{eq:three-classes}
 \end{equation}
 
-Class~I is the strongest form of hyperuniformity, as the variance remains bounded no matter how large the window gets. This means that at large enough scales, the pattern looks uniformly ordered. All perfect crystals and quasicrystals generated by Pisot substitution rules~\footnote{A Pisot number is an algebraic integer greater than 1 whose algebraic conjugates all have absolute value less than 1. The golden ratio $\tau = (1+\sqrt{5})/2 \approx 1.618$, whose conjugate is $(1-\sqrt{5})/2 \approx -0.618$, is the simplest example.} belong to this class~\cite{oguz2019substitution}. For Class~II hyperuniformity, the variance grows infinitely with $R$, but only logarithmically. Class~III is the weakest form of hyperuniformity, with an unbounded variance that grows more slowly than that of a Poisson distribution. 
-
-For quasicrystals, whose structure factor consists of dense Bragg peaks rather than a smooth envelope, fitting a power law directly to $S(k)$ is impractical. Instead, the exponent can be extracted from the integrated spectral intensity~\cite{oguz2019substitution, zachary2009hyperuniform}
-\begin{equation}
- Z(k) = 2\int_0^k S(q)\,dq \sim k^{1+\alpha}
- \quad \text{as } k \to 0,
- \label{eq:Zk}
-\end{equation}
-which smooths over the individual peaks and provides a clean power law.
+Class~I is the strongest form of hyperuniformity, as the variance remains bounded no matter how large the window gets. All perfect crystals and quasicrystals generated by Pisot substitution rules\footnote{A Pisot number is an algebraic integer greater than 1 whose algebraic conjugates all have absolute value less than 1. The golden ratio $\tau = (1+\sqrt{5})/2 \approx 1.618$, whose conjugate is $(1-\sqrt{5})/2 \approx -0.618$, is the simplest example.} belong to this class~\cite{oguz2019substitution}. For Class~II hyperuniformity, the variance grows infinitely with $R$, but only logarithmically. Class~III is the weakest form of hyperuniformity, with an unbounded variance that grows more slowly than that of a Poisson distribution. 
 
 %----------------------------------------------------------------------
 \subsection{The surface-area coefficient $\bar\Lambda$}
 \label{sec:theory-lambda}
 %----------------------------------------------------------------------
 
-Knowing which class a pattern belongs to does not fully characterize it. Two Class~I quasicrystals can both have $\alpha = 3$ and yet differ substantially in how much their density fluctuates inside a window of any given size. To see this difference, we need a quantity that captures the amplitude of the fluctuations, not just their scaling.
+Knowing which class a pattern belongs to does not fully characterize it. Two Class~I quasicrystals can both have $\alpha = 3$ but differ substantially in how much their density fluctuates inside a window of any given size. To see this difference, we need a quantity that captures the amplitude of the fluctuations, not just their scaling.
 
 For Class~I patterns in one dimension, the variance does not simply converge to a constant but typically oscillates about a mean level. This is especially true for quasicrystals with dense Bragg spectra, where the oscillations persist at all scales. In order to extract a well-defined number from this behavior, we define the surface-area coefficient as the running average
 \begin{equation}
@@ -171,13 +153,9 @@ For Class~I patterns in one dimension, the variance does not simply converge to 
  \sigma^2(R)\,dR.
  \label{eq:lambda-def}
 \end{equation}
-This averages out the oscillations and converges to the mean level of the plateau. When the variance does converge to a pointwise limit, $\bar\Lambda$ simply equals that limit.
+This averages out the oscillations and converges to the mean level of the plateau. Torquato and Stillinger proved that the one-dimensional integer lattice achieves $\bar\Lambda = 1/6$, which is the global minimum among all infinite one-dimensional hyperuniform patterns~\cite{torquato2003local}. For aperiodic systems, however, almost no values are known.
 
-The name ``surface-area coefficient'' comes from the $d$-dimensional generalization, where the leading term of the number variance for Class~I patterns scales with the surface area of the observation window~\cite{torquato2003local}. In one dimension, the surface of an interval consists of just two endpoints, so the variance approaches a constant, and $\bar\Lambda$ is simply the mean level of that constant.
-
-Torquato and Stillinger proved that the one-dimensional integer lattice achieves $\bar\Lambda = 1/6$, which is the global minimum among all infinite one-dimensional hyperuniform patterns~\cite{torquato2003local}. For aperiodic systems, however, almost no values are known. The only prior result is $\bar\Lambda = 0.20110$ for the Fibonacci chain, computed by Zachary and Torquato~\cite{zachary2009hyperuniform}.
-
-The definition of $\bar\Lambda$ in Eq.~\eqref{eq:lambda-def} yields a finite value only for Class~I patterns, because the variance is bounded. For Classes~II and~III, the variance grows without bound and $\bar\Lambda$ diverges. To rank patterns in these classes, we need analogous coefficients that extract the leading amplitude from the appropriate growth law. For Class~II ($\alpha = 1$), the variance grows logarithmically, so we define
+The definition of $\bar\Lambda$ in Eq.~\eqref{eq:lambda-def} yields a finite value only for Class~I patterns, because the variance is bounded. For Classes~II and~III, then, the variance grows without bound and $\bar\Lambda$ diverges. To rank patterns in these classes, we need analogous coefficients that extract the leading amplitude from the appropriate growth law. For Class~II ($\alpha = 1$), the variance grows logarithmically, so we define
 \begin{equation}
  \Lambda_\text{II} = \lim_{R \to \infty}
  \frac{\sigma^2(R)}{\ln R},
@@ -185,7 +163,7 @@ The definition of $\bar\Lambda$ in Eq.~\eqref{eq:lambda-def} yields a finite val
 \end{equation}
 which isolates the prefactor of the logarithmic growth.
 
-For Class~III ($0 < \alpha < 1$), the variance grows as a power law and we define
+For Class~III ($0 < \alpha < 1$), the variance grows as a power law, so we define
 \begin{equation}
  \Lambda_\text{III} = \lim_{R \to \infty}
  \frac{\sigma^2(R)}{R^{1-\alpha}},
@@ -205,70 +183,65 @@ The growth of the tiling is governed by the substitution matrix $M$, an $r \time
  M_\text{Fib} = \begin{pmatrix} 0 & 1 \\ 1 & 1 \end{pmatrix},
  \label{eq:fibonacci-matrix}
 \end{equation}
-with eigenvalues $\lambda_1 = \tau = (1+\sqrt{5})/2 \approx 1.618$ (the golden ratio) and $\lambda_2 = -1/\tau \approx -0.618$.
+with eigenvalues $\lambda_1 = \tau = (1+\sqrt{5})/2 \approx 1.618$ (the golden ratio) and $\lambda_2 = -1/\tau \approx -0.618$. The determinant $|\det M| = |0 \cdot 1 - 1 \cdot 1| = 1$, so $|\lambda_2| = 1/\lambda_1$. All metallic-mean matrices share this property, and as we show in Sec.~\ref{sec:results-constraints}, this constrains which values of $\alpha$ are accessible.
 
-The largest eigenvalue $\lambda_1$ is always positive and real for non-negative integer matrices. Every time the substitution rule is applied, the total length of the tiling is multiplied by approximately $\lambda_1$. The corresponding eigenvector then gives the asymptotic relative frequencies of each tile type, and the tile lengths are set so that the pattern scales consistently. For two tile types, this fixes the length ratio $L/S = \lambda_1$~\cite{oguz2019substitution}. 
+The largest eigenvalue $\lambda_1$ is always positive and real for non-negative integer matrices. Every time the substitution rule is applied, the total length of the tiling is multiplied by approximately $\lambda_1$. The corresponding eigenvector then gives the asymptotic relative frequencies of each tile type, and the tile lengths are set so that the pattern scales consistently. For the metallic-mean family, where $M = \bigl(\begin{smallmatrix} 0 & 1 \\ 1 & n \end{smallmatrix}\bigr)$, the tile lengths are fixed by requiring $L/S = \lambda_1 = \mu_n$~\cite{oguz2019substitution}. 
 
 Substitution matrices and hyperuniformity are connected by the eigenvalue formula of Oğuz et al~\cite{oguz2017hyperuniform,oguz2019substitution}:
 \begin{equation}
  \alpha = 1 - \frac{2\ln|\lambda_2|}{\ln\lambda_1}.
  \label{eq:eigenvalue-formula}
 \end{equation}
-For substitution tilings, this equation determines $\alpha$ entirely from the two largest eigenvalues. The formula applies when $\lambda_1$ is a Pisot number, meaning all other eigenvalues have absolute values less than 1~\cite{oguz2019substitution}. Physically, $\lambda_1$ sets how much the tiling grows with each substitution step, while $|\lambda_2|$ controls how fast density fluctuations decay. A smaller $|\lambda_2|$ corresponds to stronger suppression of large-scale density fluctuations and a larger $\alpha$. From Eq.~\eqref{eq:eigenvalue-formula}, the tiling is hyperuniform ($\alpha > 0$) whenever $|\lambda_2| < \sqrt{\lambda_1}$. 
+For substitution tilings, this equation determines $\alpha$ entirely from the two largest eigenvalues. Physically, $\lambda_1$ sets how much the tiling grows with each substitution step, while $|\lambda_2|$ controls how fast density fluctuations decay. A smaller $|\lambda_2|$ corresponds to stronger suppression of large-scale density fluctuations and a larger $\alpha$. From Eq.~\eqref{eq:eigenvalue-formula}, the tiling is hyperuniform ($\alpha > 0$) whenever $|\lambda_2| < \sqrt{\lambda_1}$.
 
-For any $r \times r$ Pisot substitution matrix $M$ with $|\det M| = 1$, the product of all eigenvalues has absolute value 1 ($|\det M| = |\lambda_1 \cdot \lambda_2 \cdots \lambda_r| = 1$). Then, because $|\lambda_2| \geq |\lambda_j|$ for all $j \geq 2$, it follows that $\lambda_1 \cdot |\lambda_2|^{r-1} \geq 1$. Because the Pisot condition requires $|\lambda_j| < 1$ for all $j \geq 2$, the second eigenvalue therefore satisfies
-\begin{equation}
- |\lambda_2| \geq \lambda_1^{-1/(r-1)}.
- \label{eq:det-bound}
-\end{equation}
-Substituting into Eq.~\eqref{eq:eigenvalue-formula}, we get an upper bound on $\alpha$:
-\begin{equation}
- \alpha \leq 1 + \frac{2}{r-1}.
- \label{eq:alpha-bound}
-\end{equation}
-For rank $r = 2$ this gives $\alpha \leq 3$. We can see this in practice by considering the metallic-mean family, with substitution rules $S \to L$, $L \to L^n S$ for integer $n \geq 1$. Each metallic ratio has matrix $M = \bigl(\begin{smallmatrix} 0 & 1 \\ 1 & n \end{smallmatrix}\bigr)$ with $\det M = -1$ and eigenvalues $\lambda_1 = \mu_n = \frac{1}{2}(n + \sqrt{n^2+4})$ (the $n$th metallic mean) and $\lambda_2 = -1/\mu_n$. Because $|\lambda_2| = 1/\lambda_1$, the eigenvalue formula gives
-\begin{equation}
- \alpha = 1 - \frac{2\ln(1/\mu_n)}{\ln\mu_n} = 1 + 2 = 3
- \label{eq:metallic-alpha}
-\end{equation}
-for every $n$. Thus, the Fibonacci ($n = 1$), silver ($n = 2$), bronze ($n = 3$), and any other metallic-mean chain are all Class~I with $\alpha = 3$ regardless of $n$.
+When $\lambda_1$ is a Pisot number, meaning all other eigenvalues have absolute values less than 1~\cite{oguz2019substitution}, the diffraction spectrum consists entirely of Bragg peaks, which are sharp delta-function peaks at a dense, countable set of wavevectors~\cite{oguz2019substitution}. This distinguishes quasicrystals from periodic crystals, whose Bragg peaks are discrete and well-separated, and from disordered systems, whose $S(k)$ is smooth and continuous. Because the Bragg peaks are dense on the real line, one cannot extract $\alpha$ by fitting a power law to $S(k)$ directly. To overcome this, we use diffusion spreadability~\cite{torquato2021spreadability,hitinbialus2024}, which smooths over the Bragg spectrum and provides a clean route to $\alpha$.
 
 %----------------------------------------------------------------------
-\subsection{Uniformly randomized lattices}
-\label{sec:theory-url}
+\subsection{Diffusion spreadability}
+\label{sec:theory-spreadability}
 %----------------------------------------------------------------------
 
-The metallic-mean chains discussed in Sec.~\ref{sec:theory-eigenvalue} are all Class~I with $\alpha = 3$. To examine Class~I behavior at $\alpha = 2$ and to obtain an exact reference value for $\bar\Lambda$, we also study the uniformly randomized lattice (URL), which is constructed by taking the integer lattice and independently displacing each site by a uniform random amount on $[-a/2, a/2]$~\cite{klatt2020perturbed}. 
-
-Because the displacements are independent and identically distributed, the only correlations between sites come from the underlying lattice. On large scales, any window of half-width $R \gg a$ then contains close to $2\rho R$ points, with fluctuations only from the boundary region of width $\sim a$ where a displaced site may or may not fall inside. These boundary fluctuations do not grow with $R$, so $\sigma^2(R)$ is bounded and the URL is Class~I hyperuniform. The structure factor vanishes quadratically near the origin, $S(k) \sim k^2$, giving $\alpha = 2$ for all $a > 0$~\cite{klatt2020perturbed}.
-
-Klatt, Kim, and Torquato~\cite{klatt2020perturbed} derived an exact expression for $\bar\Lambda$ in one dimension:
+To extract $\alpha$ from a point pattern, we convert it into a heterogeneous medium and study how transport through that medium reflects the pattern's large-scale structure. For a one-dimensional point pattern, we can construct a two-phase medium by centering a solid rod at each point, with the remaining space treated as void. The quantity that governs transport through this medium is not the bare structure factor $S(k)$, which describes correlations between points, but the spectral density
 \begin{equation}
- \bar\Lambda(a) = \frac{1 + a^2}{6}.
+ \tilde\chi_V(k) = \rho\,|\tilde{m}(k)|^2\,S(k),
+ \label{eq:spectral-density}
+\end{equation}
+where $\tilde{m}(k)$ is the Fourier transform of the rod indicator function~\cite{torquato2021spreadability}. The form factor $|\tilde{m}(k)|^2$ provides a smooth, decaying envelope that damps the Bragg peaks at large $k$, making $\tilde\chi_V(k)$ better behaved than $S(k)$ itself. 
+
+The diffusion spreadability $\mathcal{S}(t)$ measures how quickly solute, initially distributed uniformly in the solid phase and absent from the void, spreads into the void over time. In $d$ dimensions, the excess spreadability has the exact Fourier-space representation~\cite{torquato2021spreadability}
+\begin{equation}
+ \mathcal{S}(\infty) - \mathcal{S}(t) = \frac{1}{(2\pi)^d\,\phi_2}\int \tilde\chi_V(\mathbf{k})\,e^{-k^2 D t}\,d\mathbf{k},
+ \label{eq:spreadability}
+\end{equation}
+where $\phi_2$ is the packing fraction and $D$ is the diffusion coefficient. The Gaussian kernel $e^{-k^2 Dt}$ acts as a progressive low-pass filter on the spectral density~\cite{hitinbialus2024,wang2022spreadability}. At short times, all Fourier modes contribute and the dense Bragg peaks dominate the sum. As $t$ grows, the kernel damps high-$k$ modes first, progressively smoothing out the Bragg spectrum until only the small-$k$ behavior of $\tilde\chi_V(k)$ survives. This smoothing is what allows spreadability to extract a clean power law from a dense Bragg spectrum, where direct fitting of $S(k)$ cannot~\cite{hitinbialus2024}.
+
+If the spectral density vanishes as $\tilde\chi_V(k) \sim |k|^\alpha$ near the origin, the excess spreadability decays at long times as~\cite{torquato2021spreadability}
+\begin{equation}
+ \mathcal{S}(\infty) - \mathcal{S}(t) \sim t^{-(d+\alpha)/2}.
+ \label{eq:spread-powerlaw}
+\end{equation}
+In one dimension ($d = 1$), this becomes $t^{-(1+\alpha)/2}$. The mechanism behind this decay is that larger $\alpha$ suppresses long-wavelength modes of $\tilde\chi_V(k)$ more strongly, so $\tilde\chi_V(k)$ vanishes more quickly near $k = 0$ and the solute spreads to uniformity faster. For example, a one-dimensional Class~I pattern with $\alpha = 3$ has excess spreadability decaying as $t^{-2}$, while one with $\alpha = 1.5$ decays only as $t^{-1.25}$. The hyperuniformity exponent therefore connects the structure of a point pattern to measurable physical properties of the corresponding two-phase medium.
+
+%----------------------------------------------------------------------
+\subsection{Other hyperuniform systems}
+\label{sec:theory-comparison}
+%----------------------------------------------------------------------
+
+The substitution tilings described in Sec.~\ref{sec:theory-eigenvalue} are all deterministic and ordered, with $\alpha$ fixed by the substitution matrix. To place these tilings in a broader context, we also study two comparison families that achieve hyperuniformity through different mechanisms.
+
+The uniformly randomized lattice (URL) is constructed by taking the one-dimensional integer lattice and independently displacing each site by a uniform random amount on $[-a/2, a/2]$~\cite{klatt2020perturbed}. Because the displacements are independent, the only correlations between sites come from the underlying lattice. On large scales, any window of half-width $R \gg a$ contains close to $2\rho R$ points, with fluctuations only from the boundary region of width $\sim a$ where a displaced site may or may not fall inside. These boundary fluctuations do not grow with $R$, so $\sigma^2(R)$ is bounded and the URL is Class~I hyperuniform with $S(k) \sim k^2$, giving $\alpha = 2$ for all $a > 0$. For URLs, an exact expression for $\bar\Lambda$ in one dimension~\cite{klatt2020perturbed} is
+\begin{equation}
+ \bar\Lambda(a) = \frac{a}{3} + \frac{\{a\}^2(1-\{a\})^2}{6a^2},
  \label{eq:url-lambda}
 \end{equation}
-At $a = 0$ this reduces to the integer lattice minimum $\bar\Lambda = 1/6$. As $a$ increases, so does $\bar\Lambda$: larger perturbations produce more variable density fluctuations.
+where $\{a\}$ denotes the fractional part of $a$. The first term is a continuous contribution that grows with $a$, while the second term comes from the Bragg peaks inherited from the underlying lattice~\cite{klatt2020perturbed}. For $0 < a < 1$, where $\{a\} = a$, this simplifies to $\bar\Lambda(a) = (1+a^2)/6$. At $a = 0$ the formula reduces to the integer lattice minimum $\bar\Lambda = 1/6$, and $\bar\Lambda$ increases monotonically with $a$.
 
-%----------------------------------------------------------------------
-\subsection{Stealthy hyperuniform patterns}
-\label{sec:theory-stealthy}
-%----------------------------------------------------------------------
-
-Substitution tilings achieve hyperuniformity through their algebraic structure, and perturbed lattices inherit it from the underlying crystal. A third mechanism is to engineer hyperuniformity directly in Fourier space. A stealthy hyperuniform pattern satisfies the condition
+Hyperuniformity can also be imposed directly in Fourier space. A stealthy hyperuniform pattern satisfies~\cite{torquato2015ensemble}
 \begin{equation}
- S(k) = 0 \quad \text{for all } |k| < K^*,
+ S(k) = 0 \quad \text{for all }|k| \leq K^*,
  \label{eq:stealthy-condition}
 \end{equation}
-where $K^*$ is a finite exclusion radius~\cite{torquato2015ensemble}. The structure factor vanishes not just at $k = 0$ but over an entire interval, making these patterns invisible to scattering at long wavelengths.
-
-Stealthy patterns are realized as ground states of a pair potential that penalizes all density fluctuations at wavevectors $|k| < K^*$~\cite{torquato2015ensemble}. Minimizing the total potential energy forces $S(k)$ to zero for all $|k| < K^*$, which is exactly the stealthiness condition in Eq.~\eqref{eq:stealthy-condition}.
-
-Stealthy patterns are characterized by the parameter
-\begin{equation}
- \chi = \frac{M(K^*)}{N - 1},
- \label{eq:chi-def}
-\end{equation}
-where $M(K^*)$ is the number of independently constrained wavevectors $k = 2\pi m/L$ satisfying $0 < |k| \leq K^*$, and $N - 1$ is the number of translational degrees of freedom~\cite{torquato2015ensemble}. The ratio $\chi$ measures the fraction of Fourier modes that are constrained to zero. Because $S(k) = 0$ over a finite interval rather than vanishing as a power law $S(k) \sim |k|^\alpha$, stealthy patterns do not fit the standard three-class framework and the exponent $\alpha$ is not defined for them. However, $\bar\Lambda$ is still well-defined for stealthy patterns and is what we use to compare them.
+where $K^*$ is a finite exclusion radius. The structure factor vanishes not just at $k = 0$ but over an entire interval, making these patterns invisible to scattering at long wavelengths. Stealthy patterns are realized as ground states of a pair potential that penalizes all density fluctuations at wavevectors $|k| \leq K^*$~\cite{torquato2015ensemble}. They are characterized by the parameter $\chi = M(K^*)/[d(N-1)]$, where $M(K^*)$ is the number of independently constrained wavevectors satisfying $0 < |k| \leq K^*$ and $d$ is the spatial dimension~\cite{torquato2015ensemble}. The ratio $\chi$ measures the fraction of degrees of freedom that are constrained to zero. Because $S(k) = 0$ over a finite interval rather than vanishing as a power law, stealthy patterns do not fit the standard three-class framework and $\alpha$ is not defined for them. However, $\bar\Lambda$ is still well-defined and is what we use to compare them with other patterns.
 
 \section{Methods}
 \label{sec:methods}
@@ -278,67 +251,73 @@ where $M(K^*)$ is the number of independently constrained wavevectors $k = 2\pi 
 \label{sec:methods-patterns}
 %----------------------------------------------------------------------
 
-Substitution tilings are generated by iteratively applying the substitution rules to a seed word until the tiling exceeds $10^6$ tiles, which is large enough that finite-size effects on $\sigma^2(R)$ are negligible. Tile lengths are set as described in Sec.~\ref{sec:theory-eigenvalue}, and points are then placed at tile boundaries to produce the one-dimensional point pattern. The URL patterns are generated by starting from an integer lattice of $N = 50{,}000$ points and displacing each site independently by a uniform random variable on $[-a/2, a/2]$, with $a$ taking 17 values between 0.05 and 2.0 to span the range from weak to strong perturbations. Data for stealthy configurations was provided by a collaborator, with $N = 2{,}000$ points at density $\rho = 1$. For each of three values $\chi \in \{0.1, 0.2, 0.3\}$, we worked with an ensemble of several thousand independent realizations of the stealthy ground state, over which $\sigma^2(R)$ is averaged to obtain a representative ensemble estimate.
+Substitution tilings are generated by iteratively applying the substitution rules to a seed tile until the number of tiles exceeds $10^6$, which is large enough that finite-size effects on $\sigma^2(R)$ are negligible. When higher precision is needed for spreadability-based extraction of $\alpha$, we use larger chains with $N \sim 10^7$. The tile lengths are set by the eigenvalues of the substitution matrix so that the ratio of tile lengths is preserved under each substitution step, as described in Sec.~\ref{sec:theory-eigenvalue}. Points are placed at the left endpoint of each tile, producing a one-dimensional point pattern with $N$ points and total domain length $L$. 
+
+URL patterns are generated by starting from an integer lattice of $N = 50{,}000$ points and displacing each site independently by a uniform random variable on $[-a/2, a/2]$, with $a$ taking 17 values between 0.05 and 2.0 to span the range from weak to strong perturbations.
+
+Data for stealthy configurations were provided by a collaborator, consisting of disordered ground states of the collective-coordinate potential~\cite{torquato2015ensemble} with $N = 2{,}000$ points at density $\rho = 1$. For each of three values $\chi \in \{0.1, 0.2, 0.3\}$, we use an ensemble of approximately 4{,}300 independent configurations, over which $\sigma^2(R)$ is averaged to obtain a representative ensemble estimate.
 
 %----------------------------------------------------------------------
 \subsection{Extraction of $\alpha$ and $\bar\Lambda$}
 \label{sec:methods-variance}
+\label{sec:methods-alpha}
 %----------------------------------------------------------------------
 
-We extract two quantities from each pattern: the surface-area coefficient $\bar\Lambda$ (or its Class~II/III generalization), obtained from the number variance $\sigma^2(R)$ in real space, and the hyperuniformity exponent $\alpha$, obtained from the eigenvalue formula for substitution tilings (Eq.~\eqref{eq:eigenvalue-formula}), analytically for URL patterns~\cite{klatt2020perturbed}, and numerically via the spreadability method as an independent check~\cite{torquato2021spreadability}.
+For substitution tilings, $\alpha$ is analytically determined from the eigenvalue formula (Eq.~\eqref{eq:eigenvalue-formula}). As an independent numerical check, we also measure $\alpha$ via diffusion spreadability.
 
-We compute $\sigma^2(R)$ by randomly placing $30{,}000$ windows of half-width $R$ along the pattern and recording the variance of the point counts across all window placements. We impose periodic boundary conditions on the pattern and restrict window half-widths to $R < L/4$ so that each window samples only a fraction of the total pattern. We evaluate $\sigma^2(R)$ at several thousand values of $R$, ranging from below the mean point spacing up to this maximum, to resolve the full large-$R$ behavior. For stealthy patterns, where the ensemble captures configuration-to-configuration variability, $\sigma^2(R)$ is computed for each configuration individually and then averaged across the full ensemble before extracting $\bar\Lambda$.
-
-We extract $\bar\Lambda$ as the running average of $\sigma^2(R)$ over the upper two-thirds of the sampled $R$ range, where the variance has settled into its large-$R$ asymptotic behavior. For quasicrystals whose variance oscillates persistently rather than converging pointwise, this running average converges to a stable mean level, and we take that level as $\bar\Lambda$.
-
-For Class~II and Class~III patterns, $\bar\Lambda$ diverges and we instead extract $\Lambda_\text{II}$ and $\Lambda_\text{III}$ by fitting the large-$R$ variance data to the appropriate scaling forms. For Class~II we fit $\sigma^2(R) = \Lambda_\text{II}\ln R + b$, where the additive constant $b$ absorbs subleading contributions that would otherwise bias the extracted $\Lambda_\text{II}$. For Class~III we fit $\sigma^2(R) = A\,R^{\beta}$ with both $A$ and $\beta$ as free parameters, from which $\Lambda_\text{III} = A$ and $\alpha = 1 - \beta$. Leaving $\beta$ free means the fit independently determines $\alpha$ from the variance data alone, instead of just assuming the prediction from Eq.~\eqref{eq:eigenvalue-formula}.
-
-As an independent numerical check on $\alpha$, we use the diffusion spreadability method~\cite{torquato2021spreadability, wang2022spreadability, hitinbialus2024}. The spreadability measures how quickly an initially localized concentration field spreads through a heterogeneous medium. For a hyperuniform medium, the long-time decay rate of this spreading is controlled by $\alpha$, so we can fit the decay rate to get $\alpha$~\cite{torquato2021spreadability}.
-
-To apply the method, each point pattern is embedded in a one-dimensional two-phase medium by centering a solid rod of half-length $a = \phi_2/(2\rho)$ at each point, giving packing fraction $\phi_2 = 0.35$~\cite{hitinbialus2024}. From the structure factor $S(k)$, computed via discrete Fourier transform, we obtain the spectral density~\cite{torquato2021spreadability}
+To apply the spreadability method, each point pattern is embedded in a two-phase medium with packing fraction $\phi_2 = 0.35$ by centering a solid rod of half-length $a = \phi_2/(2\rho)$ at each point~\cite{hitinbialus2024}. Extracting $\alpha$ from this medium requires the spectral density $\tilde\chi_V(k)$, which we obtain by first computing the structure factor $S(k)$ of the point pattern. We compute $S(k)$ by binning the point positions into a histogram with the number of bins chosen as the next power of 2 above $2L$ for FFT efficiency, and taking a real-valued fast Fourier transform. From $S(k)$, we get $\tilde\chi_V(k)$ using Eq.~\eqref{eq:spectral-density}. In one dimension, the integral in Eq.~\eqref{eq:spreadability} becomes the discrete sum
 \begin{equation}
-  \tilde\chi_V(k) = \rho\,|\tilde{m}(k)|^2\,S(k),
-  \label{eq:spectral-density}
+ \mathcal{S}(\infty) - \mathcal{S}(t) = \frac{\Delta k}{\pi\phi_2}\sum_{n=1}^{N_k} \tilde\chi_V(k_n)\,e^{-k_n^2 D t},
+ \label{eq:spreadability-discrete}
 \end{equation}
-where $\tilde{m}(k)$ is the Fourier transform of the rod indicator function. The excess spreadability is then~\cite{torquato2021spreadability, wang2022spreadability}
+where $\Delta k = 2\pi/L$ is the wavevector spacing and $k_n = n\Delta k$. We evaluate this sum at 500 logarithmically spaced time points from $t = 1$ to $t = 10^6$ with $D = 1$. At short times, the spreadability is dominated by local structure and does not yet follow a power law, so we fit $\ln[\mathcal{S}(\infty) - \mathcal{S}(t)]$ vs.\ $\ln t$ over the time window $t \in [10^2, 10^5]$. Over this time frame, only the small-$k$ behavior of $\tilde\chi_V(k)$ contributes, and from our fit we can extract $\alpha$ from the slope $= -(1+\alpha)/2$.
+
+This simple log-slope approach can converge slowly for patterns whose subleading eigenvalue $|\lambda_2|$ is close to 1, because the correction terms in the spreadability asymptotics remain large even at $t \sim 10^5$--$10^6$. These corrections can be absorbed by fitting the excess spreadability to the form~\cite{yuan2026spreadability}
 \begin{equation}
-  \mathcal{S}(t) = \frac{d_k}{\pi\phi_2}\sum_n \tilde\chi_V(k_n)\,e^{-k_n^2 D t},
-  \label{eq:spreadability}
+\ln[\mathcal{S}(\infty) - \mathcal{S}(t)] = -\frac{d+\alpha}{2}\ln t + \ln\!\left(\sum_{j=0}^{n} C_j\, t^{-j/2}\right),
+\label{eq:yuan-typeI}
 \end{equation}
-where $d_k = 2\pi/L$ is the wavevector spacing and $D$ is the diffusion coefficient. For a Class~I hyperuniform medium, $\mathcal{S}(t)$ decays as a power law at long times~\cite{torquato2021spreadability}:
-\begin{equation}
-  \mathcal{S}(t) \sim t^{-(1+\alpha)/2},
-  \label{eq:spread-powerlaw}
-\end{equation}
-and fitting $\ln \mathcal{S}$ vs.\ $\ln t$ yields $\alpha$. We use spreadability as a numerical check on $\alpha$ for all substitution tilings in this study.
+where the $n+1$ coefficients $C_j$ and the exponent $\alpha$ are determined by a nonlinear fit. This is the Type~I fitting function of order $n$~\cite{yuan2026spreadability}, the most general of three fitting forms proposed therein. When $n = 0$, the sum reduces to a single constant and the fit is equivalent to the simple log-slope method. Each additional term absorbs one more order of subleading decay that would otherwise bias the extracted $\alpha$ at finite $t$. This expansion assumes that the spectral density $\tilde\chi_V(k)$ can be expanded in integer powers of $k$ at the origin, which does not hold for quasicrystalline media with dense Bragg peaks~\cite{yuan2026spreadability}. For such media, the excess spreadability oscillates between two power-law envelopes $C_\pm\, t^{-(d+\alpha)/2}$ rather than decaying smoothly. Nevertheless, we find that the Type~I fit still produces accurate results at moderate $n$.
+
+$\bar\Lambda$ is extracted from the number variance $\sigma^2(R)$ in real space. We compute $\sigma^2(R)$ by randomly placing $30{,}000$ windows of half-width $R$ along the pattern with periodic boundary conditions and recording the variance of the point counts across all placements. We restrict $R < L/4$ to avoid finite-size artifacts and evaluate $\sigma^2(R)$ at 4{,}000 values of $R$, ranging from below the mean point spacing up to this maximum.
+
+For Class~I patterns, $\bar\Lambda$ is extracted as the mean of $\sigma^2(R)$ over the upper two-thirds of the sampled $R$ range, where the variance has settled into its large-$R$ asymptotic behavior. For quasicrystals, whose variance oscillates persistently at all scales due to the dense Bragg spectrum, this running average converges to a stable mean level that we take as $\bar\Lambda$.
+
+For Class~II and Class~III patterns, $\bar\Lambda$ diverges and we instead extract $\Lambda_\text{II}$ and $\Lambda_\text{III}$ by fitting the large-$R$ variance data to the scaling forms in Eqs.~\eqref{eq:lambda-II}--\eqref{eq:lambda-III}. For Class~II we fit $\sigma^2(R) = \Lambda_\text{II}\ln R + b$, where the additive constant $b$ absorbs subleading contributions. For Class~III we fit $\sigma^2(R) = A\,R^{\beta}$ with both $A$ and $\beta$ as free parameters, yielding $\Lambda_\text{III} = A$ and $\alpha = 1 - \beta$. Leaving $\beta$ free provides an independent determination of $\alpha$ from the variance data, which we compare against the eigenvalue-formula prediction.
 
 %----------------------------------------------------------------------
 \subsection{Validation}
 \label{sec:methods-validation}
 %----------------------------------------------------------------------
 
-We verify the variance estimation procedure against three benchmarks of increasing complexity before applying it to the systems of interest. First, applying the procedure to a Poisson process recovers the theoretical linear scaling $\sigma^2(R) = 2\rho R$ to within $1.1\%$, confirming that the sliding-window algorithm is unbiased. Second, the URL exact formula $\bar\Lambda = (1+a^2)/6$ is reproduced to better than $0.3\%$ across all 7 values of $a$ tested, verifying that the running-average extraction works correctly for a correlated system with known $\bar\Lambda$. Third, our computed value $\bar\Lambda = 0.2000$ for the Fibonacci chain agrees with the literature value $\bar\Lambda = 0.20110$ of Zachary and Torquato~\cite{zachary2009hyperuniform} to within $0.55\%$, which is the only prior computation of $\bar\Lambda$ for a quasicrystal.
+We verify both the variance and spreadability pipelines against systems whose exact results are known analytically.
+
+As a first check on the sliding-window variance algorithm, we generated a one-dimensional Poisson process with $N = 50{,}000$ points at unit density and computed $\sigma^2(R)$ using $30{,}000$ random window placements at each of 50 values of $R$, averaged over 20 independent realizations. The measured variance recovers the exact scaling $\sigma^2(R) = 2\rho R$ to within $0.3\%$ mean relative error across the full $R$-range (Fig.~\ref{fig:poisson-benchmark}).
+
+We then computed $\bar\Lambda$ for URL patterns at 17 values of the displacement amplitude $a \in [0.05, 2.0]$, each with $N = 50{,}000$ points. The numerical values agree with the exact formula (Eq.~\ref{eq:url-lambda})~\cite{klatt2020perturbed} to better than $0.3\%$ at every $a$ tested, verifying that the running-average extraction of $\bar\Lambda$ is accurate for both weak and strong perturbations.
+
+For the Fibonacci chain at $N \approx 1{,}000{,}000$ tiles with $30{,}000$ window placements, our procedure yields $\bar\Lambda = 0.200$, which agrees with the $\bar\Lambda = 0.20110$ computed via a theta-function method~\cite{zachary2009hyperuniform} to within $0.55\%$. The small discrepancy is consistent with finite-size effects at our chain length.
+
+As a check on the spreadability pipeline, we computed $\alpha$ for the Fibonacci chain ($N \approx 15{,}000{,}000$) using the log-slope fit over the window $t \in [10^2, 10^5]$ described in Sec.~\ref{sec:methods-alpha}. The extracted value $\hat\alpha = 3.05$ agrees with the eigenvalue-formula prediction $\alpha = 3$ to within $2\%$. Higher precision (${\sim}0.01\%$) has been achieved using larger systems and thermodynamic-limit extrapolation~\cite{hitinbialus2024}, but our simpler log-slope fit on a single finite chain is sufficient for the classification purposes of this work.
 
 \section{Results}
 \label{sec:results}
-
-(I'm still currently organizing my results, so this section is missing a significant portion of discussion which I will add.)
 
 %----------------------------------------------------------------------
 \subsection{Metallic-mean family}
 \label{sec:results-metallic}
 %----------------------------------------------------------------------
 
-We begin with the metallic-mean family $S \to L$, $L \to L^n S$ for $n = 1$ through $5$, which spans the Fibonacci, silver, bronze, copper, and nickel chains (Fig.~\ref{fig:metallic-tiles}). As $n$ grows, the long tile becomes much longer than the short tile: short tiles make up $36\%$ of the Fibonacci sequence but only $8\%$ at $n = 10$.
+We begin with the metallic-mean family $S \to L$, $L \to L^n S$, shown in Fig.~\ref{fig:metallic-tiles} for $n = 1$ through $10$. Table~\ref{tab:metallic} lists the first five members of this family, spanning the Fibonacci, silver, bronze, copper, and nickel chains. As $n$ grows, the long tile becomes much longer than the short tile: short tiles make up $38\%$ of the Fibonacci sequence but only $9\%$ at $n = 10$.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\linewidth]{fig_metallic_tiles_extended.png}
-\caption{Metallic-mean tile sequences for $n = 1$ (Fibonacci) through $n = 10$, 25 tiles each. Long tiles (blue) have length $\mu_n$, while short tiles (red) have length~1.}
+\caption{Metallic-mean tile sequences for selected $n$ from 1 to 10, 25 tiles each. Long tiles (blue) have length $\mu_n$, while short tiles (red) have length~1.}
 \label{fig:metallic-tiles}
 \end{figure}
 
-As shown in Sec.~\ref{sec:theory-eigenvalue}, the eigenvalue formula predicts $\alpha = 3$ for every member of this family regardless of $n$. Table~\ref{tab:metallic} confirms this: the spreadability-based estimates of $\alpha$ agree with the prediction to within $4\%$ for all five chains, with accuracy decreasing at larger $n$ due to stronger log-periodic oscillations in $\mathcal{S}(t)$. The integer lattice ($\bar\Lambda = 1/6$) is included as the proven global minimum~\cite{torquato2003local}, and only the Fibonacci $\bar\Lambda$ was previously known~\cite{zachary2009hyperuniform}.
+As shown in Sec.~\ref{sec:theory-eigenvalue}, the eigenvalue formula predicts $\alpha = 3$ for every member of this family regardless of $n$. Table~\ref{tab:metallic} confirms this: the spreadability-based estimates of $\alpha$ agree with the prediction to within $5\%$ for all five chains, with the largest errors at $n = 5$ and $n = 4$ due to log-periodic oscillations in $\mathcal{S}(t)$. The integer lattice ($\bar\Lambda = 1/6$) is included as the proven global minimum~\cite{torquato2003local}, and only the Fibonacci $\bar\Lambda$ was previously computed~\cite{zachary2009hyperuniform}.
 
 \begin{table}[H]
 \centering
@@ -350,7 +329,7 @@ $n$ & Chain & $\mu_n$ & $\rho$ & $\alpha$ (eigenvalue) & $\alpha$ (spreadability
 1 & Fibonacci & 1.618 & 0.724 & 3 & 3.05 & 0.200 \\
 2 & Silver    & 2.414 & 0.500 & 3 & 2.99 & 0.250 \\
 3 & Bronze    & 3.303 & 0.361 & 3 & 2.99 & 0.282 \\
-4 & Copper    & 4.236 & 0.276 & 3 & 3.03 & 0.293 \\
+4 & Copper    & 4.236 & 0.276 & 3 & 3.08 & 0.293 \\
 5 & Nickel    & 5.193 & 0.222 & 3 & 2.88 & 0.310 \\
 \bottomrule
 \end{tabular}
@@ -358,8 +337,23 @@ $n$ & Chain & $\mu_n$ & $\rho$ & $\alpha$ (eigenvalue) & $\alpha$ (spreadability
 \label{tab:metallic}
 \end{table}
 
-\pagebreak
-All five chains have $\alpha = 3$, despite having very different tile-length ratios and overall structures. This demonstrates that $\alpha$ is determined entirely by the eigenvalues of the substitution matrix, not by the geometry of the tiles. For each pattern, the variance is bounded and oscillates about a mean level $\bar\Lambda$.\footnote{Plots of $\sigma^2(R)$ for the integer lattice and three metallic-mean quasicrystals are shown in Fig.~\ref{fig:bounded-variance}.} These $\bar\Lambda$ values are all different, increasing monotonically from $0.200$ (Fibonacci) to $0.310$ (Nickel), which shows that $\alpha$ and $\bar\Lambda$ indeed capture independent aspects of the pattern. While $\alpha$ controls how fast $S(k)$ vanishes near the origin, $\bar\Lambda$ measures the amplitude of the remaining density fluctuations.
+All five chains have $\alpha = 3$, despite having very different tile-length ratios and overall structures. This demonstrates that $\alpha$ is determined entirely by the eigenvalues of the substitution matrix, not by the geometry of the tiles. For each pattern, the variance is bounded and oscillates about a mean level $\bar\Lambda$ (Fig.~\ref{fig:bounded-variance}). These $\bar\Lambda$ values are all different, increasing monotonically from $0.200$ (Fibonacci) to $0.310$ (Nickel), which shows that $\alpha$ and $\bar\Lambda$ indeed capture independent aspects of the pattern. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{fig2_bounded_variance.png}
+\caption{Bounded number variance $\sigma^2(R)$ for the integer lattice and three metallic-mean chains. All four patterns are Class~I, but their mean variance levels ($\bar\Lambda$) differ. The three metallic-mean chains share $\alpha = 3$; the integer lattice has $\alpha = \infty$.}
+\label{fig:bounded-variance}
+\end{figure}
+
+Extending the computation beyond $n = 5$, $\bar\Lambda$ continues to increase monotonically and appears to approach a limiting value near $1/3$ as $n \to \infty$, as shown in Fig.~\ref{fig:metallic-convergence} below. Whether this limit is exactly $1/3$ remains a conjecture.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{fig_metallic_n500.png}
+\caption{$\bar\Lambda$ for the metallic-mean family, computed for $n = 1$ through $500$. The values increase monotonically and appear to approach a limit near $1/3$ (dashed line).}
+\label{fig:metallic-convergence}
+\end{figure}
 
 %----------------------------------------------------------------------
 \subsection{Structural constraints on $\alpha$}
@@ -367,24 +361,41 @@ All five chains have $\alpha = 3$, despite having very different tile-length rat
 \label{sec:results-other-alpha}
 %----------------------------------------------------------------------
 
-The bound $\alpha \leq 1 + 2/(r-1)$ from Eq.~\eqref{eq:alpha-bound} locks rank-2 matrices with $|\det M| = 1$ at $\alpha = 3$, as confirmed in Sec.~\ref{sec:results-metallic}. To reach other values of $\alpha$, we can either increase the rank of the substitution matrix or relax the condition $|\det M| = 1$.
+It is not a coincidence that metallic-mean chains give $\alpha = 3$. This result is forced by the structure of the substitution matrix. The eigenvalue formula (Eq.~\ref{eq:eigenvalue-formula}) combined with the condition $|\det M| = 1$ places an upper bound on $\alpha$. For a rank-$r$ Pisot matrix with $|\det M| = 1$, the product of all eigenvalues satisfies $|\lambda_1 \lambda_2 \cdots \lambda_r| = 1$. If all subleading eigenvalues have the same magnitude $|\lambda_i| = |\lambda_2|$ for $i \geq 2$, this gives $\lambda_1 |\lambda_2|^{r-1} = 1$, so $|\lambda_2| = \lambda_1^{-1/(r-1)}$. Substituting into the eigenvalue formula yields the maximum
+\begin{equation}
+\alpha \leq 1 + \frac{2}{r-1}.
+\label{eq:alpha-bound}
+\end{equation}
+For rank 2, this gives $\alpha \leq 3$, which the metallic-mean chains saturate. For rank 3, $\alpha \leq 2$. Higher-rank matrices with $|\det M| = 1$ are even more constrained. To reach values of $\alpha$ other than 3, we can either increase the rank of the substitution matrix or relax the condition $|\det M| = 1$.
 
-Increasing to rank 3 lowers the bound to $\alpha \leq 2$ and opens the range $1 < \alpha \leq 2$. The Bombieri-Taylor substitution~\cite{bombieri1986which} is a well-known example: its three-letter rule $a \to aac$, $b \to ac$, $c \to b$ has substitution matrix
+Increasing to rank 3 lowers the bound to $\alpha \leq 2$ and opens the range $1 < \alpha \leq 2$. For example, consider the substitution matrix with the three-letter rule $a \to aac$, $b \to ac$, $c \to b$~\cite{bombieri1986which}
 \begin{equation*}
 M_\text{BT} = \begin{pmatrix} 2 & 1 & 0 \\ 0 & 0 & 1 \\ 1 & 1 & 0 \end{pmatrix},
 \end{equation*}
-with $|\det M| = 1$ and largest eigenvalue $\lambda_1 \approx 2.247$. The eigenvalue formula gives $\alpha = 1.545$, and we measure $\bar\Lambda = 0.377$.
+with $|\det M| = 1$ and largest eigenvalue $\lambda_1 \approx 2.247$. The eigenvalue formula gives $\alpha = 1.545$, and we measure $\bar\Lambda = 0.377$ (Fig.~\ref{fig:bt-analysis}). This chain also illustrates why the improved spreadability fitting (Eq.~\ref{eq:yuan-typeI}) is necessary for some patterns. Because $\alpha = 1.545$ is relatively small, the asymptotic power law $t^{-(1+\alpha)/2}$ takes longer to dominate over subleading corrections, and even at $t \sim 10^5$ the simple log-slope method gives $\hat\alpha = 2.28$, a $48\%$ error. The improved Type~I fit at order $n = 6$ absorbs these corrections and reduces the error to below $10\%$ across all chain sizes tested, with the best result of $\hat\alpha = 1.57$ ($1.7\%$ error) at $N \approx 7 \times 10^6$ (Fig.~\ref{fig:yuan-spreadability}).
 
-Among rank-3 matrices, a special case arises when $\lambda_2$ and $\lambda_3$ form a complex conjugate pair. The condition $|\det M| = \lambda_1|\lambda_2|^2 = 1$ then forces $|\lambda_2| = 1/\sqrt{\lambda_1}$, and substituting into the eigenvalue formula gives $\alpha = 2$ exactly, regardless of $\lambda_1$. We verified this by exhaustively searching all 39,304 rank-3 matrices with non-negative integer entries and row sums $\leq 4$: of these, 504 are Pisot matrices with a complex eigenvalue pair, spanning 18 distinct values of $\lambda_1$ from 1.32 to 3.85, and all give $\alpha = 2$. One example is the rule $a \to bc$, $b \to c$, $c \to abc$, which gives $\bar\Lambda = 0.275$.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{fig_bt_2panel.png}
+\caption{Bombieri-Taylor chain ($\alpha = 1.545$). (a)~Bounded number variance with $\bar\Lambda = 0.377$. (b)~Spreadability decay compared to the theoretical power law $t^{-1.27}$.}
+\label{fig:bt-analysis}
+\end{figure}
 
-Together, these results show that no Pisot substitution matrix with $|\det M| = 1$ can produce $\alpha$ between 2 and 3: rank 2 is locked at $\alpha = 3$, while rank $\geq 3$ gives $\alpha \leq 2$. A further search over 24 million rank-4 matrices (row sums $\leq 3$) confirmed this gap.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\linewidth]{fig_yuan_improved.png}
+\caption{Improved spreadability fitting for the Bombieri-Taylor chain ($N = 6.8 \times 10^6$). (a)~Relative error in the extracted $\alpha$ vs.\ Type~I fitting order. The simple log-slope (order 0, red dashed) gives $48\%$ error; each additional order absorbs subleading corrections, reaching $1.7\%$ at order 6. (b)~Extracted exponent $\hat\alpha$ converging from $2.28$ (red dashed) toward the true value $\alpha = 1.545$ (green).}
+\label{fig:yuan-spreadability}
+\end{figure}
 
-However, this gap can be filled by allowing $|\det M| > 1$. For a rank-2 matrix, $|\det M| = \lambda_1|\lambda_2|$, so $|\lambda_2| = |\det M|/\lambda_1$. Substituting into Eq.~\eqref{eq:eigenvalue-formula} gives
+Among rank-3 matrices, a special case arises when $\lambda_2$ and $\lambda_3$ form a complex conjugate pair, so that $\det M = \lambda_1 |\lambda_2|^2$. Setting $|\det M| = 1$ forces $|\lambda_2| = 1/\sqrt{\lambda_1}$, which gives $\alpha = 2$ exactly, regardless of $\lambda_1$. In order to check this, we searched all $39{,}304$ rank-3 matrices with non-negative integer entries and row sums $\leq 4$. Of these, 504 are Pisot matrices with a complex eigenvalue pair, spanning 18 distinct values of $\lambda_1$ from 1.32 to 3.85, and all give $\alpha = 2$. One example, which we will later refer to as the cubic $\alpha = 2$ chain, is the rule $a \to bc$, $b \to c$, $c \to abc$, which gives $\bar\Lambda = 0.275$.
+
+Because rank-2 matrices with $|\det M| = 1$ always give $\alpha = 3$ and rank $\geq 3$ gives $\alpha \leq 2$, no Pisot matrix with $|\det M| = 1$ can produce $\alpha$ in the interval $(2, 3)$. This was confirmed by a further search over 24 million rank-4 matrices with row sums $\leq 4$. However, we can construct matrices with $\alpha$ in $(2,3)$ by allowing $|\det M| > 1$. For a rank-2 matrix, $|\det M| = \lambda_1|\lambda_2|$, so $|\lambda_2| = |\det M|/\lambda_1$. Substituting into Eq.~\eqref{eq:eigenvalue-formula} gives
 \begin{equation}
  \alpha = 3 - \frac{2\ln|\det M|}{\ln\lambda_1},
  \label{eq:alpha-detgt1}
 \end{equation}
-which reduces to $\alpha = 3$ when $|\det M| = 1$ but yields $\alpha < 3$ when $|\det M| > 1$. For $\alpha$ to remain above 2, we need $|\det M| < \sqrt{\lambda_1}$. Becuse $|\det M|$ is a positive integer, the smallest useful value is $|\det M| = 2$, which requires $\lambda_1 > 4$. The simplest such matrix is $M = \bigl(\begin{smallmatrix} 0 & 2 \\ 1 & 4 \end{smallmatrix}\bigr)$ with $\lambda_1 = 2 + \sqrt{6} \approx 4.449$, giving $\alpha = 2.071$. A systematic search over all rank-2 matrices with row sums $\leq 10$ found 138 matrices with $|\det M| = 2$ and $\alpha$ between 2.071 and 2.393, spanning 12 distinct $\alpha$ values. Table~\ref{tab:detgt1} shows the 7 most populated $\alpha$ values. Within each group, $\bar\Lambda$ varies by factors of 5--15, showing that even matrices with identical eigenvalues can produce very different levels of density fluctuation.
+which reduces to $\alpha = 3$ when $|\det M| = 1$ but yields $\alpha < 3$ when $|\det M| > 1$. For $\alpha$ to remain above 2, we need $|\det M| < \sqrt{\lambda_1}$. Because $|\det M|$ is a positive integer, the smallest useful value is $|\det M| = 2$, which requires $\lambda_1 > 4$. The simplest such matrix is $M = \bigl(\begin{smallmatrix} 0 & 2 \\ 1 & 4 \end{smallmatrix}\bigr)$, with rules $a \to b$, $b \to aabbbb$, $\lambda_1 = 2 + \sqrt{6} \approx 4.449$, giving $\alpha = 2.071$ (Fig.~\ref{fig:detgt1-chain}). A systematic search over all rank-2 matrices with row sums $\leq 10$ found 138 matrices with $|\det M| = 2$ and $\alpha$ between 2.071 and 2.392, spanning 12 distinct $\alpha$ values. Table~\ref{tab:detgt1} lists all 12 groups. Within each group, $\bar\Lambda$ varies by factors of 5--15, showing that even matrices with identical eigenvalues can produce very different levels of density fluctuation.
 
 \begin{table}[H]
 \centering
@@ -395,15 +406,27 @@ $\alpha$ & Chains & $\bar\Lambda$ range \\
 2.071 & 12 & $[0.32,\; 2.01]$ \\
 2.087 & 10 & $[0.34,\; 1.57]$ \\
 2.175 & 18 & $[0.32,\; 3.36]$ \\
+2.199 & 14 & $[0.34,\; 3.57]$ \\
+2.248 & 10 & $[0.33,\; 2.82]$ \\
 2.271 & 16 & $[0.34,\; 3.76]$ \\
 2.301 & 18 & $[0.33,\; 4.05]$ \\
+2.323 &  4 & $[0.34,\; 2.99]$ \\
+2.343 & 12 & $[0.33,\; 4.79]$ \\
 2.362 & 12 & $[0.34,\; 4.80]$ \\
-2.393 &  4 & $[0.34,\; 5.08]$ \\
+2.376 &  8 & $[0.33,\; 4.97]$ \\
+2.392 &  4 & $[0.34,\; 5.08]$ \\
 \bottomrule
 \end{tabular}
-\caption{Rank-2 matrices with $|\det M| = 2$ and $\alpha \in (2,3)$. 138 chains total across 12 distinct $\alpha$ values (only 7 are shown).}
+\caption{Rank-2 matrices with $|\det M| = 2$ and $\alpha \in (2,3)$. 138 chains total across 12 distinct $\alpha$ values.}
 \label{tab:detgt1}
 \end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.98\linewidth]{fig_detgt1_chain.png}
+\caption{The simplest $|\det M| = 2$ chain ($a \to b$, $b \to aabbbb$, $\alpha = 2.071$, $N \approx 900{,}000$). (a)~Number variance $\sigma^2(R)$ showing large log-periodic oscillations. (b)~Running average $\bar\Lambda(R)$ converging toward $\bar\Lambda \approx 0.65$.}
+\label{fig:detgt1-chain}
+\end{figure}
 
 %----------------------------------------------------------------------
 \subsection{Classes~II and~III}
@@ -414,25 +437,22 @@ The patterns discussed so far are all Class~I ($\alpha > 1$). To complete the pi
 
 The period-doubling chain, with rule $S \to L$, $L \to LSS$ and matrix $M = \bigl(\begin{smallmatrix} 0 & 2 \\ 1 & 1 \end{smallmatrix}\bigr)$, has eigenvalues $\lambda_1 = 2$ and $\lambda_2 = -1$. Because $|\lambda_2| = 1$, the eigenvalue formula gives $\alpha = 1$ exactly, placing it at the boundary between Class~I and Class~II. Its variance grows logarithmically, and fitting $\sigma^2(R) = \Lambda_\text{II}\ln R + b$ yields $\Lambda_\text{II} = 0.080$.
 
-The 0222 chain, with rule $S \to LL$, $L \to SSLL$ and matrix $M = \bigl(\begin{smallmatrix} 0 & 2 \\ 2 & 2 \end{smallmatrix}\bigr)$, has $\lambda_1 = 1 + \sqrt{5} \approx 3.236$ and $|\lambda_2| = \sqrt{5} - 1 \approx 1.236$. Because $|\lambda_2| > 1$, this is not a Pisot substitution, and the eigenvalue formula gives $\alpha = 0.639$, placing it in Class~III. Its variance grows as a power law, and the free-parameter fit $\sigma^2(R) = A\,R^\beta$ yields $\Lambda_\text{III} = 0.209$ with $\alpha = 1 - \beta = 0.68$. This is within $6\%$ of the eigenvalue prediction $\alpha = 0.639$, which can be attributed to the difficulty of extracting a clean power-law exponent from finite variance data with oscillations.
+The 0222 chain, with rule $S \to LL$, $L \to SSLL$ and matrix $M = \bigl(\begin{smallmatrix} 0 & 2 \\ 2 & 2 \end{smallmatrix}\bigr)$, has $\lambda_1 = 1 + \sqrt{5} \approx 3.236$ and $|\lambda_2| = \sqrt{5} - 1 \approx 1.236$. Because $|\lambda_2| > 1$, this is not a Pisot substitution, and the eigenvalue formula gives $\alpha = 0.639$, placing it in Class~III. Its variance grows as a power law, and the free-parameter fit $\sigma^2(R) = A\,R^\beta$ yields $\Lambda_\text{III} = 0.209$ with $\alpha = 1 - \beta = 0.684$. This is within $7\%$ of the eigenvalue prediction $\alpha = 0.639$, which can be attributed to the difficulty of extracting a clean power-law exponent from finite variance data with oscillations.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\linewidth]{fig_variance_II_III.png}
-\caption{Number variance $\sigma^2(R)$ for Classes~II and~III. Left: Period-Doubling (Class~II, $\alpha = 1$), with logarithmic growth and fitted coefficient $\Lambda_\text{II} = 0.080$. Right: 0222 chain (Class~III, $\alpha = 0.639$), with power-law growth $\sigma^2 \sim R^{0.316}$. Dashed lines show the fits described in Sec.~\ref{sec:methods-variance}.}
+\caption{Number variance $\sigma^2(R)$ for Classes~II and~III. (a)~Period-Doubling (Class~II, $\alpha = 1$), with logarithmic growth and fitted coefficient $\Lambda_\text{II} = 0.080$. (b)~0222 chain (Class~III, $\alpha = 0.639$), with power-law growth $\sigma^2 \sim R^{0.316}$. Dashed lines show the fits described in Sec.~\ref{sec:methods-variance}.}
 \label{fig:variance-classes}
 \end{figure}
 
+\pagebreak
 %----------------------------------------------------------------------
 \subsection{Ranking Class~I patterns by $\bar\Lambda$}
 \label{sec:results-ranking}
 %----------------------------------------------------------------------
 
-As shown in Table~\ref{tab:metallic} (and Figure~\ref{fig:metallic-convergence} in the appendix), $\bar\Lambda$ increases with $n$ as the tile-length ratio increases. Extending the computation to larger $n$ gives that $\bar\Lambda$ appears to approach a limiting value near $1/3$ as $n \to \infty$ (Fig.~\ref{fig:metallic-convergence}). We are still unsure if this limit is exact.
-
-The URL provides an exact benchmark: $\bar\Lambda(a) = (1+a^2)/6$~\cite{klatt2020perturbed}. Our numerical results match this formula to better than $0.3\%$ across all 17 values of $a$ tested (Fig.~\ref{fig:url-sweep}, Sec.~\ref{sec:methods-validation}) For stealthy configurations, $\bar\Lambda$ decreases as $\chi$ increases: $\bar\Lambda = 1.021$ at $\chi = 0.1$, $0.526$ at $\chi = 0.2$, and $0.357$ at $\chi = 0.3$. Constraining more Fourier modes to zero leaves less room for density fluctuations, which reduces $\bar\Lambda$ toward the lattice minimum.
-
-Table~\ref{tab:catalog} shows a catalog of patterns studied in this work, sorted by $\bar\Lambda$. The metallic-mean chains all have $\alpha = 3$ but vary by a factor of $1.5$ in $\bar\Lambda$. The 138 matrices with $|\det M| > 1$ (Table~\ref{tab:detgt1}) show even larger variation within each $\alpha$ group. Thus, knowing $\alpha$ alone is not enough to predict $\bar\Lambda$.
+Table~\ref{tab:catalog} collects all Class~I patterns studied in this work, sorted by $\bar\Lambda$, with the Class~II and~III results listed separately.
 
 \begin{table}[H]
 \centering
@@ -457,15 +477,30 @@ Period-Doubling       & II  & 1        & $\Lambda_\text{II} = 0.080$ \\
 0222 chain            & III & 0.639    & $\Lambda_\text{III} = 0.209$ \\
 \bottomrule
 \end{tabular}
-\caption{Catalog of patterns studied in this work, sorted by $\bar\Lambda$. The integer lattice achieves the proven global minimum $\bar\Lambda = 1/6$. Stealthy patterns do not have a power-law $\alpha$. Period-Doubling and 0222 chain have divergent $\bar\Lambda$ and are characterized by $\Lambda_\text{II}$ and $\Lambda_\text{III}$ instead.}
+\caption{Catalog of all patterns studied in this work, sorted by $\bar\Lambda$. Stealthy patterns have $S(k) = 0$ over a finite interval rather than vanishing as a power law, so $\alpha$ is not defined. Period-Doubling and 0222 chain have divergent $\bar\Lambda$ and are characterized by $\Lambda_\text{II}$ and $\Lambda_\text{III}$ instead.}
 \label{tab:catalog}
 \end{table}
+
+For the URL, our numerical $\bar\Lambda$ values confirm the exact formula (Eq.~\ref{eq:url-lambda})~\cite{klatt2020perturbed} to better than $0.3\%$ across all 17 values of $a$ tested\footnote{Shown in Fig.~\ref{fig:url-sweep}}. At integer values of $a$, the Bragg contribution vanishes and $\bar\Lambda = a/3$. For stealthy configurations, $S(k) = 0$ over the entire interval $|k| \leq K^*$, and $\bar\Lambda$ decreases as $\chi$ increases, from $1.021$ at $\chi = 0.1$ to $0.357$ at $\chi = 0.3$. We find that $\bar\Lambda \approx 1/(\pi^2\chi)$ in the disordered regime, though this is an empirical approximation rather than an exact result. Constraining a larger fraction of Fourier modes to zero leaves less room for density fluctuations, driving $\bar\Lambda$ toward the lattice minimum.
+
+Several features of the catalog stand out. As discussed in Sec.~\ref{sec:results-metallic}, the metallic-mean $\bar\Lambda$ appears to approach $1/3$ as $n \to \infty$. This is the same value achieved by the URL at $a = 1$, a disordered pattern with continuous $S(k)$ and $\alpha = 2$. Whether this numerical coincidence reflects a deeper connection between the two systems or is accidental remains an open question.
+
+The cubic $\alpha = 2$ chain ($\bar\Lambda = 0.275$) is a deterministic substitution tiling whose $\bar\Lambda$ matches that of a URL with $a \approx 0.8$. These two patterns share the same exponent and comparable fluctuation amplitude, but achieve hyperuniformity through completely different mechanisms. Similarly, stealthy patterns at $\chi = 0.3$ have $\bar\Lambda = 0.357$, which exceeds every metallic-mean chain, despite the fact that stealthy patterns suppress $S(k)$ to zero over a finite interval. Thus, perfect small-$k$ suppression does not guarantee tight local spatial order.
+
+The 138 chains with $|\det M| = 2$ (Table~\ref{tab:detgt1}) provide the strongest evidence that $\alpha$ and $\bar\Lambda$ are independent. Within each $\alpha$ group, $\bar\Lambda$ varies by factors of 5 to 15, depending on the full substitution rule rather than the eigenvalues alone. 
 
 \section{Conclusion}
 \label{sec:conclusion}
 
-I am still compiling and organizing my results for this report. I am thinking of adding the Yuan-Torquato (2026) improved spreadability method (and related analysis on why the original spreadability converged so slowly for the Bombieri-Taylor chain), in addition to continuing to develop the theory and results sections. 
+The standard three-class scheme for hyperuniformity sorts patterns by how fast $S(k)$ vanishes near the origin, but it does not distinguish between patterns within the same class. In this work, we computed both $\alpha$ and $\bar\Lambda$ for a broad collection of one-dimensional hyperuniform point patterns and found that these two metrics capture complementary information about large-scale structure. Patterns sharing the same $\alpha$ can differ in $\bar\Lambda$ by more than an order of magnitude, and patterns with different $\alpha$ can converge to the same $\bar\Lambda$. For the metallic-mean family, $\bar\Lambda$ increases monotonically with $n$ and appears to approach $1/3$, the value achieved by a uniformly randomized lattice at $a = 1$.
 
+The algebraic structure of the substitution matrix constrains which values of $\alpha$ are accessible. For Pisot matrices with $|\det M| = 1$, the bound $\alpha \leq 1 + 2/(r-1)$ locks rank-2 matrices at $\alpha = 3$ and rank-3 matrices at $\alpha \leq 2$, leaving the interval $(2,3)$ empty. Relaxing to $|\det M| = 2$ opens this gap, with 138 matrices found producing $\alpha$ values between 2.07 and 2.39. Within each $\alpha$ group, $\bar\Lambda$ varies widely, confirming that the full substitution rule, not just the eigenvalue spectrum, determines the amplitude of density fluctuations.
+
+From a physical standpoint, $\alpha$ controls the long-time decay rate of diffusion spreadability through the corresponding two-phase medium, while $\bar\Lambda$ sets the amplitude of the remaining fluctuations. Two patterns with the same $\alpha$ but different $\bar\Lambda$ will have the same asymptotic spreadability decay rate, but differ in the density fluctuations that persist at any finite scale. Similarly, stealthy patterns suppress $S(k)$ to zero over a finite interval, but their surface-area coefficient $\bar\Lambda$ can exceed that of every metallic-mean chain, showing that perfect small-$k$ suppression does not guarantee tight local spatial order.
+
+One limitation of the catalog is that the only $\alpha = 3$ patterns available are the ordered metallic-mean chains. A disordered family at the same exponent would allow a direct test of how order and disorder affect $\bar\Lambda$ at fixed $\alpha$, but no such family is currently known in one dimension. Several other questions remain open, including whether an analytical formula exists for the metallic-mean $\bar\Lambda$, whether the sequence converges to exactly $1/3$, and whether the two-axis framework extends naturally to two-dimensional quasicrystals such as Penrose and Ammann-Beenker tilings.
+
+\pagebreak
 %==============================================================================
 % Bibliography
 %==============================================================================
@@ -478,90 +513,73 @@ I am still compiling and organizing my results for this report. I am thinking of
 \label{app:extra-figures}
 
 % --- Variance ---
+% fig2_bounded_variance promoted to S4.1
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.8\linewidth]{fig2_bounded_variance.png}
-\caption{Bounded number variance for the integer lattice and three metallic-mean chains.}
-\label{fig:bounded-variance}
-\end{figure}
+% Commented out: not referenced in main text
+%\begin{figure}[H]
+%\centering
+%\includegraphics[width=0.8\linewidth]{figH_stealthy_variance.png}
+%\caption{Ensemble-averaged number variance for stealthy configurations at $\chi = 0.1, 0.2, 0.3$.}
+%\label{fig:stealthy-variance}
+%\end{figure}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.8\linewidth]{figH_stealthy_variance.png}
-\caption{Ensemble-averaged number variance for stealthy configurations at $\chi = 0.1, 0.2, 0.3$.}
-\label{fig:stealthy-variance}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\linewidth]{fig_detgt1_chain.png}
-\caption{Number variance and running $\bar\Lambda(R)$ for the simplest $|\det M| = 2$ chain ($\alpha = 2.071$).}
-\label{fig:detgt1-chain}
-\end{figure}
+% fig_detgt1_chain promoted to S4.2
 
 % --- Structure factor ---
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.75\linewidth]{stealthy_Sk_overlay.png}
-\caption{Structure factor $S(k)$ for stealthy configurations at three $\chi$ values. $S(k) = 0$ for $k < K^* = 2\pi\chi$.}
-\label{fig:stealthy-sk}
-\end{figure}
+% Commented out: not referenced in main text
+%\begin{figure}[H]
+%\centering
+%\includegraphics[width=0.75\linewidth]{stealthy_Sk_overlay.png}
+%\caption{Structure factor $S(k)$ for stealthy configurations at three $\chi$ values. $S(k) = 0$ for $|k| \leq K^*$.}
+%\label{fig:stealthy-sk}
+%\end{figure}
 
 % --- Spreadability and alpha extraction ---
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.85\linewidth]{fig8_alpha_extraction.png}
-\caption{Effective exponent $\alpha(t)$ from spreadability for three metallic-mean chains and a Poisson control. All three chains converge to $\alpha = 3$.}
-\label{fig:alpha-extraction}
-\end{figure}
+% Commented out: not referenced in main text
+%\begin{figure}[H]
+%\centering
+%\includegraphics[width=0.85\linewidth]{fig8_alpha_extraction.png}
+%\caption{Effective exponent $\alpha(t)$ from spreadability for three metallic-mean chains and a Poisson control. All three chains converge to $\alpha = 3$.}
+%\label{fig:alpha-extraction}
+%\end{figure}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.85\linewidth]{bombieri_taylor_analysis.png}
-\caption{Bombieri-Taylor chain ($\alpha = 1.545$): variance, structure factor, spreadability decay, and placement among known $\alpha$ values.}
-\label{fig:bt-analysis}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.85\linewidth]{fig_yuan_spreadability.png}
-\caption{Yuan-Torquato improved spreadability fitting: absolute error $|\hat\alpha - \alpha|$ vs.\ fitting order for Fibonacci and Bombieri-Taylor.}
-\label{fig:yuan-spreadability}
-\end{figure}
+% bombieri_taylor_analysis and yuan_spreadability promoted to S4.2
 
 % --- Validation ---
 
 \begin{figure}[H]
 \centering
+\includegraphics[width=0.85\linewidth]{fig1_poisson_benchmark.png}
+\caption{Poisson process variance benchmark. The measured $\sigma^2(R)$ agrees with the theoretical scaling $\sigma^2 = 2\rho R$ (dashed) to within $0.3\%$ mean relative error, averaged over 20 independent realizations.}
+\label{fig:poisson-benchmark}
+\end{figure}
+
+\begin{figure}[H]
+\centering
 \includegraphics[width=0.85\linewidth]{fig_url_sweep.png}
-\caption{Numerical $\bar\Lambda(a)$ vs.\ the exact formula $(1+a^2)/6$ for 17 values of $a$ for URLs.}
+\caption{Numerical $\bar\Lambda(a)$ vs.\ the exact formula (Eq.~\ref{eq:url-lambda}) for 17 values of $a$ for URLs.}
 \label{fig:url-sweep}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.85\linewidth]{fig_finite_size_alpha.png}
-\caption{Finite-size convergence. (a)~$\bar\Lambda$ from $\sigma^2(R)$ stabilizes by $N \sim 10^3$. (b)~BT original spreadability $\hat\alpha$ converges slowly in the fitting window, reaching the true value only at large $t$.}
-\label{fig:finite-size}
-\end{figure}
+% Commented out: not referenced in main text
+%\begin{figure}[H]
+%\centering
+%\includegraphics[width=0.85\linewidth]{fig_finite_size_alpha.png}
+%\caption{Finite-size convergence. (a)~$\bar\Lambda$ from $\sigma^2(R)$ stabilizes by $N \sim 10^3$. (b)~BT original spreadability $\hat\alpha$ converges slowly in the fitting window, reaching the true value only at large $t$.}
+%\label{fig:finite-size}
+%\end{figure}
 
 % --- Conjectures and ranking ---
+% fig_metallic_n500 promoted to S4.4
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.75\linewidth]{fig_metallic_n500.png}
-\caption{$\bar\Lambda$ for the metallic-mean family, computed for $n = 1$ through $500$.}
-\label{fig:metallic-convergence}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.85\linewidth]{fig_silver_lambda_quarter.png}
-\caption{Silver chain number variance ($N = 9.4 \times 10^6$).}
-\label{fig:silver-quarter}
-\end{figure}
+% Commented out: not referenced in main text
+%\begin{figure}[H]
+%\centering
+%\includegraphics[width=0.85\linewidth]{fig_silver_lambda_quarter.png}
+%\caption{Silver chain number variance ($N = 9.4 \times 10^6$).}
+%\label{fig:silver-quarter}
+%\end{figure}
 
 \end{document}

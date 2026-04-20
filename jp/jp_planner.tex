@@ -57,214 +57,233 @@ magnitude.
 %==============================================================================
 
 %------------------------------------------------------------------------------
-\subsection{\S1. Introduction}
-
-Frame the paper around the central question: how to classify and compare
-1D hyperuniform point patterns, especially substitution tilings, beyond the
-coarse three-class scheme.
+\subsection{\S1. Introduction \textnormal{\small (written)}}
 
 \begin{itemize}[leftmargin=1.5em]
-  \item What is hyperuniformity: $S(\mathbf{k}) \to 0$ as $\mathbf{k} \to 0$.
-        Density fluctuations suppressed at long wavelengths.
-        Contrast with Poisson ($\sigma^2 \sim R^d$).
-
-  \item Where it appears: quasicrystals, jammed packings, photonic materials,
-        avian photoreceptors, prime numbers, cosmological structure.
-
-  \item The three-class scheme is coarse: many structurally different patterns
-        share the same class. Motivate the need for both a
-        \emph{classification} metric ($\alpha$) and a \emph{ranking} metric
-        ($\Lb$).
-
-  \item Position relative to existing literature: Torquato \& Stillinger (2003)
-        defined $\Lb$; Zachary \& Torquato (2009) computed it for Fibonacci;
-        Oğuz et al.\ (2019) gave the eigenvalue formula for $\alpha$.
-        No prior systematic catalog exists.
-
-  \item What this paper does: compute $\alpha$ and $\Lb$ for a broad
-        collection of 1D patterns, identify the algebraic constraints on
-        $\alpha$, and characterize what controls $\Lb$.
+  \item Hyperuniformity: $S(k) \to 0$ as $k \to 0$.
+        Contrast with Poisson. Where it appears.
+  \item Three-class scheme ($\alpha$) is coarse: two Class~I patterns
+        can share $\alpha = 3$ but differ in fluctuation amplitude.
+  \item $\Lb$ captures this amplitude. Only two prior values known
+        (lattice $1/6$, Fibonacci $0.20110$).
+  \item What this paper does and main finding: $\alpha$ and $\Lb$
+        are independent.
 \end{itemize}
 
-\fig{Schematic of the three classes, or a visual comparing a lattice
-     vs.\ quasicrystal vs.\ disordered hyperuniform pattern}
+\fig{Two Class~I chains with same $\alpha$, different structure}
 
 %------------------------------------------------------------------------------
-\subsection{\S2. Theory}
+\subsection{\S2. Theory \textnormal{\small (written)}}
 
-Introduce the two-axis framework.
+Four subsections:
 
 \begin{itemize}[leftmargin=1.5em]
-  \item \textbf{First axis: $\alpha$ classifies.}
-        Number variance $\sigma^2(R)$, pair correlations $h(r)$, structure
-        factor $S(k)$. Hyperuniformity condition $S(0) = 0$.
-        Power-law $S(k) \sim |k|^\alpha$ determines the class:
-        Class~I ($\alpha > 1$, bounded $\sigma^2$),
-        Class~II ($\alpha = 1$, $\sigma^2 \sim \ln R$),
-        Class~III ($0 < \alpha < 1$, $\sigma^2 \sim R^{1-\alpha}$).
+  \item \textbf{\S2.1. Number variance, structure factor, and $\alpha$.}
+        $\sigma^2(R)$, $g_2(r)$, $S(k)$, hyperuniformity condition,
+        power-law $S(k) \sim |k|^\alpha$, three classes.
 
-  \item \textbf{Second axis: $\Lb$ ranks.}
-        Definition as running average of $\sigma^2(R)$.
-        Properties: density-invariant, bounded for Class~I,
-        global minimum $\Lb = 1/6$ (integer lattice in 1D).
-        Literature value: $\Lb = 0.20110$ for Fibonacci
-        (Zachary \& Torquato 2009, theta-function method).
+  \item \textbf{\S2.2. The surface-area coefficient $\Lb$.}
+        Running average of $\sigma^2(R)$. Lattice minimum $1/6$.
+        $\Lambda_{II}$, $\Lambda_{III}$ for Classes~II/III.
 
-  \item \textbf{Substitution tilings and the eigenvalue formula.}
-        Substitution rules, matrix $M$, inflation factor $\lambda_1$.
-        Oğuz et al.\ (2019): $\alpha = 1 - 2\ln|\lambda_2|/\ln\lambda_1$.
-        Pisot property ($|\lambda_i| < 1$ for $i \geq 2$) guarantees
-        Bragg diffraction.
+  \item \textbf{\S2.3. Substitution tilings and the eigenvalue formula.}
+        Substitution rules, matrix $M$, Fibonacci example.
+        Eigenvalue formula $\alpha = 1 - 2\ln|\lambda_2|/\ln\lambda_1$.
+        Pisot property $\to$ Bragg peaks (dense, countable).
+        Cannot fit $S(k)$ directly $\to$ motivates spreadability.
 
-  \item \textbf{Determinant constraint on $\alpha$.}
-        For $|\det M| = 1$: product of eigenvalues is fixed, constraining
-        $|\lambda_2|$ from below. Result: $\alpha \leq 1 + 2/(r{-}1)$
-        for rank $r$. Rank 2 $\to$ $\alpha = 3$; rank 3 $\to$ $\alpha \leq 2$.
-        For $|\det M| > 1$: $\alpha = 3 - 2\ln|\det M|/\ln\lambda_1$.
-
-  \item \textbf{Perturbed lattices (URL).}
-        Uniform displacement $U(-a/2, a/2)$; $\alpha = 2$ for all $a > 0$.
-        Exact formula $\Lb = (1 + a^2)/6$ (Klatt et al.\ 2020).
-
-  \item \textbf{Stealthy hyperuniform patterns.}
-        $S(k) \equiv 0$ for $|k| < K^*$.
-        $\chi = M(K)/(N{-}1)$; disordered for $\chi < 1/2$,
-        ordered for $\chi > 1/2$.
+  \item \textbf{\S2.4. Diffusion spreadability.}
+        Two-phase embedding, spectral density
+        $\tilde\chi_V(k) = \rho|\tilde m(k)|^2 S(k)$.
+        Spreadability formula (integral form, $d$ dimensions).
+        Gaussian kernel as low-pass filter smooths Bragg peaks.
+        Power-law decay $t^{-(d+\alpha)/2}$; physical meaning:
+        larger $\alpha$ $\to$ faster diffusion \emph{and} more
+        transparent to low-frequency waves.
 \end{itemize}
 
 %------------------------------------------------------------------------------
 \subsection{\S3. Methods}
 
-Three subsections: pattern generation, extraction, and validation.
+Three subsections. Procedural only; all theory/motivation is in \S2.
 
 \begin{itemize}[leftmargin=1.5em]
   \item \textbf{Pattern generation.}
-        One paragraph covering all three families.
-        Substitution tilings: iterative rule application to a seed word,
-        $\geq 10^6$ tiles.
-        URL: integer lattice with independent uniform displacements on
-        $[-a/2, a/2]$; $N = 100{,}000$; 7 values of $a$.
-        Stealthy: collaborator-generated ensemble,
-        ${\sim}4300$ configurations per $\chi$, $N = 2000$, $\rho = 1$,
-        $\chi \in \{0.1, 0.2, 0.3\}$.
+        Substitution tilings: iterative rule application, $\geq 10^6$ tiles.
+        URL: $N = 50{,}000$, 17 values of $a \in [0.05, 2.0]$.
+        Stealthy: collaborator ensemble, ${\sim}4300$ configs/$\chi$,
+        $N = 2000$, $\rho = 1$, $\chi \in \{0.1, 0.2, 0.3\}$.
 
   \item \textbf{Extraction of $\alpha$ and $\Lb$.}
-        $\sigma^2(R)$: sliding window, $30{,}000$ randomly placed windows,
-        periodic BCs, $R < L/4$, several hundred $R$ values.
-        $\Lb$: running average over upper two-thirds of sampled $R$ range.
-        Class~II: curve fit $\sigma^2 = \Lambda_{II}\ln R + b$.
-        Class~III: curve fit $\sigma^2 = A\,R^{\beta}$ with both $A$ and
-        $\beta$ free; $\Lambda_{III} = A$, $\alpha = 1 - \beta$.
-        $S(k)$ via DFT. For substitution tilings, $\alpha$ from eigenvalue
-        formula; for URL, $\alpha = 2$ analytically.
+        $\alpha$: embed in two-phase medium ($\phi_2 = 0.35$),
+        compute $S(k)$ via DFT, form $\tilde\chi_V(k)$,
+        evaluate spreadability, fit log-log slope.
+        Cross-check against eigenvalue formula.
+        $\Lb$: sliding window ($30{,}000$ placements, $R < L/4$),
+        running average over upper two-thirds of $R$ range.
+        Class~II: fit $\sigma^2 = \Lambda_{II}\ln R + b$.
+        Class~III: fit $\sigma^2 = A\,R^{\beta}$, both free.
 
   \item \textbf{Validation.}
-        Three benchmarks:
-        (i) Poisson: $\sigma^2(R) = 2\rho R$ recovered to $1.1\%$;
-        (ii) URL exact formula matched to $<0.3\%$ across 7 values of $a$;
-        (iii) Fibonacci $\Lb = 0.200$ vs.\ literature $0.20110$
-             (Zachary \& Torquato 2009), $0.55\%$.
+        (i) Poisson $\sigma^2 = 2\rho R$, $1.1\%$ error;
+        (ii) URL $\Lb = (1+a^2)/6$, $<0.3\%$;
+        (iii) Fibonacci $\Lb = 0.200$ vs.\ $0.20110$ (Zachary 2009);
+        (iv) Fibonacci $\alpha = 3.05$ via spreadability (Hitin-Bialus 2024).
 \end{itemize}
 
 %------------------------------------------------------------------------------
-\subsection{\S4. Structural Constraints on $\alpha$}
+\subsection{\S4. Results}
 
-What controls $\alpha$? The algebra of the substitution matrix.
+Single results section with four subsections. Subsections 4.2 and 4.4
+carry the most weight.
+
+%- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsubsection{\S4.1. Metallic-mean family}
+
+Present the main family: all five metallic-mean chains have $\alpha = 3$,
+confirmed by both eigenvalue formula and spreadability.
 
 \begin{itemize}[leftmargin=1.5em]
-  \item \textbf{Rank-2, $|\det M| = 1$: metallic means.}
-        Five chains (Fibonacci through Nickel), all $\alpha = 3$.
-        Algebraic reason: $|\lambda_2| = 1/\lambda_1$.
-        General bound: $\alpha \leq 1 + 2/(r{-}1)$.
-        Table of chains with $n$, $\mu_n$, $\rho$, $\alpha$.
-
-  \item \textbf{Rank-3, $|\det M| = 1$: Bombieri-Taylor and cubic $\alpha = 2$.}
-        BT: $\alpha = 1.545$, $\Lb = 0.377$. First Class~I substitution
-        tiling with $1 < \alpha < 2$.
-        504 cubic matrices with complex pairs: all $\alpha = 2$ exactly.
-        Deterministic analogue of URL at the same exponent.
-        Example: $a \to bc$, $b \to c$, $c \to abc$; $\Lb = 0.275$.
-
-  \item \textbf{Exhaustive search.}
-        39,304 $3\times3$ matrices (row sums $\leq 4$), 24M $4\times4$
-        (row sums $\leq 4$): no $|\det M| = 1$ matrix gives
-        $\alpha \in (2,3)$.
-
-  \item \textbf{$|\det M| > 1$: non-unit determinant.}
-        Formula: $\alpha = 3 - 2\ln|\det M|/\ln\lambda_1$.
-        $|\det M| = 2$ with $\lambda_1 > 4$ gives $\alpha \in (2,3)$.
-        138 matrices found (row sums $\leq 10$), 12 distinct $\alpha$
-        values in $[2.07, 2.39]$.
-        Smallest: $M = \bigl[\begin{smallmatrix}0&1\\2&4\end{smallmatrix}\bigr]$,
-        $\alpha = 2.071$.
-
-  \item \textbf{Classes II and III.}
-        Period-Doubling: $\alpha = 1$ (Class~II); $\Lambda_{II} = 0.080$.
-        0222 chain: $\alpha = 0.639$ (Class~III); $\Lambda_{III} = 0.209$.
+  \item Table of chains with $n$, $\mu_n$, $\rho$, $\alpha$ (eigenvalue),
+        $\alpha$ (spreadability), $\Lb$.
+        Integer lattice included as baseline ($\Lb = 1/6$).
+  \item All are ordered, deterministic quasicrystals with pure
+        Bragg spectra. Despite very different tile-length ratios,
+        they all share $\alpha = 3$, demonstrating that $\alpha$ is
+        determined by the eigenvalue structure alone.
+  \item $\Lb$ increases monotonically from Fibonacci ($0.201$) to
+        Nickel ($0.310$): same $\alpha$, different residual disorder.
+        A first indication that $\alpha$ and $\Lb$ capture
+        independent information (confirmed more broadly in \S4.4).
 \end{itemize}
 
 \fig{$\sigma^2(R)$ for Fibonacci/Silver/Bronze (bounded Class~I oscillation)}
 
-\fig{BT analysis: variance, $S(k)$, spreadability convergence}
+%- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsubsection{\S4.2. Structural constraints on $\alpha$}
 
-\fig{$\sigma^2(R)$ for Period-Doubling and 0222 (Class~II/III growth)}
+\textbf{This is a central section of the paper.} What values of $\alpha$
+are algebraically accessible, and why?
+
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{The determinant bound.}
+        For a rank-$r$ unimodular Pisot matrix ($|\det M| = 1$):
+        $\alpha \leq 1 + 2/(r{-}1)$.
+        Rank 2 $\to$ $\alpha \leq 3$ (saturated by all metallic means).
+        Rank 3 $\to$ $\alpha \leq 2$.
+        Derive from the eigenvalue formula and $|\det M| = 1$.
+
+  \item \textbf{Rank-3 results.}
+        Bombieri-Taylor: $\alpha = 1.545$, $\Lb = 0.377$. Occupies
+        the interval $1 < \alpha < 2$.
+        504 cubic matrices with complex eigenvalue pairs all give
+        $\alpha = 2$ exactly (forced by $|\det M| = \lambda_1|\lambda_2|^2 = 1$).
+        Example: $a \to bc$, $b \to c$, $c \to abc$; $\Lb = 0.275$.
+        Exhaustive enumeration up to rank 4 confirms no unimodular
+        matrix gives $\alpha \in (2,3)$.
+
+  \item \textbf{Filling the gap: $|\det M| > 1$.}
+        For rank-2: $\alpha = 3 - 2\ln|\det M|/\ln\lambda_1$.
+        $|\det M| = 2$ with $\lambda_1 > 4$ gives $\alpha \in (2,3)$.
+        138 matrices found (row sums $\leq 10$), 12 distinct $\alpha$
+        values in $[2.07, 2.39]$.
+        Smallest example: $M = \bigl[\begin{smallmatrix}0&1\\2&4\end{smallmatrix}\bigr]$,
+        $\alpha = 2.071$.
+        Within each $\alpha$ group, $\Lb$ varies by factors of 5--15,
+        showing that the full substitution rule matters, not just the
+        eigenvalues.
+\end{itemize}
+
+\fig{BT analysis: variance, $S(k)$, spreadability}
 
 \fig{$\sigma^2(R)$ and running $\Lb$ for the $\alpha = 2.071$ chain}
 
-%------------------------------------------------------------------------------
-\subsection{\S5. Ranking Class~I Patterns by $\Lb$}
+%- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsubsection{\S4.3. Classes~II and~III}
 
-$\alpha$ classifies; $\Lb$ \emph{ranks}.
+Brief. Two substitution tilings that fall outside Class~I, included
+to complete the picture.
 
 \begin{itemize}[leftmargin=1.5em]
-  \item \textbf{Integer lattice as the minimum benchmark.}
-        $\Lb = 1/6$: the global minimum for all 1D hyperuniform patterns.
+  \item Period-Doubling: $|\lambda_2| = 1$, so $\alpha = 1$ exactly
+        (Class~II boundary). $\sigma^2 \sim \Lambda_{II}\ln R$;
+        $\Lambda_{II} = 0.080$.
+  \item 0222 chain: $|\lambda_2| > 1$ (non-Pisot), $\alpha = 0.639$
+        (Class~III). $\sigma^2 \sim \Lambda_{III} R^{1-\alpha}$;
+        $\Lambda_{III} = 0.209$.
+  \item $\Lambda_{II}$ and $\Lambda_{III}$ serve as the analogues of
+        $\Lb$ for these classes: they extract the leading amplitude
+        from the appropriate growth law.
+\end{itemize}
 
-  \item \textbf{Metallic-mean chains.}
-        $\Lb$ values: Fibonacci $= 0.201$, Silver $= 0.250$,
-        Bronze $= 0.282$, Copper $= 0.293$, Nickel $= 0.310$.
-        Four of five are new (only Fibonacci previously known).
-        The sequence increases with $n$ and appears to approach
-        ${\sim}1/3$, but whether the limit is exactly $1/3$
-        remains an open question.
+\fig{$\sigma^2(R)$ for Period-Doubling and 0222 (Class~II/III growth)}
 
-  \item \textbf{URL.}
-        $\Lb = (1 + a^2)/6$; validated at 7 values of $a$.
-        At $a = 1$: $\Lb = 1/3$.
+%- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsubsection{\S4.4. Ranking Class~I patterns by $\Lb$}
 
-  \item \textbf{Bombieri-Taylor.}
-        $\Lb = 0.377$; higher than any metallic mean.
-        Large $|\lambda_2|$ produces more variance at intermediate scales.
+\textbf{This is the other central section.} $\alpha$ classifies;
+$\Lb$ ranks. The catalog table is presented here, and then we ask:
+what do we learn from comparing $\Lb$ across structurally different
+systems?
 
-  \item \textbf{Stealthy patterns.}
-        $\Lb \approx 1/(\pi^2\chi)$ for disordered phase.
-        Two structural phases at same $\chi$:
-        ordered ($\Lb \approx 1/6$) vs.\ disordered ($\Lb \gg 1/6$).
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{The catalog.}
+        Full table of all Class~I patterns sorted by $\Lb$:
+        integer lattice ($1/6$), metallic means, cubic $\alpha = 2$,
+        URL at various $a$, BT, stealthy at various $\chi$.
+        Classes~II/III listed separately with $\Lambda_{II}$,
+        $\Lambda_{III}$.
 
-  \item \textbf{Key observation: $\alpha$ does not determine $\Lb$.}
-        The 138 chains with $|\det M| = 2$ share $\alpha$ values but
-        $\Lb$ varies by factors of 5--15 within each group.
-        The full substitution rule, not just the eigenvalues, matters.
+  \item \textbf{Comparison families.}
+        URL: $\Lb = (1+a^2)/6$, exact (Klatt et al.\ 2020);
+        $\alpha = 2$ for all $a > 0$; at $a = 1$ (cloaking),
+        $\Lb = 1/3$.
+        Stealthy: $S(k) \equiv 0$ for $|k| < K^*$;
+        $\Lb \approx 1/(\pi^2\chi)$ for the disordered phase;
+        $\chi$ controls the fraction of constrained Fourier modes.
 
-  \item \textbf{What controls $\Lb$:}
+  \item \textbf{What the ranking reveals.}
+        The metallic-mean chains are ordered (Bragg spectra,
+        $\alpha = 3$); the URL is disordered (continuous $S(k)$,
+        $\alpha = 2$). Yet the large-$n$ metallic means approach
+        $\Lb \approx 1/3$ from below, matching the cloaked URL.
+        Two structurally different systems converge to the same
+        residual fluctuation level despite different $\alpha$.
+
+        The cubic $\alpha = 2$ chain ($\Lb = 0.275$) is a
+        deterministic analogue of URL at $a \approx 0.8$: same
+        exponent, comparable disorder, completely different mechanism.
+
+        Stealthy at $\chi = 0.3$ ($\Lb = 0.357$) has more residual
+        disorder than any metallic mean, despite perfect
+        small-$k$ suppression. Constraining a finite set of Fourier
+        modes does not impose local spatial order.
+
+        The 138 non-unimodular chains show $\Lb$ varying by
+        factors of 5--15 within each $\alpha$ group: the full
+        substitution rule, not just the eigenvalues, controls
+        residual disorder.
+
+        \opn{We only have good ordered structures (metallic means)
+        at $\alpha = 3$. A disordered $\alpha = 3$ comparison would
+        be valuable but is not in the catalog. Note as limitation.}
+
+  \item \textbf{What controls $\Lb$.}
+        Close with a short synthesis: $\Lb$ increases with
         tile-length disparity (metallic means),
         displacement amplitude (URL),
-        spectral constraint strength (stealthy),
-        rate of $S(k)$ suppression near $k = 0$ (BT).
+        weaker spectral constraints (stealthy), and
+        slower $S(k)$ suppression near $k = 0$ (BT).
+        In each case, more room for large-scale density fluctuations
+        translates to larger $\Lb$.
 \end{itemize}
 
 \fig{Full $\Lb$ catalog table (all patterns, sorted by $\Lb$)}
 
-\fig{$\Lb$ ranking visualization (bar chart or dot plot)}
-
-\fig{Metallic-mean tile visualizations for $n = 1$ through $10$}
-
 \fig{$\Lb(\mu_n)$ convergence plot, $n = 1$ through $100$}
 
-\fig{URL $\Lb(a)$ sweep with exact formula overlay}
-
 %------------------------------------------------------------------------------
-\subsection{\S6. Conclusion}
+\subsection{\S5. Conclusion}
 
 \begin{itemize}[leftmargin=1.5em]
   \item Return to the main thesis: 1D hyperuniformity needs both a
@@ -277,12 +296,25 @@ $\alpha$ classifies; $\Lb$ \emph{ranks}.
   \item Summarize how structural disorder is reflected in $\Lb$:
         tile disparity, displacement amplitude, spectral constraints.
 
+  \item Highlight the physical significance: $\alpha$ controls how
+        easily diffusion (and, by extension, wave propagation) occurs
+        through the corresponding two-phase medium. Ranking by $\Lb$
+        within each class further differentiates patterns that would
+        otherwise appear equivalent from a transport standpoint.
+
+  \item Ordered vs.\ disordered: the metallic-mean chains provide a
+        clean ordered family at $\alpha = 3$, but the catalog lacks a
+        comparably clean disordered family at the same $\alpha$.
+        This asymmetry limits how much we can say about the
+        ordered/disordered distinction within Class~I.
+
   \item Open questions:
         \begin{itemize}[noitemsep]
           \item Analytical formula for metallic-mean $\Lb$?
           \item Exact limit of the metallic-mean $\Lb$ sequence?
           \item Extension to 2D (Penrose, Ammann-Beenker)?
           \item What structural features minimize $\Lb$ beyond the lattice?
+          \item Comparison with disordered $\alpha = 3$ systems?
         \end{itemize}
 \end{itemize}
 
