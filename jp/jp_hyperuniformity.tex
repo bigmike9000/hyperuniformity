@@ -277,7 +277,7 @@ This simple log-slope approach can converge slowly for patterns whose subleading
 \ln[\mathcal{S}(\infty) - \mathcal{S}(t)] = -\frac{d+\alpha}{2}\ln t + \ln\!\left(\sum_{j=0}^{n} C_j\, t^{-j/2}\right),
 \label{eq:yuan-typeI}
 \end{equation}
-where the $n+1$ coefficients $C_j$ and the exponent $\alpha$ are determined by a nonlinear fit. This is the Type~I fitting function of order $n$~\cite{yuan2026spreadability}, the most general of three fitting forms proposed therein. When $n = 0$, the sum reduces to a single constant and the fit is equivalent to the simple log-slope method. Each additional term absorbs one more order of subleading decay that would otherwise bias the extracted $\alpha$ at finite $t$. This expansion assumes that the spectral density $\tilde\chi_V(k)$ can be expanded in integer powers of $k$ at the origin, which does not hold for quasicrystalline media with dense Bragg peaks~\cite{yuan2026spreadability}. For such media, the excess spreadability oscillates between two power-law envelopes $C_\pm\, t^{-(d+\alpha)/2}$ rather than decaying smoothly. Nevertheless, we find that the Type~I fit still produces accurate results at moderate $n$.
+where the $n+1$ coefficients $C_j$ and the exponent $\alpha$ are determined by a nonlinear fit. This is the Type~I fitting function of order $n$~\cite{yuan2026spreadability}, the most general of three fitting forms proposed by Yuan et al. When $n = 0$, the sum reduces to a single constant and the fit is equivalent to the simple log-slope method. Each additional term absorbs one more order of subleading decay that would otherwise bias the extracted $\alpha$ at finite $t$. This expansion assumes that the spectral density $\tilde\chi_V(k)$ can be expanded in integer powers of $k$ at the origin, which does not hold for quasicrystalline media with dense Bragg peaks~\cite{yuan2026spreadability}. For such media, the excess spreadability oscillates between two power-law envelopes $C_\pm\, t^{-(d+\alpha)/2}$ rather than decaying smoothly. Nevertheless, we find that the Type~I fit still produces accurate results at moderate $n$.
 
 $\bar\Lambda$ is extracted from the number variance $\sigma^2(R)$ in real space. We compute $\sigma^2(R)$ by randomly placing $30{,}000$ windows of half-width $R$ along the pattern with periodic boundary conditions and recording the variance of the point counts across all placements. We restrict $R < L/4$ to avoid finite-size artifacts and evaluate $\sigma^2(R)$ at 4{,}000 values of $R$, ranging from below the mean point spacing up to this maximum.
 
@@ -346,7 +346,7 @@ All five chains have $\alpha = 3$, despite having very different tile-length rat
 \label{fig:bounded-variance}
 \end{figure}
 
-Extending the computation beyond $n = 5$, $\bar\Lambda$ continues to increase monotonically and appears to approach a limiting value near $1/3$ as $n \to \infty$, as shown in Fig.~\ref{fig:metallic-convergence} below. Whether this limit is exactly $1/3$ remains a conjecture.
+Extending the computation beyond $n = 5$, $\bar\Lambda$ continues to increase and appears to approach a limiting value near $1/3$ as $n \to \infty$, as shown in Fig.~\ref{fig:metallic-convergence} below. Whether this limit is exactly $1/3$ remains a conjecture.
 
 \begin{figure}[H]
 \centering
@@ -433,7 +433,7 @@ $\alpha$ & Chains & $\bar\Lambda$ range \\
 \label{sec:results-class23}
 %----------------------------------------------------------------------
 
-The patterns discussed so far are all Class~I ($\alpha > 1$). To complete the picture, we also examine two substitution tilings that fall into the weaker hyperuniformity classes.
+The patterns discussed so far are all Class~I ($\alpha > 1$). In this section, we also briefly examine two substitution tilings that fall into the weaker hyperuniformity classes.
 
 The period-doubling chain, with rule $S \to L$, $L \to LSS$ and matrix $M = \bigl(\begin{smallmatrix} 0 & 2 \\ 1 & 1 \end{smallmatrix}\bigr)$, has eigenvalues $\lambda_1 = 2$ and $\lambda_2 = -1$. Because $|\lambda_2| = 1$, the eigenvalue formula gives $\alpha = 1$ exactly, placing it at the boundary between Class~I and Class~II. Its variance grows logarithmically, and fitting $\sigma^2(R) = \Lambda_\text{II}\ln R + b$ yields $\Lambda_\text{II} = 0.080$.
 
@@ -492,7 +492,7 @@ The 138 chains with $|\det M| = 2$ (Table~\ref{tab:detgt1}) provide the stronges
 \section{Conclusion}
 \label{sec:conclusion}
 
-The standard three-class scheme for hyperuniformity sorts patterns by how fast $S(k)$ vanishes near the origin, but it does not distinguish between patterns within the same class. In this work, we computed both $\alpha$ and $\bar\Lambda$ for a broad collection of one-dimensional hyperuniform point patterns and found that these two metrics capture complementary information about large-scale structure. Patterns sharing the same $\alpha$ can differ in $\bar\Lambda$ by more than an order of magnitude, and patterns with different $\alpha$ can converge to the same $\bar\Lambda$. For the metallic-mean family, $\bar\Lambda$ increases monotonically with $n$ and appears to approach $1/3$, the value achieved by a uniformly randomized lattice at $a = 1$.
+The standard three-class scheme for hyperuniformity sorts patterns by how fast $S(k)$ vanishes near the origin, but it does not distinguish between patterns within the same class. In this work, we computed both $\alpha$ and $\bar\Lambda$ for a broad collection of one-dimensional hyperuniform point patterns and found that these two metrics capture complementary information about large-scale structure. Patterns sharing the same $\alpha$ can differ in $\bar\Lambda$ by more than an order of magnitude, and patterns with different $\alpha$ can converge to the same $\bar\Lambda$. For the metallic-mean family, $\bar\Lambda$ increases with $n$ and appears to approach $1/3$, the value achieved by a uniformly randomized lattice at $a = 1$.
 
 The algebraic structure of the substitution matrix constrains which values of $\alpha$ are accessible. For Pisot matrices with $|\det M| = 1$, the bound $\alpha \leq 1 + 2/(r-1)$ locks rank-2 matrices at $\alpha = 3$ and rank-3 matrices at $\alpha \leq 2$, leaving the interval $(2,3)$ empty. Relaxing to $|\det M| = 2$ opens this gap, with 138 matrices found producing $\alpha$ values between 2.07 and 2.39. Within each $\alpha$ group, $\bar\Lambda$ varies widely, confirming that the full substitution rule, not just the eigenvalue spectrum, determines the amplitude of density fluctuations.
 
