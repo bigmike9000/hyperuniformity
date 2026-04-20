@@ -55,7 +55,7 @@ This paper represents my own work in accordance with University regulations.\\
 %==============================================================================
 \begin{abstract}
 \noindent
-For an uncorrelated random point pattern in space, the variance in the number of points found inside a spherical observation window of radius $R$ grows in proportion to $R^d$ in $d$ dimensions. Hyperuniform patterns break this scaling, as their density fluctuations are anomalously suppressed at large scales. How quickly the structure factor $S(k)$ vanishes as $k \to 0$ varies from system to system, and the power-law exponent $\alpha$ in $S(k) \sim |k|^\alpha$ defines three distinct hyperuniformity classes. However, patterns within the same class can have very different fluctuation amplitudes, motivating the use of a surface-area coefficient $\bar\Lambda$ for Class~I patterns to measure the amplitude of the remaining fluctuations. In this work, we compute both $\alpha$ and $\bar\Lambda$ across a range of one-dimensional hyperuniform point patterns, including metallic-mean substitution chains whose irrational tile-length ratios generate quasiperiodic order, higher-rank substitution tilings, uniformly randomized lattices, and stealthy configurations. Starting from the eigenvalue formula for substitution matrices, we confirm that all metallic-mean chains share $\alpha = 3$ and find that $\bar\Lambda$ increases monotonically from Fibonacci (the golden ratio) toward an apparent limit near $1/3$. We then identify algebraic constraints on the substitution matrix and show how relaxing these constraints opens up new regions of the $\alpha$ spectrum. Across all systems studied, patterns sharing the same $\alpha$ were determined to be able to have very different $\bar\Lambda$, showing that $\alpha$ and $\bar\Lambda$ capture complementary and independent information about large-scale structure.
+For an uncorrelated random point pattern in space, the variance in the number of points found inside a spherical observation window of radius $R$ grows in proportion to $R^d$ in $d$ dimensions. Hyperuniform patterns break this scaling, as their density fluctuations are anomalously suppressed at large scales. When the structure factor vanishes as $S(k) \sim |k|^\alpha$ near the origin, the exponent $\alpha$ defines three distinct hyperuniformity classes. However, patterns within the same class can have very different fluctuation amplitudes, motivating the use of a surface-area coefficient $\bar\Lambda$ for Class~I patterns to measure the amplitude of the remaining fluctuations. In this work, we compute both $\alpha$ and $\bar\Lambda$ across a range of one-dimensional hyperuniform point patterns, including metallic-mean substitution chains whose irrational tile-length ratios generate quasiperiodic order, higher-rank substitution tilings, uniformly randomized lattices, and stealthy configurations. Starting from the eigenvalue formula for substitution matrices, we confirm that all metallic-mean chains share $\alpha = 3$ and find that $\bar\Lambda$ increases monotonically from Fibonacci (the golden ratio) toward an apparent limit near $1/3$. We then identify algebraic constraints on the substitution matrix and show how relaxing these constraints opens up new regions of the $\alpha$ spectrum. Across all systems studied, patterns sharing the same $\alpha$ were determined to be able to have very different $\bar\Lambda$, showing that $\alpha$ and $\bar\Lambda$ capture complementary and independent information about large-scale structure.
 \end{abstract}
 
 \begingroup
@@ -351,7 +351,7 @@ Extending the computation beyond $n = 5$, $\bar\Lambda$ continues to increase mo
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.75\linewidth]{fig_metallic_n500.png}
-\caption{$\bar\Lambda$ for the metallic-mean family, computed for $n = 1$ through $500$. The values increase monotonically and appear to approach a limit near $1/3$ (dashed line).}
+\caption{$\bar\Lambda$ for the metallic-mean family, computed for $n = 1$ through $500$. The values increase toward a limit near $1/3$ (dashed line), with some noise at large $n$ due to reduced chain sizes.}
 \label{fig:metallic-convergence}
 \end{figure}
 
@@ -376,15 +376,15 @@ with $|\det M| = 1$ and largest eigenvalue $\lambda_1 \approx 2.247$. The eigenv
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\linewidth]{fig_bt_2panel.png}
+\includegraphics[width=0.9\linewidth]{fig_bt_2panel.png}
 \caption{Bombieri-Taylor chain ($\alpha = 1.545$). (a)~Bounded number variance with $\bar\Lambda = 0.377$. (b)~Spreadability decay compared to the theoretical power law $t^{-1.27}$.}
 \label{fig:bt-analysis}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\linewidth]{fig_yuan_improved.png}
-\caption{Improved spreadability fitting for the Bombieri-Taylor chain ($N = 6.8 \times 10^6$). (a)~Relative error in the extracted $\alpha$ vs.\ Type~I fitting order. The simple log-slope (order 0, red dashed) gives $48\%$ error; each additional order absorbs subleading corrections, reaching $1.7\%$ at order 6. (b)~Extracted exponent $\hat\alpha$ converging from $2.28$ (red dashed) toward the true value $\alpha = 1.545$ (green).}
+\includegraphics[width=0.9\linewidth]{fig_yuan_improved.png}
+\caption{Improved spreadability fitting for the Bombieri-Taylor chain ($N = 6.8 \times 10^6$). (a)~Relative error in the extracted $\alpha$ vs.\ Type~I fitting order. The simple log-slope (red dashed) gives $48\%$ error; each additional order absorbs subleading corrections, reaching $1.7\%$ at order 6. (b)~Extracted exponent $\hat\alpha$ converging from $2.28$ (red dashed) toward the true value $\alpha = 1.545$ (green).}
 \label{fig:yuan-spreadability}
 \end{figure}
 
@@ -477,7 +477,7 @@ Period-Doubling       & II  & 1        & $\Lambda_\text{II} = 0.080$ \\
 0222 chain            & III & 0.639    & $\Lambda_\text{III} = 0.209$ \\
 \bottomrule
 \end{tabular}
-\caption{Catalog of all patterns studied in this work, sorted by $\bar\Lambda$. Stealthy patterns have $S(k) = 0$ over a finite interval rather than vanishing as a power law, so $\alpha$ is not defined. Period-Doubling and 0222 chain have divergent $\bar\Lambda$ and are characterized by $\Lambda_\text{II}$ and $\Lambda_\text{III}$ instead.}
+\caption{All patterns studied in this work, sorted by $\bar\Lambda$. Stealthy patterns have $S(k) = 0$ over a finite interval instead of vanishing as a power law, so $\alpha$ is not defined. Period-Doubling and 0222 chain have divergent $\bar\Lambda$ and are characterized by $\Lambda_\text{II}$ and $\Lambda_\text{III}$ instead.}
 \label{tab:catalog}
 \end{table}
 
